@@ -1,0 +1,398 @@
+#############################################
+###recursion
+
+modify arr
+create arr and fill
+in-place
+	two pointer
+	iteration
+	recursion
+
+while
+
+for 
+
+
+
+
+
+面试题 08.06. 汉诺塔问题
+
+698. 划分为k个相等的子集
+
+
+
+544. 输出比赛匹配对
+
+
+246. 中心对称数
+	247. 中心对称数 II
+	!
+	248. 中心对称数 III
+
+
+SUMMARY
+https://leetcode.com/problems/permutations/discuss/18284/Backtrack-Summary%3A-General-Solution-for-10-Questions!!!!!!!!-Python-(Combination-Sum-Subsets-Permutation-Palindrome)
+
+
+
+
+091.320	Generalized Abbreviation
+094.1087 Brace Expansion 字母切换
+
+
+
+
+
+
+
+
+
+
+#############################################
+###backtrace
+
+
+opener
+1688. 比赛中的配对次数
+
+401. 二进制手表
+	https://pyformat.info/#simple
+
+
+
+17. 电话号码的字母组合
+	##基操 revisit
+
+
+
+
+
+
+backtrace
+dfs
+bfs
+
+
+	
+exit if
+	no remaining
+	cur = len
+
+
+permutation / rearrange order
+	search original arr, check if i in cur / set
+	dfs(nums, cur):
+		if len(nums) == len(cur):
+			res.append(cur[:]) #
+		else:
+			if nums[i] not in cur:
+				cur.append(nums[i])
+				dfs(nums, cur)
+				cur.pop()
+
+	search left arr
+	dfs(left, cur):
+		if not left:
+			res.append(cur)
+		else:
+			for i, num in enumerate(left):
+				cur.append(num)
+				dfs(left[:i] + nums[i+1:], cur)
+				cur.pop()
+
+				//
+				dfs(nums[:i]+nums[i+1:], line+[num]) 
+
+				//
+				dfs(nums[:i]+nums[i+1:], [num]+line) 
+
+subset
+	combination / no set dup
+	search / dfs from i+1
+	def backtrack(start = 0, cur = []):
+	    if len(cur) == k:  
+	        output.append(cur[:])
+	    for i in range(first, n):
+	        cur.append(nums[i])
+	        backtrack(i + 1, cur)
+	        cur.pop()
+	        --
+	        backtrack(i + 1, cur+[nums[i]])
+
+
+to iterate
+	def dfs(start, cur, target):
+		for i in range(begin)
+			with duplicate
+			dfs(i, cur + nums[i], target - nums[i])
+			without duplicate
+			dfs(i+1, cur + nums[i], target - nums[i])
+
+		-- no for
+		cur.append(nums[i])
+        select(c, cur, i + 1)
+        cur.pop()
+        select(c, cur, i + 1)
+
+res = []
+self.res = []
+dfs(nums, [])
+
+
+
+
+https://leetcode-cn.com/problems/permutations/solution/hui-su-suan-fa-python-dai-ma-java-dai-ma-by-liweiw/
+
+
+22. 括号生成
+
+
+
+46. 全排列
+
+
+	47. 全排列 II
+
+
+		267. 回文排列 II
+	
+
+
+
+
+	77. 组合
+	subset(bmi, rowSums(bmi$height_in > 60))
+
+
+
+
+	39. 组合总和
+		append - dfs - pop
+		dfs
+
+		--
+		begin / idx
+
+
+
+	40. 组合总和 II
+		想清楚搜索策略
+		[1, 1, 2, 5, 6, 7]
+		1 + [1 + 2 ...] 包括2个1
+		1 + [2 ...] 包括1个1, 跳过第二个1
+
+
+
+	216. 组合总和 III
+		revisit stefan
+
+
+
+	254. 因子的组合
+	!!!
+
+
+		31. 下一个排列
+
+
+
+
+78. 子集
+	dfs recur
+	bfs
+
+90. 子集 II
+
+
+
+
+
+
+
+131. 分割回文串
+	read problem
+	understand cases
+
+
+
+	5. 最长回文子串
+
+
+	132. 分割回文串 II
+
+
+
+
+
+
+
+
+
+
+291. 单词规律 II
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+89. 格雷编码
+
+
+
+306. 累加数
+
+
+	842. 将数组拆分成斐波那契序列
+
+
+
+784. 字母大小写全排列
+
+
+
+
+
+
+
+
+###############################################
+### dfs bfs
+
+
+def dfs(grid, i, j):
+	if 0 <= i < n and 0 <= j < m:
+		grid[i][j] = ...
+		for x, y in [(i-1,j),(i+1,j),(i,j-1),(i,j+1)]
+			dfs(grid, x, y)
+check the point outside
+	or inside combined
+check ↑←↓→ in recursion
+	or here	--- relation. this <-> outer
+
+
+
+200. 岛屿数量
+	union-find
+	dfs bfs
+	visited
+	
+
+	130. 被围绕的区域
+	uni-find!!!
+
+
+	323. 无向图中连通分量的数目
+	uni-find!!!!
+
+
+
+	286. 墙与门
+	multi source bfs
+
+
+		994. 腐烂的橘子
+		return the last updated level
+
+
+
+	694. 不同岛屿的数量
+	redo practice
+
+
+	463. 岛屿的周长
+
+	733. 图像渲染
+
+
+
+	695. 岛屿的最大面积
+	
+
+	1034. 边框着色
+
+
+
+305. 岛屿数量 II
+	!!!
+	uni-find 
+
+
+
+
+827. 最大人工岛
+
+
+
+
+
+
+
+
+
+
+
+
+###############################################
+### Union-Find
+6.28
+074.1101. The Earliest Moment When Everyone Become Friends 彼此熟识的最早时间
+
+
+128. Longest Consecutive Sequence
+xxx
+
+
+
+959. Regions Cut By Slashes 由斜杠划分区域
+684. Redundant Connection
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

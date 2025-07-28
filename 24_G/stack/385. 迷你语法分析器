@@ -1,0 +1,189 @@
+
+
+
+class Solution {
+    int index = 0;
+
+    public NestedInteger deserialize(String s) {
+        if (s.charAt(index) == '[') {
+            index++;
+            NestedInteger ni = new NestedInteger();
+            while (s.charAt(index) != ']') {
+                ni.add(deserialize(s));
+                if (s.charAt(index) == ',') {
+                    index++;
+                }
+            }
+            index++;
+            return ni;
+        } else {
+            boolean negative = false;
+            if (s.charAt(index) == '-') {
+                negative = true;
+                index++;
+            }
+            int num = 0;
+            while (index < s.length() && Character.isDigit(s.charAt(index))) {
+                num = num * 10 + s.charAt(index) - '0';
+                index++;
+            }
+            if (negative) {
+                num *= -1;
+            }
+            return new NestedInteger(num);
+        }
+    }
+}
+
+
+
+class Solution:
+    def deserialize(self, s: str) -> NestedInteger:
+        index = 0
+
+        def dfs() -> NestedInteger:
+            nonlocal index
+            if s[index] == '[':
+                index += 1
+                ni = NestedInteger()
+                while s[index] != ']':
+                    ni.add(dfs())
+                    if s[index] == ',':
+                        index += 1
+                index += 1
+                return ni
+            else:
+                negative = False
+                if s[index] == '-':
+                    negative = True
+                    index += 1
+                num = 0
+                while index < len(s) and s[index].isdigit():
+                    num *= 10
+                    num += int(s[index])
+                    index += 1
+                if negative:
+                    num = -num
+                return NestedInteger(num)
+
+        return dfs()
+
+
+
+
+
+
+class Solution {
+    public NestedInteger deserialize(String s) {
+        if (s.charAt(0) != '[') {
+            return new NestedInteger(Integer.parseInt(s));
+        }
+        Deque<NestedInteger> stack = new ArrayDeque<NestedInteger>();
+        int num = 0;
+        boolean negative = false;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == '-') {
+                negative = true;
+            } else if (Character.isDigit(c)) {
+                num = num * 10 + c - '0';
+            } else if (c == '[') {
+                stack.push(new NestedInteger());
+            } else if (c == ',' || c == ']') {
+                if (Character.isDigit(s.charAt(i - 1))) {
+                    if (negative) {
+                        num *= -1;
+                    }
+                    stack.peek().add(new NestedInteger(num));
+                }
+                num = 0;
+                negative = false;
+                if (c == ']' && stack.size() > 1) {
+                    NestedInteger ni = stack.pop();
+                    stack.peek().add(ni);
+                }
+            }
+        }
+        return stack.pop();
+    }
+}
+
+
+class Solution:
+    def deserialize(self, s: str) -> NestedInteger:
+        if s[0] != '[':
+            return NestedInteger(int(s))
+        stack, num, negative = [], 0, False
+        for i, c in enumerate(s):
+            if c == '-':
+                negative = True
+            elif c.isdigit():
+                num = num * 10 + int(c)
+            elif c == '[':
+                stack.append(NestedInteger())
+            elif c in ',]':
+                if s[i-1].isdigit():
+                    if negative:
+                        num = -num
+                    stack[-1].add(NestedInteger(num))
+                num, negative = 0, False
+                if c == ']' and len(stack) > 1:
+                    stack[-2].add(stack.pop())
+        return stack.pop()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

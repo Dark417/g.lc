@@ -1,0 +1,76 @@
+
+
+
+def findSubArray(nums):
+    N = len(nums) # 数组/字符串长度
+    left, right = 0, 0 # 双指针，表示当前遍历的区间[left, right]，闭区间
+    sums = 0 # 用于统计 子数组/子区间 是否有效，根据题目可能会改成求和/计数
+    res = 0 # 保存最大的满足题目要求的 子数组/子串 长度
+    while right < N: # 当右边的指针没有搜索到 数组/字符串 的结尾
+        sums += nums[right] # 增加当前右边指针的数字/字符的求和/计数
+        while 区间[left, right]不符合题意：# 此时需要一直移动左指针，直至找到一个符合题意的区间
+            sums -= nums[left] # 移动左指针前需要从counter中减少left位置字符的求和/计数
+            left += 1 # 真正的移动左指针，注意不能跟上面一行代码写反
+        # 到 while 结束时，我们找到了一个符合题意要求的 子数组/子串
+        res = max(res, right - left + 1) # 需要更新结果
+        right += 1 # 移动右指针，去探索新的区间
+    return res
+
+
+
+
+
+
+22.2.26
+219. 存在重复元素 II
+https://leetcode-cn.com/problems/contains-duplicate-ii/solution/gong-shui-san-xie-hua-dong-chuang-kou-yu-q02i/
+	217. 存在重复元素
+	
+
+1763. 最长的美好子字符串
+
+
+	1984. 学生分数的最小差值
+
+
+	643. 子数组最大平均数 I
+
+
+	1176. 健身计划评估
+
+
+	1876. 长度为三且各字符不同的子字
+
+
+22.2.28
+
+
+22.3.5
+
+22.3.11
+
+718. 最长重复子数组
+
+
+
+
+
+22.3.18
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

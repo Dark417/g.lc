@@ -1,0 +1,63 @@
+
+
+2021/10/28
+Robinhood practice
+1. arr accumulate
+2. cutpalindrome
+3. matrix sort and reorder
+4. number of zigzag
+
+
+2021/10/29
+Robinhood
+1. 
+2.
+3. . # * box falling
+4. 
+
+
+2021/10/30
+Tiktok
+1. 
+2. 8/3 + 8%3
+3. 4.
+5. (A(B(D(F))(E))(C))
+急什么？面对test编程不会？
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,179 @@
+2020.5.3
+Python心得
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+!!! must do, basic
+!! to learn
+! ? tbd
+
+saw
+
+Hash Table
+3. Longest Substring Without Repeating Characters !!
+
+Binary Tree
+1351. Count Negative Numbers in a Sorted Matrix
+
+
+
+Greedy
+1221. Split a String in Balanced Strings
+
+
+
+
+
+148. Sort List
+179. Largest Number
+242. Valid Anagram
+
+1356. Sort Integers by The Number of 1 Bits
+
+350. Intersection of Two Arrays II
+1329. Sort the Matrix Diagonally
+
+1305. All Elements in Two Binary Search Trees
+969. Pancake Sorting
+973. K Closest Points to Origin
+
+1122. Relative Sort Array
+976. Largest Perimeter Triangle
+
+
+
+
+
+
+todo
+349. Intersection of Two Arrays
+922. Sort Array By Parity II
+numbers can be calculated, not just countable objects
+
+
+
+C sort
+164. Maximum Gap	
+
+
+
+
+
+skipped
+
+
+
+
+attenpted
+discuss
+961. N-Repeated Element in Size 2N Array
+	https://leetcode.com/problems/n-repeated-element-in-size-2n-array/discuss/208317/C%2B%2B-2-lines-O(4)-or-O-(1)
+
+
+doing
+
+
+
+
+
+
+
+unsolved
+
+
+747. Largest Number At Least Twice of Others
+219. Contains Duplicate II
+728. Self Dividing Numbers
+942. DI String Match
+
+
+
+solved
+C re
+977. Squares of a Sorted Array
+771. Jewels and Stones
+1295. Find Numbers with Even Number of Digits
+1217. Play with Chips
+
+Hash
+217. Contains Duplicate
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

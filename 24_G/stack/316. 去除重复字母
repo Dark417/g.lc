@@ -1,0 +1,19 @@
+316. 去除重复字母
+
+
+def removeDuplicateLetters(self, s: str) -> str:
+    stack = []
+    m = Counter(s)
+    for c in s:
+        if c not in stack:
+            while stack and c < stack[-1] and m[stack[-1]] > 0:
+                stack.pop()
+            stack.append(c)
+        m[c] -= 1
+    return "".join(stack)
+
+
+
+
+
+

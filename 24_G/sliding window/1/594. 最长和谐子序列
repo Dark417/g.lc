@@ -1,0 +1,91 @@
+594. 最长和谐子序列
+
+class Solution:
+    def findLHS(self, nums: List[int]) -> int:
+        nums.sort()
+        res, begin = 0, 0
+        for end in range(len(nums)):
+            while nums[end] - nums[begin] > 1:
+                begin += 1
+            if nums[end] - nums[begin] == 1:
+                res = max(res, end - begin + 1)
+        return res
+
+
+
+class Solution {
+    public int findLHS(int[] nums) {
+        Arrays.sort(nums);
+        int begin = 0;
+        int res = 0;
+        for (int end = 0; end < nums.length; end++) {
+            while (nums[end] - nums[begin] > 1) {
+                begin++;
+            }
+            if (nums[end] - nums[begin] == 1) {
+                res = Math.max(res, end - begin + 1);
+            }
+        }
+        return res;
+    }
+}
+
+
+class Solution {
+    public int findLHS(int[] nums) {
+        Arrays.sort(nums);
+        int n = nums.length, ans = 0;
+        for (int i = 0, j = 0; j < n; j++) {
+            while (i < j && nums[j] - nums[i] > 1) i++;
+            if (nums[j] - nums[i] == 1) ans = Math.max(ans, j - i + 1);
+        }
+        return ans;
+    }
+}
+
+
+
+
+
+class Solution:
+    def findLHS(self, nums: List[int]) -> int:
+        cnt = Counter(nums)
+        return max((val + cnt[key + 1] for key, val in cnt.items() if key + 1 in cnt), default=0)
+
+
+
+class Solution {
+    public int findLHS(int[] nums) {
+        HashMap <Integer, Integer> cnt = new HashMap <>();
+        int res = 0;
+        for (int num : nums) {
+            cnt.put(num, cnt.getOrDefault(num, 0) + 1);
+        }
+        for (int key : cnt.keySet()) {
+            if (cnt.containsKey(key + 1)) {
+                res = Math.max(res, cnt.get(key) + cnt.get(key + 1));
+            }
+        }
+        return res;
+    }
+}
+
+
+class Solution {
+    public int findLHS(int[] nums) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i : nums) map.put(i, map.getOrDefault(i, 0) + 1);
+        int ans = 0;
+        for (int i : nums) {
+            if (map.containsKey(i - 1)) {
+                ans = Math.max(ans, map.get(i) + map.get(i - 1));
+            }
+        }
+        return ans;
+    }
+}
+
+作者：宫水三叶
+链接：https://leetcode.cn/problems/longest-harmonious-subsequence/solutions/1111541/gong-shui-san-xie-yi-ti-shuang-jie-hua-d-quuh/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。

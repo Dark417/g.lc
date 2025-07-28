@@ -1,0 +1,41 @@
+187. 重复的DNA序列
+
+def findRepeatedDnaSequences(self, s: str) -> List[str]:
+        if len(s) < 10:
+            return []
+
+        res = set()
+        ss = set()
+
+        for i in range(len(s) - 9):
+            cur = s[i:i+10]
+            if cur in ss:
+                res.add(cur)
+                ss.remove(cur)
+            else:
+                ss.add(cur)
+
+        return list(res)
+
+
+def findRepeatedDnaSequences(self, s: str) -> List[str]:
+        ans = []
+        cnt = defaultdict(int)
+        for i in range(len(s) - L + 1):
+            sub = s[i : i + L]
+            cnt[sub] += 1
+            if cnt[sub] == 2:
+                ans.append(sub)
+        return ans
+
+
+
+
+
+
+
+
+
+
+
+

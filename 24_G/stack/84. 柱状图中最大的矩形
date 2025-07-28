@@ -1,0 +1,195 @@
+
+
+
+0 brute
+
+traverse height
+
+public class Solution {
+
+    public int largestRectangleArea(int[] heights) {
+        int len = heights.length;
+        // 特判
+        if (len == 0) {
+            return 0;
+        }
+
+        int res = 0;
+        for (int i = 0; i < len; i++) {
+
+            // 找左边最后 1 个大于等于 heights[i] 的下标
+            int left = i;
+            int curHeight = heights[i];
+            while (left > 0 && heights[left - 1] >= curHeight) {
+                left--;
+            }
+
+            // 找右边最后 1 个大于等于 heights[i] 的索引
+            int right = i;
+            while (right < len - 1 && heights[right + 1] >= curHeight) {
+                right++;
+            }
+
+            int width = right - left + 1;
+            res = Math.max(res, width * curHeight);
+        }
+        return res;
+    }
+}
+
+from typing import List
+
+
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        size = len(heights)
+        res = 0
+
+        for i in range(size):
+            left = i
+            cur_height = heights[i]
+            while left > 0 and heights[left - 1] >= cur_height:
+                left -= 1
+
+            right = i
+            while right < size - 1 and heights[right + 1] >= cur_height:
+                right += 1
+
+            max_width = right - left + 1
+            res = max(res, max_width * cur_height)
+        return res
+
+
+
+traverse width
+
+c++
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        int n = heights.size();
+        int ans = 0;
+        // 枚举左边界
+        for (int left = 0; left < n; ++left) {
+            int minHeight = INT_MAX;
+            // 枚举右边界
+            for (int right = left; right < n; ++right) {
+                // 确定高度
+                minHeight = min(minHeight, heights[right]);
+                // 计算面积
+                ans = max(ans, (right - left + 1) * minHeight);
+            }
+        }
+        return ans;
+    }
+};
+
+
+
+traverse height
+
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        int n = heights.size();
+        int ans = 0;
+        for (int mid = 0; mid < n; ++mid) {
+            // 枚举高
+            int height = heights[mid];
+            int left = mid, right = mid;
+            // 确定左右边界
+            while (left - 1 >= 0 && heights[left - 1] >= height) {
+                --left;
+            }
+            while (right + 1 < n && heights[right + 1] >= height) {
+                ++right;
+            }
+            // 计算面积
+            ans = max(ans, (right - left + 1) * height);
+        }
+        return ans;
+    }
+};
+
+
+
+
+
+1 stack
+
+class Solution {
+    public int largestRectangleArea(int[] heights) {
+        int n = heights.length;
+        int[] left = new int[n];
+        int[] right = new int[n];
+        
+        Deque<Integer> mono_stack = new ArrayDeque<Integer>();
+        for (int i = 0; i < n; ++i) {
+            while (!mono_stack.isEmpty() && heights[mono_stack.peek()] >= heights[i]) {
+                mono_stack.pop();
+            }
+            left[i] = (mono_stack.isEmpty() ? -1 : mono_stack.peek());
+            mono_stack.push(i);
+        }
+
+        mono_stack.clear();
+        for (int i = n - 1; i >= 0; --i) {
+            while (!mono_stack.isEmpty() && heights[mono_stack.peek()] >= heights[i]) {
+                mono_stack.pop();
+            }
+            right[i] = (mono_stack.isEmpty() ? n : mono_stack.peek());
+            mono_stack.push(i);
+        }
+        
+        int ans = 0;
+        for (int i = 0; i < n; ++i) {
+            ans = Math.max(ans, (right[i] - left[i] - 1) * heights[i]);
+        }
+        return ans;
+    }
+}
+
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        n = len(heights)
+        left, right = [0] * n, [0] * n
+
+        mono_stack = list()
+        for i in range(n):
+            while mono_stack and heights[mono_stack[-1]] >= heights[i]:
+                mono_stack.pop()
+            left[i] = mono_stack[-1] if mono_stack else -1
+            mono_stack.append(i)
+        
+        mono_stack = list()
+        for i in range(n - 1, -1, -1):
+            while mono_stack and heights[mono_stack[-1]] >= heights[i]:
+                mono_stack.pop()
+            right[i] = mono_stack[-1] if mono_stack else n
+            mono_stack.append(i)
+        
+        ans = max((right[i] - left[i] - 1) * heights[i] for i in range(n)) if n > 0 else 0
+        return ans
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

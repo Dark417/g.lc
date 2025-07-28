@@ -1,0 +1,337 @@
+################################################
+###linked list
+
+
+
+
+change node value?
+in place!
+recursion
+
+hash table
+
+reverse
+	iteration
+	recursion
+	start None
+
+merge
+	recursion
+
+pre cur
+mid
+head head.next
+
+
+start at pre | for i in range(n)
+
+
+
+get count / index right
+	get numeric relation
+what to be saved as tmp? changed, used later
+是否始终一个规律, if divided into parts
+
+
+
+
+
+
+ez
+103.21. Merge Two Sorted Lists 合并两个有序链表
+	剑指 Offer 25. 合并两个排序的链表
+
+
+
+102.206. Reverse Linked List 反转链表
+剑指 Offer 24. 反转链表
+	剑指 Offer 06. 从尾到头打印链表
+
+
+
+
+99.237. Delete Node in a Linked List 删除链表中的节点
+剑指 Offer 18. 删除链表的节点
+面试题 02.03. 删除中间节点
+	分两截
+
+
+
+
+116.203. Remove Linked List Elements 移除链表元素
+剑指 Offer 18. 删除链表的节点
+	recursion
+	
+
+
+110.83. Remove Duplicates from Sorted List 移除重复节点
+	iter set recur
+	面试题 02.01. 移除重复节点
+
+
+
+
+108.876. Middle of the Linked List 链表的中间结点
+
+
+
+
+115.234. Palindrome Linked List
+面试题 02.06. 回文链表
+	reverse = ll
+	reverse 1st half
+	reverse 2nd half
+		doesn't have to split
+
+
+
+
+133.141. Linked List Cycle 环形链表
+	!! 134.142. Linked List Cycle II 环形链表 II
+	
+	面试题 02.08. 环路检测
+
+
+
+
+
+142.160. Intersection of Two Linked Lists 相交链表
+面试题 02.07. 链表相交
+	consider cases
+
+
+
+
+
+剑指 Offer 22. 链表中倒数第k个节点
+	101. 面试题 02.02. 返回倒数第 k 个节点
+
+
+
+
+
+
+100.1290. Convert Binary Number in a Linked List to Integer 二进制链表转整数
+
+
+
+
+109.1474 Delete N Nodes After M Nodes of a Linked List 删除链表 M 个节点之后的 N 个节点
+		
+
+
+
+
+##mid
+
+2. Add Two Numbers 两数相加
+	!2
+	445. Add Two Numbers II 两数相加 II
+	int
+	str
+
+	989. 数组形式的整数加法
+	!2
+
+
+106.24. Swap Nodes in Pairs 两两交换链表中的节点
+
+
+
+
+107.92. 反转链表 II
+	!!! if m == n: return head
+	extreme case in the pattern
+	or state first easily
+
+
+
+104.148. Sort List 排序链表
+	!!! merge-sort
+	quick-sort
+
+
+
+	75. 颜色分类
+
+
+	
+	147. 对链表进行插入排序
+
+
+
+
+136.143. Reorder List 重排链表
+	!!! steps
+
+
+
+
+112.86. Partition List 分割链表
+	!2
+	面试题 02.04. 分割链表
+
+
+
+
+143.19. Remove Nth Node From End of List 删除链表的倒数第N个节点
+	start at pre | for i in range(n)
+
+
+
+
+
+138.109. Convert Sorted List to Binary Search Tree 有序链表转换二叉搜索树
+!!
+
+
+426. 将二叉搜索树转化为排序的双向链表
+!!!
+
+
+
+
+132.82. 移除重复节点 II
+
+
+
+
+141.61 Rotate List 旋转链表
+	consider all cases, even in mid process
+	what cases could there be
+
+
+
+
+140.328. 奇偶链表
+
+
+
+
+
+725. 分隔链表
+	
+
+
+114. 369 Plus One Linked List 给单链表加一
+	for j in range(q + (i < r) - 1):
+
+
+
+
+
+
+
+
+
+
+138. 复制带随机指针的链表
+	剑指 Offer 35. 复杂链表的复制
+
+
+
+
+
+
+
+379. 电话目录管理系统
+!! design
+
+707. 设计链表
+!
+
+
+
+1670. 设计前中后队列
+
+
+
+
+
+430. Flatten a Multilevel Doubly Linked List
+扁平化多级双向链表
+!!
+
+
+
+
+
+
+817. 链表组件
+
+
+
+708. 循环有序列表的插入
+!!
+
+
+
+
+1669. 合并两个链表
+
+
+
+1634. 求两个多项式链表的和
+	cur.next = None
+
+
+
+
+
+1367. 二叉树中的列表
+!!
+
+
+
+
+
+1019. 链表中的下一个更大节点
+!!! mono stack
+	what to maintain
+	retrieve and replace
+	index
+42
+84
+907
+1019
+768
+402
+
+	
+
+
+1171. 从链表中删去总和值为零的连续节点
+!!
+
+
+
+
+
+
+1721. 交换链表中的节点 
+	!!
+	get count / index right
+	get numeric relation
+	how to get to the index quick
+
+
+
+
+
+hard###################################
+
+
+135.23. Merge k Sorted Lists 
+
+
+
+130.25. Reverse Nodes in k-Group K 个一组翻转链表
+
+	
+	
+
+
+
+	
+
+	

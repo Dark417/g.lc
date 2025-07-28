@@ -1,0 +1,6 @@
+229. 多数元素 II
+
+
+def majorityElement(self, nums: List[int]) -> List[int]:
+        cnt = Counter(nums)
+        return [i for i in cnt if cnt[i] > len(nums)//3]

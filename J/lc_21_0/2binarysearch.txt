@@ -1,0 +1,356 @@
+
+
+
+
+
+################################################
+###binary search
+查找出现的位置
+查找应该插入的位置
+查找重复元素的第一个
+
+base cases
+
+if nums[m] <= tar
+	i = m + 1
+#最终i为target+1
+l < r, 退出条件 l = r = 违反条件的第一个
+
+
+l + 1 => l out of bound
+
+return mid / l?
+
+
+
+
+bisect.bisect_left(row, target)
+
+
+
+
+
+# binary search
+
+mid = (l + r) >> 1
+mid = (l + r + 1) >> 1
+
+
+mid = l + (r - l) // 2
+mid = l + (r - l + 1) // 2
+
+mid = l + ((r - l) >>1 )
+
+
+
+[1, 3, 5, 7]
+
+find element
+
+while l < r:
+	mid = (l + r) // 2
+	if t == mid:
+		return mid
+	if t < mid:
+		r = mid  
+	else:
+		l = mid + 1
+return l
+
+while l <= r:
+	mid = (l + r) // 2
+	if t == mid:
+		return mid
+	if t < mid:
+		r = mid - 1
+	else:
+		l = mid + 1
+return l
+
+
+[1, 3, 5, 7]
+
+find index <= target
+mid - left
+--------------------------------
+index < target
+while l < r:
+	mid = (l + r) // 2
+	if t <= mid:
+		r = mid - 1
+	else:
+		l = mid
+return l / r
+
+--------------------------------
+
+index <= target
+while l < r:
+	mid = (l + r) // 2
+	if t < mid:
+		r = mid - 1
+	else:
+		l = mid
+return l / r
+
+--------------------------------
+index <= target
+while l <= r:
+	mid = (l + r) // 2
+	if t < mid:
+		r = mid - 1
+	else:
+		l = mid + 1
+return r
+
+
+mid - right
+--------------------------------
+while l < r:
+	mid = (l + r + 1) // 2
+	if mid <
+
+
+
+
+
+
+
+ez----------
+
+
+704. 二分查找
+	bs, rec
+
+
+35. 搜索插入位置
+	bs
+
+
+	69. x 的平方根
+
+
+	367. 有效的完全平方数
+	正整数
+
+
+	374. 猜数字大小1
+
+
+	704. Binary Search
+
+
+
+	
+
+
+
+剑指 Offer 53 - I. 在排序数组中查找数字 I
+	左边界 还是右边界
+	if nums[m] <= tar
+		i = m + 1
+	#最终i为target+1
+
+	1150. 检查一个数是否在数组中占绝大多数
+
+		169. 多数元素
+		?
+
+
+
+
+349. 两个数组的交集
+	set
+	sort, scan
+	sort 1, bs 2
+
+	350. 两个数组的交集 II
+
+	238.1213. Intersection of Three Sorted Arrays 三个有序数组的交集
+
+
+
+392. 判断子序列
+	dp
+
+
+270. 最接近的二叉搜索树值
+	tree
+	inorder
+	!
+
+
+
+1351. 统计有序矩阵中的负数
+
+
+
+
+low %
+278. 第一个错误的版本
+
+	441. 排列硬币
+
+
+	面试题 10.05. 稀疏数组搜索
+
+
+
+	1337. 矩阵中战斗力最弱的 K 行
+	bs, sum
+
+
+	744. 寻找比目标字母大的最小字母
+
+
+	852. 山脉数组的峰顶索引
+	l < r, 退出条件 l = r = 违反条件的第一个
+
+		162. 寻找峰值
+
+		1064. 不动点
+		find first fit, continue: r = mid
+
+		面试题 08.03. 魔术索引
+
+
+
+mid####################
+
+
+
+
+378. 有序矩阵中第K小的元素
+
+
+
+
+
+
+
+22.3.12
+
+475. 供暖器
+
+33. 搜索旋转排序数组
+
+	81. 搜索旋转排序数组 II
+
+	153. 寻找旋转排序数组中的最小值
+
+
+400. 第 N 位数字
+?
+
+167. 两数之和 II - 输入有序数组
+	for i in range(n)
+		l = i + 1
+		r = n - 1
+		while l <= r
+
+
+
+34. 在排序数组中查找元素的第一个和最后一个位置
+
+
+
+22.3.14
+162. 寻找峰值
+
+	74. 搜索二维矩阵
+	0st <= key
+
+	l, r = 0, m * n - 1  roll
+
+	240. 搜索二维矩阵 II
+		剑指 Offer 04. 二维数组中的查找
+
+		本题没有确保「每行的第一个整数大于前一行的最后一个整数」，因此我们无法采取「两次二分」的做法
+
+
+611. 有效三角形的个数
+	
+	259. 较小的三数之和
+		for i ...
+			2sum
+				for j
+					bs
+
+
+209. 长度最小的子数组
+	presum + bisect
+	sw
+
+
+
+
+
+22.3.15
+825. 适龄的朋友
+
+718. 最长重复子数组
+	dp
+	sw
+
+
+22.3.17
+4. 寻找两个正序数组的中位数
+
+540. 有序数组中的单一元素
+
+
+300. 最长递增子序列
+
+
+
+
+
+540. 有序数组中的单一元素
+mid是偶数时, mid+1=mid⊕1
+
+mid是奇数时, mid−1=mid⊕1
+
+
+287. 寻找重复数
+	??? 龟兔赛跑 乌龟赢了 ... 乌龟都赢麻了
+	bs on idx 0 1 2 3, not arr
+
+1004. 最大连续1的个数 III
+
+
+
+
+
+22.3.17
+
+面试题 10.03. 搜索旋转数组
+???
+
+
+22.3.18
+334. 递增的三元子序列
+	lmin < i < rmax
+	greedy first second
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

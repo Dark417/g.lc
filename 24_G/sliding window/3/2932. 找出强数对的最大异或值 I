@@ -1,0 +1,11 @@
+2932. 找出强数对的最大异或值 I
+
+
+class Solution:
+    def maximumStrongPairXor(self, nums: List[int]) -> int:
+        return max(x ^ y for x, y in combinations_with_replacement(nums, 2) if abs(x - y) <= min(x, y))
+
+
+
+
+

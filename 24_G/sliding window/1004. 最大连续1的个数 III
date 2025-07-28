@@ -1,0 +1,33 @@
+1004. 最大连续1的个数 III
+
+
+class Solution:
+    def maxVowels(self, s: str, k: int) -> int:
+        st = set(['a', 'e', 'i', 'o', 'u'])
+        cnt = sum(1 for i in range(k) if s[i] in st)
+        res = cnt
+        for i in range(k, len(s)):
+            cnt = cnt + 1 if s[i] in st else cnt
+            cnt = cnt - 1 if s[i - k] in st else cnt
+            res = max(res, cnt)
+        return res
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

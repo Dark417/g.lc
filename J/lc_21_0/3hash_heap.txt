@@ -1,0 +1,169 @@
+
+#############################################
+hash
+
+
+1. 两数之和  
+	hash
+	bs
+	
+	ext
+
+
+ez
+136. 只出现一次的数字
+xor
+
+
+
+268. 丢失的数字
+	sum - sum0
+	swap?
+
+
+157.389. Find the Difference 找不同
+learn ops!
+
+
+
+
+
+
+266. 回文排列
+
+
+
+
+1207. 独一无二的出现次数
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+8.17
+
+245.202. Happy Number
+
+
+248.204. Count Primes 计数质数
+
+
+8.18
+250.760. Find Anagram Mappings
+
+
+251.771. Jewels and Stones 宝石与石头
+
+
+151.1365. How Many Numbers Are Smaller Than the Current Number 有多少小于当前数字的数字
+bucket sort
+
+
+
+152.1086. High Five 前五科的均分
+
+
+153.359. Logger Rate Limiter 日志速率限制器
+	154.362. Design Hit Counter 敲击计数器
+
+
+145.1512. Number of Good Pairs 好数对的数目
+
+
+155.136. Single Number 只出现一次的数字
+bit bit bit
+	137. Single Number II
+	138. Single Number III
+
+
+156.268. Missing Number
+bit
+
+
+
+
+
+
+159.1207. Unique Number of Occurrences 独一无二的出现次数
+
+
+160.1160. Find Words That Can Be Formed by Characters 拼写单词
+
+
+
+
+8.19
+158.645. Set Mismatch
+
+8.20
+
+
+
+
+
+
+#############################################
+##heap
+
+剑指 Offer 40. 最小的k个数
+	quick-sort
+
+1046. 最后一块石头的重量
+	heap implementation
+
+
+703. 数据流中的第 K 大元素
+	剑指 Offer II 059. 数据流的第 K 大数值
+
+
+	
+
+
+mid
+264. 丑数 II
+	heap dp
+	263. 丑数
+
+	313. 超级丑数
+
+
+
+
+215. 数组中的第K个最大元素
+	!!quick-sort
+
+
+347. 前 K 个高频元素
+	???
+	!!!
+
+
+
+
+560. 和为 K 的子数组
+
+	1两数之和
+	1248. 统计「优美子数组」
+	454. 四数相加 II
+
+
+
+
+
+
+
+
+
+
+
+
