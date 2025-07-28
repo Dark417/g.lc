@@ -165,9 +165,9 @@ from queue import PriorityQueue as PQ
 pq.get()
 pq.put(v1)
 
+set(nums) - {0}
 
-
-
+freq[0]
 
 
 

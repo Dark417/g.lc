@@ -26,6 +26,21 @@ LCR 159. 库存管理 III
 2335. 装满杯子需要的最短总时长
 
 
+2357. 使数组中所有元素都等于零
+
+506. 相对名次
+
+
+1046. 最后一块石头的重量
+
+
+1086. 前五科的均分
+
+
+1337. 矩阵中战斗力最弱的 K 行
+
+
+
 #mid####################################################################
 
 
@@ -274,41 +289,149 @@ def fillCups(self, amount: List[int]) -> int:
 
 
 
+2357. 使数组中所有元素都等于零
+def minimumOperations(self, nums: List[int]) -> int:
+    heapify(nums)
+    res = 0
+    while nums:
+        val = 0
+        while nums:
+            val = heappop(nums)
+            if val != 0:
+                break
+        for i in range(len(nums)):
+            nums[i] -= val
+        if val != 0:
+            res += 1
+    return res
+
+    return len(set(nums) - {0})
+
+def minimumOperations(self, nums: List[int]) -> int:
+    nums.sort()
+    ans = 0
+    prev = 0
+    for num in nums:
+        if num > prev:
+            ans += 1
+            prev = num
+    return ans
+
+def minimumOperations(self, nums: List[int]) -> int:
+    heapify(nums)
+    ans = 0
+    while nums:
+        val = heappop(nums)
+        if val == 0:
+            continue
+        ans += 1
+        new_nums = [x - val for x in nums]
+        nums[:] = new_nums
+        heapify(nums)
+    return ans
+
+
+506. 相对名次
+def findRelativeRanks(self, score: List[int]) -> List[str]:
+    desc = ("Gold Medal", "Silver Medal", "Bronze Medal")
+    ans = [""] * len(score)
+    arr = sorted(enumerate(score), key=lambda x: -x[1])
+    for i, (idx, _) in enumerate(arr):
+        ans[idx] = desc[i] if i < 3 else str(i + 1)
+    return ans
+
+
+def findRelativeRanks(self, score: List[int]) -> List[str]:
+    ranks = sorted(score, reverse=True)
+    ranksIndex = dict()
+    for i in range(len(ranks)):
+        ranksIndex[ranks[i]] = i
+    res = []
+    for s in score:
+        rank = ranksIndex[s]
+        if rank == 0:
+            res.append("Gold Medal")
+        elif rank == 1:
+            res.append("Silver Medal")
+        elif rank == 2:
+            res.append("Bronze Medal")
+        else:
+            res.append(str(rank + 1))
+    return res
+
+
+def findRelativeRanks(self, nums):
+    heap = [(-num, i) for i, num in enumerate(nums)]
+    heapq.heapify(heap)
+    N = len(nums)
+    res = [""] * N
+    count = 1
+    while heap:
+        num, i = heapq.heappop(heap)
+        if count == 1:
+            res[i] = "Gold Medal"
+        elif count == 2:
+            res[i] = "Silver Medal"
+        elif count == 3:
+            res[i] = "Bronze Medal"
+        else:
+            res[i] = str(count)
+        count += 1
+    return res
 
 
 
+1046. 最后一块石头的重量
+def lastStoneWeight(self, stones: List[int]) -> int:
+    heap = [-stone for stone in stones]
+    heapify(heap)
+    while len(heap) > 1:
+        x = heappop(heap)
+        y = heappop(heap)
+        if x != y:
+            heappush(heap, x-y)
+    if heap:
+        return -heap[0]
+    return 0
 
 
 
+1086. 前五科的均分
+def highFive(self, items: List[List[int]]) -> List[List[int]]:
+    heap = {}
+    for id, score in items:
+        if id not in heap:
+            heap[id] = []
+        heappush(heap[id], - score)
+    
+    res = []
+    for id, score in heap.items():
+        sm = 0
+        for i in range(5):
+            sm += -1 * heappop(score)
+        res.append([id, sm//5])
+    return sorted(res, key = lambda x: x[0])
+
+
+def highFive(self, items: List[List[int]]) -> List[List[int]]:
+    items.sort(key = lambda x: [-x[0], x[1]], reverse = True)
+    dc = defaultdict(list)
+    for id, score in items:
+        if len(dc[id]) < 5:
+            dc[id].append(score)
+            
+    return [[id, sum(dc[id])//5] for id in dc.keys()]
+
+
+    def highFive(self, items: List[List[int]]) -> List[List[int]]:
+        d = defaultdict(list)
+        for i, s in items:
+            d[i].append(s)
+        return [[k, sum(nlargest(5, d[k]))//5] for k in sorted(d.keys())]
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+1337. 矩阵中战斗力最弱的 K 行
 
 
 
