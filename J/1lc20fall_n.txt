@@ -1,0 +1,437 @@
+20201026 3.29 pm
+XL 
+riiii
+
+let's go
+
+
+20210903
+
+
+
+
+
+###Tree
+
+recursive, dfs
+	top-down
+	bottom-up
+iterative, bfs
+	recur <-, pop recur ->
+	stack stack pop
+morris-
+
+
+
+if not node
+dfs(node.left) # without if node.left
+
+
+
+144. Binary Tree Preorder Traversal
+94. Binary Tree Inorder Traversal
+145. Binary Tree Postorder Traversal
+
+
+102. Binary Tree Level Order Traversal
+	bfs
+	dfs + level
+
+
+226. Invert Binary Tree
+	rec1, 2		
+	iter 
+
+104. Maximum Depth of Binary Tree
+	dfs rec
+	bfs iter	+/lv  +/node and compare
+
+	110. Balanced Binary Tree
+		top-down
+		bottom-up
+	111. Minimum Depth of Binary Tree
+		dfs rec
+		bfs iter	first non-left-right
+	550. Maximum Depth of N-ary Tree
+		dfs rec 
+		bfs iter
+
+
+107. Binary Tree Level Order Traversal II
+	bfs append / append[0]
+	dfs append / append[0]
+
+	637. Average of Levels in Binary Tree
+		dfs rec		only numbers
+		bfs iter
+
+	
+
+114. Flatten Binary Tree to Linked List
+
+	430. Flatten a Multilevel Doubly Linked List
+
+617. Merge Two Binary Trees
+
+
+199. 二叉树的右视图
+	545. 二叉树的边界
+	116. 填充每个节点的下一个右侧节点指针
+		117. 填充每个节点的下一个右侧节点指针 II
+
+101. 对称二叉树
+
+
+124. 二叉树中的最大路径和
+
+	543. Diameter of Binary Tree
+		ans@cur, return max(left/right)+1
+
+	112. 路径总和
+		dfs, acc_sum / dec_sum, top-down, bottom-up,
+		bfs
+	
+	113. 路径总和 II
+
+		257. 二叉树的所有路径
+		988. 从叶结点开始的最小字符串
+
+	437. 路径总和 III
+	666. 路径和 IV
+
+
+	129. 求根到叶子节点数字之和
+	687. 最长同值路径
+
+
+	250. 统计同值子树
+		572. 另一个树的子树
+		kmp https://leetcode-cn.com/problems/subtree-of-another-tree/solution/ling-yi-ge-shu-de-zi-shu-by-leetcode-solution/
+		树哈希
+		
+		508. 出现次数最多的子树元素和
+
+
+
+
+
+
+
+
+
+96. 95. Unique Binary Search Trees
+95. Unique Binary Search Trees II
+	recursion
+	dp	
+108. Convert Sorted Array to Binary Search Tree
+105. Construct Binary Tree from Preorder and Inorder Traversal
+	recursion
+	iteration...
+
+106. Construct Binary Tree from Inorder and Postorder Traversal
+
+
+
+
+
+
+
+
+balanced
+
+
+complete
+
+
+red black tree
+
+B tree
+
+
+B+ tree
+
+
+
+
+589. N-ary Tree Preorder Traversal N叉树的前序遍历
+
+
+
+
+
+
+
+
+
+############################################################
+### Linked List
+
+
+
+LinkedList
+
+change node value?
+in place!
+recursion
+
+hash table
+
+Reverse
+	iteration
+	recursion
+
+Merge
+	recursion
+
+pre cur
+mid
+head head.next
+
+
+
+Basic
+99.237. Delete Node in a Linked List 删除链表中的节点
+剑指 Offer 18. 删除链表的节点
+面试题 02.03. 删除中间节点
+
+
+116.203. Remove Linked List Elements 移除链表元素
+剑指 Offer 18. 删除链表的节点
+recursion
+
+
+102.206. Reverse Linked List 反转链表
+剑指 Offer 24. 反转链表
+
+	107.92. Reverse Linked List II 反转链表 II
+	反字符旋转
+	https://leetcode-cn.com/problems/reverse-linked-list-ii/solution/fan-zhuan-lian-biao-ii-by-leetcode/
+
+
+
+
+100.1290. Convert Binary Number in a Linked List to Integer 二进制链表转整数
+
+
+
+剑指 Offer 22. 链表中倒数第k个节点
+	101. 面试题 02.02. 返回倒数第 k 个节点
+
+
+108.876. Middle of the Linked List 链表的中间结点
+
+
+
+剑指 Offer 06. 从尾到头打印链表
+
+
+
+
+109.1474 Delete N Nodes After M Nodes of a Linked List 删除链表 M 个节点之后的 N 个节点
+
+
+
+
+110.83. Remove Duplicates from Sorted List 移除重复节点
+	面试题 02.01. 移除重复节点
+	132.82. Remove Duplicates from Sorted List II 移除重复节点 II
+
+
+
+
+143.19. Remove Nth Node From End of List
+
+
+
+142.160. Intersection of Two Linked Lists 相交链表
+面试题 02.07. 链表相交
+	consider cases
+
+
+
+
+133.141. Linked List Cycle 环形链表
+	!! 134.142. Linked List Cycle II 环形链表 II
+	https://leetcode-cn.com/problems/linked-list-cycle-ii/solution/linked-list-cycle-ii-kuai-man-zhi-zhen-shuang-zhi-/
+	面试题 02.08. 环路检测
+
+
+
+
+
+115.234. Palindrome Linked List
+面试题 02.06. 回文链表
+	reverse
+	compare
+		doesn't have to split
+
+
+
+
+
+
+
+
+
+103.21. Merge Two Sorted Lists 合并两个有序链表
+剑指 Offer 25. 合并两个排序的链表
+
+
+
+
+
+
+
+
+
+
+141.61 Rotate List 旋转链表
+	consider all cases, even in mid process
+
+
+
+140.328	Odd Even Linked List 奇偶链表
+
+
+
+
+
+
+
+
+
+
+
+L3
+
+
+
+MergeSort done
+quicksort
+
+bubble sort
+insertion sort
+selection sort
+
+
+
+106.24. Swap Nodes in Pairs 两两交换链表中的节点
+
+
+
+135.23. Merge k Sorted Lists 
+
+104.148. Sort List 排序链表
+
+130.25. Reverse Nodes in k-Group K 个一组翻转链表
+
+105.2. Add Two Numbers 两数相加
+138. 445. Add Two Numbers II 两数相加 II
+
+
+ 
+
+
+112.86. Partition List 分割链表
+面试题 02.04. 分割链表
+
+136.143. Reorder List 重排链表
+
+137.19. Remove Nth Node From End of List 删除链表的倒数第N个节点
+
+138.109. Convert Sorted List to Binary Search Tree 有序链表转换二叉搜索树
+
+
+139.147	Insertion Sort List 对链表进行插入排序
+
+
+
+
+
+114. 369 Plus One Linked List 给单链表加一
+面试题 02.05. 链表求和 给单链表加一
+
+
+
+++
+	
+725
+分隔链表
+54.8%		
+
+	
+379
+电话目录管理系统
+66.1%				
+	
+1171
+从链表中删去总和值为零的连续节点
+42.7%		
+
+138. 复制带随机指针的链表
+剑指 Offer 35
+复杂链表的复制
+71.0%		
+	
+708
+循环有序列表的插入
+31.0%		
+	
+1367
+二叉树中的列表
+39.2%		
+	
+面试题 02.05
+链表求和
+45.6%		
+	
+430
+扁平化多级双向链表
+49.6%		
+	
+1019
+链表中的下一个更大节点
+55.7%		
+	
+707
+设计链表
+27.6%		
+	
+426
+将二叉搜索树转化为排序的双向链表
+63.5%		
+	
+817
+链表组件
+57.7%		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

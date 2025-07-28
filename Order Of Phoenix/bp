@@ -1,0 +1,219 @@
+----!
+
+idea
+algo
+lan klg
+one line
+
+
+status = {
+	0: tbc
+
+	5: very confident
+}
+
+
+
+
+
+
+
+
+
+急什么？面对test编程不会？
+
+
+
+
+
+
+Trie
+
+
+
+
+
+in place?
+swap
+
+zip
+reduce
+list slice
+xor
+
+
+corner cases in the pattern
+or state first easily
+
+
+----td
+
+
+
+
+regexp
+
+
+
+
+
+dfs / recursion
+pass the array / index
+
+
+
+paradigm
+dfs
+bfs
+recursion
+union-find
+
+
+
+
+###core
+
+stack
+queue
+heap
+
+
+
+merge-sort
+quick-sort
+heap-sort
+
+
+buble-sort
+insertion-sort
+selection-sort
+
+
+bucket-sort
+counting-sort
+radix-sort
+
+
+
+data structures
+stack
+queue
+heap
+union-find
+
+
+
+
+
+
+
+td
+
+rabin-karp algorithm
+
+
+
+
+
+
+
+
+ord("A") = 65
+chr(ord("A") + 25)
+
+
+df1['e'] = pd.Series(np.random.randn(sLength), index=df1.index)
+
+
+
+
+@cache  # 缓存装饰器，避免重复计算 dfs 的结果（记忆化）
+def dfs
+
+
+
+buckets = [[] for _ in range(max_cnt + 1)]
+
+
+
+
+cnt = Counter(x + y for x in nums1 for y in nums2)
+
+cnt[s[i]] = cnt.get(s[i], 0) + 1
+
+cnt.pop()
+
+def square(number):
+    return number * number
+
+map(square, numbers)
+
+x2 = list(map(lambda x: x*x, [0, 10, 20, 30]))
+
+
+vals.sort(key = lambda x: x[1], reverse=True)
+
+vals.sort(key = lambda x: -x[1])
+# sort x, on value -x[1]
+
+quick sort
+quick 
+
+
+
+from queue import PriorityQueue as PQ
+pq.get()
+pq.put(v1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

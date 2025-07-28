@@ -1,0 +1,67 @@
+2269. 找到一个数字的 K 美丽值
+
+class Solution:
+    def divisorSubstrings(self, num: int, k: int) -> int:
+        num_str = str(num)
+        res = 0
+        for i in range(len(num_str) - k + 1):
+            cur_num = int(num_str[i: i+k])
+            if cur_num != 0 and num % cur_num == 0:
+                res += 1
+        return res
+
+
+class Solution:
+    def divisorSubstrings(self, num: int, k: int) -> int:
+        strs = str(num)
+        return sum(1 for i in range(len(strs)-k+1) if (t :=int(strs[i:i+k])) != 0  and num % t == 0)
+
+        
+class Solution {
+    public int divisorSubstrings(int num, int k) {
+        String value = String.valueOf(num);
+        int l = 0;       //左指针
+        int r = k-1;    //右指针
+        int res = 0;    //被整除的数
+        int ans = 0;    //美丽值
+        while(r<value.length()){
+            for(int i=l;i<r+1;i++){
+                int a = value.charAt(i)-'0';    //转化为整数
+                res += a * Math.pow(10, r-i);
+            }
+            if(res!=0 && num%res==0)  ans++;
+            res = 0;
+            r++;
+            l++;    //长度固定为k所以左右指针同时移动
+        }
+        return ans;
+    }
+}
+
+
+class Solution {
+    public int divisorSubstrings(int num, int k) {
+        int ans=0;
+        int res=num;
+        int res1=0;
+         int id=1;
+        int i=0;
+        while(res!=0){
+            while(i<k){
+                int l=res%10;
+                res1+=(l*id);
+                id*=10;
+                i++;
+                res/=10;
+            }
+           
+            if(res1!=0&&num%res1==0){
+                ans++;
+            }
+            res1/=10;
+            id=(int)Math.pow(10,k-1);
+            i--;
+        }
+        return ans;
+    }
+}

@@ -1,0 +1,307 @@
+######################################
+##two pointer
+for
+while
+
+
+recursion
+
+
+
+
+
+ez################
+
+
+26. 删除排序数组中的重复项
+
+27. 移除元素
+!!
+	283. 移动零
+
+	80. 删除排序数组中的重复项 II
+	i(idx) + for n in nums + nums[i]
+	while i(idx), j(iter)
+	count /  n > nums[i - 2] / i != i-1
+
+
+
+88. 合并两个有序数组
+!!
+	面试题 10.01. 合并排序的数组
+
+	977. 有序数组的平方
+
+
+
+1099. 小于 K 的两数之和
+
+
+349. 两个数组的交集
+
+	350. 两个数组的交集 II
+
+	1213. 三个有序数组的交集
+
+
+344. 反转字符串
+
+
+28. 实现 strStr()
+!!!
+KMP，BM，Horspool
+Sunday 
+
+
+
+
+125. 验证回文串
+
+
+345. 反转字符串中的元音字母
+
+
+844. 比较含退格的字符串
+
+
+925. 长按键入
+!!
+	for i in range(n)... j+=1
+	looping one, increment another
+
+
+
+
+167. 两数之和 II - 输入有序数组
+	bs 2ptr hash
+
+
+
+
+
+
+
+
+hard#############
+30. 串联所有单词的子串
+
+
+239. 滑动窗口最大值
+
+
+	632. 最小区间
+
+	727. 最小窗口子序列
+
+
+	992. K 个不同整数的子数组
+
+
+
+mid################
+
+
+3. 无重复字符的最长子串
+	!!!
+	powcai
+
+	for / while
+		dict by index
+		while remove
+		bucket / arr
+
+
+
+	76. 最小覆盖子串
+
+
+	159. 至多包含两个不同字符的最长子串
+	!!
+
+	340. 至多包含 K 个不同字符的最长子串
+
+
+
+	209. 长度最小的子数组
+	!!
+
+		325. 和等于 k 的最长子数组长度
+
+
+
+
+
+15. 三数之和
+!!!
+	deduplicate
+		two pointer
+		sort + set
+		sort + check next -> move
+
+		16. 最接近的三数之和
+
+
+		259. 较小的三数之和
+		n3 / i,j, bs k / i, bs jk
+
+		
+
+		611. 有效三角形的个数
+
+
+		1099. Two Sum Less Than K 小于 K 的两数之和
+
+
+
+	18. 四数之和
+	backtrace
+
+
+
+
+11. 盛最多水的容器
+!!!
+	167. 两数之和 II - 输入有序数组
+	240. 搜索二维矩阵 II
+
+
+
+
+
+
+75. 颜色分类
+!!
+!! quick-sort
+
+	215. 数组中的第 K 个最大元素
+
+
+	451. 根据字符出现频率排序
+
+
+
+
+
+
+
+
+
+
+
+424. 替换后的最长重复字符
+	https://leetcode-cn.com/problems/longest-repeating-character-replacement/solution/ti-huan-hou-de-zui-chang-zhong-fu-zi-fu-eaacp/
+	!!!!
+	what to manage
+	arr (idx as key / chr->num)
+	dict
+		
+
+
+	1208. 可能使字符串相等；
+	1493. 删掉一个元素以后全为 1 的最长子数组。
+
+
+
+
+
+
+
+713. 乘积小于K的子数组
+	2p bs
+
+
+
+
+
+524. 通过删除字母匹配到字典里最长单词
+
+
+
+532. 数组中的 k-diff 数对
+	!!!
+	when counter / dic
+	when 2p
+	when bs
+
+	dict/counter
+	2p -dup
+
+
+
+457. 环形数组循环
+	??
+
+
+	
+567. 字符串的排列
+	!!!
+	counter / count + arr
+
+
+
+	438. 找到字符串中所有字母异位词
+
+
+
+
+	643. 子数组最大平均数 I：滑动窗口裸题 （含模板）~
+
+	1423. 可获得的最大点数：详解滑动窗口基本思路（含模板）~
+
+
+
+
+
+723. 粉碎糖果
+
+
+
+
+487. 最大连续1的个数 II
+	dp
+
+
+	485. 最大连续 1 的个数
+
+
+
+	1004. 最大连续1的个数 III
+
+
+
+
+1711. 大餐计数
+
+
+
+
+
+
+243.763. Partition Labels 划分字母区间
+
+
+
+211.1055. Shortest Way to Form String 形成字符串的最短路径
+hash 
+
+
+
+
+1570. 两个稀疏向量的点积
+
+
+
+
+
+
+### Sliding window
+395. 至少有 K 个重复字符的最长子串
+
+
+239. 滑动窗口最大值
+
+
+
+
+
+

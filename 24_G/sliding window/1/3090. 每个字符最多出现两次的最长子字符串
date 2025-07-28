@@ -1,0 +1,43 @@
+3090. 每个字符最多出现两次的最长子字符串
+
+def maximumLengthSubstring(self, s: str) -> int:
+    ans = left = 0
+    cnt = {}
+    for i in range(len(s)):
+        cnt[s[i]] = cnt.get(s[i], 0) + 1
+        while cnt[s[i]] > 2:
+            cnt[s[left]] -= 1
+            left += 1
+        ans = max(ans, i - left + 1)
+    return ans
+
+        
+def maximumLengthSubstring(self, s: str) -> int:
+    ans = left = 0
+    cnt = defaultdict(int)
+    for i, c in enumerate(s):
+        cnt[c] += 1
+        while cnt[c] > 2:
+            cnt[s[left]] -= 1
+            left += 1
+        ans = max(ans, i - left + 1)
+    return ans
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

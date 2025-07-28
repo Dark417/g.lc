@@ -1,0 +1,62 @@
+
+
+
+172. 阶乘后的零
+	
+	面试题 16.05. 阶乘尾数
+
+
+
+292. Nim 游戏
+	https://leetcode-cn.com/problems/nim-game/solution/ji-yi-hua-di-gui-dong-tai-gui-hua-guan-cha-gui-lu-/
+
+
+
+	293. 翻转游戏
+
+
+
+
+231. 2的幂
+	bit
+
+	
+326. 3的幂
+
+342. 4的幂
+
+
+
+
+976. 三角形的最大周长
+	sort, for a,b > c
+	
+	812. 最大三角形面积
+        def area(p, q, r):
+
+        return max(area(*triangle)
+	            for triangle in itertools.combinations(points, 3))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

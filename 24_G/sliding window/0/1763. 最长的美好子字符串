@@ -1,0 +1,144 @@
+1763. 最长的美好子字符串
+
+
+class Solution:
+    def longestNiceSubstring(self, s: str) -> str:
+        def check(typeNum):
+            nonlocal maxPos, maxLen
+            lowerCnt = [0] * 26
+            upperCnt = [0] * 26
+            l, r, total, cnt = 0, 0, 0, 0
+            while r < len(s):
+                idx = ord(s[r].lower()) - ord('a')
+                if s[r].islower():
+                    lowerCnt[idx] += 1
+                    if lowerCnt[idx] == 1 and upperCnt[idx] > 0:
+                        cnt += 1
+                else:
+                    upperCnt[idx] += 1
+                    if upperCnt[idx] == 1 and lowerCnt[idx] > 0:
+                        cnt += 1
+                if lowerCnt[idx] + upperCnt[idx] == 1:
+                    total += 1
+
+                while total > typeNum :
+                    idx = ord(s[l].lower()) - ord('a')
+                    if lowerCnt[idx] + upperCnt[idx] == 1:
+                        total -= 1
+                    if s[l].islower():
+                        lowerCnt[idx] -= 1
+                        if lowerCnt[idx] == 0 and upperCnt[idx] > 0:
+                            cnt -= 1
+                    else:
+                        upperCnt[idx] -= 1
+                        if upperCnt[idx] == 0 and lowerCnt[idx] > 0:
+                            cnt -= 1
+                    l += 1
+                if cnt == typeNum and r - l + 1 > maxLen:
+                    maxPos, maxLen = l, r - l + 1
+                r += 1
+        
+        maxPos, maxLen = 0, 0
+        types = len(set(s.lower()))
+        for i in range(1, types + 1):
+            check(i)
+        return s[maxPos: maxPos + maxLen]
+
+
+
+
+
+brute
+def longestNiceSubstring(self, s: str) -> str:
+    n = len(s)
+    maxPos, maxLen = 0, 0
+    for i in range(n):
+        lower, upper = 0, 0
+        for j in range(i, n):
+            if s[j].islower():
+                lower = lower | (1 << (ord(s[j]) - ord('a')))  # Replacing lower |=
+            else:
+                upper = upper | (1 << (ord(s[j]) - ord('A')))  # Replacing upper |=
+            if lower == upper and j - i + 1 > maxLen:
+                maxPos = i
+                maxLen = j - i + 1
+    return s[maxPos: maxPos + maxLen]
+
+
+
+class Solution:
+    def longestNiceSubstring(self, s: str) -> str:
+        n = len(s)
+        maxPos, maxLen = 0, 0
+        for i in range(n):
+            lower, upper = 0, 0
+            for j in range(i, n):
+                if s[j].islower():
+                    lower |= 1 << (ord(s[j]) - ord('a'))
+                else:
+                    upper |= 1 << (ord(s[j]) - ord('A'))
+                if lower == upper and j - i + 1 > maxLen:
+                    maxPos = i
+                    maxLen = j - i + 1
+        return s[maxPos: maxPos + maxLen]
+
+
+Java
+class Solution {
+    public String longestNiceSubstring(String s) {
+        int n = s.length();
+        int maxPos = 0;
+        int maxLen = 0;
+        for (int i = 0; i < n; ++i) {
+            int lower = 0;
+            int upper = 0;
+            for (int j = i; j < n; ++j) {
+                if (Character.isLowerCase(s.charAt(j))) {
+                    lower |= 1 << (s.charAt(j) - 'a');
+                } else {
+                    upper |= 1 << (s.charAt(j) - 'A');
+                }
+                if (lower == upper && j - i + 1 > maxLen) {
+                    maxPos = i;
+                    maxLen = j - i + 1;
+                }
+            }
+        }
+        return s.substring(maxPos, maxPos + maxLen);
+    }
+}
+
+
+
+divide and conquer
+class Solution:
+    def longestNiceSubstring(self, s: str) -> str:
+        maxPos, maxLen = 0, 0
+        def dfs(start, end):
+            nonlocal maxPos, maxLen
+            if start >= end:
+                return
+            lower, upper = 0, 0
+            for i in range(start, end + 1):
+                if s[i].islower():
+                    lower|= 1 << (ord(s[i]) - ord('a'))
+                else:
+                    upper|= 1 << (ord(s[i]) - ord('A'))
+            if lower == upper:
+                if end - start + 1 > maxLen:
+                    maxPos, maxLen = start, end - start + 1
+                return
+            pos, valid = start, lower & upper
+            while pos <= end:
+                start = pos
+                while pos <= end and valid & (1 << (ord(s[pos].lower()) - ord('a'))):
+                    pos += 1
+                dfs(start, pos - 1)
+                pos += 1
+        dfs(0, len(s) - 1)
+        return s[maxPos : maxPos + maxLen]
+
+作者：力扣官方题解
+链接：https://leetcode.cn/problems/longest-nice-substring/solutions/1240201/zui-chang-de-mei-hao-zi-zi-fu-chuan-by-l-4l1t/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。

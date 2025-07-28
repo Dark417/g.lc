@@ -1,0 +1,242 @@
+
+----!
+
+idea
+algo
+lan klg
+one line
+
+
+in place?
+swap
+
+zip
+reduce
+list slice
+xor
+
+
+corner cases in the pattern
+or state first easily
+
+
+----td
+
+
+
+
+regexp
+
+
+
+
+
+dfs / recursion
+pass the array / index
+
+
+
+paradigm
+dfs
+bfs
+recursion
+union-find
+
+
+
+
+###core
+
+stack
+queue
+heap
+
+
+
+merge-sort
+quick-sort
+heap-sort
+
+
+buble-sort
+insertion-sort
+selection-sort
+
+
+bucket-sort
+counting-sort
+radix-sort
+
+
+
+data structures
+stack
+queue
+heap
+union-find
+
+
+
+
+
+
+leetcode hot 100
+
+leetcode hot 200
+
+
+stack
+
+
+
+
+td
+
+rabin-karp algorithm
+
+
+
+
+
+
+##################################################
+Season 5
+22.3.8
+
+
+binary search
+22.3.12
+
+475. 供暖器
+
+33. 搜索旋转排序数组
+
+	81. 搜索旋转排序数组 II
+
+	153. 寻找旋转排序数组中的最小值
+
+
+400. 第 N 位数字
+?
+
+167. 两数之和 II - 输入有序数组
+	for i in range(n)
+		l = i + 1
+		r = n - 1
+		while l <= r
+
+
+
+34. 在排序数组中查找元素的第一个和最后一个位置
+
+
+
+22.3.14
+162. 寻找峰值
+
+	74. 搜索二维矩阵
+	0st <= key
+
+	l, r = 0, m * n - 1  roll
+
+	240. 搜索二维矩阵 II
+		剑指 Offer 04. 二维数组中的查找
+
+		本题没有确保「每行的第一个整数大于前一行的最后一个整数」，因此我们无法采取「两次二分」的做法
+
+
+611. 有效三角形的个数
+	
+	259. 较小的三数之和
+		for i ...
+			2sum
+				for j
+					bs
+
+
+209. 长度最小的子数组
+	presum + bisect
+	sw
+
+
+
+
+
+22.3.15
+825. 适龄的朋友
+
+718. 最长重复子数组
+	dp
+	sw
+
+
+22.3.17
+4. 寻找两个正序数组的中位数
+
+540. 有序数组中的单一元素
+
+
+300. 最长递增子序列
+
+
+
+
+
+540. 有序数组中的单一元素
+mid是偶数时, mid+1=mid⊕1
+
+mid是奇数时, mid−1=mid⊕1
+
+
+287. 寻找重复数
+	??? 龟兔赛跑 乌龟赢了 ... 乌龟都赢麻了
+	bs on idx 0 1 2 3, not arr
+
+1004. 最大连续1的个数 III
+
+
+
+
+
+22.3.17
+
+面试题 10.03. 搜索旋转数组
+???
+
+
+
+
+22.3.18
+334. 递增的三元子序列
+	lmin < i < rmax
+	greedy first second
+
+
+
+22.3.19
+Queue
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

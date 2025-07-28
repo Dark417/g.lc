@@ -1,0 +1,218 @@
+def evalRPN(self, tokens):
+    stack = []
+    for token in tokens:
+        try:
+            stack.append(int(token))
+        except:
+            num2 = stack.pop()
+            num1 = stack.pop()
+            stack.append(self.evaluate(num1, num2, token))
+    return stack[0]
+
+def evaluate(self, num1, num2, op):
+    if op == "+":
+        return num1 + num2
+    elif op == "-":
+        return num1 - num2
+    elif op == "*":
+        return num1 * num2
+    elif op == "/":
+        return int(num1 / float(num2))
+
+
+
+
+
+class Solution {
+    public int evalRPN(String[] tokens) {
+        Deque<Integer> stack = new LinkedList<Integer>();
+        int n = tokens.length;
+        for (int i = 0; i < n; i++) {
+            String token = tokens[i];
+            if (isNumber(token)) {
+                stack.push(Integer.parseInt(token));
+            } else {
+                int num2 = stack.pop();
+                int num1 = stack.pop();
+                switch (token) {
+                    case "+":
+                        stack.push(num1 + num2);
+                        break;
+                    case "-":
+                        stack.push(num1 - num2);
+                        break;
+                    case "*":
+                        stack.push(num1 * num2);
+                        break;
+                    case "/":
+                        stack.push(num1 / num2);
+                        break;
+                    default:
+                }
+            }
+        }
+        return stack.pop();
+    }
+
+    public boolean isNumber(String token) {
+        return !("+".equals(token) || "-".equals(token) || "*".equals(token) || "/".equals(token));
+    }
+}
+
+
+class Solution:
+    def evalRPN(self, tokens: List[str]) -> int:
+        op_to_binary_fn = {
+            "+": add,
+            "-": sub,
+            "*": mul,
+            "/": lambda x, y: int(x / y),   # 需要注意 python 中负数除法的表现与题目不一致
+        }
+
+        stack = list()
+        for token in tokens:
+            try:
+                num = int(token)
+            except ValueError:
+                num2 = stack.pop()
+                num1 = stack.pop()
+                num = op_to_binary_fn[token](num1, num2)
+            finally:
+                stack.append(num)
+            
+        return stack[0]
+
+
+
+list as stack
+
+class Solution {
+    public int evalRPN(String[] tokens) {
+        int n = tokens.length;
+        int[] stack = new int[(n + 1) / 2];
+        int index = -1;
+        for (int i = 0; i < n; i++) {
+            String token = tokens[i];
+            switch (token) {
+                case "+":
+                    index--;
+                    stack[index] += stack[index + 1];
+                    break;
+                case "-":
+                    index--;
+                    stack[index] -= stack[index + 1];
+                    break;
+                case "*":
+                    index--;
+                    stack[index] *= stack[index + 1];
+                    break;
+                case "/":
+                    index--;
+                    stack[index] /= stack[index + 1];
+                    break;
+                default:
+                    index++;
+                    stack[index] = Integer.parseInt(token);
+            }
+        }
+        return stack[index];
+    }
+}
+
+
+
+class Solution:
+    def evalRPN(self, tokens: List[str]) -> int:
+        op_to_binary_fn = {
+            "+": add,
+            "-": sub,
+            "*": mul,
+            "/": lambda x, y: int(x / y),   # 需要注意 python 中负数除法的表现与题目不一致
+        }
+
+        n = len(tokens)
+        stack = [0] * ((n + 1) // 2)
+        index = -1
+        for token in tokens:
+            try:
+                num = int(token)
+                index += 1
+                stack[index] = num
+            except ValueError:
+                index -= 1
+                stack[index] = op_to_binary_fn[token](stack[index], stack[index + 1])
+            
+        return stack[0]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

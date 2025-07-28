@@ -1,0 +1,29 @@
+3. 无重复字符的最长子串
+
+
+def lengthOfLongestSubstring(self, s: str) -> int:
+    cnt = {}
+    res = l = 0
+
+    for i in range(len(s)):
+        cnt[s[i]] = cnt.get(s[i], 0) + 1
+        while cnt[s[i]] > 1:
+            cnt[s[l]] -= 1
+            l += 1
+        res = max(res, i - l + 1)
+
+    return res
+
+
+
+
+
+
+
+
+
+
+
+
+
+

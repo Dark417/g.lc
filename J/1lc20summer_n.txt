@@ -1,0 +1,1525 @@
+"""
+2020.6.7
+
+
+Topics:
+String
+Array
+
+
+DynamicProgramming
+BackTrace
+
+
+
+
+
+
+
+
+
+Operations:
+XOR
+zip
+
+
+
+
+
+
+
+
+https://www.geeksforgeeks.org/string-data-structure/
+
+
+
+status = {
+	0: tbc
+
+	5: very confident
+}
+
+
+
+
+
+
+
+peek
+
+215. Kth Largest Element in an Array
+
+
+Stacked
+
+
+
+###################################################
+
+String
+6.7
+001.1119. Remove Vowels from a String
+002.345. Reverse Vowels of a String
+003.58. Length of Last Word
+
+6.8
+004.面试题 17.11. 单词距离
+10
+005.面试题58 - II. 左旋转字符串 
+006.1165. 单行键盘
+007.1108. Defanging an IP Address  
+008.面试题 08.09. 括号
+0
+009.1436. 旅行终点站
+
+010.1221. Split a String in Balanced Strings 分割平衡字符串
+011.709. To Lower Case 转换成小写字母
+012.22. Generate Parentheses 括号生成
+013.804. Unique Morse Code Words 唯一摩尔斯密码词
+014.1309. Decrypt String from Alphabet to Integer Mapping 解码字母到整数映射
+
+6.9
+015.1180 Count Substrings with Only One Distinct Letter 统计只含单一字母的子串
+016.657	Robot Return to Origin 机器人能否返回原点
+1
+017.1370 Increasing Decreasing String 上升下降字符串
+018.186 Reverse Words in a String II    
+
+6.10
+019.151.Reverse Words in a String 翻转字符串里的单词
+020.1347. Minimum Number of Steps to Make Two Strings Anagram 生成每种字符都是奇数个的字符串
+
+6.11
+021.293	Flip Game 翻转游戏
+022.557. Reverse Words in a String III 反转字符串中的单词 III 
+023.541. Reverse String II 反转字符串 II
+10
+024.890. Find and Replace Pattern 查找和替换模式
+10
+025.344. Reverse String 反转字符串
+10
+026.1100. Find K-Length Substrings With No Repeated Characters 长度为 K 的无重复字符子串
+10
+027.537. Complex Number Multiplication 复数乘法
+10
+028.521. Longest Uncommon Subsequence I 最长特殊序列 Ⅰ
+10
+029.893. Groups of Special-Equivalent Strings 特殊等价字符串组
+00
+030.544. Output Contest Matches 输出比赛匹配对
+00
+
+6.12
+031.791. Custom Sort String 自定义字符串排序
+10
+032. 面试题 01.02. 判定是否互为字符重排
+10
+033.800. Similar RGB Color 相似 RGB 颜色
+000
+034.面试题 10.02. 变位词组
+035.1455. Check If a Word Occurs As a Prefix of Any Word in a Sentence 检查单词是否为句中其他单词的前缀
+10
+036.12. Integer to Roman 整数转罗马数字
+037.13. Roman to Integer
+038.1332. Remove Palindromic Subsequences 删除回文子序列
+10
+039.929. Unique Email Addresses
+11
+040.1189. Maximum Number of Balloons “气球” 的最大数量
+10
+
+6.13
+042.3. Longest Substring Without Repeating Characters 无重复字符的最长子串
+
+6.14
+044.49. Group Anagrams 字母异位词分组
+11
+045.647. Palindromic Substrings 回文子串
+00
+046.1433 Check If a String Can Break Another String 检查一个字符串是否可以打破另一个字符串
+10
+047.1170. Compare Strings by Frequency of the Smallest Character 比较字符串最小字母出现频次
+048.249. Group Shifted Strings 移位字符串分组
+
+6.15
+049.383. Ransom Note 赎金信
+
+6.16
+050.824. Goat Latin 山羊拉丁文
+051.67. Add Binary 二进制求和
+052.6. ZigZag Conversion Z 字形变换
+
+6.17
+053.38. Count and Say 外观数列
+054.553. Optimal Division 最优除法
+
+6.20
+058.125. Valid Palindrome 验证回文串
+092.408	Valid Word Abbreviation 有效单词缩写
+
+
+7.5
+
+
+
+
+
+
+
+
+
+
+
+
+
+###################################################
+###array
+
+idea
+algo
+lan klg
+one line
+
+
+in place?
+swap
+
+zip
+reduce
+list slice
+xor
+
+
+7.13
+144.1470. Shuffle the Array 重新排列数组
+bit
+list iteration + math
+
+
+
+
+146.1480. Running Sum of 1d Array 一维数组的动态和
+
+
+147.1431. Kids With the Greatest Number of Candies 拥有最多糖果的孩子
+
+
+148.1486. XOR Operation in an Array 数组异或操作
+
+
+149.1389. Create Target Array in the Given Order 按既定顺序创建目标数组
+
+
+150.1313. Decompress Run-Length Encoded List 解压缩编码列表
+https://leetcode.com/problems/decompress-run-length-encoded-list/discuss/478426/Python-3-(one-line)-(beats-100)
+
+
+
+152.1295. Find Numbers with Even Number of Digits 统计位数为偶数的数字
+
+
+153.1266. Minimum Time Visiting All Points 访问所有点的最小时间
+
+
+154.1450. Number of Students Doing Homework at a Given Time 在既定时间做作业的学生人数
+
+
+155.1464. Maximum Product of Two Elements in an Array
+
+
+156.1502. Can Make Arithmetic Progression From Sequence 判断能否形成等差数列
+ 
+
+
+157.1299. Replace Elements with Greatest Element on Right Side 将每个元素替换为右侧最大元素
+
+
+
+
+
+7.14
+159.1085. Sum of Digits in the Minimum Number 最小元素各数位之和
+160.258. Add Digits
+
+https://leetcode.com/problems/add-digits/solution/
+
+
+161.1460. Make Two Arrays Equal by Reversing Sub-arrays 通过翻转子数组使两个数组相等
+
+
+162.1252. Cells with Odd Values in a Matrix 奇数值单元格的数目
+bit op
+math conversion
+
+
+163.832. Flipping an Image 翻转图像
+bit
+
+
+164.1475. Final Prices With a Special Discount in a Shop 商品折扣后的最终价
+stack
+2
+
+
+165.1304. Find N Unique Integers Sum up to Zero 和为零的N个唯一整数
+
+
+166.1051. Height Checker 1051. 高度检查器
+bucketsort
+
+
+167. 面试题 01.01. 判定字符是否唯一
+bit
+
+
+
+168.561. Array Partition I 数组拆分 I
+
+
+
+
+Phase II
+7.15
+169.1. Two Sum 两数之和
+
+
+
+	189.697. Degree of an Array 数组的度
+
+
+
+7.16
+172. 26. Remove Duplicates from Sorted Array 删除排序数组中的重复项
+	173.27 Remove Element
+
+	174.80. Remove Duplicates from Sorted Array II 删除排序数组中的重复项 II
+
+
+
+7.17
+175.118. Pascal's Triangle 杨辉三角
+	176.119. Pascal's Triangle II 杨辉三角 II
+
+
+171.121. Best Time to Buy and Sell Stock
+https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/solution/gu-piao-wen-ti-python3-c-by-z1m/
+
+	122. Best Time to Buy and Sell Stock II 买卖股票的最佳时机 II
+
+
+
+
+7.18
+178.88. Merge Sorted Array 合并两个有序数组
+	面试题 10.01. 合并排序的数组
+
+
+179.977. Squares of a Sorted Array 有序数组的平方
+timsort
+
+	180.986. Interval List Intersections 区间列表的交集
+	altho many if, ok
+	-> consider all case bef
+	think always first
+
+
+	181.56. Merge Intervals 合并区间
+	interval problems
+		merge n intervals
+	wow +++ = =.
+
+	https://leetcode-cn.com/problems/merge-intervals/solution/tan-xin-suan-fa-java-by-liweiwei1419-3/
+	greedy problems
+
+	counting sort
+
+	https://leetcode.com/problems/merge-intervals/solution/
+	connected component
+	undirected graph
+
+	sss
+	182.759. Employee Free Time
+	e
+
+	183.252. Meeting Rooms 会议室
+	sorting
+
+
+	184.253. Meeting Rooms II 会议室 II   
+	heapq!
+
+
+	185.452. Minimum Number of Arrows to Burst Balloons
+
+
+	435. 无重叠区间
+
+
+	360. Sort Transformed Array 有序转化数组
+
+
+
+
+7.19
+186. 剑指 Offer 53 - II. 0～n-1中缺失的数字
+binary search
+
+
+
+7.20
+202.905. Sort Array By Parity 按奇偶排序数组
+
+
+203.283. Move Zeroes 移动零
+
+
+
+
+
+#################################################################
+Math
+8.17
+246.263. Ugly Number 丑数
+	247. Ugly Number II 丑数 II
+
+
+
+
+
+
+
+
+
+
+
+
+
+#################################################################
+Hash Table
+8.17
+
+245.202. Happy Number
+
+
+248.204. Count Primes 计数质数
+
+
+8.18
+250.760. Find Anagram Mappings
+
+
+251.771. Jewels and Stones 宝石与石头
+
+
+151.1365. How Many Numbers Are Smaller Than the Current Number 有多少小于当前数字的数字
+bucket sort
+
+
+
+152.1086. High Five 前五科的均分
+
+
+153.359. Logger Rate Limiter 日志速率限制器
+	154.362. Design Hit Counter 敲击计数器
+
+
+145.1512. Number of Good Pairs 好数对的数目
+
+
+155.136. Single Number 只出现一次的数字
+bit bit bit
+	137. Single Number II
+	138. Single Number III
+
+
+156.268. Missing Number
+bit
+
+
+
+
+
+
+159.1207. Unique Number of Occurrences 独一无二的出现次数
+
+
+160.1160. Find Words That Can Be Formed by Characters 拼写单词
+
+
+
+
+8.19
+158.645. Set Mismatch
+
+8.20
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##################################################################
+Dynamic Programming
+
+定义子问题
+写出子问题的递推关系
+确定 DP 数组的计算顺序
+空间优化（可选）
+
+
+
+6.13
+043.5. Longest Palindromic Substring 最长回文子串
+00
+
+
+
+
+7.19
+	187.198. House Robber 打家劫舍
+	classic dp!
+	learn!
+
+		188.面试题 17.16. 按摩师
+
+		199.213. House Robber II 打家劫舍 II
+
+		337. House Robber III
+
+
+
+
+
+7.20
+204.70. Climbing Stairs 爬楼梯
+dp
+rec
+	剑指 Offer 10- II. 青蛙跳台阶问题
+	
+	6.13
+	041.509. Fibonacci Number 斐波那契数
+	11
+
+	205.1137. N-th Tribonacci Number
+	11
+
+	206.746. Min Cost Climbing Stairs 使用最小花费爬楼梯
+	11
+
+
+207.303. Range Sum Query - Immutable 区域和检索 - 数组不可变
+11
+	307. 区域和检索 - 数组可修改
+
+
+
+
+
+
+7.21
+
+
+208.1025. Divisor Game 除数博弈
+dp
+
+
+
+209.392. Is Subsequence 判断子序列
+Knuth–Morris–Pratt algorithm
+
+
+
+210.792. Number of Matching Subsequences 匹配子序列的单词数
+bs
+https://registry.jsonresume.org/joeytall
+
+
+
+
+
+212.面试题 08.01. 三步问题
+int overflow
+
+
+
+
+
+7.22
+214.96. Unique Binary Search Trees 不同的二叉搜索树
+bst def
+分治法
+笛卡尔积
+记忆化递归
+
+
+
+217.191. Number of 1 Bits 位1的个数
+
+
+
+
+217.64. Minimum Path Sum 最小路径和
+
+
+218.62. Unique Paths 不同路径
+
+
+
+7.23
+223.628. Maximum Product of Three Numbers
+三个数的最大乘积
+
+
+
+
+7.23
+
+219.63. Unique Paths II 不同路径 II
+11
+
+	112	路径问题之路径总和I[Tricolor Squirrel]	
+	113/437	路径问题之路径总和II[Snow Squirrels]	
+	62/63	动态规划解路径之不同路径[Chipmunk]	
+	980	路径之不同路径II[Red Squirrel]	
+	666	路径问题之路径总和III[Groundhog]	
+	64/120	动态规划解路径之最小路径和[Flying Squirrel]	
+	174	动态规划解路径之地下城游戏[Lord Squirrel]
+
+
+
+177. 152. Maximum Product Subarray 乘积最大子数组
+
+
+
+	224.238. Product of Array Except Self 除自身以外数组的乘积
+	剑指 Offer 66. 构建乘积数组
+	lol in-place!
+
+
+	628. 三个数的最大乘积
+	math / idea first
+
+
+	713. 乘积小于K的子数组
+
+
+	325. Maximum Size Subarray Sum Equals k 和等于 k 的最长子数组长度
+
+
+
+7.24
+
+
+213.256. Paint House 粉刷房子
+	226.265. Paint House II 粉刷房子 II
+
+	227.276. Paint Fence 栅栏涂色
+
+
+216.338. Counting Bits 比特位计数
+
+
+
+
+7.25
+7.26
+
+
+
+
+215.95. Unique Binary Search Trees II 不同的二叉搜索树 II
+
+
+
+7.27
+229.120. Triangle 三角形最小路径和
+reduce!
+
+
+
+230.877. Stone Game 石子游戏
+
+
+231.1277. Count Square Submatrices with All Ones
+
+
+	232.221. Maximal Square
+
+	85. Maximal Rectangle 最大矩形
+
+	单调栈 https://leetcode-cn.com/problems/maximal-square/solution/zui-da-ju-xing-zheng-fang-xing-de-dan-diao-zhan-ji/
+
+
+	Leetcode #221 Maximal Square
+
+	Leetcode #304 Range Sum Query 2D - Immutable
+
+	Leetcode #661 Image Smoother
+
+	Leetcode #1314 Matrix Block Sum
+
+
+
+
+
+7.28
+
+233.139. Word Break 单词拆分
+
+
+
+
+8.2
+234.931. Minimum Falling Path Sum 下降路径最小和
+
+
+
+
+8.14
+220.174. Dungeon Game 地下城游戏
+
+
+8.16
+8.17
+228.413. Arithmetic Slices 等差数列划分
+	446. Arithmetic Slices II - Subsequence
+
+
+
+8.18
+249.279. Perfect Squares 完全平方数
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+170.53. Maximum Subarray 最大子序和
+d&q 2
+
+	面试题 16.17. 连续数列
+
+
+	15. 3Sum
+
+		16. 3Sum Closest 最接近的三数之和
+
+
+	18. 4Sum 四数之和  
+
+
+	->152. 乘积最大子数组
+
+	167. Two Sum II - Input array is sorted 两数之和 II - 输入有序数组
+
+	170. Two Sum III - Data structure design 两数之和 III - 数据结构设计 
+
+
+	653. Two Sum IV - Input is a BST 两数之和 IV - 输入 BST
+
+
+	1099. Two Sum Less Than K 小于 K 的两数之和
+
+	259. 3Sum Smaller 较小的三数之和
+
+
+	611. 有效三角形的个数
+
+	560. 和为K的子数组
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+6.19
+057.1014. Best Sightseeing Pair 最佳观光组合
+
+7.6
+111.360. Sort Transformed Array 有序转化数组
+113.66 Plus One 
+
+
+
+
+
+##################################################################
+LinkedList
+
+In place!
+Recursion
+
+
+Reverse
+	iteration
+	recursion
+
+Merge
+	recursion
+
+pre cur
+mid
+head head.next
+
+
+
+Basic
+099.237. Delete Node in a Linked List 删除链表中的节点
+剑指 Offer 18. 删除链表的节点
+面试题 02.03. 删除中间节点
+
+
+102.206. Reverse Linked List 反转链表
+剑指 Offer 24. 反转链表
+
+
+116.203. Remove Linked List Elements 移除链表元素
+剑指 Offer 18. 删除链表的节点
+
+
+108.876. Middle of the Linked List 链表的中间结点
+
+
+剑指 Offer 06. 从尾到头打印链表
+
+
+
+
+Intermediary
+101. 面试题 02.02. 返回倒数第 k 个节点
+剑指 Offer 22. 链表中倒数第k个节点
+
+
+143.19. Remove Nth Node From End of List
+
+
+142.160. Intersection of Two Linked Lists 相交链表
+面试题 02.07. 链表相交
+	consider cases
+
+
+115.234. Palindrome Linked List
+面试题 02.06. 回文链表
+	reverse
+	compare
+		doesn't have to split
+
+
+110.83. Remove Duplicates from Sorted List 移除重复节点
+面试题 02.01. 移除重复节点
+132.82. Remove Duplicates from Sorted List II 移除重复节点 II
+
+
+
+107.92. Reverse Linked List II 反转链表 II
+反字符旋转
+https://leetcode-cn.com/problems/reverse-linked-list-ii/solution/fan-zhuan-lian-biao-ii-by-leetcode/
+
+
+103.21. Merge Two Sorted Lists 合并两个有序链表
+剑指 Offer 25. 合并两个排序的链表
+
+
+109.1474 Delete N Nodes After M Nodes of a Linked List 删除链表 M 个节点之后的 N 个节点
+
+
+
+133.141. Linked List Cycle 环形链表
+134.142. Linked List Cycle II 环形链表 II
+面试题 02.08. 环路检测
+
+
+
+141.61 Rotate List 旋转链表
+	consider all cases, even in mid process
+
+
+
+140.328	Odd Even Linked List 奇偶链表
+
+
+
+
+100.1290. Convert Binary Number in a Linked List to Integer 二进制链表转整数
+
+
+
+
+
+
+L3
+
+
+
+MergeSort done
+quicksort
+
+bubble sort
+insertion sort
+selection sort
+
+
+
+106.24. Swap Nodes in Pairs 两两交换链表中的节点
+
+
+
+135.23. Merge k Sorted Lists 
+
+104.148. Sort List 排序链表
+
+130.25. Reverse Nodes in k-Group K 个一组翻转链表
+
+105.2. Add Two Numbers 两数相加
+138. 445. Add Two Numbers II 两数相加 II
+
+
+ 
+
+
+112.86. Partition List 分割链表
+面试题 02.04. 分割链表
+
+136.143. Reorder List 重排链表
+
+137.19. Remove Nth Node From End of List 删除链表的倒数第N个节点
+
+138.109. Convert Sorted List to Binary Search Tree 有序链表转换二叉搜索树
+
+
+139.147	Insertion Sort List 对链表进行插入排序
+
+
+
+
+
+114. 369 Plus One Linked List 给单链表加一
+面试题 02.05. 链表求和 给单链表加一
+
+
+
+++
+	
+725
+分隔链表
+54.8%		
+
+	
+379
+电话目录管理系统
+66.1%				
+	
+1171
+从链表中删去总和值为零的连续节点
+42.7%		
+
+138. 复制带随机指针的链表
+剑指 Offer 35
+复杂链表的复制
+71.0%		
+	
+708
+循环有序列表的插入
+31.0%		
+	
+1367
+二叉树中的列表
+39.2%		
+	
+面试题 02.05
+链表求和
+45.6%		
+	
+430
+扁平化多级双向链表
+49.6%		
+	
+1019
+链表中的下一个更大节点
+55.7%		
+	
+707
+设计链表
+27.6%		
+	
+426
+将二叉搜索树转化为排序的双向链表
+63.5%		
+	
+817
+链表组件
+57.7%		
+
+
+
+
+
+
+
+
+##################################################################
+Greedy
+
+
+
+7.20
+201.406. Queue Reconstruction by Height
+有几种不同的思路
+	从不同角度/思路都可以实现 try think all
+	convert to implementation
+	don't panick | go
+
+
+
+
+
+
+
+
+
+
+
+
+##################################################################
+Two Pointers
+
+
+
+
+
+
+
+
+
+
+
+##################################################################
+Binary Search
+244.704. Binary Search 二分查找
+
+
+	158.1351. Count Negative Numbers in a Sorted Matrix 统计有序矩阵中的负数
+	binary search
+	dnc
+	dnc+bs
+
+	Search in a Sorted Array of Unknown Size
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Stack
+7.1
+093.394. Decode String 字符串解码
+
+1130. Minimum Cost Tree From Leaf Values
+907. Sum of Subarray Minimums
+901. Online Stock Span
+856. Score of Parentheses
+503. Next Greater Element II
+496. Next Greater Element I
+84. Largest Rectangle in Histogram
+42. Trapping Rain Water
+
+503. Next Greater Element II
+739. Daily Temperatures
+1019. Next Greater Node In Linked List
+
+
+
+
+
+
+
+DFS BFS
+6.18
+056.102. Binary Tree Level Order Traversal I
+055.107. Binary Tree Level Order Traversal II 二叉树的层次遍历 II
+056.面试题 04.03. 特定深度节点链表
+11
+059.1028. Recover a Tree From Preorder Traversal
+ 从先序遍历还原二叉树
+
+6.26
+070.199. Binary Tree Right Side View 二叉树的右视图
+	071.116. Populating Next Right Pointers in Each Node 填充每个节点的下一个右侧节点指针
+	072.117. Populating Next Right Pointers in Each Node II 填充每个节点的下一个右侧节点指针 II
+
+6.27
+	073.545	Boundary of Binary Tree 二叉树的边界
+
+6.28
+075.298	Binary Tree Longest Consecutive Sequence 
+	076.549	Binary Tree Longest Consecutive Sequence II 二叉树中最长的连续序列
+	00
+
+
+
+Recursion
+
+
+
+
+
+
+
+
+Tree
+
+tree traversal
+https://leetcode.com/problems/binary-tree-postorder-traversal/discuss/45740/Summary-of-preorder-inorder-postorder-four-traversal-ways-for-each
+
+***
+if root inherently exists
+
+***
+
+dfs bfs recursion iteration
+6.20
+060.559. Maximum Depth of N-ary Tree N叉树的最大深度
+	061.104. Maximum Depth of Binary Tree
+11
+062.124. Binary Tree Maximum Path Sum 二叉树中的最大路径和
+
+063.110. Balanced Binary Tree
+11
+
+6.21
+064.111. Minimum Depth of Binary Tree 二叉树的最小深度
+065.513. Find Bottom Left Tree Value 找树左下角的值
+066.124. Binary Tree Maximum Path Sum
+
+6.22
+067.101. Symmetric Tree 对称二叉树
+068.690. Employee Importance
+
+6.23
+069.339. Nested List Weight Sum 嵌套列表权重和
+
+7.7
+117.112. Path Sum 路径总和
+118.113. Path Sum II 路径总和II
+119.129. Sum Root to Leaf Numbers 求根到叶子节点数字之和
+
+7.8
+120.687. Longest Univalue Path 最长同值路径
+
+7.9
+121.257. Binary Tree Paths 二叉树的所有路径
+11
+122.250	Count Univalue Subtrees 统计同值子树
+123.988. Smallest String Starting From Leaf 从叶结点开始的最小字符串
+124.572. Subtree of Another Tree 另一个树的子树
+125.100. Same Tree 相同的树
+
+  
+
+7.10
+126.437. Path Sum III
+127.666. Path Sum IV
+
+128.508. Most Frequent Subtree Sum
+
+
+
+
+
+
+
+
+
+
+
+Stack
+7.10
+129.剑指 Offer 09. 用两个栈实现队列
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Union-Find
+6.28
+074.1101. The Earliest Moment When Everyone Become Friends 彼此熟识的最早时间
+
+
+128. Longest Consecutive Sequence
+xxx
+
+
+
+959. Regions Cut By Slashes 由斜杠划分区域
+684. Redundant Connection
+
+
+
+Backtrack
+SUMMARY
+https://leetcode.com/problems/permutations/discuss/18284/Backtrack-Summary%3A-General-Solution-for-10-Questions!!!!!!!!-Python-(Combination-Sum-Subsets-Permutation-Palindrome)
+
+6.29
+077.22. Generate Parentheses 括号生成
+078.46. Permutations 全排列
+
+
+6.30
+079.784. Letter Case Permutation 字母大小写全排列
+080.78. Subsets 子集
+
+7.1
+090.90 Subsets II 子集 II
+091.320	Generalized Abbreviation
+094.1087 Brace Expansion 字母切换
+
+
+7.2
+095.17. Letter Combinations of a Phone Number 电话号码的字母组合
+096.77. Combinations 组合
+097.39. Combination Sum 组合总和
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1.1119. Remove Vowels from a String
+1
+re
+
+
+
+
+
+
+3.58. Length of Last Word
+back iter
+
+
+4.面试题 17.11. 单词距离
+
+
+
+5.面试题58 - II. 左旋转字符串
+1
+read 0
+
+
+6.1165. 单行键盘
+7.1108. Defanging an IP Address  
+
+
+
+"""
+
+
+
+
+
+"""
+built-in types
+https://docs.python.org/3/library/stdtypes.html
+
+
+str func
+https://docs.python.org/3/library/string.html
+https://www.w3schools.com/python/python_ref_string.asp
+
+"""
+s = "abcde"
+
+r = "".join()
+
+ in place
+s.replace()
+
+s.count()
+
+TreeMap
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

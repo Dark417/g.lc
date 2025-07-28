@@ -1,0 +1,232 @@
+2020.6.1
+Data Strcture and Algorithms in Python
+
+Preface
+1 Python
+
+Object 7
+legitimate
+creation
+default
+
+bool
+
+int
+	int('17f', 16)
+	binary octal hex
+		prefix of 0
+		0b1011, 0o52, 0x7f
+float
+	scientific representation
+
+tuple
+	(17,) //(17)
+str
+	escape character
+	unicode characters
+set
+	hash table
+dict
+	{}
+	init
+	
+
+1.3
+order of precedence
+12 
+logic operators
+not and or
+equality operators
+is, is not, ==, !=
+comparison
+	str    unicode value 
+
+14
+bit op
+sequence op
+
+
+
+
+
+
+
+2 OOP
+3 Algo Analysis
+
+111 time
+clock
+timeit
+
+
+
+
+
+
+4 Recursion
+153 English ruler
+156 binary search
+
+159 os lib
+
+
+
+
+5 Array-based sequences
+
+190 compact array
+	integer!=
+
+
+
+6 Stack Queue
+230 stack adt cls
+	233 ArrayStack cls
+
+	235 reverse data using stack
+	236 match parenthese
+	238 match HTML tags
+
+240 queue adt
+	243 ArrayQueue cls
+
+247 double ended queue
+
+
+
+
+7 Linked List
+7.1 Singly Linked Lists
+	258 add first
+	add last
+	rm
+	what if empty ll?
+	263 ll Stack
+
+	264 ll Queue
+
+7.2 Circularly Linked Lists
+	268 CircularQueue
+
+7.3 doubly linked list
+
+
+
+
+
+
+
+8 Trees
+305 Tree adt
+	307 code
+	308 depth
+	309 height1 height2
+313 Binary Tree
+	314 code
+	315 bt properties
+	320 ll bt code
+		321 bt constructor
+
+324 STOPed!!!!!
+
+
+
+
+9 Priority Queue
+
+10 Map, Hash Table, Skip List
+403 Map ADT
+	methods
+
+405 Count Word Freq
+
+406 implement concrete MutableMapping
+
+
+408 MapBase cls
+409 UnsortedTableMap cls
+
+422 py hash table
+423 vode
+
+10.3 Sorted maps
+427 Sorted Maps
+430 code
+
+10.4 Skip Lists
+
+
+10.5 Sets
+446 set def
+
+
+
+
+11 Search Trees
+12 Sorting, Selection
+13 Text Processing
+14 Graph Algorithms
+15 Memory Management and B-Trees
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
