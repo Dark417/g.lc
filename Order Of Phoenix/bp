@@ -152,6 +152,9 @@ x2 = list(map(lambda x: x*x, [0, 10, 20, 30]))
 
 
 vals.sort(key = lambda x: x[1], reverse=True)
+items.sort(key=lambda item:[-item[0], item[1]],reverse=True)
+#sort key: -item[0] but x change elements
+
 
 vals.sort(key = lambda x: -x[1])
 # sort x, on value -x[1]
@@ -170,18 +173,20 @@ set(nums) - {0}
 freq[0]
 
 
+heap = [(-num, i) for i, num in enumerate(nums)]
+heapq.heapify(heap)
+
+
+grid = [[1, 2, 3], [4, 5, 6]]
+*grid => [1, 2, 3], [4, 5, 6]
+
+zip(*grid)
+#[(1, 4), (2, 5), (3, 6)]
 
 
 
 
-
-
-
-
-
-
-
-
+sum(matrix, [])
 
 
 

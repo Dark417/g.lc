@@ -39,16 +39,63 @@ LCR 159. 库存管理 III
 
 1337. 矩阵中战斗力最弱的 K 行
 
+3507. 移除最小数对使数组有序 I
+
+
+2231. 按奇偶性交换后的最大数字
+
+
+
+2500. 删除每行中的最大值
+
+
+
+2558. 从数量最多的堆取走礼物
+
+
+
+
+
+2974. 最小数字游戏
+
+
+
+
+
+
 
 
 #mid####################################################################
 
 
+215. 数组中的第K个最大元素
+!!!!
+    
+    692. 前K个高频单词
+
+    
+
+912. 排序数组
+!!!!
+
+
+347. 前 K 个高频元素
+!!
+
+
+
+面试题 17.14. 最小K个数
+quick sort!!!!
+
+
+
+378. 有序矩阵中第 K 小的元素
 
 
 
 
 
+#ez####################################################################
 
 
 
@@ -147,6 +194,23 @@ def add(self, val: int) -> int:
         heapq.heapreplace(self.hp, val)
     
     return self.hp[0]
+
+
+def __init__(self, k: int, nums: List[int]):
+    self.k = k
+    self.q = q =[] 
+    for x in nums:
+        heappush(q,x)
+        if len(q) > k:
+            heappop(q)
+
+def add(self, val: int) -> int:
+    q = self.q
+    heappush(q,val)
+    if len(q) > self.k:
+        heappop(q)
+    return q[0]
+
 
 
 
@@ -432,49 +496,180 @@ def highFive(self, items: List[List[int]]) -> List[List[int]]:
 
 
 1337. 矩阵中战斗力最弱的 K 行
+def kWeakestRows(self, mat: List[List[int]], k: int) -> List[int]:
+    m, n = len(mat), len(mat[0])
+    power = []
+    for i in range(m):
+        l, r, pos = 0, n - 1, -1
+        while l <= r:
+            mid = (l + r) // 2
+            if mat[i][mid] == 0:
+                r = mid - 1
+            else:
+                pos = mid
+                l = mid + 1
+        power.append([pos, i])
+
+    heapify(power)
+    res = []
+    for _ in range(k):
+        res.append(heappop(power)[1])
+    return res
+
+
+2231. 按奇偶性交换后的最大数字
+def largestInteger(self, num: int) -> int:
+    s = str(num)
+    ans = 0
+    # maxHeap[0] := the odd digits
+    # maxHeap[1] := the even digits
+    maxHeap = [[] for _ in range(2)]
+
+    for c in s:
+      digit = int(c)
+      heapq.heappush(maxHeap[digit % 2], -digit)
+
+    for c in s:
+      i = int(c) & 1
+      ans = (ans * 10 - heapq.heappop(maxHeap[i]))
+
+    return ans
+
+
+
+
+
+2500. 删除每行中的最大值
+def deleteGreatestValue(self, grid: List[List[int]]) -> int:
+        for row in grid:
+            row.sort()
+        return sum(map(max, zip(*grid)))
+
+
+
+2558. 从数量最多的堆取走礼物
+def pickGifts(self, gifts: List[int], k: int) -> int:
+    q = [-gift for gift in gifts]
+    heapify(q)
+    while k:
+        # x = heappop(q)
+        # heappush(q, -int(sqrt(-x)))
+        heapreplace(gifts, -isqrt(-gifts[0]))
+        k -= 1
+    return -sum(q)
+
+
+
+
+3507. 移除最小数对使数组有序 I
+
+
+
+
+
+2974. 最小数字游戏
+def numberGame(self, nums: List[int]) -> List[int]:
+        heapify(nums)
+        res = []
+        while nums:
+            a = heappop(nums)
+            b = heappop(nums)
+            res.append(b)
+            res.append(a)
+        return res
+
+
+
+
+####################################################################
+215. 数组中的第K个最大元素
+    
+
+    692. 前K个高频单词
+    def topKFrequent(self, words: List[str], k: int) -> List[str]:
+        cnt = Counter(words)
+        # sort on lambda
+        srted = sorted(cnt.items(), key=lambda x: (-x[1], x[0]))
+
+        return [x[0] for x in srted[:k]]
+
+    def topKFrequent(self, words: List[str], k: int) -> List[str]:
+        hash = collections.Counter(words)
+        # sorted on key < = sort on cnt
+        res = sorted(hash, key=lambda word:(-hash[word], word))
+        return res[:k]
+
+
+    def topKFrequent(self, words: List[str], k: int) -> List[str]:
+        cnt = Counter(words)
+        h = []
+        for ke, v in cnt.items():
+            heappush(h, (-v, ke))
+        res = []
+        for _ in range(k):
+            res.append(heapq.heappop(h)[1]) # We only want the word
+        return res
+
+
+
+
+
+912. 排序数组
 
 
 
 
 
 
+347. 前 K 个高频元素
+def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+    cnt = Counter(nums)
+    maxcnt = max(cnt.values())
+    buckets = [[] for _ in range(maxcnt + 1)]
+    for x, c in cnt.items():
+        buckets[c].append(x)
+    res = []
+
+    for bucket in reversed(buckets):
+        res += bucket
+        if len(res) == k:
+            return res
+
+
+    451. 根据字符出现频率排序
+    def frequencySort(self, s: str) -> str:
+        cnt = defaultdict(list)
+        for c in s:
+            cnt[c].append(c)
+        
+        sorted_items = sorted(cnt.items(), key = lambda x: len(x[1]), reverse = True)
+        return "".join("".join(x[1]) for x in sorted_items)
+
+    return ''.join([i * j for i, j in collections.Counter(s).most_common()])
 
 
 
 
 
 
+面试题 17.14. 最小K个数
+def smallestK(self, arr: List[int], k: int) -> List[int]:
+    if k == 0:
+        return []
+    hp = [-x for x in arr[:k]]
+    heapify(hp)
+    for i in range(k, len(arr)):
+        if -hp[0] > arr[i]:
+            heappop(hp)
+            heappush(hp, -arr[i])
+    return [-x for x in hp]
+
+
+378. 有序矩阵中第 K 小的元素
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+451. 根据字符出现频率排序
 
 
 

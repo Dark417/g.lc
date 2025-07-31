@@ -199,7 +199,7 @@ def majorityElement(self, nums: List[int]) -> int:
         mx = max(cnt.values())
         ###
         return min(k for k in cnt if cnt[k] == mx)
-
+        return min(cnt, key=lambda k: (-cnt[k], k))
 
     def mostFrequentEven(self, nums: List[int]) -> int:
         count = Counter()
@@ -212,6 +212,17 @@ def majorityElement(self, nums: List[int]) -> int:
                 res = k
                 ct = v
         return res
+
+    def mostFrequentEven(self, nums: List[int]) -> int:
+        ans = -1
+        cnt = Counter()
+        for x in nums:
+            if x % 2: continue  # 跳过奇数
+            cnt[x] += 1
+            if cnt[x] > cnt[ans] or cnt[x] == cnt[ans] and x < ans:
+                ans = x  # 出现次数最大的数中，值最小的
+        return ans
+
 
 
 
