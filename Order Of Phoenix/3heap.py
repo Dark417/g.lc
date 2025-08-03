@@ -73,14 +73,20 @@ LCR 159. 库存管理 III
     
     692. 前K个高频单词
 
-    
+    973. 最接近原点的 K 个点
+
+
+    347. 前 K 个高频元素
+    !!
+
+    451. 根据字符出现频率排序
+
+
 
 912. 排序数组
 !!!!
 
 
-347. 前 K 个高频元素
-!!
 
 
 
@@ -90,10 +96,35 @@ quick sort!!!!
 
 
 378. 有序矩阵中第 K 小的元素
+??? bi 
+
+
+    373. 查找和最小的 K 对数字
+    !!!!
+
+
+    786. 第 K 个最小的质数分数
+    ????
+
+
+
+743. 网络延迟时间
+...Dijikstra
 
 
 
 
+
+253. 会议室 II
+
+
+658. 找到 K 个最接近的元素
+!!
+
+
+
+
+264. 丑数 II
 
 #ez####################################################################
 
@@ -521,8 +552,6 @@ def kWeakestRows(self, mat: List[List[int]], k: int) -> List[int]:
 def largestInteger(self, num: int) -> int:
     s = str(num)
     ans = 0
-    # maxHeap[0] := the odd digits
-    # maxHeap[1] := the even digits
     maxHeap = [[] for _ in range(2)]
 
     for c in s:
@@ -535,7 +564,11 @@ def largestInteger(self, num: int) -> int:
 
     return ans
 
-
+    # nums = str(num)
+    # odd = sorted({nums[i]: i for i in range(nums) if int(nums[i]) % 2}, key = lambda x: x[1], reverse = True)
+    # even = sorted({nums[i]: i for i in range(nums) if int(nums[i]) % 2 == 0}, key = lambda x: x[1], reverse = True)
+    # print(odd)
+    # print(even)
 
 
 
@@ -612,6 +645,78 @@ def numberGame(self, nums: List[int]) -> List[int]:
 
 
 
+    973. 最接近原点的 K 个点
+    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        points.sort(key=lambda x: (x[0]**2 + x[1]**2))
+        return points[:k]
+
+    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        q = [(x ** 2 + y ** 2, (x, y)) for i, (x, y) in enumerate(points)]
+        heapq.heapify(q)
+        res = []
+        while len(res) < k:
+            res.append(heappop(q)[1])
+        return res
+
+    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        q = [(-x ** 2 - y ** 2, i) for i, (x, y) in enumerate(points[:k])]
+        heapq.heapify(q)
+        
+        n = len(points)
+        for i in range(k, n):
+            x, y = points[i]
+            dist = -x ** 2 - y ** 2
+            heapq.heappushpop(q, (dist, i))
+        
+        ans = [points[identity] for (_, identity) in q]
+        return ans
+
+
+
+
+
+
+
+        1985. 找出数组中的第 K 大整数
+
+
+        # 自定义比较函数，在 s1 对应的整数较大时返回 -1，反之返回 1
+        def cmp(s1: str, s2: str) -> int:
+            # 首先比较字符串长度
+            if len(s1) > len(s2):
+                return -1
+            elif len(s1) < len(s2):
+                return 1
+            else:
+                # 长度相等时比较字符串字典序大小
+                if s1 > s2:
+                    return -1
+                else:
+                    return 1
+            
+        nums.sort(key=cmp_to_key(cmp))
+        return nums[k-1]
+
+
+        return sorted(nums, key=int)[-k]
+
+        return sorted(nums, key=lambda x:int(x))[-k]
+        return sorted(nums, key=lambda x:-int(x))[k-1]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 912. 排序数组
@@ -665,11 +770,94 @@ def smallestK(self, arr: List[int], k: int) -> List[int]:
     return [-x for x in hp]
 
 
+
+
 378. 有序矩阵中第 K 小的元素
+    def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
+        n = len(matrix)
+        hp = [ (matrix[i][0], i, 0) for i in range(n)]
+        heapify(hp)
+        res = 0
+        for i in range(k - 1):
+            num, x, y = heappop(hp)
+            if y != n - 1:
+                heappush(hp, (matrix[x][y+1], x, y + 1))
+        return heappop(hp)[0]
+
+    ???
+    def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
+        n = len(matrix)
+
+        def check(mid):
+            i, j = n - 1, 0
+            num = 0
+            while i >= 0 and j < n:
+                if matrix[i][j] <= mid:
+                    num += i + 1
+                    j += 1
+                else:
+                    i -= 1
+            return num >= k
+
+        left, right = matrix[0][0], matrix[-1][-1]
+        while left < right:
+            mid = (left + right) // 2
+            if check(mid):
+                right = mid
+            else:
+                left = mid + 1
+        
+        return left
+
+  
+        373. 查找和最小的 K 对数字
+        !!!!
+        def kSmallestPairs(self, nums1: List[int], nums2: List[int], k: int) -> List[List[int]]:
+        m, n = len(nums1), len(nums2)
+        res = []
+        pq = [(nums1[i] + nums2[0], i , 0) for i in range(min(k, m))]
+        while pq and len(res) < k:
+            _, i, j = heappop(pq)
+            res.append([nums1[i], nums2[j]])
+            if j + 1 < n:
+                heappush(pq, (nums1[i] + nums2[j+1], i, j + 1))
+        return res
+
+        def kSmallestPairs(self, nums1: List[int], nums2: List[int], k: int) -> List[List[int]]:
+        ans = []
+        h = [(nums1[0] + nums2[0], 0, 0)]
+        while len(ans) < k:
+            _, i, j = heappop(h)
+            ans.append([nums1[i], nums2[j]])
+            if j == 0 and i + 1 < len(nums1):
+                heappush(h, (nums1[i + 1] + nums2[0], i + 1, 0))
+            if j + 1 < len(nums2):
+                heappush(h, (nums1[i] + nums2[j + 1], i, j + 1))
+        return ans
+
+
+        786. 第 K 个最小的质数分数
+
+        def kthSmallestPrimeFraction(self, arr: List[int], k: int) -> List[int]:
+            def cmp(x: Tuple[int, int], y: Tuple[int, int]) -> int:
+                return -1 if x[0] * y[1] < x[1] * y[0] else 1
+            
+            n = len(arr)
+            frac = list()
+            for i in range(n):
+                for j in range(i + 1, n):
+                    frac.append((arr[i], arr[j]))
+            
+            frac.sort(key=cmp_to_key(cmp))
+            return list(frac[k - 1])
 
 
 
-451. 根据字符出现频率排序
+
+
+
+
+743. 网络延迟时间
 
 
 
@@ -679,26 +867,109 @@ def smallestK(self, arr: List[int], k: int) -> List[int]:
 
 
 
+253. 会议室 II
+def minMeetingRooms(self, intervals: List[List[int]]) -> int:
+    intervals.sort(key=lambda x:x[0])
+    hp = []
+    heappush(hp, intervals[0][1])
+    for i in range(1, len(intervals)):
+        if hp[0] <= intervals[i][0]:
+            heappop(hp)
+        heappush(hp, intervals[i][1])
+    return len(hp)
+
+
+
+def minMeetingRooms(self, intervals: List[List[int]]) -> int:
+    intervals.sort()
+    rooms = [intervals[0][0]]   # 房间内保存最早结束时间
+    for s, e in intervals:
+        if rooms[0] <= s:       # 有空余房间
+            heapq.heapreplace(rooms, e)
+        else:                   # 没有空余房间
+            heapq.heappush(rooms, e)
+    return len(rooms) 
+
+
+def minMeetingRooms(self, intervals: List[List[int]]) -> int:
+    used_rooms = 0
+    stime = sorted(i[0] for i in intervals)
+    etime = sorted(i[1] for i in intervals)
+    s = e = 0
+    while s < len(intervals):
+        if stime[s] >= etime[e]:
+            used_rooms -=1
+            e += 1
+        used_rooms += 1
+        s += 1
+    return used_rooms
+
+
+def minMeetingRooms(self, intervals: List[List[int]]) -> int:
+    events = []
+    for start, end in intervals:
+        events.append((start, 1))  # +1 room at start
+        events.append((end, -1))   # -1 room at end
+    
+    # Step 2: Sort events by time (if equal, process end before start)
+    events.sort(key=lambda x: (x[0], x[1]))
+    
+    # Step 3: Sweep through events to find max concurrent meetings
+    curr_rooms = 0
+    max_rooms = 0
+    for time, delta in events:
+        curr_rooms += delta
+        max_rooms = max(max_rooms, curr_rooms)
+    
+    return max_rooms
+
+
+
+
+658. 找到 K 个最接近的元素
+def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
+    arr.sort(key=lambda v: abs(v - x))
+    return sorted(arr[:k])
+
+    def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
+        r = bisect_left(arr, x)
+        l = r - 1
+        for _ in range(k):
+            if r >= len(arr) or (l >= 0 and x - arr[l] <= arr[r] - x):
+                l -= 1
+            else:
+                r += 1
+        return arr[l + 1: r]
+
+    def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
+        r = bisect_left(arr, x)
+        l = r - 1
+        for _ in range(k):
+            if l < 0:
+                r += 1
+            elif r >= len(arr) or x - arr[l] <= arr[r] - x:
+                l -= 1
+            else:
+                r += 1
+        return arr[l + 1: r]
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+264. 丑数 II
+def nthUglyNumber(self, n: int) -> int:
+    factors = [2, 3, 5]
+    seen = {1}
+    heap = [1]
+    for i in range(n - 1):
+        cur = heappop(heap)
+        for factor in factors:
+            nxt = cur * factor
+            if nxt not in seen:
+                seen.add(nxt)
+                heappush(heap, nxt)
+    return heappop(heap)
 
 
 

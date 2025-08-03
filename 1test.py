@@ -18,11 +18,11 @@ def areSentencesSimilar(sentence1: List[str], sentence2: List[str], similarPairs
 
 if __name__ == "__main__":
 
-    sentence1 = ["great","acting","skills"]
-    sentence2 = ["fine","drama","talent"]
-    similarPairs = [["great","fine"],["drama","acting"],["skills","talent"]]
-    res = areSentencesSimilar(sentence1, sentence2, similarPairs)
-    print(res)  # Output: True
-
-
-    
+    # sentence1 = ["great","acting","skills"]
+    # sentence2 = ["fine","drama","talent"]
+    # similarPairs = [["great","fine"],["drama","acting"],["skills","talent"]]
+    # res = areSentencesSimilar(sentence1, sentence2, similarPairs)
+    # print(res)  # Output: True
+    res = []
+    res.append((1,2))
+    print(res)
