@@ -95,7 +95,7 @@ class MyQueue:
     def empty(self) -> bool:
         return not self.s2  # O(1)
 
-
+###
 225. 用队列实现栈
 class MyStack:
     def __init__(self):
