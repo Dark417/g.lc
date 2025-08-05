@@ -34,12 +34,19 @@
 #mid####################################################################
 
 918. 环形子数组的最大和
+????
 
 
 
 
 
+1438. 绝对差不超过限制的最长连续子数组
+!!!!
 
+	2294. 划分数组使最大差为 K
+
+
+	
 
 #core####################################################################
 232. 用栈实现队列
@@ -266,22 +273,89 @@ def findTheWinner(self, n: int, k: int) -> int:
 
 
 
+950. 按递增顺序显示卡牌
+def deckRevealedIncreasing(self, deck: List[int]) -> List[int]:
+    n = len(deck)
+    idx = deque(range(n))
+    res = [None] * n
+    for card in sorted(deck):
+        res[idx.popleft()] = card
+        if idx:
+            idx.append(idx.popleft())
+    return res
+
+??
+def deckRevealedIncreasing(self, deck: List[int]) -> List[int]:
+    n = len(deck)
+    deck.sort()
+    d1 = deck[:len(deck)//2+1]
+    d2 = deck[len(deck)//2:]
+    i = 0
+    res = []
+    while i < len(deck)//2:
+        res.append(d1[i])
+        res.append(d2[i])
+        i += 1
+    if i != len(d1):
+        res.append(d1[i])
+    return res
 
 
 
 
 
+2327. 知道秘密的人数
 
 
 
 
+1438. 绝对差不超过限制的最长连续子数组
+def longestSubarray(self, nums: List[int], limit: int) -> int:
+    s = SortedList()
+    res = l = r = 0
+    while r < len(nums):
+        s.add(nums[r])
+        while s[-1] - s[0] > limit:
+            s.remove(nums[l])
+            l += 1
+        res = max(res, r - l + 1)
+        r += 1
+    return res
+
+!!!
+def longestSubarray(self, nums: List[int], limit: int) -> int:
+    minq = deque()
+    maxq = deque()
+    res = l = r = 0
+    while r < len(nums):
+        while minq and minq[-1] > nums[r]:
+            minq.pop()
+        while maxq and maxq[-1] < nums[r]:
+            maxq.pop()
+        maxq.append(nums[r])
+        minq.append(nums[r])
+
+        while maxq and minq and maxq[0] - minq[0] > limit:
+            if nums[l] == minq[0]:
+                minq.popleft()
+            if nums[l] == maxq[0]:
+                maxq.popleft()
+            l += 1
+        res = max(res, r - l + 1)
+        r += 1
+    return res
 
 
-
-
-
-
-
+    2294. 划分数组使最大差为 K
+    def partitionArray(self, nums: List[int], k: int) -> int:
+        nums.sort()
+        res = 1
+        rec = nums[0]
+        for n in nums:
+            if n - rec > k:
+                res += 1
+                rec = n
+        return res
 
 
 
