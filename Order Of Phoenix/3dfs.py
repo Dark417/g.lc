@@ -20,14 +20,29 @@
 
     994. 腐烂的橘子
 
-    
-
-463. 岛屿的周长
-
-695. 岛屿的最大面积
 
 
-	
+    463. 岛屿的周长
+    !!!
+
+
+
+    694. 不同岛屿的数量
+
+
+
+    695. 岛屿的最大面积
+
+
+279. 完全平方数
+
+
+322. 零钱兑换
+
+
+
+
+
 
 
 # mid ################################################################
@@ -483,23 +498,6 @@ def orangesRotting(self, grid: List[List[int]]) -> int:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 463. 岛屿的周长
 def islandPerimeter(self, grid: List[List[int]]) -> int:
     m, n = len(grid), len(grid[0])
@@ -529,6 +527,11 @@ def islandPerimeter(self, grid: List[List[int]]) -> int:
             if i != r-1 and grid[i][j] == grid[i+1][j] == 1:
                 sm -= 2
     return sm
+
+
+
+694. 不同岛屿的数量
+
 
 
 
@@ -594,16 +597,38 @@ def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
 
 
 
+279. 完全平方数
+@cache  # 缓存装饰器，避免重复计算 dfs 的结果（记忆化）
+def dfs(i: int, j: int) -> int:
+    if i == 0:
+        return inf if j else 0
+    if j < i * i:
+        return dfs(i - 1, j)  # 只能不选
+    return min(dfs(i - 1, j), dfs(i, j - i * i) + 1)  # 不选 vs 选
+
+class Solution:
+    def numSquares(self, n: int) -> int:
+        return dfs(isqrt(n), n)
 
 
 
+def numSquares_dp(self, n: int) -> int:
+        f = [float('inf')] * (n + 1)
+        f[0] = 0
+
+        for i in range(1, n + 1):
+            minn = float('inf')
+            j = 1
+            while j * j <= i:
+                minn = min(minn, f[i - j * j])
+                j += 1
+
+            f[i] = minn + 1
+        
+        return f[n]
 
 
-
-
-
-
-
+322. 零钱兑换
 
 
 
