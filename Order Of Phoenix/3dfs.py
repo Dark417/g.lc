@@ -18,23 +18,27 @@
     419. 棋盘上的战舰
     #题不好
 
+
     994. 腐烂的橘子
-
-
+    !!
 
     463. 岛屿的周长
     !!!
 
 
-
     694. 不同岛屿的数量
 
 
-
     695. 岛屿的最大面积
+    !
+        2658. 网格图中鱼的最大数目
+        
 
 
 279. 完全平方数
+# def dp/dfs:
+#   if x == 0: return 0  # check first
+
 
 
 322. 零钱兑换
@@ -452,6 +456,7 @@ def orangesRotting(self, grid: List[List[int]]) -> int:
 
     return -1 if fresh else ans
 
+
 def orangesRotting(self, grid: List[List[int]]) -> int:
     M = len(grid)
     N = len(grid[0])
@@ -492,9 +497,6 @@ def orangesRotting(self, grid: List[List[int]]) -> int:
         return -1
     else:
         return round
-
-
-
 
 
 
@@ -596,8 +598,160 @@ def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
     return ans
 
 
+def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+    rows, cols = len(grid), len(grid[0])
+    max_area = 0
+
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == 1:
+                queue = collections.deque([(r, c)])
+                current_area = 0
+                while queue:
+                    row, col = queue.popleft()
+                    if grid[row][col] == 1:
+                        grid[row][col] = 0
+                        current_area += 1
+                        for dr, dc in (0, 1), (0, -1), (1, 0), (-1, 0):
+                            nr, nc = row + dr, col + dc
+                            if 0 <= nr < rows and 0 <= nc < cols:
+                                if grid[nr][nc] == 1:
+                                    queue.append((nr, nc))
+                max_area = max(max_area, current_area)
+
+    return max_area
+
+
+
+2658. 网格图中鱼的最大数目
+def findMaxFish(self, grid: List[List[int]]) -> int:
+    m, n = len(grid), len(grid[0])
+    def dfs(i, j):
+        if 0 <= i < m and 0 <= j < n and grid[i][j] > 0:
+            s = grid[i][j]
+            grid[i][j] = 0
+            for x, y in (i-1,j),(i+1,j),(i,j-1),(i,j+1):
+                s += dfs(x, y)
+            return s
+        else:
+            return 0
+    return max(max(dfs(i, j) for j in range(n)) for i in range(m))
+
+def findMaxFish(self, grid: List[List[int]]) -> int:
+    m, n = len(grid), len(grid[0])
+    def dfs(i: int, j: int) -> int:
+        if i < 0 or i >= m or j < 0 or j >= n or grid[i][j] == 0:
+            return 0
+        s = grid[i][j]
+        grid[i][j] = 0  # 标记成访问过
+        for x, y in (i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1):
+            s += dfs(x, y)  # 四方向移动
+        return s
+    return max(max(dfs(i, j) for j in range(n)) for i in range(m))
+
+
+def findMaxFish(self, grid: List[List[int]]) -> int:
+    m, n = len(grid), len(grid[0])
+    max_fish = 0
+    for r in range(m):
+        for c in range(n):
+            if grid[r][c] > 0:
+                queue = collections.deque([(r, c)])
+                total_fish = 0
+                while queue:
+                    i, j = queue.popleft()
+                    if grid[i][j] > 0:
+                        total_fish += grid[i][j]
+                        grid[i][j] = 0
+                        for nr, nc in (i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1):
+                            if 0 <= nr < m and 0 <= nc < n and grid[nr][nc] > 0:
+                                queue.append((nr, nc))
+                max_fish = max(max_fish, total_fish)
+    return max_fish
+        
+def findMaxFish(self, grid: List[List[int]]) -> int:
+    m, n = len(grid), len(grid[0])
+    max_fish = 0
+
+    def bfs(start_r: int, start_c: int) -> int:
+        queue = collections.deque([(start_r, start_c)])
+        total_fish = 0
+        while queue:
+            r, c = queue.popleft()
+            if grid[r][c] > 0:
+                total_fish += grid[r][c]
+                grid[r][c] = 0
+                for dr, dc in (0, 1), (0, -1), (1, 0), (-1, 0):
+                    nr, nc = r + dr, c + dc
+                    if 0 <= nr < m and 0 <= nc < n and grid[nr][nc] > 0:
+                        queue.append((nr, nc))         
+        return total_fish
+
+    for i in range(m):
+        for j in range(n):
+            if grid[i][j] > 0:
+                max_fish = max(max_fish, bfs(i, j))
+    return max_fish
+
+
+
 
 279. 完全平方数
+
+
+# call stack as memo storage
+
+# init* i == 0: return 0
+# f[0] = 0
+# get min, init with inf
+# inf
+
+
+def numSquares_dp(self, n: int) -> int:
+    f = [float('inf')] * (n + 1)
+    f[0] = 0
+
+    for i in range(1, n + 1):
+        minn = float('inf')
+        j = 1
+        while j * j <= i:
+            minn = min(minn, f[i - j * j])
+            j += 1
+
+        f[i] = minn + 1
+    
+    return f[n]
+
+
+N = 10000
+f = [[0] * (N + 1) for _ in range(isqrt(N) + 1)]
+f[0] = [0] + [inf] * N
+for i in range(1, len(f)):
+    for j in range(N + 1):
+        if j < i * i:
+            f[i][j] = f[i - 1][j]  # 只能不选
+        else:
+            f[i][j] = min(f[i - 1][j], f[i][j - i * i] + 1)  # 不选 vs 选
+
+class Solution:
+    def numSquares(self, n: int) -> int:
+        return f[isqrt(n)][n]  # 也可以写 f[-1][n]
+
+
+# instead of iter from i, 
+#   iter from i*i!
+N = 10000
+f = [0] + [inf] * N
+for i in range(1, isqrt(N) + 1):
+    for j in range(i * i, N + 1):
+        f[j] = min(f[j], f[j - i * i] + 1)  # 不选 vs 选
+
+class Solution:
+    def numSquares(self, n: int) -> int:
+        return f[n]
+
+
+
 @cache  # 缓存装饰器，避免重复计算 dfs 的结果（记忆化）
 def dfs(i: int, j: int) -> int:
     if i == 0:
@@ -612,31 +766,292 @@ class Solution:
 
 
 
-def numSquares_dp(self, n: int) -> int:
-        f = [float('inf')] * (n + 1)
-        f[0] = 0
+def numSquares_memo_dp(self, n: int) -> int:
+    squares = [i * i for i in range(1, int(math.sqrt(n)) + 1)]
 
-        for i in range(1, n + 1):
-            minn = float('inf')
-            j = 1
-            while j * j <= i:
-                minn = min(minn, f[i - j * j])
-                j += 1
+    @functools.lru_cache(n)
+    def dp(rem: int) -> int:
+        if rem == 0:
+            return 0
+        mini = float('inf')
+        for square in squares:
+            next_rem = rem - square
+            if next_rem < 0:
+                break
+            res = dp(next_rem)
+            if res != float('inf'):
+                mini = min(mini, res + 1)
+        return mini
 
-            f[i] = minn + 1
+    result = dp(n)
+    return int(result)
+
+
+def numSquares_bfs(self, n: int) -> int:
+    if n <= 0: return 0
+    squares = [i * i for i in range(1, int(math.sqrt(n)) + 1)]
+    queue = deque([(n, 0)])
+    visited = {n} # Use a set to prevent revisiting states and infinite loops
+    
+    while queue:
+        current_n, steps = queue.popleft()
         
-        return f[n]
+        if current_n == 0:
+            return steps
+        
+        for square in squares:
+            next_n = current_n - square
+            
+            if next_n < 0:
+                break
+            
+            if next_n not in visited:
+                visited.add(next_n)
+                queue.append((next_n, steps + 1))
+    
+    # Should not be reached based on Lagrange's theorem (max answer is 4)
+    return n
 
 
+
+# --- 4. Depth-First Search (DFS) + Pruning Method ---
+# Time Complexity: Difficult to determine precisely, faster than naive DFS but slower than BFS
+# Space Complexity: O(n) (for the recursion stack)
+def numSquares_dfs(self, n: int) -> int:
+    squares = [i * i for i in range(1, int(math.sqrt(n)) + 1)][::-1] 
+
+    for k in range(1, 5): 
+        if self._dfs_check(n, k, squares):
+            return k
+    # Fallback, though guaranteed to be found by k=4
+    return 4 
+
+
+def _dfs_check(self, target: int, k: int, squares: List[int]) -> bool:
+    """
+    Checks if the target can be summed by k perfect squares.
+    :param target: The remaining target number
+    :param k: The number of perfect squares allowed
+    :param squares: List of perfect squares (sorted descending)
+    """
+    if k == 1:
+        # Base case: Check if the target itself is a perfect square
+        return int(math.sqrt(target))**2 == target
+
+    # If k > 1, try subtracting one square (s)
+    for s in squares:
+        if s > target:
+            continue
+        
+        # Recursive call: Check if target - s can be formed by k-1 squares
+        if self._dfs_check(target - s, k - 1, squares):
+            return True
+    
+    return False
+
+
+# --- 3. Mathematical Method (Legendre's Three-Square Theorem) ---
+# Time Complexity: O(sqrt(n)) - The fastest approach
+# Space Complexity: O(1)
+def numSquares_math(self, n: int) -> int:
+    """
+    Mathematical solution based on number theory: Lagrange's Four-Square Theorem 
+    and Legendre's Three-Square Theorem.
+    
+    1. Any positive integer can be represented as the sum of at most four squares.
+    2. Answer is 1 if n is a perfect square.
+    3. Answer is 4 if n is of the form 4^k * (8m + 7).
+    4. Answer is 2 if n can be represented as a^2 + b^2.
+    5. Otherwise, the answer must be 3.
+    """
+    
+    # Step 1: Check for answer 1 (n itself is a perfect square)
+    if int(math.sqrt(n))**2 == n:
+        return 1
+
+    # Helper function: Checks if n satisfies the form n = 4^k * (8m + 7)
+    def is_sum_of_four(num):
+        # Continuously divide n by 4 until it's no longer divisible
+        while num % 4 == 0:
+            num //= 4
+        # Check if the remaining number satisfies the (8m + 7) form
+        return num % 8 == 7
+
+    # Step 2: Check for answer 4 (based on Legendre's theorem)
+    if is_sum_of_four(n):
+        return 4
+
+    # Step 3: Check for answer 2 (n is a sum of two perfect squares)
+    # Check if there exist two numbers a, b such that n = a^2 + b^2
+    i = 1
+    while i * i <= n:
+        j_square = n - i * i
+        # Check if n - i*i is also a perfect square
+        if int(math.sqrt(j_square))**2 == j_square:
+            return 2
+        i += 1
+
+    # Step 4: The answer must be 3 (if it's not 1, 2, or 4, it must be 3)
+    return 3
+
+
+
+        
 322. 零钱兑换
+dp(i, c)
+Failure: i < 0 AND c > 0. You ran out of available items before reaching the target.    
+Success: i < 0 AND c == 0. You ran out of items exactly at the target.
+
+def coinChange(self, coins: List[int], amount: int) -> int:
+    @cache  # 缓存装饰器，避免重复计算 dfs 的结果（记忆化）
+    def dfs(i: int, c: int) -> int:
+        if i < 0:
+            return 0 if c == 0 else inf
+        if c < coins[i]:  # 只能不选
+            return dfs(i - 1, c)
+        # 不选 vs 继续选
+        return min(dfs(i - 1, c), dfs(i, c - coins[i]) + 1)
+
+    ans = dfs(len(coins) - 1, amount)
+    return ans if ans < inf else -1
 
 
 
+def coinChange(self, coins: List[int], amount: int) -> int:
+    @functools.lru_cache(amount)
+    def dp(rem):
+        if rem < 0: return -1
+        if rem == 0: return 0
+        mini = int(1e9)
+        for coin in self.coins:
+            res = dp(rem - coin)
+            if res >= 0 and res < mini:
+                mini = res + 1
+        return mini if mini < int(1e9) else -1
+    self.coins = coins
+    return dp(amount) if amount >= 1 else 0
 
 
 
+def coinChange(self, coins: List[int], amount: int) -> int:
+    if amount == 0:
+        return 0
+    coins.sort(reverse=True) 
+    @functools.cache
+    def dp(rem: int) -> float:
+        if rem < 0:
+            return math.inf
+        if rem == 0:
+            return 0.0
+                    mini = math.inf
+        for coin in coins:
+            result = dp(rem - coin)
+
+            if result != math.inf:
+                mini = min(mini, result + 1)
+        return mini
+    min_coins = dp(amount)
+    return int(min_coins) if min_coins != math.inf else -1
 
 
+
+def coinChange(self, coins: List[int], amount: int) -> int:
+    dp = [float('inf')] * (amount + 1)
+    dp[0] = 0
+
+    for coin in coins:
+        for x in range(coin, amount + 1):
+            dp[x] = min(dp[x], dp[x - coin] + 1)
+    return dp[amount] if dp[amount] != float('inf') else -1
+
+
+
+def coinChange_dp_bu(self, coins: List[int], amount: int) -> int:
+    if amount == 0:
+        return 0
+        
+    dp = [float('inf')] * (amount + 1)
+    dp[0] = 0
+
+    for i in range(1, amount + 1):
+        for coin in coins:
+            if i - coin >= 0:
+                dp[i] = min(dp[i], dp[i - coin] + 1)
+    
+    return int(dp[amount]) if dp[amount] != float('inf') else -1
+
+
+def coinChange_dp_td(self, coins: List[int], amount: int) -> int:
+    if amount == 0:
+        return 0
+    coins.sort(reverse=True)
+    @functools.lru_cache(amount)
+    def dp(rem: int) -> int:
+        if rem == 0:
+            return 0
+        if rem < 0:
+            return -1 # Impossible state
+        mini = float('inf')
+        for coin in coins:
+            res = dp(rem - coin)
+            if res >= 0:
+                mini = min(mini, res + 1)
+        return mini if mini != float('inf') else -1
+    
+    return dp(amount)
+
+#!!! good
+def coinChange_bfs(self, coins: List[int], amount: int) -> int:
+    if amount == 0:
+        return 0
+    coins.sort(reverse=True)
+    queue = deque([(amount, 0)])
+    visited = {amount} 
+    
+    while queue:
+        current_rem, steps = queue.popleft()
+        for coin in coins:
+            next_rem = current_rem - coin
+            if next_rem == 0:
+                return steps + 1
+            if next_rem < 0:
+                break
+            if next_rem not in visited:
+                visited.add(next_rem)
+                queue.append((next_rem, steps + 1))
+    return -1
+
+
+#no
+def coinChange_dfs(self, coins: List[int], amount: int) -> int:
+    if amount == 0:
+        return 0
+    coins.sort(reverse=True)
+    self.min_coins = float('inf')
+
+    def dfs(idx: int, rem: int, count: int) -> None:
+        if rem == 0:
+            self.min_coins = min(self.min_coins, count)
+            return
+        if count + 1 >= self.min_coins:
+            return
+        coin = coins[idx]
+        max_uses = rem // coin
+        for k in range(max_uses, -1, -1):
+            new_rem = rem - k * coin
+            new_count = count + k
+            if new_count >= self.min_coins:
+                continue 
+
+            if idx < len(coins) - 1:
+                dfs(idx + 1, new_rem, new_count)
+            elif new_rem == 0:
+
+                self.min_coins = min(self.min_coins, new_count)
+
+    dfs(0, amount, 0)
+    
+    return int(self.min_coins) if self.min_coins != float('inf') else -1
 
 
 
