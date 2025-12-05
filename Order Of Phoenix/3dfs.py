@@ -3,9 +3,15 @@
 
 # collections.deque()
 
+# hard ########################
+
+329. 矩阵中的最长递增路径
+2328. 网格图中递增路径的数目
+
+711. 不同岛屿的数量 II
 
 
-# mid
+# mid ########################
 200. 岛屿数量
     #dfs
 
@@ -27,7 +33,8 @@
 
 
     694. 不同岛屿的数量
-
+    !!! how to check same shape
+    # if seen, add set() or cell = 0
 
     695. 岛屿的最大面积
     !
@@ -38,12 +45,77 @@
 279. 完全平方数
 # def dp/dfs:
 #   if x == 0: return 0  # check first
-
+!!!
 
 
 322. 零钱兑换
+!!!
 
 
+207. 课程表
+# topology sort
+
+    210. 课程表 II
+    # 0->1 means both 0, 1 finished
+
+
+547. 省份数量
+#union-find
+
+
+662. 二叉树最大宽度
+
+
+
+399. 除法求值
+
+
+
+797. 所有可能的路径
+# backtrace
+
+
+
+# hard ##############################################################
+329. 矩阵中的最长递增路径
+class Solution:
+    
+    DIRS = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+
+    def longestIncreasingPath(self, matrix: List[List[int]]) -> int:
+        if not matrix:
+            return 0
+        
+        @lru_cache(None)
+        def dfs(row: int, column: int) -> int:
+            best = 1
+            for dx, dy in Solution.DIRS:
+                newRow, newColumn = row + dx, column + dy
+                if 0 <= newRow < rows and 0 <= newColumn < columns and matrix[newRow][newColumn] > matrix[row][column]:
+                    best = max(best, dfs(newRow, newColumn) + 1)
+            return best
+
+        ans = 0
+        rows, columns = len(matrix), len(matrix[0])
+        for i in range(rows):
+            for j in range(columns):
+                ans = max(ans, dfs(i, j))
+        return ans
+
+
+
+2328. 网格图中递增路径的数目
+def countPaths(self, grid: List[List[int]]) -> int:
+    MOD = 1_000_000_007
+    m, n = len(grid), len(grid[0])
+    @cache
+    def dfs(i: int, j: int) -> int:
+        res = 1
+        for x, y in (i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1):
+            if 0 <= x < m and 0 <= y < n and grid[x][y] > grid[i][j]:
+                res += dfs(x, y)
+        return res % MOD
+    return sum(dfs(i, j) for i in range(m) for j in range(n)) % MOD
 
 
 
@@ -533,6 +605,163 @@ def islandPerimeter(self, grid: List[List[int]]) -> int:
 
 
 694. 不同岛屿的数量
+def numDistinctIslands(self, grid: List[List[int]]) -> int:
+
+   # 执行 DFS 以查找当前岛中的所有单元。
+   def dfs(row, col):
+       if row < 0 or col < 0 or row >= len(grid) or col >= len(grid[0]):
+           return
+       if (row, col) in seen or not grid[row][col]:
+           return
+       seen.add((row, col))
+       current_island.add((row - row_origin, col - col_origin))
+       dfs(row + 1, col)
+       dfs(row - 1, col)
+       dfs(row, col + 1)
+       dfs(row, col - 1)
+   
+   # 只要还有岛屿，就重复启动 DFS。
+   seen = set()
+   unique_islands = set()
+   for row in range(len(grid)):
+       for col in range(len(grid[0])):
+           current_island = set()
+           row_origin = row
+           col_origin = col
+           dfs(row, col)
+           if current_island:
+               unique_islands.add(frozenset(current_island))
+   
+   return len(unique_islands)
+
+
+def numDistinctIslands(self, grid: List[List[int]]) -> int:
+
+   # 执行 DFS 以查找当前岛中的所有单元。
+   def dfs(row, col, direction):
+       if row < 0 or col < 0 or row >= len(grid) or col >= len(grid[0]):
+           return
+       if (row, col) in seen or not grid[row][col]:
+           return
+       seen.add((row, col))
+       path_signature.append(direction)
+       dfs(row + 1, col, ""D"")
+       dfs(row - 1, col, ""U"")
+       dfs(row, col + 1, ""R"")
+       dfs(row, col - 1, ""L"")
+       path_signature.append(""0"")
+   
+   # 只要还有岛屿，就重复启动 DFS。
+   seen = set()
+   unique_islands = set()
+   for row in range(len(grid)):
+       for col in range(len(grid[0])):
+           path_signature = []
+           dfs(row, col, ""0"")
+           if path_signature:
+               unique_islands.add(tuple(path_signature))
+   
+   return len(unique_islands)
+
+
+
+def numDistinctIslands(self, grid: List[List[int]]) -> int:
+    R, C = len(grid), len(grid[0])
+    unique_shapes = set()
+    
+    def dfs(r, c, r0, c0, current_island):
+        if not (0 <= r < R and 0 <= c < C and grid[r][c] == 1):
+            return
+        grid[r][c] = 0
+        current_island.append((r - r0, c - c0))
+        
+        # 探索邻居，注意这里固定了探索顺序 (D, U, R, L) 以确保指纹的唯一性
+        dfs(r + 1, c, r0, c0, current_island)
+        dfs(r - 1, c, r0, c0, current_island)
+        dfs(r, c + 1, r0, c0, current_island)
+        dfs(r, c - 1, r0, c0, current_island)
+
+    for r in range(R):
+        for c in range(C):
+            if grid[r][c] == 1:
+                current_island = []
+                # r0, c0 作为岛屿的原点
+                r0, c0 = r, c 
+                dfs(r, c, r0, c0, current_island)
+                # 将相对坐标列表转换为元组，以便可以作为集合元素存储
+                unique_shapes.add(tuple(current_island))
+    return len(unique_shapes)
+
+
+#bfs
+def numDistinctIslands(self, grid: List[List[int]]) -> int:
+    R, C = len(grid), len(grid[0])
+    unique_shapes = set()
+    for r in range(R):
+        for c in range(C):
+            if grid[r][c] == 1:
+                q = collections.deque([(r, c)])
+                shape = set()
+                r0, c0 = r, c
+                while q:
+                    i, j = q.popleft()
+                    if 0 <= i < R and 0 <= j < C and grid[i][j] == 1:
+                        grid[i][j] = 0
+                        shape.add((i - r0, j - c0))
+                        for nr, nc in (i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1):
+                            if 0 <= nr < R and 0 <= nc < C and grid[nr][nc] == 1:
+                                q.append((nr, nc))
+                if shape:
+                    unique_shapes.add(frozenset(shape))
+    return len(unique_shapes)
+
+
+
+def numDistinctIslands(self, grid: List[List[int]]) -> int:
+    def equalIslands(island1, island2):
+        if len(island1) != len(island2):
+            return False
+        for cell_1, cell_2 in zip(island1, island2):
+                if cell_1 != cell_2:
+                    return False
+        return True
+
+    def current_island_is_unique():
+        for other_island in unique_islands:
+            if equalIslands(current_island, other_island):
+                return False
+        return True
+        
+    # 执行 DFS 以查找当前岛中的所有单元。
+    def dfs(row, col):
+        if row < 0 or col < 0 or row >= len(grid) or col >= len(grid[0]):
+            return
+        if (row, col) in seen or not grid[row][col]:
+            return
+        seen.add((row, col))
+        current_island.append((row - row_origin, col - col_origin))
+        dfs(row + 1, col)
+        dfs(row - 1, col)
+        dfs(row, col + 1)
+        dfs(row, col - 1)
+    
+    # 只要还有岛屿，就重复启动 DFS。
+    # dfs use local variable
+    seen = set()
+    unique_islands = []
+    for row in range(len(grid)):
+        for col in range(len(grid[0])):
+            current_island = []
+            row_origin = row
+            col_origin = col
+            dfs(row, col)
+            if not current_island or not current_island_is_unique():
+                continue
+            unique_islands.append(current_island)
+    return len(unique_islands)
+
+
+
 
 
 
@@ -1055,37 +1284,239 @@ def coinChange_dfs(self, coins: List[int], amount: int) -> int:
 
 
 
+207. 课程表
+# post-order traversal
+
+def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+    edges = collections.defaultdict(list)
+    visited = [0] * numCourses
+    result = list()
+    valid = True
+
+    for info in prerequisites:
+        edges[info[1]].append(info[0])
+    
+    def dfs(u: int):
+        nonlocal valid
+        visited[u] = 1
+        for v in edges[u]:
+            if visited[v] == 0:
+                dfs(v)
+                if not valid:
+                    return
+            elif visited[v] == 1:
+                valid = False
+                return
+        visited[u] = 2
+        result.append(u)
+    
+    for i in range(numCourses):
+        if valid and not visited[i]:
+            dfs(i)
+    
+    return valid
+
+def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+    g = [[] for _ in range(numCourses)]
+    for a, b in prerequisites:
+        g[b].append(a)
+    colors = [0] * numCourses
+    def dfs(x: int) -> bool:
+        colors[x] = 1  # x 正在访问中
+        for y in g[x]:
+            if colors[y] == 1 or colors[y] == 0 and dfs(y):
+                return True  # 找到了环
+        colors[x] = 2  # x 完全访问完毕，从 x 出发无法找到环
+        return False  # 没有找到环
+
+    for i, c in enumerate(colors):
+        if c == 0 and dfs(i):
+            return False  # 有环
+    return True  # 没有环
+
+作
+
+def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+    edges = collections.defaultdict(list)
+    indeg = [0] * numCourses
+
+    for info in prerequisites:
+        edges[info[1]].append(info[0])
+        indeg[info[0]] += 1
+    
+    q = collections.deque([u for u in range(numCourses) if indeg[u] == 0])
+    visited = 0
+
+    while q:
+        visited += 1
+        u = q.popleft()
+        for v in edges[u]:
+            indeg[v] -= 1
+            if indeg[v] == 0:
+                q.append(v)
+
+    return visited == numCourses
+
+
+
+210. 课程表 II
+def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+    edges = collections.defaultdict(list)
+    visited = [0] * numCourses
+    result = list()
+    valid = True
+    for info in prerequisites:
+        edges[info[1]].append(info[0])
+    def dfs(u: int):
+        nonlocal valid
+        visited[u] = 1
+        for v in edges[u]:
+            if visited[v] == 0:
+                dfs(v)
+                if not valid:
+                    return
+            elif visited[v] == 1:
+                valid = False
+                return
+        visited[u] = 2
+        result.append(u)
+    for i in range(numCourses):
+        if valid and not visited[i]:
+            dfs(i)
+    if not valid:
+        return list()
+    return result[::-1]
+
+
+def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+    edges = collections.defaultdict(list)
+    indeg = [0] * numCourses
+    result = list()
+
+    for info in prerequisites:
+        edges[info[1]].append(info[0])
+        indeg[info[0]] += 1
+    
+    q = collections.deque([u for u in range(numCourses) if indeg[u] == 0])
+
+    while q:
+        u = q.popleft()
+        result.append(u)
+        for v in edges[u]:
+            indeg[v] -= 1
+            if indeg[v] == 0:
+                q.append(v)
+
+    if len(result) != numCourses:
+        result = list()
+    return result
+
+
+
+547. 省份数量
+def findCircleNum(self, isConnected: List[List[int]]) -> int:
+    def dfs(i):
+        for j in range(cities):
+            if isConnected[i][j] == 1 and j not in visited:
+                visited.add(j)
+                dfs(j)
+    cities = len(isConnected)
+    visited = set()
+    provinces = 0
+    for i in range(cities):
+        if i not in visited:
+            dfs(i)
+            provinces += 1
+    return provinces
+
+
+def findCircleNum(self, isConnected: List[List[int]]) -> int:
+    cities = len(isConnected)
+    visited = set()
+    provinces = 0
+    for i in range(cities):
+        if i not in visited:
+            provinces += 1
+            q = deque([i])
+            while q:
+                j = q.popleft()
+                visited.add(j)
+                for k in range(cities):
+                    if isConnected[j][k] == 1 and k not in visited:
+                        q.append(k)
+    return provinces
+
+
+def findCircleNum(self, isConnected: List[List[int]]) -> int:
+    def find(index: int) -> int:
+        if parent[index] != index:
+            parent[index] = find(parent[index])
+        return parent[index]
+    
+    def union(index1: int, index2: int):
+        parent[find(index1)] = find(index2)
+    
+    cities = len(isConnected)
+    parent = list(range(cities))
+    
+    for i in range(cities):
+        for j in range(i + 1, cities):
+            if isConnected[i][j] == 1:
+                union(i, j)
+    
+    provinces = sum(parent[i] == i for i in range(cities))
+    return provinces
 
 
 
 
+662. 二叉树最大宽度
+def widthOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+    res = 1
+    arr = [[root, 1]]
+    while arr:
+        tmp = []
+        for node, idx in arr:
+            if node.left:
+                tmp.append([node.left, idx * 2])
+            if node.right:
+                tmp.append([node.right, idx * 2 + 1])
+        res = max(res, arr[-1][1] - arr[0][1]  + 1)
+        arr = tmp
+    return res
+
+def widthOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+    levelMin = {}
+    def dfs(node: Optional[TreeNode], depth: int, index: int) -> int:
+        if node is None:
+            return 0
+        if depth not in levelMin:
+            levelMin[depth] = index  # 每一层最先访问到的节点会是最左边的节点，即每一层编号的最小值
+        return max(index - levelMin[depth] + 1,
+                   dfs(node.left, depth + 1, index * 2),
+                   dfs(node.right, depth + 1, index * 2 + 1))
+    return dfs(root, 1, 1)
 
 
 
+797. 所有可能的路径
+def allPathsSourceTarget(self, graph: List[List[int]]) -> List[List[int]]:
+    res = []
+    stk = []
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    def dfs(x):
+        if x == len(graph) - 1:
+            res.append(stk[:])
+            return
+        
+        for y in graph[x]:
+            stk.append(y)
+            dfs(y)
+            stk.pop()
+    
+    stk.append(0)
+    dfs(0)
+    return res
 
 
 
