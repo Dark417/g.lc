@@ -3,160 +3,118 @@
 This is the NeetCode "Blind 75" list (75 questions), grouped by category and difficulty, followed by Python reference solutions.
 Problem titles/difficulty are from neetcode.io; solution writeups/code are original.
 
-## Index (by category & difficulty)
+## Index (by category)
 
 ### Arrays & Hashing
-#### Easy
-- [1. Two Sum](#lc-0001)
-- [217. Contains Duplicate](#lc-0217)
-- [242. Valid Anagram](#lc-0242)
-
-#### Medium
-- [49. Group Anagrams](#lc-0049)
-- [128. Longest Consecutive Sequence](#lc-0128)
-- [238. Product of Array Except Self](#lc-0238)
-- [271. Encode and Decode Strings](#lc-0271)
-- [347. Top K Frequent Elements](#lc-0347)
+- [E] [1. Two Sum](#lc-0001) — Find two indices whose values add up to a target.
+- [E] [217. Contains Duplicate](#lc-0217) — Determine if any value appears at least twice.
+- [E] [242. Valid Anagram](#lc-0242) — Check if two strings are anagrams.
+- [M] [49. Group Anagrams](#lc-0049) — Group words that are anagrams of each other.
+- [M] [128. Longest Consecutive Sequence](#lc-0128) — Longest run of consecutive integers.
+- [M] [238. Product of Array Except Self](#lc-0238) — Product of all elements except current, without division.
+- [M] [271. Encode and Decode Strings](#lc-0271) — Serialize and deserialize a list of strings safely.
+- [M] [347. Top K Frequent Elements](#lc-0347) — Return the k most frequent elements.
 
 ### Two Pointers
-#### Easy
-- [125. Valid Palindrome](#lc-0125)
-
-#### Medium
-- [11. Container With Most Water](#lc-0011)
-- [15. 3Sum](#lc-0015)
+- [E] [125. Valid Palindrome](#lc-0125) — Check if a string is a palindrome (alphanumeric, case-insensitive).
+- [M] [11. Container With Most Water](#lc-0011) — Max area between two vertical lines.
+- [M] [15. 3Sum](#lc-0015) — Find unique triplets that sum to zero.
 
 ### Sliding Window
-#### Easy
-- [121. Best Time to Buy And Sell Stock](#lc-0121)
-
-#### Medium
-- [3. Longest Substring Without Repeating Characters](#lc-0003)
-- [424. Longest Repeating Character Replacement](#lc-0424)
-
-#### Hard
-- [76. Minimum Window Substring](#lc-0076)
+- [E] [121. Best Time to Buy And Sell Stock](#lc-0121) — Maximize profit from one buy/sell.
+- [M] [3. Longest Substring Without Repeating Characters](#lc-0003) — Longest substring with unique chars.
+- [M] [424. Longest Repeating Character Replacement](#lc-0424) — Longest substring after up to k replacements.
+- [H] [76. Minimum Window Substring](#lc-0076) — Smallest window covering all characters of a pattern.
 
 ### Stack
-#### Easy
-- [20. Valid Parentheses](#lc-0020)
+- [E] [20. Valid Parentheses](#lc-0020) — Check matching and properly nested brackets.
 
 ### Binary Search
-#### Medium
-- [33. Search In Rotated Sorted Array](#lc-0033)
-- [153. Find Minimum In Rotated Sorted Array](#lc-0153)
+- [M] [33. Search In Rotated Sorted Array](#lc-0033) — Binary search on a rotated sorted array.
+- [M] [153. Find Minimum In Rotated Sorted Array](#lc-0153) — Find minimum element in rotated sorted array.
 
 ### Linked List
-#### Easy
-- [21. Merge Two Sorted Lists](#lc-0021)
-- [141. Linked List Cycle](#lc-0141)
-- [206. Reverse Linked List](#lc-0206)
-
-#### Medium
-- [19. Remove Nth Node From End of List](#lc-0019)
-- [143. Reorder List](#lc-0143)
-
-#### Hard
-- [23. Merge K Sorted Lists](#lc-0023)
+- [E] [21. Merge Two Sorted Lists](#lc-0021) — Merge two sorted linked lists into one.
+- [E] [141. Linked List Cycle](#lc-0141) — Detect whether a cycle exists in a linked list.
+- [E] [206. Reverse Linked List](#lc-0206) — Reverse a singly linked list.
+- [M] [19. Remove Nth Node From End of List](#lc-0019) — Remove nth node from end in one pass.
+- [M] [143. Reorder List](#lc-0143) — Reorder list by interleaving first and second halves.
+- [H] [23. Merge K Sorted Lists](#lc-0023) — Merge k sorted lists into one efficiently.
 
 ### Trees
-#### Easy
-- [100. Same Tree](#lc-0100)
-- [104. Maximum Depth of Binary Tree](#lc-0104)
-- [226. Invert Binary Tree](#lc-0226)
-- [572. Subtree of Another Tree](#lc-0572)
-
-#### Medium
-- [98. Validate Binary Search Tree](#lc-0098)
-- [102. Binary Tree Level Order Traversal](#lc-0102)
-- [105. Construct Binary Tree From Preorder And Inorder Traversal](#lc-0105)
-- [230. Kth Smallest Element In a Bst](#lc-0230)
-- [235. Lowest Common Ancestor of a Binary Search Tree](#lc-0235)
-
-#### Hard
-- [124. Binary Tree Maximum Path Sum](#lc-0124)
-- [297. Serialize And Deserialize Binary Tree](#lc-0297)
+- [E] [100. Same Tree](#lc-0100) — Check if two binary trees are identical.
+- [E] [104. Maximum Depth of Binary Tree](#lc-0104) — Compute max depth of a binary tree.
+- [E] [226. Invert Binary Tree](#lc-0226) — Swap left/right children for every node.
+- [E] [572. Subtree of Another Tree](#lc-0572) — Check if one tree is a subtree of another.
+- [M] [98. Validate Binary Search Tree](#lc-0098) — Verify BST ordering property.
+- [M] [102. Binary Tree Level Order Traversal](#lc-0102) — Return tree nodes level by level.
+- [M] [105. Construct Binary Tree From Preorder And Inorder Traversal](#lc-0105) — Reconstruct tree from traversals.
+- [M] [230. Kth Smallest Element In a Bst](#lc-0230) — Find k-th smallest value in a BST.
+- [M] [235. Lowest Common Ancestor of a Binary Search Tree](#lc-0235) — LCA using BST properties.
+- [H] [124. Binary Tree Maximum Path Sum](#lc-0124) — Max path sum anywhere in the tree.
+- [H] [297. Serialize And Deserialize Binary Tree](#lc-0297) — Convert tree to string and back.
 
 ### Tries
-#### Medium
-- [208. Implement Trie Prefix Tree](#lc-0208)
-- [211. Design Add And Search Words Data Structure](#lc-0211)
-
-#### Hard
-- [212. Word Search II](#lc-0212)
+- [M] [208. Implement Trie Prefix Tree](#lc-0208) — Basic trie supporting insert/search/prefix.
+- [M] [211. Design Add And Search Words Data Structure](#lc-0211) — Trie with wildcard search support.
+- [H] [212. Word Search II](#lc-0212) — Find multiple words on a board using a trie + DFS.
 
 ### Heap / Priority Queue
-#### Hard
-- [295. Find Median From Data Stream](#lc-0295)
+- [H] [295. Find Median From Data Stream](#lc-0295) — Maintain median with two heaps.
 
 ### Backtracking
-#### Medium
-- [39. Combination Sum](#lc-0039)
-- [79. Word Search](#lc-0079)
+- [M] [39. Combination Sum](#lc-0039) — Find combinations summing to target (reuse allowed).
+- [M] [79. Word Search](#lc-0079) — Backtracking to find a single word in a grid.
 
 ### Graphs
-#### Medium
-- [133. Clone Graph](#lc-0133)
-- [200. Number of Islands](#lc-0200)
-- [207. Course Schedule](#lc-0207)
-- [261. Graph Valid Tree](#lc-0261)
-- [323. Number of Connected Components In An Undirected Graph](#lc-0323)
-- [417. Pacific Atlantic Water Flow](#lc-0417)
+- [M] [133. Clone Graph](#lc-0133) — Deep-copy an undirected graph.
+- [M] [200. Number of Islands](#lc-0200) — Count islands in a grid via flood-fill.
+- [M] [207. Course Schedule](#lc-0207) — Detect cycle / topological order in prerequisites.
+- [M] [261. Graph Valid Tree](#lc-0261) — Check if edges form a single tree (Union-Find).
+- [M] [323. Number of Connected Components In An Undirected Graph](#lc-0323) — Count components.
+- [M] [417. Pacific Atlantic Water Flow](#lc-0417) — Reachability to both oceans via reverse flow.
 
 ### Advanced Graphs
-#### Hard
-- [269. Alien Dictionary](#lc-0269)
+- [H] [269. Alien Dictionary](#lc-0269) — Derive character order from sorted word list.
 
 ### 1-D Dynamic Programming
-#### Easy
-- [70. Climbing Stairs](#lc-0070)
-
-#### Medium
-- [5. Longest Palindromic Substring](#lc-0005)
-- [91. Decode Ways](#lc-0091)
-- [139. Word Break](#lc-0139)
-- [152. Maximum Product Subarray](#lc-0152)
-- [198. House Robber](#lc-0198)
-- [213. House Robber II](#lc-0213)
-- [300. Longest Increasing Subsequence](#lc-0300)
-- [322. Coin Change](#lc-0322)
-- [647. Palindromic Substrings](#lc-0647)
+- [E] [70. Climbing Stairs](#lc-0070) — Count ways to climb stairs using 1 or 2 steps.
+- [M] [5. Longest Palindromic Substring](#lc-0005) — Longest palindromic substring in a string.
+- [M] [91. Decode Ways](#lc-0091) — Number of ways to decode digit string to letters.
+- [M] [139. Word Break](#lc-0139) — Determine if string can be segmented into dictionary words.
+- [M] [152. Maximum Product Subarray](#lc-0152) — Max product subarray considering negatives.
+- [M] [198. House Robber](#lc-0198) — Max robbery without robbing adjacent houses.
+- [M] [213. House Robber II](#lc-0213) — Circular version of House Robber.
+- [M] [300. Longest Increasing Subsequence](#lc-0300) — Length of LIS (n log n solution available).
+- [M] [322. Coin Change](#lc-0322) — Minimum coins to make amount (DP).
+- [M] [647. Palindromic Substrings](#lc-0647) — Count all palindromic substrings.
 
 ### 2-D Dynamic Programming
-#### Medium
-- [62. Unique Paths](#lc-0062)
-- [1143. Longest Common Subsequence](#lc-1143)
+- [M] [62. Unique Paths](#lc-0062) — Count grid paths with only right/down moves.
+- [M] [1143. Longest Common Subsequence](#lc-1143) — LCS length between two strings.
 
 ### Greedy
-#### Medium
-- [53. Maximum Subarray](#lc-0053)
-- [55. Jump Game](#lc-0055)
+- [M] [53. Maximum Subarray](#lc-0053) — Kadane's algorithm for max contiguous sum.
+- [M] [55. Jump Game](#lc-0055) — Greedy farthest-reachability check.
 
 ### Intervals
-#### Easy
-- [252. Meeting Rooms](#lc-0252)
-
-#### Medium
-- [56. Merge Intervals](#lc-0056)
-- [57. Insert Interval](#lc-0057)
-- [253. Meeting Rooms II](#lc-0253)
-- [435. Non Overlapping Intervals](#lc-0435)
+- [E] [252. Meeting Rooms](#lc-0252) — Can attend all meetings without overlap?
+- [M] [56. Merge Intervals](#lc-0056) — Merge overlapping intervals.
+- [M] [57. Insert Interval](#lc-0057) — Insert and merge a new interval.
+- [M] [253. Meeting Rooms II](#lc-0253) — Minimum number of meeting rooms required.
+- [M] [435. Non Overlapping Intervals](#lc-0435) — Minimum removals to avoid overlaps.
 
 ### Math & Geometry
-#### Medium
-- [48. Rotate Image](#lc-0048)
-- [54. Spiral Matrix](#lc-0054)
-- [73. Set Matrix Zeroes](#lc-0073)
+- [M] [48. Rotate Image](#lc-0048) — Rotate matrix 90° in-place.
+- [M] [54. Spiral Matrix](#lc-0054) — Return elements in spiral order.
+- [M] [73. Set Matrix Zeroes](#lc-0073) — Zero rows/cols containing a zero (in-place).
 
 ### Bit Manipulation
-#### Easy
-- [190. Reverse Bits](#lc-0190)
-- [191. Number of 1 Bits](#lc-0191)
-- [268. Missing Number](#lc-0268)
-- [338. Counting Bits](#lc-0338)
-
-#### Medium
-- [371. Sum of Two Integers](#lc-0371)
+- [E] [190. Reverse Bits](#lc-0190) — Reverse bits in a fixed-width integer.
+- [E] [191. Number of 1 Bits](#lc-0191) — Count set bits (Hamming weight).
+- [E] [268. Missing Number](#lc-0268) — Find missing number in 0..n using XOR.
+- [E] [338. Counting Bits](#lc-0338) — Count bits for all numbers up to n.
+- [M] [371. Sum of Two Integers](#lc-0371) — Add two integers without using '+'.
 
 ## Solutions (Python)
 
@@ -166,9 +124,9 @@ Notes
 
 ### Arrays & Hashing
 
-<a id="lc-0001"></a>
-#### 1. Two Sum (Easy)
-LeetCode: https://leetcode.com/problems/two-sum/
+- <a id="lc-0001"></a>
+- #### 1. [Two Sum](https://leetcode.com/problems/two-sum/) [E]
+- Description: Find two indices whose values add up to a target.
 
 - Idea: Keep a hash map `value -> index`; for each number `x`, check whether `target - x` was seen before.
 - Time: `O(n)`
@@ -186,9 +144,9 @@ class Solution:
         return []
 ```
 
-<a id="lc-0217"></a>
-#### 217. Contains Duplicate (Easy)
-LeetCode: https://leetcode.com/problems/contains-duplicate/
+- <a id="lc-0217"></a>
+- #### 217. [Contains Duplicate](https://leetcode.com/problems/contains-duplicate/) [E]
+- Description: Determine if any value appears at least twice in an array.
 
 - Idea: Track seen values in a set; if we ever see one twice, return `True`.
 - Time: `O(n)`
@@ -205,9 +163,9 @@ class Solution:
         return False
 ```
 
-<a id="lc-0242"></a>
-#### 242. Valid Anagram (Easy)
-LeetCode: https://leetcode.com/problems/valid-anagram/
+- <a id="lc-0242"></a>
+- #### 242. [Valid Anagram](https://leetcode.com/problems/valid-anagram/) [E]
+- Description: Check whether two strings are permutations of each other.
 
 - Idea: Two strings are anagrams iff their character counts match.
 - Time: `O(n)`
@@ -222,9 +180,9 @@ class Solution:
         return Counter(s) == Counter(t)
 ```
 
-<a id="lc-0049"></a>
-#### 49. Group Anagrams (Medium)
-LeetCode: https://leetcode.com/problems/group-anagrams/
+- <a id="lc-0049"></a>
+- #### 49. [Group Anagrams](https://leetcode.com/problems/group-anagrams/) [M]
+- Description: Group a list of strings into collections of anagrams.
 
 - Idea: Use a hash map keyed by a canonical signature for each word (e.g., a 26-count tuple).
 - Time: `O(n * k)` where `k` is word length (counting chars)
@@ -247,9 +205,9 @@ class Solution:
         return list(groups.values())
 ```
 
-<a id="lc-0128"></a>
-#### 128. Longest Consecutive Sequence (Medium)
-LeetCode: https://leetcode.com/problems/longest-consecutive-sequence/
+- <a id="lc-0128"></a>
+- #### 128. [Longest Consecutive Sequence](https://leetcode.com/problems/longest-consecutive-sequence/) [M]
+- Description: Find the length of the longest run of consecutive integers in an array.
 
 - Idea: Put everything in a set; only start counting from numbers that have no predecessor (`x-1` not in set).
 - Time: `O(n)` average
@@ -271,9 +229,9 @@ class Solution:
         return best
 ```
 
-<a id="lc-0238"></a>
-#### 238. Product of Array Except Self (Medium)
-LeetCode: https://leetcode.com/problems/product-of-array-except-self/
+- <a id="lc-0238"></a>
+- #### 238. [Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/) [M]
+- Description: For each index, compute the product of all other elements without division.
 
 - Idea: Build prefix products left-to-right into `ans`, then multiply by suffix products right-to-left.
 - Time: `O(n)`
@@ -298,9 +256,9 @@ class Solution:
         return ans
 ```
 
-<a id="lc-0271"></a>
-#### 271. Encode and Decode Strings (Medium)
-LeetCode: https://leetcode.com/problems/encode-and-decode-strings/
+- <a id="lc-0271"></a>
+- #### 271. [Encode and Decode Strings](https://leetcode.com/problems/encode-and-decode-strings/) [M]
+- Description: Serialize and deserialize a list of strings into one string safely.
 
 - Idea: Length-prefix each string so decoding is unambiguous: `<len>#<string>...`.
 - Time: `O(total_chars)` for both encode/decode
@@ -330,11 +288,11 @@ class Codec:
         return res
 ```
 
-<a id="lc-0347"></a>
-#### 347. Top K Frequent Elements (Medium)
-LeetCode: https://leetcode.com/problems/top-k-frequent-elements/
+- <a id="lc-0347"></a>
+- #### 347. [Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/) [M]
+- Description: Return the k most frequent elements from an array.
 
-##### Approach 1: Bucket sort
+- ##### Approach 1: Bucket sort
 - Idea: Count frequencies, then bucket numbers by frequency and scan buckets from high to low.
 - Time: `O(n)`
 - Space: `O(n)`
@@ -385,9 +343,9 @@ class Solution:
 
 ### Two Pointers
 
-<a id="lc-0125"></a>
-#### 125. Valid Palindrome (Easy)
-LeetCode: https://leetcode.com/problems/valid-palindrome/
+- <a id="lc-0125"></a>
+- #### 125. [Valid Palindrome](https://leetcode.com/problems/valid-palindrome/) [E]
+- Description: Determine whether a string reads the same forward and backward (alphanumeric only).
 
 - Idea: Two pointers; skip non-alphanumerics and compare lowercased characters.
 - Time: `O(n)`
@@ -411,9 +369,9 @@ class Solution:
         return True
 ```
 
-<a id="lc-0011"></a>
-#### 11. Container With Most Water (Medium)
-LeetCode: https://leetcode.com/problems/container-with-most-water/
+- <a id="lc-0011"></a>
+- #### 11. [Container With Most Water](https://leetcode.com/problems/container-with-most-water/) [M]
+- Description: Maximize area formed between two vertical lines on the x-axis.
 
 - Idea: Two pointers; the area is limited by the shorter wall, so move the shorter pointer inward.
 - Time: `O(n)`
@@ -435,9 +393,9 @@ class Solution:
         return best
 ```
 
-<a id="lc-0015"></a>
-#### 15. 3Sum (Medium)
-LeetCode: https://leetcode.com/problems/3sum/
+- <a id="lc-0015"></a>
+- #### 15. [3Sum](https://leetcode.com/problems/3sum/) [M]
+- Description: Find unique triplets in array which sum to zero.
 
 - Idea: Sort; fix `i`, then run a 2-sum with two pointers on `i+1..n-1`, skipping duplicates.
 - Time: `O(n^2)`
@@ -477,9 +435,9 @@ class Solution:
 
 ### Sliding Window
 
-<a id="lc-0121"></a>
-#### 121. Best Time to Buy And Sell Stock (Easy)
-LeetCode: https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
+- <a id="lc-0121"></a>
+- #### 121. [Best Time to Buy And Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) [E]
+- Description: Max profit from one buy-sell transaction given daily prices.
 
 - Idea: Track the minimum price so far; at each day, consider selling today.
 - Time: `O(n)`
@@ -498,9 +456,9 @@ class Solution:
         return best
 ```
 
-<a id="lc-0003"></a>
-#### 3. Longest Substring Without Repeating Characters (Medium)
-LeetCode: https://leetcode.com/problems/longest-substring-without-repeating-characters/
+- <a id="lc-0003"></a>
+- #### 3. [Longest Substring Without Repeating Characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/) [M]
+- Description: Length of the longest substring with all distinct characters.
 
 - Idea: Sliding window; store last seen index for each char and move `left` past duplicates.
 - Time: `O(n)`
@@ -522,9 +480,9 @@ class Solution:
         return best
 ```
 
-<a id="lc-0424"></a>
-#### 424. Longest Repeating Character Replacement (Medium)
-LeetCode: https://leetcode.com/problems/longest-repeating-character-replacement/
+- <a id="lc-0424"></a>
+- #### 424. [Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/) [M]
+- Description: Longest substring achievable by replacing up to `k` characters.
 
 - Idea: Sliding window; keep `max_count` of any char in the window. Window is valid if `window_size - max_count <= k`.
 - Time: `O(n)`
@@ -554,9 +512,9 @@ class Solution:
         return best
 ```
 
-<a id="lc-0076"></a>
-#### 76. Minimum Window Substring (Hard)
-LeetCode: https://leetcode.com/problems/minimum-window-substring/
+- <a id="lc-0076"></a>
+- #### 76. [Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/) [H]
+- Description: Find the smallest substring that contains all characters of a target string.
 
 - Idea: Sliding window with counts; expand right until all required chars are satisfied, then shrink left while staying valid.
 - Time: `O(|s| + |t|)`
@@ -605,9 +563,9 @@ class Solution:
 
 ### Stack
 
-<a id="lc-0020"></a>
-#### 20. Valid Parentheses (Easy)
-LeetCode: https://leetcode.com/problems/valid-parentheses/
+- <a id="lc-0020"></a>
+- #### 20. [Valid Parentheses](https://leetcode.com/problems/valid-parentheses/) [E]
+- Description: Verify that brackets are balanced and properly nested.
 
 - Idea: Use a stack; every closing bracket must match the most recent unmatched opening bracket.
 - Time: `O(n)`
@@ -632,9 +590,9 @@ class Solution:
 
 ### Binary Search
 
-<a id="lc-0033"></a>
-#### 33. Search In Rotated Sorted Array (Medium)
-LeetCode: https://leetcode.com/problems/search-in-rotated-sorted-array/
+- <a id="lc-0033"></a>
+- #### 33. [Search In Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/) [M]
+- Description: Find target index in a rotated sorted array using binary search.
 
 - Idea: Binary search; at each step, determine which half is sorted and narrow accordingly.
 - Time: `O(log n)`
@@ -664,9 +622,9 @@ class Solution:
         return -1
 ```
 
-<a id="lc-0153"></a>
-#### 153. Find Minimum In Rotated Sorted Array (Medium)
-LeetCode: https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/
+- <a id="lc-0153"></a>
+- #### 153. [Find Minimum In Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) [M]
+- Description: Locate the minimum element in a rotated sorted array in O(log n).
 
 - Idea: Binary search; compare `nums[mid]` to `nums[right]` to decide which side contains the minimum.
 - Time: `O(log n)`
@@ -689,9 +647,9 @@ class Solution:
 
 ### Linked List
 
-<a id="lc-0021"></a>
-#### 21. Merge Two Sorted Lists (Easy)
-LeetCode: https://leetcode.com/problems/merge-two-sorted-lists/
+- <a id="lc-0021"></a>
+- #### 21. [Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/) [E]
+- Description: Merge two sorted singly-linked lists into one sorted list.
 
 - Idea: Two pointers + dummy head; repeatedly take the smaller node.
 - Time: `O(m + n)`
@@ -717,11 +675,11 @@ class Solution:
         return dummy.next
 ```
 
-<a id="lc-0141"></a>
-#### 141. Linked List Cycle (Easy)
-LeetCode: https://leetcode.com/problems/linked-list-cycle/
+- <a id="lc-0141"></a>
+- #### 141. [Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/) [E]
+- Description: Detect whether a linked list contains a cycle.
 
-##### Approach 1: Floyd's tortoise-and-hare
+- ##### Approach 1: Floyd's tortoise-and-hare
 - Idea: If a cycle exists, fast pointer will eventually meet slow pointer.
 - Time: `O(n)`
 - Space: `O(1)`
@@ -756,11 +714,11 @@ class Solution:
         return False
 ```
 
-<a id="lc-0206"></a>
-#### 206. Reverse Linked List (Easy)
-LeetCode: https://leetcode.com/problems/reverse-linked-list/
+- <a id="lc-0206"></a>
+- #### 206. [Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/) [E]
+- Description: Reverse the pointers of a singly linked list and return the new head.
 
-##### Approach 1: Iterative
+- ##### Approach 1: Iterative
 - Idea: Rewire `next` pointers while walking the list.
 - Time: `O(n)`
 - Space: `O(1)`
@@ -798,9 +756,9 @@ class Solution:
         return dfs(head, None)
 ```
 
-<a id="lc-0019"></a>
-#### 19. Remove Nth Node From End of List (Medium)
-LeetCode: https://leetcode.com/problems/remove-nth-node-from-end-of-list/
+- <a id="lc-0019"></a>
+- #### 19. [Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) [M]
+- Description: Remove the n-th node from the end of a linked list in one pass.
 
 - Idea: Two pointers; move `fast` `n` steps ahead, then move both until `fast` reaches the end.
 - Time: `O(n)`
@@ -823,9 +781,9 @@ class Solution:
         return dummy.next
 ```
 
-<a id="lc-0143"></a>
-#### 143. Reorder List (Medium)
-LeetCode: https://leetcode.com/problems/reorder-list/
+- <a id="lc-0143"></a>
+- #### 143. [Reorder List](https://leetcode.com/problems/reorder-list/) [M]
+- Description: Reorder list by alternating nodes from front and back.
 
 - Idea: Find middle, reverse second half, then weave the two lists together.
 - Time: `O(n)`
@@ -864,11 +822,11 @@ class Solution:
             second = tmp2
 ```
 
-<a id="lc-0023"></a>
-#### 23. Merge K Sorted Lists (Hard)
-LeetCode: https://leetcode.com/problems/merge-k-sorted-lists/
+- <a id="lc-0023"></a>
+- #### 23. [Merge K Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/) [H]
+- Description: Merge k sorted linked lists into one sorted list efficiently.
 
-##### Approach 1: Min-heap
+- ##### Approach 1: Min-heap
 - Idea: Always pop the smallest current head among the `k` lists.
 - Time: `O(N log k)` where `N` is total nodes
 - Space: `O(k)`
@@ -937,9 +895,9 @@ class Solution:
 
 ### Trees
 
-<a id="lc-0100"></a>
-#### 100. Same Tree (Easy)
-LeetCode: https://leetcode.com/problems/same-tree/
+- <a id="lc-0100"></a>
+- #### 100. [Same Tree](https://leetcode.com/problems/same-tree/) [E]
+- Description: Check whether two binary trees are structurally identical with same values.
 
 - Idea: Recursively compare structure and values.
 - Time: `O(n)`
@@ -955,9 +913,9 @@ class Solution:
         return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
 ```
 
-<a id="lc-0104"></a>
-#### 104. Maximum Depth of Binary Tree (Easy)
-LeetCode: https://leetcode.com/problems/maximum-depth-of-binary-tree/
+- <a id="lc-0104"></a>
+- #### 104. [Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/) [E]
+- Description: Compute the maximum depth (height) of a binary tree.
 
 - Idea: Depth is `1 + max(depth(left), depth(right))`.
 - Time: `O(n)`
@@ -971,9 +929,9 @@ class Solution:
         return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
 ```
 
-<a id="lc-0226"></a>
-#### 226. Invert Binary Tree (Easy)
-LeetCode: https://leetcode.com/problems/invert-binary-tree/
+- <a id="lc-0226"></a>
+- #### 226. [Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/) [E]
+- Description: Swap left and right children for every node in the tree.
 
 - Idea: Swap left/right recursively.
 - Time: `O(n)`
@@ -988,9 +946,9 @@ class Solution:
         return root
 ```
 
-<a id="lc-0572"></a>
-#### 572. Subtree of Another Tree (Easy)
-LeetCode: https://leetcode.com/problems/subtree-of-another-tree/
+- <a id="lc-0572"></a>
+- #### 572. [Subtree of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/) [E]
+- Description: Determine whether one tree is a subtree of another tree.
 
 - Idea: Traverse `root`; at each node, check if the two trees match exactly.
 - Time: `O(n * m)` worst-case
@@ -1015,11 +973,11 @@ class Solution:
         return self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
 ```
 
-<a id="lc-0098"></a>
-#### 98. Validate Binary Search Tree (Medium)
-LeetCode: https://leetcode.com/problems/validate-binary-search-tree/
+- <a id="lc-0098"></a>
+- #### 98. [Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) [M]
+- Description: Verify that a binary tree satisfies BST ordering constraints.
 
-##### Approach 1: DFS with bounds
+- ##### Approach 1: DFS with bounds
 - Idea: Every node must lie in `(low, high)` where bounds tighten as you go down the tree.
 - Time: `O(n)`
 - Space: `O(h)`
@@ -1063,11 +1021,11 @@ class Solution:
         return True
 ```
 
-<a id="lc-0102"></a>
-#### 102. Binary Tree Level Order Traversal (Medium)
-LeetCode: https://leetcode.com/problems/binary-tree-level-order-traversal/
+- <a id="lc-0102"></a>
+- #### 102. [Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/) [M]
+- Description: Return the node values of a binary tree level by level.
 
-##### Approach 1: BFS
+- ##### Approach 1: BFS
 - Idea: Use a queue; process one full level at a time.
 - Time: `O(n)`
 - Space: `O(n)` (queue in worst case)
@@ -1121,9 +1079,9 @@ class Solution:
         return res
 ```
 
-<a id="lc-0105"></a>
-#### 105. Construct Binary Tree From Preorder And Inorder Traversal (Medium)
-LeetCode: https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
+- <a id="lc-0105"></a>
+- #### 105. [Construct Binary Tree From Preorder And Inorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/) [M]
+- Description: Reconstruct a binary tree given its preorder and inorder traversals.
 
 - Idea: Preorder picks the root first; inorder splits left/right subtrees around the root.
 - Time: `O(n)` with an inorder index map
@@ -1152,9 +1110,9 @@ class Solution:
         return build(0, len(inorder) - 1)
 ```
 
-<a id="lc-0230"></a>
-#### 230. Kth Smallest Element In a BST (Medium)
-LeetCode: https://leetcode.com/problems/kth-smallest-element-in-a-bst/
+- <a id="lc-0230"></a>
+- #### 230. [Kth Smallest Element In a BST](https://leetcode.com/problems/kth-smallest-element-in-a-bst/) [M]
+- Description: Return the k-th smallest value in a BST using in-order traversal.
 
 - Idea: In-order traversal visits BST nodes in sorted order; stop at the k-th visit.
 - Time: `O(h + k)` average
@@ -1177,9 +1135,9 @@ class Solution:
             cur = cur.right
 ```
 
-<a id="lc-0235"></a>
-#### 235. Lowest Common Ancestor of a Binary Search Tree (Medium)
-LeetCode: https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/
+- <a id="lc-0235"></a>
+- #### 235. [Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/) [M]
+- Description: Find the lowest common ancestor of two nodes in a BST.
 
 - Idea: Use BST ordering: if both targets are < node, go left; if both > node, go right; else node is LCA.
 - Time: `O(h)`
@@ -1200,12 +1158,12 @@ class Solution:
                 return cur
 ```
 
-<a id="lc-0124"></a>
-#### 124. Binary Tree Maximum Path Sum (Hard)
-LeetCode: https://leetcode.com/problems/binary-tree-maximum-path-sum/
+- <a id="lc-0124"></a>
+- #### 124. [Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/) [H]
+- Description: Compute the maximum path sum for any path in the binary tree.
 
 - Idea: For each node, compute the max "gain" to contribute to its parent (choose at most one side),
-  while updating a global best using `node + left_gain + right_gain`.
+-  while updating a global best using `node + left_gain + right_gain`.
 - Time: `O(n)`
 - Space: `O(h)`
 
@@ -1229,9 +1187,9 @@ class Solution:
         return best
 ```
 
-<a id="lc-0297"></a>
-#### 297. Serialize And Deserialize Binary Tree (Hard)
-LeetCode: https://leetcode.com/problems/serialize-and-deserialize-binary-tree/
+- <a id="lc-0297"></a>
+- #### 297. [Serialize And Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/) [H]
+- Description: Serialize a binary tree to a string and reconstruct it back.
 
 - Idea: Preorder DFS with a null marker (e.g., `#`) uniquely represents the tree.
 - Time: `O(n)` for both serialize/deserialize
@@ -1270,9 +1228,9 @@ class Codec:
 
 ### Tries
 
-<a id="lc-0208"></a>
-#### 208. Implement Trie Prefix Tree (Medium)
-LeetCode: https://leetcode.com/problems/implement-trie-prefix-tree/
+- <a id="lc-0208"></a>
+- #### 208. [Implement Trie Prefix Tree](https://leetcode.com/problems/implement-trie-prefix-tree/) [M]
+- Description: Implement a trie supporting insert, search, and prefix queries.
 
 - Idea: Each node stores a map of `char -> child` and an `end` flag.
 - Time: `O(L)` per operation where `L` is word length
@@ -1314,9 +1272,9 @@ class Trie:
         return True
 ```
 
-<a id="lc-0211"></a>
-#### 211. Design Add And Search Words Data Structure (Medium)
-LeetCode: https://leetcode.com/problems/design-add-and-search-words-data-structure/
+- <a id="lc-0211"></a>
+- #### 211. [Design Add And Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/) [M]
+- Description: Trie that supports adding words and searching with `.` wildcards.
 
 - Idea: Trie + DFS when encountering wildcard `.` (try all children).
 - Time: `O(L)` average; `O(26^L)` worst-case with many wildcards
@@ -1355,9 +1313,9 @@ class WordDictionary:
         return dfs(0, self.root)
 ```
 
-<a id="lc-0212"></a>
-#### 212. Word Search II (Hard)
-LeetCode: https://leetcode.com/problems/word-search-ii/
+- <a id="lc-0212"></a>
+- #### 212. [Word Search II](https://leetcode.com/problems/word-search-ii/) [H]
+- Description: Find all words from a list that appear on a letter board using a trie + DFS.
 
 - Idea: Insert words into a trie; run DFS from each cell, walking the trie to prune impossible paths early.
 - Time: Depends on branching; trie pruning makes it practical for constraints.
@@ -1416,9 +1374,9 @@ class Solution:
 
 ### Heap / Priority Queue
 
-<a id="lc-0295"></a>
-#### 295. Find Median From Data Stream (Hard)
-LeetCode: https://leetcode.com/problems/find-median-from-data-stream/
+- <a id="lc-0295"></a>
+- #### 295. [Find Median From Data Stream](https://leetcode.com/problems/find-median-from-data-stream/) [H]
+- Description: Maintain a running median as numbers are added using two heaps.
 
 - Idea: Two heaps: max-heap for the lower half, min-heap for the upper half; keep sizes balanced.
 - Time: `O(log n)` per insert, `O(1)` median
@@ -1454,9 +1412,9 @@ class MedianFinder:
 
 ### Backtracking
 
-<a id="lc-0039"></a>
-#### 39. Combination Sum (Medium)
-LeetCode: https://leetcode.com/problems/combination-sum/
+- <a id="lc-0039"></a>
+- #### 39. [Combination Sum](https://leetcode.com/problems/combination-sum/) [M]
+- Description: Find all combinations of candidates that sum to target (reuse allowed).
 
 - Idea: DFS/backtracking; at each index, choose the current candidate any number of times.
 - Time: Exponential in worst case (output-sensitive)
@@ -1485,9 +1443,9 @@ class Solution:
         return res
 ```
 
-<a id="lc-0079"></a>
-#### 79. Word Search (Medium)
-LeetCode: https://leetcode.com/problems/word-search/
+- <a id="lc-0079"></a>
+- #### 79. [Word Search](https://leetcode.com/problems/word-search/) [M]
+- Description: Determine if a single word exists in a 2D board by backtracking.
 
 - Idea: Backtracking from each cell; mark visited cells in-place during the current path.
 - Time: `O(R*C*4^L)` worst-case
@@ -1526,11 +1484,11 @@ class Solution:
 
 ### Graphs
 
-<a id="lc-0133"></a>
-#### 133. Clone Graph (Medium)
-LeetCode: https://leetcode.com/problems/clone-graph/
+- <a id="lc-0133"></a>
+- #### 133. [Clone Graph](https://leetcode.com/problems/clone-graph/) [M]
+- Description: Create a deep copy of an undirected graph.
 
-##### Approach 1: DFS + hash map
+- ##### Approach 1: DFS + hash map
 - Idea: `old_node -> new_node` mapping; recursively clone neighbors.
 - Time: `O(V + E)`
 - Space: `O(V)`
@@ -1582,11 +1540,11 @@ class Solution:
         return clones[node]
 ```
 
-<a id="lc-0200"></a>
-#### 200. Number of Islands (Medium)
-LeetCode: https://leetcode.com/problems/number-of-islands/
+- <a id="lc-0200"></a>
+- #### 200. [Number of Islands](https://leetcode.com/problems/number-of-islands/) [M]
+- Description: Count connected groups of '1's (islands) in a grid.
 
-##### Approach 1: DFS flood-fill
+- ##### Approach 1: DFS flood-fill
 - Idea: For every land cell, flood-fill (turn `1` to `0`) to mark the entire island.
 - Time: `O(R*C)`
 - Space: `O(R*C)` recursion stack worst-case
@@ -1655,11 +1613,11 @@ class Solution:
         return islands
 ```
 
-<a id="lc-0207"></a>
-#### 207. Course Schedule (Medium)
-LeetCode: https://leetcode.com/problems/course-schedule/
+- <a id="lc-0207"></a>
+- #### 207. [Course Schedule](https://leetcode.com/problems/course-schedule/) [M]
+- Description: Determine if all courses can be finished given prerequisite pairs (cycle check).
 
-##### Approach 1: DFS cycle detection
+- ##### Approach 1: DFS cycle detection
 - Idea: `0=unvisited, 1=visiting, 2=done`; finding a back-edge to `visiting` means a cycle.
 - Time: `O(V + E)`
 - Space: `O(V + E)`
@@ -1728,9 +1686,9 @@ class Solution:
         return taken == numCourses
 ```
 
-<a id="lc-0261"></a>
-#### 261. Graph Valid Tree (Medium)
-LeetCode: https://leetcode.com/problems/graph-valid-tree/
+- <a id="lc-0261"></a>
+- #### 261. [Graph Valid Tree](https://leetcode.com/problems/graph-valid-tree/) [M]
+- Description: Check if given edges form a single tree using Union-Find.
 
 - Idea: A valid tree has exactly `n-1` edges and no cycles. Union-Find detects cycles efficiently.
 - Time: `O(n + e * α(n))`
@@ -1770,9 +1728,9 @@ class Solution:
         return True
 ```
 
-<a id="lc-0323"></a>
-#### 323. Number of Connected Components In An Undirected Graph (Medium)
-LeetCode: https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/
+- <a id="lc-0323"></a>
+- #### 323. [Number of Connected Components In An Undirected Graph](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) [M]
+- Description: Count connected components in an undirected graph (Union-Find or DFS).
 
 - Idea: Union-Find; each successful union reduces the component count by 1.
 - Time: `O(n + e * α(n))`
@@ -1811,9 +1769,9 @@ class Solution:
         return components
 ```
 
-<a id="lc-0417"></a>
-#### 417. Pacific Atlantic Water Flow (Medium)
-LeetCode: https://leetcode.com/problems/pacific-atlantic-water-flow/
+- <a id="lc-0417"></a>
+- #### 417. [Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/) [M]
+- Description: Find cells that can flow to both the Pacific and Atlantic oceans.
 
 - Idea: Reverse the flow: start DFS/BFS from ocean borders and move to equal/higher heights. Intersection are cells reaching both oceans.
 - Time: `O(R*C)`
@@ -1849,9 +1807,9 @@ class Solution:
 
 ### Advanced Graphs
 
-<a id="lc-0269"></a>
-#### 269. Alien Dictionary (Hard)
-LeetCode: https://leetcode.com/problems/alien-dictionary/
+- <a id="lc-0269"></a>
+- #### 269. [Alien Dictionary](https://leetcode.com/problems/alien-dictionary/) [H]
+- Description: Derive a possible character order from a sorted dictionary of an alien language.
 
 - Idea: Build a directed graph from first differing character between adjacent words, then topologically sort.
 - Edge case: If `w1` is longer and `w1.startswith(w2)`, input is invalid (no ordering).
@@ -1894,9 +1852,9 @@ class Solution:
 
 ### 1-D Dynamic Programming
 
-<a id="lc-0070"></a>
-#### 70. Climbing Stairs (Easy)
-LeetCode: https://leetcode.com/problems/climbing-stairs/
+- <a id="lc-0070"></a>
+- #### 70. [Climbing Stairs](https://leetcode.com/problems/climbing-stairs/) [E]
+- Description: Count ways to reach the top when you can take 1 or 2 steps.
 
 - Idea: Fibonacci: `ways[i] = ways[i-1] + ways[i-2]`.
 - Time: `O(n)`
@@ -1914,9 +1872,9 @@ class Solution:
         return b
 ```
 
-<a id="lc-0005"></a>
-#### 5. Longest Palindromic Substring (Medium)
-LeetCode: https://leetcode.com/problems/longest-palindromic-substring/
+- <a id="lc-0005"></a>
+- #### 5. [Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/) [M]
+- Description: Find the longest palindromic substring in a given string.
 
 - Idea: Expand around each center (odd and even) and keep the best window.
 - Time: `O(n^2)`
@@ -1947,9 +1905,9 @@ class Solution:
         return s[best_l : best_r + 1]
 ```
 
-<a id="lc-0091"></a>
-#### 91. Decode Ways (Medium)
-LeetCode: https://leetcode.com/problems/decode-ways/
+- <a id="lc-0091"></a>
+- #### 91. [Decode Ways](https://leetcode.com/problems/decode-ways/) [M]
+- Description: Count decodings of digit strings mapping 1->A..26->Z using DP.
 
 - Idea: DP over prefix length. A digit can stand alone (1..9) and/or pair with previous (10..26).
 - Time: `O(n)`
@@ -1974,11 +1932,11 @@ class Solution:
         return dp1
 ```
 
-<a id="lc-0139"></a>
-#### 139. Word Break (Medium)
-LeetCode: https://leetcode.com/problems/word-break/
+- <a id="lc-0139"></a>
+- #### 139. [Word Break](https://leetcode.com/problems/word-break/) [M]
+- Description: Determine if a string can be segmented into a sequence of dictionary words.
 
-##### Approach 1: Bottom-up DP
+- ##### Approach 1: Bottom-up DP
 - Idea: `dp[i]` is True if `s[:i]` can be segmented; try all previous cuts `j < i`.
 - Time: `O(n^2)` checks (substring lookup is average `O(1)` with a set)
 - Space: `O(n)`
@@ -2027,9 +1985,9 @@ class Solution:
         return dfs(0)
 ```
 
-<a id="lc-0152"></a>
-#### 152. Maximum Product Subarray (Medium)
-LeetCode: https://leetcode.com/problems/maximum-product-subarray/
+- <a id="lc-0152"></a>
+- #### 152. [Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/) [M]
+- Description: Find maximum product of any contiguous subarray, tracking min/max prefixes.
 
 - Idea: Track both max and min products ending at current index (negative flips max/min).
 - Time: `O(n)`
@@ -2050,9 +2008,9 @@ class Solution:
         return ans
 ```
 
-<a id="lc-0198"></a>
-#### 198. House Robber (Medium)
-LeetCode: https://leetcode.com/problems/house-robber/
+- <a id="lc-0198"></a>
+- #### 198. [House Robber](https://leetcode.com/problems/house-robber/) [M]
+- Description: Maximize robbery value without robbing adjacent houses (linear DP).
 
 - Idea: DP with two states: `prev1` best up to i-1, `prev2` best up to i-2.
 - Time: `O(n)`
@@ -2070,9 +2028,9 @@ class Solution:
         return prev1
 ```
 
-<a id="lc-0213"></a>
-#### 213. House Robber II (Medium)
-LeetCode: https://leetcode.com/problems/house-robber-ii/
+- <a id="lc-0213"></a>
+- #### 213. [House Robber II](https://leetcode.com/problems/house-robber-ii/) [M]
+- Description: Circular houses version of House Robber; exclude either first or last.
 
 - Idea: Circle constraint means you can't take both first and last. Solve two linear cases and take max.
 - Time: `O(n)`
@@ -2093,11 +2051,11 @@ class Solution:
         return max(rob_line(nums[:-1]), rob_line(nums[1:]))
 ```
 
-<a id="lc-0300"></a>
-#### 300. Longest Increasing Subsequence (Medium)
-LeetCode: https://leetcode.com/problems/longest-increasing-subsequence/
+- <a id="lc-0300"></a>
+- #### 300. [Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/) [M]
+- Description: Length of the longest strictly increasing subsequence (n log n solution available).
 
-##### Approach 1: `O(n^2)` DP
+- ##### Approach 1: `O(n^2)` DP
 - Idea: `dp[i]` = LIS ending at i; transition from all `j<i` with `nums[j] < nums[i]`.
 - Time: `O(n^2)`
 - Space: `O(n)`
@@ -2137,11 +2095,11 @@ class Solution:
         return len(tails)
 ```
 
-<a id="lc-0322"></a>
-#### 322. Coin Change (Medium)
-LeetCode: https://leetcode.com/problems/coin-change/
+- <a id="lc-0322"></a>
+- #### 322. [Coin Change](https://leetcode.com/problems/coin-change/) [M]
+- Description: Compute minimum number of coins needed to make a given amount using DP.
 
-##### Approach 1: Bottom-up DP
+- ##### Approach 1: Bottom-up DP
 - Idea: `dp[a]` = min coins to make amount `a`; try each coin.
 - Time: `O(amount * numCoins)`
 - Space: `O(amount)`
@@ -2189,9 +2147,9 @@ class Solution:
         return -1 if ans == float("inf") else ans
 ```
 
-<a id="lc-0647"></a>
-#### 647. Palindromic Substrings (Medium)
-LeetCode: https://leetcode.com/problems/palindromic-substrings/
+- <a id="lc-0647"></a>
+- #### 647. [Palindromic Substrings](https://leetcode.com/problems/palindromic-substrings/) [M]
+- Description: Count all palindromic substrings in a given string.
 
 - Idea: Expand around each center (odd and even) and count.
 - Time: `O(n^2)`
@@ -2219,9 +2177,9 @@ class Solution:
 
 ### 2-D Dynamic Programming
 
-<a id="lc-0062"></a>
-#### 62. Unique Paths (Medium)
-LeetCode: https://leetcode.com/problems/unique-paths/
+- <a id="lc-0062"></a>
+- #### 62. [Unique Paths](https://leetcode.com/problems/unique-paths/) [M]
+- Description: Count number of unique paths in an m x n grid moving only right/down.
 
 - Idea: `dp[r][c] = dp[r-1][c] + dp[r][c-1]`; use 1D DP since each row depends only on previous.
 - Time: `O(m*n)`
@@ -2239,9 +2197,9 @@ class Solution:
         return dp[-1]
 ```
 
-<a id="lc-1143"></a>
-#### 1143. Longest Common Subsequence (Medium)
-LeetCode: https://leetcode.com/problems/longest-common-subsequence/
+- <a id="lc-1143"></a>
+- #### 1143. [Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/) [M]
+- Description: Compute the length of the longest common subsequence between two strings.
 
 - Idea: 2D DP: `dp[i][j]` = LCS length for suffixes `text1[i:]`, `text2[j:]`.
 - Time: `O(m*n)`
@@ -2265,9 +2223,9 @@ class Solution:
 
 ### Greedy
 
-<a id="lc-0053"></a>
-#### 53. Maximum Subarray (Medium)
-LeetCode: https://leetcode.com/problems/maximum-subarray/
+- <a id="lc-0053"></a>
+- #### 53. [Maximum Subarray](https://leetcode.com/problems/maximum-subarray/) [M]
+- Description: Find the contiguous subarray with the largest sum (Kadane's algorithm).
 
 - Idea: Kadane's algorithm: best subarray ending at `i` is either `nums[i]` or extend previous.
 - Time: `O(n)`
@@ -2283,9 +2241,9 @@ class Solution:
         return best
 ```
 
-<a id="lc-0055"></a>
-#### 55. Jump Game (Medium)
-LeetCode: https://leetcode.com/problems/jump-game/
+- <a id="lc-0055"></a>
+- #### 55. [Jump Game](https://leetcode.com/problems/jump-game/) [M]
+- Description: Determine if you can reach the last index given max jumps at each position.
 
 - Idea: Greedy keep the farthest reachable index; fail if you land beyond it.
 - Time: `O(n)`
@@ -2304,9 +2262,9 @@ class Solution:
 
 ### Intervals
 
-<a id="lc-0252"></a>
-#### 252. Meeting Rooms (Easy)
-LeetCode: https://leetcode.com/problems/meeting-rooms/
+- <a id="lc-0252"></a>
+- #### 252. [Meeting Rooms](https://leetcode.com/problems/meeting-rooms/) [E]
+- Description: Determine if a person can attend all given meeting intervals without overlap.
 
 - Idea: Sort by start time; any overlap means you can't attend all meetings.
 - Time: `O(n log n)`
@@ -2322,9 +2280,9 @@ class Solution:
         return True
 ```
 
-<a id="lc-0056"></a>
-#### 56. Merge Intervals (Medium)
-LeetCode: https://leetcode.com/problems/merge-intervals/
+- <a id="lc-0056"></a>
+- #### 56. [Merge Intervals](https://leetcode.com/problems/merge-intervals/) [M]
+- Description: Merge all overlapping intervals into disjoint intervals.
 
 - Idea: Sort by start; extend the current merged interval while overlaps continue.
 - Time: `O(n log n)`
@@ -2345,9 +2303,9 @@ class Solution:
         return merged
 ```
 
-<a id="lc-0057"></a>
-#### 57. Insert Interval (Medium)
-LeetCode: https://leetcode.com/problems/insert-interval/
+- <a id="lc-0057"></a>
+- #### 57. [Insert Interval](https://leetcode.com/problems/insert-interval/) [M]
+- Description: Insert and merge a new interval into a list of non-overlapping intervals.
 
 - Idea: Add all intervals before `newInterval`, merge overlaps with it, then append the rest.
 - Time: `O(n)`
@@ -2378,11 +2336,11 @@ class Solution:
         return res
 ```
 
-<a id="lc-0253"></a>
-#### 253. Meeting Rooms II (Medium)
-LeetCode: https://leetcode.com/problems/meeting-rooms-ii/
+- <a id="lc-0253"></a>
+- #### 253. [Meeting Rooms II](https://leetcode.com/problems/meeting-rooms-ii/) [M]
+- Description: Compute minimum number of meeting rooms required to hold all meetings.
 
-##### Approach 1: Min-heap of end times
+- ##### Approach 1: Min-heap of end times
 - Idea: Reuse a room if the earliest-ending meeting ends before the next starts; otherwise allocate a new room.
 - Time: `O(n log n)`
 - Space: `O(n)` heap worst-case
@@ -2431,9 +2389,9 @@ class Solution:
         return best
 ```
 
-<a id="lc-0435"></a>
-#### 435. Non Overlapping Intervals (Medium)
-LeetCode: https://leetcode.com/problems/non-overlapping-intervals/
+- <a id="lc-0435"></a>
+- #### 435. [Non Overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/) [M]
+- Description: Minimum number of intervals to remove to make the rest non-overlapping.
 
 - Idea: Greedy sort by end time; keep the interval with the earliest end to leave room for future intervals.
 - Time: `O(n log n)`
@@ -2460,9 +2418,9 @@ class Solution:
 
 ### Math & Geometry
 
-<a id="lc-0048"></a>
-#### 48. Rotate Image (Medium)
-LeetCode: https://leetcode.com/problems/rotate-image/
+- <a id="lc-0048"></a>
+- #### 48. [Rotate Image](https://leetcode.com/problems/rotate-image/) [M]
+- Description: Rotate an n x n matrix 90 degrees clockwise in-place.
 
 - Idea: Rotate 90° clockwise = transpose + reverse each row.
 - Time: `O(n^2)`
@@ -2483,9 +2441,9 @@ class Solution:
             row.reverse()
 ```
 
-<a id="lc-0054"></a>
-#### 54. Spiral Matrix (Medium)
-LeetCode: https://leetcode.com/problems/spiral-matrix/
+- <a id="lc-0054"></a>
+- #### 54. [Spiral Matrix](https://leetcode.com/problems/spiral-matrix/) [M]
+- Description: Return elements of a matrix in spiral order.
 
 - Idea: Maintain boundaries (top, bottom, left, right) and peel layers.
 - Time: `O(R*C)`
@@ -2523,11 +2481,11 @@ class Solution:
         return res
 ```
 
-<a id="lc-0073"></a>
-#### 73. Set Matrix Zeroes (Medium)
-LeetCode: https://leetcode.com/problems/set-matrix-zeroes/
+- <a id="lc-0073"></a>
+- #### 73. [Set Matrix Zeroes](https://leetcode.com/problems/set-matrix-zeroes/) [M]
+- Description: If a cell is zero, set its entire row and column to zero (in-place options).
 
-##### Approach 1: Row/column sets
+- ##### Approach 1: Row/column sets
 - Idea: First pass records which rows/cols must be zeroed; second pass writes zeros.
 - Time: `O(R*C)`
 - Space: `O(R + C)`
@@ -2584,9 +2542,9 @@ class Solution:
 
 ### Bit Manipulation
 
-<a id="lc-0190"></a>
-#### 190. Reverse Bits (Easy)
-LeetCode: https://leetcode.com/problems/reverse-bits/
+- <a id="lc-0190"></a>
+- #### 190. [Reverse Bits](https://leetcode.com/problems/reverse-bits/) [E]
+- Description: Reverse the bit order in a fixed-width integer.
 
 - Idea: Build the reversed number by shifting result left and reading bits from `n`.
 - Time: `O(1)` (32 iterations)
@@ -2602,9 +2560,9 @@ class Solution:
         return res
 ```
 
-<a id="lc-0191"></a>
-#### 191. Number of 1 Bits (Easy)
-LeetCode: https://leetcode.com/problems/number-of-1-bits/
+- <a id="lc-0191"></a>
+- #### 191. [Number of 1 Bits](https://leetcode.com/problems/number-of-1-bits/) [E]
+- Description: Count the number of set bits (population count) in an integer.
 
 - Idea: Repeatedly clear the lowest set bit with `n &= n-1`.
 - Time: `O(popcount(n))`
@@ -2620,9 +2578,9 @@ class Solution:
         return count
 ```
 
-<a id="lc-0268"></a>
-#### 268. Missing Number (Easy)
-LeetCode: https://leetcode.com/problems/missing-number/
+- <a id="lc-0268"></a>
+- #### 268. [Missing Number](https://leetcode.com/problems/missing-number/) [E]
+- Description: Find the missing number in [0..n] given n distinct numbers.
 
 - Idea: XOR all indices and values together; pairs cancel leaving the missing number.
 - Time: `O(n)`
@@ -2637,9 +2595,9 @@ class Solution:
         return res
 ```
 
-<a id="lc-0338"></a>
-#### 338. Counting Bits (Easy)
-LeetCode: https://leetcode.com/problems/counting-bits/
+- <a id="lc-0338"></a>
+- #### 338. [Counting Bits](https://leetcode.com/problems/counting-bits/) [E]
+- Description: For each number 0..n, compute the number of set bits efficiently.
 
 - Idea: `bits[i] = bits[i >> 1] + (i & 1)`.
 - Time: `O(n)`
@@ -2654,9 +2612,9 @@ class Solution:
         return ans
 ```
 
-<a id="lc-0371"></a>
-#### 371. Sum of Two Integers (Medium)
-LeetCode: https://leetcode.com/problems/sum-of-two-integers/
+- <a id="lc-0371"></a>
+- #### 371. [Sum of Two Integers](https://leetcode.com/problems/sum-of-two-integers/) [M]
+- Description: Compute sum of two integers without using the `+` operator using bitwise ops.
 
 - Idea: Bitwise addition: `xor` gives sum without carry; `(a&b)<<1` gives carry. Repeat until carry is 0.
 - Note: Python ints are unbounded, so mask to 32-bit to emulate signed int behavior.
