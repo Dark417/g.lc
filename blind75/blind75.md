@@ -1807,8 +1807,8 @@ class Solution:
 ### Advanced Graphs
 
 <a id="lc-0269"></a>
-#### 269. [Alien Dictionary](https://leetcode.com/problems/alien-dictionary/) [H]
-Description: Derive a possible character order from a sorted dictionary of an alien language.
+- #### 269. [Alien Dictionary](https://leetcode.com/problems/alien-dictionary/) [H]
+- Description: Derive a possible character order from a sorted dictionary of an alien language.
 
 Idea: Build a directed graph from first differing character between adjacent words, then topologically sort.
 Edge case: If `w1` is longer and `w1.startswith(w2)`, input is invalid (no ordering).

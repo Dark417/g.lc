@@ -13,6 +13,28 @@
 - [2296. Design a Text Editor](#lc-2296)
 - [3510. Minimum Pair Removal to Sort Array II](#lc-3510)
 
+
+### Medium
+
+- [146. LRU Cache](#lc-0146)
+- [2. Add Two Numbers](#lc-0002)
+- [143. Reorder List](#lc-0143)
+- [19. Remove Nth Node From End of List](#lc-0019)
+- [148. Sort List](#lc-0148)
+- [92. Reverse Linked List II](#lc-0092)
+- [707. Design Linked List](#lc-0707)
+- [142. Linked List Cycle II](#lc-0142)
+- [138. Copy List with Random Pointer](#lc-0138)
+- [24. Swap Nodes in Pairs](#lc-0024)
+- [82. Remove Duplicates from Sorted List II](#lc-0082)
+- [114. Flatten Binary Tree to Linked List](#lc-0114)
+- [86. Partition List](#lc-0086)
+- [445. Add Two Numbers II](#lc-0445)
+- [61. Rotate List](#lc-0061)
+- [622. Design Circular Queue](#lc-0622)
+- [116. Populating Next Right Pointers in Each Node](#lc-0116)
+
+
 ### Easy
 - [160. Intersection of Two Linked Lists](#lc-0160)
 
@@ -614,6 +636,795 @@ class Solution:
 
         return ops
 # Time: O(n log n), Space: O(n)
+```
+
+<a id="lc-0146"></a>
+#### 146. [LRU Cache](https://leetcode.com/problems/lru-cache/) [M]
+Description: Design a cache that supports `get` and `put` in `O(1)`.
+
+Idea: Hash map + doubly-linked list (most-recent at the front).
+
+```python
+class _Node:
+    def __init__(self, key=0, val=0):
+        self.key = key
+        self.val = val
+        self.prev = None
+        self.next = None
+
+
+class LRUCache:
+    def __init__(self, capacity):
+        self.cap = capacity
+        self.cache = {}
+        self.head = _Node()
+        self.tail = _Node()
+        self.head.next = self.tail
+        self.tail.prev = self.head
+
+    def _remove(self, node):
+        node.prev.next = node.next
+        node.next.prev = node.prev
+
+    def _add_front(self, node):
+        node.prev = self.head
+        node.next = self.head.next
+        self.head.next.prev = node
+        self.head.next = node
+
+    def get(self, key):
+        if key not in self.cache:
+            return -1
+        node = self.cache[key]
+        self._remove(node)
+        self._add_front(node)
+        return node.val
+
+    def put(self, key, value):
+        if key in self.cache:
+            node = self.cache[key]
+            node.val = value
+            self._remove(node)
+            self._add_front(node)
+            return
+
+        node = _Node(key, value)
+        self.cache[key] = node
+        self._add_front(node)
+
+        if len(self.cache) > self.cap:
+            lru = self.tail.prev
+            self._remove(lru)
+            del self.cache[lru.key]
+# Time: O(1) per op, Space: O(capacity)
+```
+
+<a id="lc-0002"></a>
+#### 2. [Add Two Numbers](https://leetcode.com/problems/add-two-numbers/) [M]
+Description: Add two numbers represented by reverse-order linked lists.
+
+Idea: Digit-by-digit addition with carry.
+
+```python
+
+class Solution:
+    # l1 和 l2 为当前遍历的节点，carry 为进位
+    # add extra parameter 'carry'!
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode], carry=0) -> Optional[ListNode]:
+        if l1 is None and l2 is None and carry == 0:  # 递归边界
+            return None
+
+        s = carry
+        if l1:
+            s += l1.val  # 累加进位与节点值
+            l1 = l1.next
+        if l2:
+            s += l2.val
+            l2 = l2.next
+
+        # s 除以 10 的余数为当前节点值，商为进位
+        return ListNode(s % 10, self.addTwoNumbers(l1, l2, s // 10))
+
+
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        cur = dummy = ListNode()
+        carry = 0
+        while l1 or l2 or carry:
+            if l1:
+                carry += l1.val
+                l1 = l1.next
+            if l2:
+                carry += l2.val
+                l2 = l2.next
+            cur.next = ListNode(carry % 10)
+            carry //= 10
+            cur = cur.next
+        return dummy.next
+        
+
+
+class Solution:
+    # l1 和 l2 为当前遍历的节点，carry 为进位
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode], carry=0) -> Optional[ListNode]:
+        if l1 is None and l2 is None:  # 递归边界
+            return ListNode(carry) if carry else None  # 如果进位了，就额外创建一个节点
+        if l1 is None:  # 如果 l1 是空的，那么此时 l2 一定不是空节点
+            l1, l2 = l2, l1  # 交换 l1 与 l2，保证 l1 非空，从而简化代码
+        s = carry + l1.val + (l2.val if l2 else 0)  # 节点值和进位加在一起
+        l1.val = s % 10  # 每个节点保存一个数位（直接修改原链表）
+        l1.next = self.addTwoNumbers(l1.next, l2.next if l2 else None, s // 10)  # 进位
+        return l1
+
+
+```
+
+<a id="lc-0143"></a>
+#### 143. [Reorder List](https://leetcode.com/problems/reorder-list/) [M]
+Description: Reorder `L0→L1→…→Ln` to `L0→Ln→L1→Ln-1→…` (in-place).
+
+Idea: Find middle, reverse second half, then merge two halves.
+
+```python
+
+# get the middle node
+# slow, fast pointers
+# reverse the second half
+# 1 4 2 3, 2 3 not touched
+class Solution:
+    # 876. 链表的中间结点
+    def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        slow = fast = head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        return slow
+
+    # 206. 反转链表
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        pre, cur = None, head
+        while cur:
+            nxt = cur.next
+            cur.next = pre
+            pre = cur
+            cur = nxt
+        return pre
+
+    def reorderList(self, head: Optional[ListNode]) -> None:
+        mid = self.middleNode(head)
+        head2 = self.reverseList(mid)
+        while head2.next:
+            nxt = head.next
+            nxt2 = head2.next
+            head.next = head2
+            head2.next = nxt
+            head = nxt
+            head2 = nxt2
+
+class Solution:
+    def reorderList(self, head):
+        if not head or not head.next:
+            return
+
+        slow = fast = head
+        while fast.next and fast.next.next:
+            slow = slow.next
+            fast = fast.next.next
+
+        prev = None
+        cur = slow.next
+        slow.next = None
+        while cur:
+            nxt = cur.next
+            cur.next = prev
+            prev = cur
+            cur = nxt
+
+        first, second = head, prev
+        while second:
+            n1, n2 = first.next, second.next
+            first.next = second
+            second.next = n1
+            first, second = n1, n2
+# Time: O(n), Space: O(1)
+```
+
+<a id="lc-0019"></a>
+#### 19. [Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) [M]
+Description: Remove the `n`th node from the end of the list.
+
+Idea: Two pointers with a fixed gap of `n`.
+
+```python
+class Solution:
+    def removeNthFromEnd(self, head, n):
+        dummy = ListNode(0)
+        dummy.next = head
+
+        fast = dummy
+        for _ in range(n):
+            fast = fast.next
+
+        slow = dummy
+        while fast.next:
+            fast = fast.next
+            slow = slow.next
+
+        slow.next = slow.next.next
+        return dummy.next
+# Time: O(n), Space: O(1)
+
+
+def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
+    def getLength(head: ListNode) -> int:
+        length = 0
+        while head:
+            length += 1
+            head = head.next
+        return length
+    
+    dummy = ListNode(0, head)
+    length = getLength(head)
+    cur = dummy
+    for i in range(1, length - n + 1):
+        cur = cur.next
+    cur.next = cur.next.next
+    return dummy.next
+
+def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
+    dummy = ListNode(0, head)
+    stack = list()
+    cur = dummy
+    while cur:
+        stack.append(cur)
+        cur = cur.next
+    
+    for i in range(n):
+        stack.pop()
+
+    prev = stack[-1]
+    prev.next = prev.next.next
+    return dummy.next
+```
+
+
+2095. Delete the Middle Node of a Linked List
+```python
+class Solution:
+    def deleteMiddle(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        slow = fast = head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+        dummy = cur = ListNode(next = head)
+        while cur.next != slow:
+            cur = cur.next
+        cur.next = cur.next.next
+        return dummy.next
+```
+
+1721. Swapping Nodes in a Linked
+```python
+class Solution:
+    def swapNodes(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        cur = head
+        for _ in range(k - 1):
+            cur = cur.next
+        p1 = cur
+        p2 = head
+        cur = p1
+        while cur.next:
+            cur = cur.next
+            p2 = p2.next
+        p1.val, p2.val = p2.val, p1.val
+        return head
+```
+
+<a id="lc-0148"></a>
+#### 148. [Sort List](https://leetcode.com/problems/sort-list/) [M]
+Description: Sort a linked list in `O(n log n)` time.
+
+Idea: Merge sort on linked list (split by slow/fast pointers).
+
+```python
+class Solution:
+    def sortList(self, head):
+        if not head or not head.next:
+            return head
+
+        slow, fast = head, head.next
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+        mid = slow.next
+        slow.next = None
+
+        left = self.sortList(head)
+        right = self.sortList(mid)
+        return self._merge(left, right)
+
+    def _merge(self, a, b):
+        dummy = ListNode()
+        cur = dummy
+        while a and b:
+            if a.val <= b.val:
+                cur.next = a
+                a = a.next
+            else:
+                cur.next = b
+                b = b.next
+            cur = cur.next
+        cur.next = a if a else b
+        return dummy.next
+# Time: O(n log n), Space: O(log n) recursion
+
+class Solution:
+    def sortList(self, head: ListNode) -> ListNode:
+        if not head or not head.next: return head # termination.
+        # cut the LinkedList at the mid index.
+        slow, fast = head, head.next
+        while fast and fast.next:
+            fast, slow = fast.next.next, slow.next
+        mid, slow.next = slow.next, None # save and cut.
+        # recursive for cutting.
+        left, right = self.sortList(head), self.sortList(mid)
+        # merge `left` and `right` linked list and return it.
+        h = res = ListNode(0)
+        while left and right:
+            if left.val < right.val: h.next, left = left, left.next
+            else: h.next, right = right, right.next
+            h = h.next
+        h.next = left if left else right
+        return res.next
+
+```
+
+<a id="lc-0092"></a>
+#### 92. [Reverse Linked List II](https://leetcode.com/problems/reverse-linked-list-ii/) [M]
+Description: Reverse the nodes between positions `left` and `right`.
+
+Idea: Fix the node before `left`, then do head-insertion for the sublist.
+
+```python
+class Solution:
+    def reverseBetween(self, head, left, right):
+        if not head or left == right:
+            return head
+
+        dummy = ListNode(0)
+        dummy.next = head
+
+        prev = dummy
+        for _ in range(left - 1):
+            prev = prev.next
+
+        cur = prev.next
+        for _ in range(right - left):
+            move = cur.next
+            cur.next = move.next
+            move.next = prev.next
+            prev.next = move
+
+        return dummy.next
+# Time: O(n), Space: O(1)
+
+class Solution:
+    def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
+        p0 = dummy = ListNode(next=head)
+        for _ in range(left - 1):
+            p0 = p0.next
+
+        pre = None
+        cur = p0.next
+        for _ in range(right - left + 1):
+            nxt = cur.next
+            cur.next = pre  # 每次循环只修改一个 next，方便大家理解
+            pre = cur
+            cur = nxt
+
+        # 见视频
+        p0.next.next = cur  # 1.next => 2,  2.next => 5
+        p0.next = pre       # 1.next => 4
+        return dummy.next
+```
+
+<a id="lc-0707"></a>
+#### 707. [Design Linked List](https://leetcode.com/problems/design-linked-list/) [M]
+Description: Implement a linked list with common operations.
+
+Idea: Doubly-linked list with head/tail sentinels + size.
+
+```python
+class _Node:
+    def __init__(self, val=0):
+        self.val = val
+        self.prev = None
+        self.next = None
+
+
+class MyLinkedList:
+    def __init__(self):
+        self.size = 0
+        self.head = _Node()
+        self.tail = _Node()
+        self.head.next = self.tail
+        self.tail.prev = self.head
+
+    def _node_at(self, index):
+        if index < 0 or index >= self.size:
+            return None
+
+        if index < self.size // 2:
+            cur = self.head.next
+            for _ in range(index):
+                cur = cur.next
+            return cur
+
+        cur = self.tail.prev
+        for _ in range(self.size - index - 1):
+            cur = cur.prev
+        return cur
+
+    def _insert_before(self, node, new_node):
+        prev = node.prev
+        new_node.prev = prev
+        new_node.next = node
+        prev.next = new_node
+        node.prev = new_node
+
+    def get(self, index):
+        node = self._node_at(index)
+        return node.val if node else -1
+
+    def addAtHead(self, val):
+        self._insert_before(self.head.next, _Node(val))
+        self.size += 1
+
+    def addAtTail(self, val):
+        self._insert_before(self.tail, _Node(val))
+        self.size += 1
+
+    def addAtIndex(self, index, val):
+        if index <= 0:
+            self.addAtHead(val)
+            return
+        if index == self.size:
+            self.addAtTail(val)
+            return
+        if index > self.size:
+            return
+
+        node = self._node_at(index)
+        self._insert_before(node, _Node(val))
+        self.size += 1
+
+    def deleteAtIndex(self, index):
+        node = self._node_at(index)
+        if not node:
+            return
+        node.prev.next = node.next
+        node.next.prev = node.prev
+        self.size -= 1
+# Time: O(n) per op (traversal), Space: O(n)
+```
+
+<a id="lc-0142"></a>
+#### 142. [Linked List Cycle II](https://leetcode.com/problems/linked-list-cycle-ii/) [M]
+Description: Return the node where the cycle begins, or `None`.
+
+Idea: Floyd's cycle detection; then reset one pointer to head.
+
+```python
+class Solution:
+    def detectCycle(self, head):
+        slow = fast = head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+            if slow is fast:
+                p = head
+                while p is not slow:
+                    p = p.next
+                    slow = slow.next
+                return p
+        return None
+# Time: O(n), Space: O(1)
+```
+
+<a id="lc-0138"></a>
+#### 138. [Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/) [M]
+Description: Deep copy a list where each node has `next` and `random`.
+
+Idea: Hash map from old nodes to new nodes (two passes).
+
+```python
+class Solution:
+    def copyRandomList(self, head):
+        if not head:
+            return None
+
+        old_to_new = {}
+        cur = head
+        while cur:
+            old_to_new[cur] = Node(cur.val)
+            cur = cur.next
+
+        cur = head
+        while cur:
+            node = old_to_new[cur]
+            node.next = old_to_new.get(cur.next)
+            node.random = old_to_new.get(cur.random)
+            cur = cur.next
+
+        return old_to_new[head]
+# Time: O(n), Space: O(n)
+```
+
+<a id="lc-0024"></a>
+#### 24. [Swap Nodes in Pairs](https://leetcode.com/problems/swap-nodes-in-pairs/) [M]
+Description: Swap every two adjacent nodes.
+
+Idea: Iteratively swap pairs using a dummy head.
+
+```python
+class Solution:
+    def swapPairs(self, head):
+        dummy = ListNode(0)
+        dummy.next = head
+        prev = dummy
+
+        while prev.next and prev.next.next:
+            a = prev.next
+            b = a.next
+            prev.next = b
+            a.next = b.next
+            b.next = a
+            prev = a
+
+        return dummy.next
+# Time: O(n), Space: O(1)
+```
+
+<a id="lc-0082"></a>
+#### 82. [Remove Duplicates from Sorted List II](https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/) [M]
+Description: Remove all nodes that have duplicate numbers (leave only distinct).
+
+Idea: Use a dummy head and skip runs of duplicates.
+
+```python
+class Solution:
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        cur = dummy = ListNode(next=head)
+        while cur.next and cur.next.next:
+            val = cur.next.val
+            if cur.next.next.val == val:  # 后两个节点值相同
+                # 值等于 val 的节点全部删除
+                while cur.next and cur.next.val == val:
+                    cur.next = cur.next.next
+            else:
+                cur = cur.next
+        return dummy.next
+
+
+class Solution:
+    def deleteDuplicates(self, head):
+        dummy = ListNode(0)
+        dummy.next = head
+
+        prev = dummy
+        cur = head
+        while cur:
+            if cur.next and cur.val == cur.next.val:
+                dup = cur.val
+                while cur and cur.val == dup:
+                    cur = cur.next
+                prev.next = cur
+            else:
+                prev = cur
+                cur = cur.next
+
+        return dummy.next
+# Time: O(n), Space: O(1)
+```
+
+<a id="lc-0114"></a>
+#### 114. [Flatten Binary Tree to Linked List](https://leetcode.com/problems/flatten-binary-tree-to-linked-list/) [M]
+Description: Flatten the tree to a linked list in-place (preorder).
+
+Idea: Preorder traversal with a stack; rewire `right` pointers.
+
+```python
+class Solution:
+    def flatten(self, root):
+        if not root:
+            return
+
+        stack = [root]
+        prev = None
+
+        while stack:
+            node = stack.pop()
+            if prev:
+                prev.left = None
+                prev.right = node
+
+            if node.right:
+                stack.append(node.right)
+            if node.left:
+                stack.append(node.left)
+
+            prev = node
+# Time: O(n), Space: O(n)
+```
+
+<a id="lc-0086"></a>
+#### 86. [Partition List](https://leetcode.com/problems/partition-list/) [M]
+Description: Partition the list around `x` preserving relative order.
+
+Idea: Build two lists (`< x` and `>= x`) then concatenate.
+
+```python
+class Solution:
+    def partition(self, head, x):
+        small_dummy = ListNode()
+        big_dummy = ListNode()
+        small, big = small_dummy, big_dummy
+
+        while head:
+            nxt = head.next
+            head.next = None
+            if head.val < x:
+                small.next = head
+                small = small.next
+            else:
+                big.next = head
+                big = big.next
+            head = nxt
+
+        small.next = big_dummy.next
+        return small_dummy.next
+# Time: O(n), Space: O(1)
+```
+
+<a id="lc-0445"></a>
+#### 445. [Add Two Numbers II](https://leetcode.com/problems/add-two-numbers-ii/) [M]
+Description: Add two numbers represented by forward-order linked lists.
+
+Idea: Use stacks to add from least-significant digit.
+
+```python
+class Solution:
+    def addTwoNumbers(self, l1, l2):
+        s1, s2 = [], []
+        while l1:
+            s1.append(l1.val)
+            l1 = l1.next
+        while l2:
+            s2.append(l2.val)
+            l2 = l2.next
+
+        carry = 0
+        head = None
+        while s1 or s2 or carry:
+            v1 = s1.pop() if s1 else 0
+            v2 = s2.pop() if s2 else 0
+            s = v1 + v2 + carry
+            carry = s // 10
+
+            node = ListNode(s % 10)
+            node.next = head
+            head = node
+
+        return head
+# Time: O(m+n), Space: O(m+n)
+```
+
+<a id="lc-0061"></a>
+#### 61. [Rotate List](https://leetcode.com/problems/rotate-list/) [M]
+Description: Rotate the list to the right by `k` places.
+
+Idea: Make a cycle, then break it at the new tail.
+
+```python
+class Solution:
+    def rotateRight(self, head, k):
+        if not head or not head.next or k == 0:
+            return head
+
+        n = 1
+        tail = head
+        while tail.next:
+            tail = tail.next
+            n += 1
+
+        k %= n
+        if k == 0:
+            return head
+
+        tail.next = head
+        steps = n - k
+        cur = head
+        for _ in range(steps - 1):
+            cur = cur.next
+
+        new_head = cur.next
+        cur.next = None
+        return new_head
+# Time: O(n), Space: O(1)
+```
+
+<a id="lc-0622"></a>
+#### 622. [Design Circular Queue](https://leetcode.com/problems/design-circular-queue/) [M]
+Description: Implement a fixed-size circular queue.
+
+Idea: Array + head index + element count.
+
+```python
+class MyCircularQueue:
+    def __init__(self, k):
+        self.k = k
+        self.q = [0] * k
+        self.head = 0
+        self.count = 0
+
+    def enQueue(self, value):
+        if self.isFull():
+            return False
+        idx = (self.head + self.count) % self.k
+        self.q[idx] = value
+        self.count += 1
+        return True
+
+    def deQueue(self):
+        if self.isEmpty():
+            return False
+        self.head = (self.head + 1) % self.k
+        self.count -= 1
+        return True
+
+    def Front(self):
+        if self.isEmpty():
+            return -1
+        return self.q[self.head]
+
+    def Rear(self):
+        if self.isEmpty():
+            return -1
+        return self.q[(self.head + self.count - 1) % self.k]
+
+    def isEmpty(self):
+        return self.count == 0
+
+    def isFull(self):
+        return self.count == self.k
+# Time: O(1) per op, Space: O(k)
+```
+
+<a id="lc-0116"></a>
+#### 116. [Populating Next Right Pointers in Each Node](https://leetcode.com/problems/populating-next-right-pointers-in-each-node/) [M]
+Description: Connect `next` pointers in a perfect binary tree.
+
+Idea: Use already-built `next` pointers to traverse each level in `O(1)` extra space.
+
+```python
+class Solution:
+    def connect(self, root):
+        if not root:
+            return None
+
+        leftmost = root
+        while leftmost.left:
+            head = leftmost
+            while head:
+                head.left.next = head.right
+                if head.next:
+                    head.right.next = head.next.left
+                head = head.next
+            leftmost = leftmost.left
+
+        return root
+# Time: O(n), Space: O(1)
 ```
 
 <a id="lc-0160"></a>
