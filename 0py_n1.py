@@ -156,9 +156,10 @@ class Solution(object):
 
 # function
 
-
-
-
+res = sorted(d.items(), key=lambda x: x[1])
+res = sorted(d.items(), key=lambda x: x[1], reverse=True)
+sorted_dict = dict(sorted(d.items(), key=lambda x: x[1], reverse=True))
+res = sorted(cnt.items(), key=lambda x: x[1], reverse=True)
 
 
 

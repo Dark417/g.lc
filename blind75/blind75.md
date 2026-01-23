@@ -288,9 +288,66 @@ Description: Return the k most frequent elements from an array.
 ##### Approach 1: Bucket sort
 Idea: Count frequencies, then bucket numbers by frequency and scan buckets from high to low.
 
-```python
-from collections import Counter
+bucket sort: same freq same bucket
 
+
+```python
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        # 第一步：统计每个元素的出现次数
+        cnt = Counter(nums)
+        max_cnt = max(cnt.values())
+
+        # 第二步：把出现次数相同的元素，放到同一个桶中
+        buckets = [[] for _ in range(max_cnt + 1)]  # 也可以用 defaultdict(list)
+        for x, c in cnt.items():
+            buckets[c].append(x)
+
+        # 第三步：倒序遍历 buckets，把出现次数前 k 大的元素加入答案
+        ans = []
+        for bucket in reversed(buckets):
+            ans += bucket
+            # 注意题目保证答案唯一，一定会出现恰好等于 k 的情况
+            if len(ans) == k:
+                return ans
+
+
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        count = {}
+        for n in nums:
+            count[n] = count.get(n, 0) + 1
+        
+        heap = []
+        for num in count:
+            heapq.heappush(heap, (count[num], num))
+            if len(heap) > k:
+                heapq.heappop(heap)
+
+        res = []
+        for i in range(k):
+            res.append(heapq.heappop(heap)[1])
+        return res
+
+
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        count = {}
+        for num in nums:
+            count[num] = 1 + count.get(num, 0)
+
+        arr = []
+        for num, cnt in count.items():
+            arr.append([cnt, num])
+        arr.sort()
+
+        res = []
+        while len(res) < k:
+            res.append(arr.pop()[1])
+        return res
+
+
+from collections import Counter
 
 class Solution:
     def topKFrequent(self, nums, k):
@@ -2049,7 +2106,71 @@ Description: Length of the longest strictly increasing subsequence (n log n solu
 Idea: Maintain `tails[len] = smallest possible tail value of an increasing subsequence of length len+1`.
 
 ```python
+class Solution:
+def longestConsecutive(self, nums: List[int]) -> int:
+        numSet = set(nums)
+        longest = 0
+
+        for num in numSet:
+            if (num - 1) not in numSet:
+                length = 1
+                while (num + length) in numSet:
+                    length += 1
+                longest = max(length, longest)
+        return longest
+
+
+class Solution:
+    def longestConsecutive(self, nums: List[int]) -> int:
+        mp = defaultdict(int)
+        res = 0
+
+        for num in nums:
+            if not mp[num]:
+                mp[num] = mp[num - 1] + mp[num + 1] + 1
+                mp[num - mp[num - 1]] = mp[num]
+                mp[num + mp[num + 1]] = mp[num]
+                res = max(res, mp[num])
+        return res
+        
+
+class Solution:
+    def longestConsecutive(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+        res = 0
+        nums.sort()
+
+        curr, streak = nums[0], 0
+        i = 0
+        while i < len(nums):
+            if curr != nums[i]:
+                curr = nums[i]
+                streak = 0
+            while i < len(nums) and nums[i] == curr:
+                i += 1
+            streak += 1
+            curr += 1
+            res = max(res, streak)
+        return res
+
 import bisect
+
+def longestConsecutive(nums):
+    if not nums:
+        return 0
+
+    nums.sort()
+    longest = cur = 1
+
+    for i in range(1, len(nums)):
+        if nums[i] == nums[i - 1] + 1:
+            cur += 1
+        elif nums[i] != nums[i - 1]:
+            cur = 1
+        longest = max(longest, cur)
+
+    return longest
 
 
 class Solution:
