@@ -1050,6 +1050,38 @@ class Solution:
         if same(root, subRoot):
             return True
         return self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
+
+class Solution:
+    def serialize(self, root: Optional[TreeNode]) -> str:
+        if root == None:
+            return "$#"
+
+        return ("$" + str(root.val) + self.serialize(root.left) + self.serialize(root.right))
+
+    def z_function(self, s: str) -> list:
+        z = [0] * len(s)
+        l, r, n = 0, 0, len(s)
+        for i in range(1, n):
+            if i <= r:
+                z[i] = min(r - i + 1, z[i - l])
+            while i + z[i] < n and s[z[i]] == s[i + z[i]]:
+                z[i] += 1
+            if i + z[i] - 1 > r:
+                l, r = i, i + z[i] - 1
+        return z
+
+    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+        serialized_root = self.serialize(root)
+        serialized_subRoot = self.serialize(subRoot)
+        combined = serialized_subRoot + "|" + serialized_root
+
+        z_values = self.z_function(combined)
+        sub_len = len(serialized_subRoot)
+
+        for i in range(sub_len + 1, len(combined)):
+            if z_values[i] == sub_len:
+                return True
+        return False
 # Time: O(n * m) worst-case, Space: O(h) recursion stack
 ```
 
@@ -1123,6 +1155,27 @@ class Solution:
         dfs(root, 0)
         return res
 # Time: O(n), Space: O(h)
+
+class Solution:
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        res = []
+
+        q = collections.deque()
+        q.append(root)
+
+        while q:
+            qLen = len(q)
+            level = []
+            for i in range(qLen):
+                node = q.popleft()
+                if node:
+                    level.append(node.val)
+                    q.append(node.left)
+                    q.append(node.right)
+            if level:
+                res.append(level)
+
+        return res
 ```
 
 ##### Approach 2: BFS
@@ -1229,6 +1282,18 @@ class Solution:
             else:
                 return cur
 # Time: O(h), Space: O(1)
+
+class Solution:
+    def lowestCommonAncestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
+        cur = root
+
+        while cur:
+            if p.val > cur.val and q.val > cur.val:
+                cur = cur.right
+            elif p.val < cur.val and q.val < cur.val:
+                cur = cur.left
+            else:
+                return cur
 ```
 
 <a id="lc-0124"></a>

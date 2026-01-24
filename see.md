@@ -18,6 +18,18 @@ instruction to do it
 
  -->
 
+## 心得
+### recursion
+- base case / termination condition
+- process current level
+- drill down to next level
+- reverse the current level state if needed
+
+
+---
+
+
+
 
 
 ```__slots__```
