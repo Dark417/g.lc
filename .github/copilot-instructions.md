@@ -2,7 +2,7 @@
 
 When editing/adding problem solutions in this repository:
 
-- Follow the formatting rules in `INSTRUCTIONS.md`.
+- Follow the formatting rules in `/INSTRUCTIONS.md`.
 
 - Use the heading `Category` (not `Index`) for the problem jump list.
 

@@ -1,6 +1,12 @@
 {
   "permissions": {
+    "defaultMode": "bypassPermissions",
     "allow": [
+      "Write",
+      "Edit",
+      "MultiEdit",
+      "Read",
+      "Search",
       "Bash(echo:*)",
       "Bash(git push:*)",
       "Bash(dir:*)"

@@ -3,40 +3,39 @@
 
 ## Category
 
-### Hard
-- [23. Merge K Sorted Lists](#lc-0023)
-- [25. Reverse Nodes in k-Group](#lc-0025)
-- [432. All O`one Data Structure](#lc-0432)
-- [460. LFU Cache](#lc-0460)
-- [716. Max Stack](#lc-0716)
-- [1206. Design Skiplist](#lc-1206)
-- [2296. Design a Text Editor](#lc-2296)
-- [3510. Minimum Pair Removal to Sort Array II](#lc-3510)
-
+### Easy
+- [E] [160. Intersection of Two Linked Lists](#lc-0160) — Return node where two singly linked lists intersect.
 
 ### Medium
+- [M] [2. Add Two Numbers](#lc-0002) — Add two numbers represented by reverse-order linked lists.
+- [M] [19. Remove Nth Node From End of List](#lc-0019) — Remove the nth node from the end of the list.
+- [M] [24. Swap Nodes in Pairs](#lc-0024) — Swap every two adjacent nodes.
+- [M] [61. Rotate List](#lc-0061) — Rotate the list to the right by k places.
+- [M] [82. Remove Duplicates from Sorted List II](#lc-0082) — Remove all nodes with duplicate numbers.
+- [M] [86. Partition List](#lc-0086) — Partition list around x preserving relative order.
+- [M] [92. Reverse Linked List II](#lc-0092) — Reverse nodes between positions left and right.
+- [M] [114. Flatten Binary Tree to Linked List](#lc-0114) — Flatten tree to linked list in-place (preorder).
+- [M] [116. Populating Next Right Pointers in Each Node](#lc-0116) — Connect next pointers in a perfect binary tree.
+- [M] [138. Copy List with Random Pointer](#lc-0138) — Deep copy a list with next and random pointers.
+- [M] [142. Linked List Cycle II](#lc-0142) — Return the node where the cycle begins.
+- [M] [143. Reorder List](#lc-0143) — Reorder list by interleaving first and reversed second half.
+- [M] [146. LRU Cache](#lc-0146) — Design a cache with get and put in O(1).
+- [M] [148. Sort List](#lc-0148) — Sort a linked list in O(n log n) time.
+- [M] [445. Add Two Numbers II](#lc-0445) — Add two numbers represented by forward-order linked lists.
+- [M] [622. Design Circular Queue](#lc-0622) — Implement a fixed-size circular queue.
+- [M] [707. Design Linked List](#lc-0707) — Implement a linked list with common operations.
+- [M] [1721. Swapping Nodes in a Linked List](#lc-1721) — Swap kth node from start with kth from end.
+- [M] [2095. Delete the Middle Node of a Linked List](#lc-2095) — Delete the middle node of a linked list.
 
-- [146. LRU Cache](#lc-0146)
-- [2. Add Two Numbers](#lc-0002)
-- [143. Reorder List](#lc-0143)
-- [19. Remove Nth Node From End of List](#lc-0019)
-- [148. Sort List](#lc-0148)
-- [92. Reverse Linked List II](#lc-0092)
-- [707. Design Linked List](#lc-0707)
-- [142. Linked List Cycle II](#lc-0142)
-- [138. Copy List with Random Pointer](#lc-0138)
-- [24. Swap Nodes in Pairs](#lc-0024)
-- [82. Remove Duplicates from Sorted List II](#lc-0082)
-- [114. Flatten Binary Tree to Linked List](#lc-0114)
-- [86. Partition List](#lc-0086)
-- [445. Add Two Numbers II](#lc-0445)
-- [61. Rotate List](#lc-0061)
-- [622. Design Circular Queue](#lc-0622)
-- [116. Populating Next Right Pointers in Each Node](#lc-0116)
-
-
-### Easy
-- [160. Intersection of Two Linked Lists](#lc-0160)
+### Hard
+- [H] [23. Merge K Sorted Lists](#lc-0023) — Merge k sorted linked lists into one sorted list.
+- [H] [25. Reverse Nodes in k-Group](#lc-0025) — Reverse nodes of a linked list k at a time.
+- [H] [432. All O`one Data Structure](#lc-0432) — Support inc, dec, getMaxKey, getMinKey in O(1) time.
+- [H] [460. LFU Cache](#lc-0460) — Design a cache with get/put and LFU eviction.
+- [H] [716. Max Stack](#lc-0716) — Stack supporting push, pop, top, peekMax, popMax.
+- [H] [1206. Design Skiplist](#lc-1206) — Implement a Skiplist with search, add, and erase.
+- [H] [2296. Design a Text Editor](#lc-2296) — Implement a text editor with cursor movement and editing.
+- [H] [3510. Minimum Pair Removal to Sort Array II](#lc-3510) — Minimum merge operations to make array non-decreasing.
 
 ## Solutions (Python)
 
@@ -888,7 +887,12 @@ def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
 ```
 
 
-2095. Delete the Middle Node of a Linked List
+<a id="lc-2095"></a>
+#### 2095. [Delete the Middle Node of a Linked List](https://leetcode.com/problems/delete-the-middle-node-of-a-linked-list/) [M]
+Description: Delete the middle node of a linked list.
+
+Idea: Find middle with slow/fast pointers, then skip it.
+
 ```python
 class Solution:
     def deleteMiddle(self, head: Optional[ListNode]) -> Optional[ListNode]:
@@ -896,14 +900,20 @@ class Solution:
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
-        dummy = cur = ListNode(next = head)
+        dummy = cur = ListNode(next=head)
         while cur.next != slow:
             cur = cur.next
         cur.next = cur.next.next
         return dummy.next
+# Time: O(n), Space: O(1)
 ```
 
-1721. Swapping Nodes in a Linked
+<a id="lc-1721"></a>
+#### 1721. [Swapping Nodes in a Linked List](https://leetcode.com/problems/swapping-nodes-in-a-linked-list/) [M]
+Description: Swap the kth node from the start with the kth node from the end.
+
+Idea: Two pointers with fixed gap to find kth from end; swap values.
+
 ```python
 class Solution:
     def swapNodes(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
@@ -918,6 +928,7 @@ class Solution:
             p2 = p2.next
         p1.val, p2.val = p2.val, p1.val
         return head
+# Time: O(n), Space: O(1)
 ```
 
 <a id="lc-0148"></a>

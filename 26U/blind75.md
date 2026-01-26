@@ -1025,6 +1025,29 @@ class Solution:
         root.left, root.right = self.invertTree(root.right), self.invertTree(root.left)
         return root
 # Time: O(n), Space: O(h) recursion stack
+
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if root:
+            root.left, root.right = root.right, root.left
+            self.invertTree(root.right)
+            self.invertTree(root.left)
+            return root
+
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root:
+            return None
+        queue = deque([root])
+        while queue:
+            node = queue.popleft()
+            node.left, node.right = node.right, node.left
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        return root
+        
 ```
 
 <a id="lc-0572"></a>
@@ -1104,6 +1127,24 @@ class Solution:
 
         return dfs(root, float("-inf"), float("inf"))
 # Time: O(n), Space: O(h)
+
+class Solution:
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        if not root:
+            return True
+
+        q = deque([(root, float("-inf"), float("inf"))])
+
+        while q:
+            node, left, right = q.popleft()
+            if not (left < node.val < right):
+                return False
+            if node.left:
+                q.append((node.left, left, node.val))
+            if node.right:
+                q.append((node.right, node.val, right))
+
+        return True
 ```
 
 ##### Approach 2: In-order traversal
@@ -1236,6 +1277,36 @@ class Solution:
 
         return build(0, len(inorder) - 1)
 # Time: O(n) with an inorder index map, Space: O(n) for the map + recursion stack
+
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        if not preorder or not inorder:
+            return None
+
+        root = TreeNode(preorder[0])
+        mid = inorder.index(preorder[0])
+        root.left = self.buildTree(preorder[1 : mid + 1], inorder[:mid])
+        root.right = self.buildTree(preorder[mid + 1 :], inorder[mid + 1 :])
+        return root
+
+
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        preIdx = inIdx = 0
+        def dfs(limit):
+            nonlocal preIdx, inIdx
+            if preIdx >= len(preorder):
+                return None
+            if inorder[inIdx] == limit:
+                inIdx += 1
+                return None
+
+            root = TreeNode(preorder[preIdx])
+            preIdx += 1
+            root.left = dfs(root.val)
+            root.right = dfs(limit)
+            return root
+        return dfs(float('inf'))
 ```
 
 <a id="lc-0230"></a>
@@ -1245,6 +1316,27 @@ Description: Return the k-th smallest value in a BST using in-order traversal.
 Idea: In-order traversal visits BST nodes in sorted order; stop at the k-th visit.
 
 ```python
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        cnt = k
+        res = root.val
+
+        def dfs(node):
+            nonlocal cnt, res
+            if not node:
+                return
+
+            dfs(node.left)
+            cnt -= 1
+            if cnt == 0:
+                res = node.val
+                return
+            dfs(node.right)
+
+        dfs(root)
+        return res
+
+
 class Solution:
     def kthSmallest(self, root, k):
         stack = []
@@ -1284,16 +1376,20 @@ class Solution:
 # Time: O(h), Space: O(1)
 
 class Solution:
-    def lowestCommonAncestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
-        cur = root
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        if root in (None, p, q):  # 找到 p 或 q 就不往下递归了，原因见上面答疑
+            return root
+        left = self.lowestCommonAncestor(root.left, p, q)
+        right = self.lowestCommonAncestor(root.right, p, q)
+        if left and right:  # 左右都找到
+            return root  # 当前节点是最近公共祖先
+        # 如果只有左子树找到，就返回左子树的返回值
+        # 如果只有右子树找到，就返回右子树的返回值
+        # 如果左右子树都没有找到，就返回 None（注意此时 right = None）
+        return left or right
 
-        while cur:
-            if p.val > cur.val and q.val > cur.val:
-                cur = cur.right
-            elif p.val < cur.val and q.val < cur.val:
-                cur = cur.left
-            else:
-                return cur
+
+
 ```
 
 <a id="lc-0124"></a>
@@ -1360,6 +1456,44 @@ class Codec:
 
         return dfs()
 # Time: O(n) for both serialize/deserialize, Space: O(n)
+
+class Codec:
+
+    # Encodes a tree to a single string.
+    def serialize(self, root: Optional[TreeNode]) -> str:
+        if not root:
+            return "N"
+        res = []
+        queue = deque([root])
+        while queue:
+            node = queue.popleft()
+            if not node:
+                res.append("N")
+            else:
+                res.append(str(node.val))
+                queue.append(node.left)
+                queue.append(node.right)
+        return ",".join(res)
+
+    # Decodes your encoded data to tree.
+    def deserialize(self, data: str) -> Optional[TreeNode]:
+        vals = data.split(",")
+        if vals[0] == "N":
+            return None
+        root = TreeNode(int(vals[0]))
+        queue = deque([root])
+        index = 1
+        while queue:
+            node = queue.popleft()
+            if vals[index] != "N":
+                node.left = TreeNode(int(vals[index]))
+                queue.append(node.left)
+            index += 1
+            if vals[index] != "N":
+                node.right = TreeNode(int(vals[index]))
+                queue.append(node.right)
+            index += 1
+        return root
 ```
 
 ### Tries
