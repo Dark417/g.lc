@@ -37,7 +37,7 @@ def q():
     def dfs():
         ...
         return # Not return anything
-    dfs():
+    dfs()
     return res
 
 # call itself, enter dfs
@@ -47,8 +47,30 @@ def q():
 
     return somevalue
 
+# dfs
+# 1
+# go to bottom, bottom / leaf first
+# calc res along the way
+# update res 
+# return cur to parent
+res = [] / float('inf') / 0
+def dfs(x):
+    y = ..
+    dfs(y)
+    cur = ...
+    nonlocal res
+    res = max(res, )
+    return max(res, up_to_now) #up_to_prev + y
+dfs(init)
+return res
 
+# 2
+# 
+
+```
 ### iteration
+
+```python
 - how many to iterate
     - if multi level, what # current level?
         - len(cur)
@@ -57,7 +79,26 @@ def q():
 
 
 
+#### Basic
+```python
+class Solution:
+    def __init__(self):
+        self.maxSum = float("-inf")
+    def solution():
+        self.maxSum
 
+class Solution:
+    def solution():
+        n
+        def dfs():
+            nonlocal n
+
+class Solution:
+    def help():
+        ...
+    def solution():
+        self.help()
+```
 
 ```__slots__```
 
