@@ -230,8 +230,8 @@ This file tracks every question added or updated, grouped by day in reverse-chro
 
 ```md
 #### Jan 26
-- [H] [2538. Difference Between Maximum and Minimum Price Sum](26U/tree.md#lc-2538)
-- [M] [236. Lowest Common Ancestor of a Binary Tree](26U/tree.md#lc-0236)
+- [H] [2538. Difference Between Maximum and Minimum Price Sum](/26U/tree.md#lc-2538)
+- [M] [236. Lowest Common Ancestor of a Binary Tree](/26U/tree.md#lc-0236)
 
 #### Jan 25
 - ...
@@ -242,3 +242,8 @@ This file tracks every question added or updated, grouped by day in reverse-chro
 - Within each day, entries are **chronological** (earliest first).
 - Each entry is a single bullet line that links to the question's solution; do not log tags or descriptions here.
 - Every entry **must** correspond to a solution that exists in a topic `.md` file — never log a question without having its detail elsewhere.
+
+
+## Git push instructions
+
+Always add ., commit with a generated message, push to main

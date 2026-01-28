@@ -2,12 +2,84 @@
 
 ## Category
 
+### Easy
+- [E] [100. Same Tree](#lc-0100)\
+  Check if two binary trees are identical.\
+  `Tree` `Depth-First Search` `Binary Tree`
+
+- [E] [104. Maximum Depth of Binary Tree](#lc-0104)\
+  Compute the maximum depth of a binary tree.\
+  `Tree` `Depth-First Search` `Breadth-First Search`
+
+- [E] [111. Minimum Depth of Binary Tree](#lc-0111)\
+  Find the minimum depth from the root node to the closest leaf.\
+  `Tree` `Depth-First Search` `Breadth-First Search`
+
+- [E] [226. Invert Binary Tree](#lc-0226)\
+  Swap left and right children for every node.\
+  `Tree` `Depth-First Search` `Breadth-First Search`
+
+- [E] [572. Subtree of Another Tree](#lc-0572)\
+  Check if one tree is a subtree of another.\
+  `Tree` `Depth-First Search` `Hash Table`
+
 ### Medium
+- [M] [98. Validate Binary Search Tree](#lc-0098)\
+  Verify the BST ordering property of a binary tree.\
+  `Tree` `Depth-First Search` `Binary Search Tree`
+
+- [M] [102. Binary Tree Level Order Traversal](#lc-0102)\
+  Return tree nodes level by level.\
+  `Tree` `Breadth-First Search` `Queue`
+
+- [M] [103. Binary Tree Zigzag Level Order Traversal](#lc-0103)\
+  Return zigzag level order traversal.\
+  `Tree` `Breadth-First Search` `Queue`
+
+- [M] [105. Construct Binary Tree From Preorder And Inorder Traversal](#lc-0105)\
+  Reconstruct a tree from preorder and inorder traversals.\
+  `Tree` `Array` `Hash Table` `Depth-First Search`
+
+- [M] [106. Construct Binary Tree From Inorder And Postorder Traversal](#lc-0106)\
+  Reconstruct a tree from inorder and postorder traversals.\
+  `Tree` `Array` `Hash Table` `Depth-First Search`
+
+- [M] [107. Binary Tree Level Order Traversal II](#lc-0107)\
+  Return level order traversal in reverse.\
+  `Tree` `Breadth-First Search` `Queue`
+
+- [M] [116. Populating Next Right Pointers In Each Node](#lc-0116)\
+  Fill the next pointer for each node to point to its right sibling.\
+  `Tree` `Breadth-First Search` `Linked List` `Binary Tree`
+
+- [M] [117. Populating Next Right Pointers in Each Node II](#lc-0117)\
+  Connect each node to the next node on its level when the tree is not perfect.\
+  `Tree` `Breadth-First Search` `Linked List`
+
+- [M] [199. Binary Tree Right Side View](#lc-0199)\
+  Return the rightmost node at each level.\
+  `Tree` `Depth-First Search` `Breadth-First Search` `Queue`
+
+- [M] [230. Kth Smallest Element In a Bst](#lc-0230)\
+  Find the kth smallest value in a BST.\
+  `Tree` `Depth-First Search` `Binary Search Tree` `Stack`
+
 - [M] [236. Lowest Common Ancestor of a Binary Tree](#lc-0236)\
   Find the lowest common ancestor of two nodes in a binary tree.\
   `Tree` `Depth-First Search` `Binary Tree`
 
 ### Hard
+- [H] [95. Unique Binary Search Trees II](#lc-0095)\
+  Generate all structurally unique BSTs with n nodes.\
+  `Tree` `Backtracking` `Binary Search Tree` `Dynamic Programming`
+
+- [H] [96. Unique Binary Search Trees](#lc-0096)\
+  Count the number of structurally unique BSTs with n nodes.\
+  `Tree` `Dynamic Programming` `Binary Search Tree` `Math`
+
+- [H] [429. N-ary Tree Level Order Traversal](#lc-0429)\
+  Return level order traversal of an n-ary tree.\
+  `Tree` `Breadth-First Search` `Queue`
 - [H] [124. Binary Tree Maximum Path Sum](#lc-0124)\
   Find the maximum path sum in a binary tree.\
   `Tree` `Depth-First Search` `Dynamic Programming` `Binary Tree`
@@ -56,8 +128,85 @@
   求二叉树中的最大路径和.\
   `Tree` `Depth-First Search` `Dynamic Programming` `Binary Tree`
 
-## Solutions (Python)
+- [H] [LCR 413. Substructure Determination](#lc-lcr-413)\
+  Check if a binary tree B is a substructure of tree A.\
+  `Tree` `Depth-First Search` `Binary Tree`
 
+## Solutions (Python)
+###
+### Easy
+111. 二叉树的最小深度
+<a id="lc-0111"></a>
+#### 111. [Minimum Depth of Binary Tree](https://leetcode.com/problems/minimum-depth-of-binary-tree/) [E]
+
+```python
+class Solution:
+    def minDepth(self, root: Optional[TreeNode]) -> int:
+        ans = inf
+        def dfs(node: Optional[TreeNode], cnt: int) -> None:
+            if node is None:
+                return
+            nonlocal ans
+            cnt += 1
+            if cnt >= ans:
+                return  # 最优性剪枝
+            if node.left is None and node.right is None:  # node 是叶子
+                ans = cnt
+                return
+            dfs(node.left, cnt)
+            dfs(node.right, cnt)
+        dfs(root, 0)
+        return ans if root else 0
+
+
+class Solution:
+    def minDepth(self, root: Optional[TreeNode]) -> int:
+        ans = inf
+        def dfs(node: Optional[TreeNode], cnt: int) -> None:
+            if node is None:
+                return
+            cnt += 1
+            if node.left is None and node.right is None:  # node 是叶子
+                nonlocal ans
+                ans = min(ans, cnt)
+                return
+            dfs(node.left, cnt)
+            dfs(node.right, cnt)
+        dfs(root, 0)
+        return ans if root else 0
+
+```
+
+104. 二叉树的最大深度
+```python
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        if root is None:
+            return 0
+        l_depth = self.maxDepth(root.left)
+        r_depth = self.maxDepth(root.right)
+        return max(l_depth, r_depth) + 1
+
+# 方法二：自顶向下
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        ans = 0
+        def dfs(node: Optional[TreeNode], depth: int) -> None:
+            if node is None:
+                return
+            depth += 1
+            nonlocal ans
+            ans = max(ans, depth)
+            dfs(node.left, depth)
+            dfs(node.right, depth)
+        dfs(root, 0)
+        return ans
+```
+
+
+
+---
+### Medium
 <a id="lc-0124"></a>
 #### 124. [Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/) [H]
 `Tree` `Depth-First Search` `Dynamic Programming` `Binary Tree`
@@ -204,6 +353,651 @@ class Solution:
         return left if left else right
 # Time: O(n), Space: O(n)
 ```
+
+<a id="lc-0106"></a>
+#### 106. [Construct Binary Tree from Inorder and Postorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/) [M]
+`Tree` `Array` `Hash Table` `Depth-First Search`
+Description: Construct a binary tree from its inorder and postorder traversals.
+
+##### Approach 1: Recursive with hash map
+Idea: Root is the last element of postorder. Find root in inorder to split subtrees. Recursively build left and right.
+
+```python
+!!!
+class Solution:
+    def buildTree(self, inorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
+        def build(left, right):
+            if left > right:
+                return None
+            val = postorder.pop()
+            root = TreeNode(val)
+            i = idx[val]
+            root.right = build(i + 1, right)
+            root.left = build(left, i - 1)
+            return root
+            
+        idx = {val: i for i, val in enumerate(inorder)}
+        return build(0, len(inorder) - 1)
+
+
+class Solution:
+    def buildTree(self, inorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
+        index = {x: i for i, x in enumerate(inorder)}
+
+        def dfs(in_l: int, post_l: int, post_r: int) -> Optional[TreeNode]:
+            if post_l == post_r:  # 空节点
+                return None
+            left_size = index[postorder[post_r - 1]] - in_l  # 左子树的大小
+            print(left_size) #1
+            left = dfs(in_l, post_l, post_l + left_size)
+            right = dfs(in_l + left_size + 1, post_l + left_size, post_r - 1)
+            print(left_size) #0 changed!!!
+            return TreeNode(postorder[post_r - 1], left, right)
+
+        return dfs(0, 0, len(postorder))  # 左闭右开区间
+
+
+#lcs
+class Solution:
+    def buildTree(self, inorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
+        if not postorder:  # 空节点
+            return None
+        left_size = inorder.index(postorder[-1])  # 左子树的大小
+        left = self.buildTree(inorder[:left_size], postorder[:left_size])
+        right = self.buildTree(inorder[left_size + 1:], postorder[left_size: -1])
+        return TreeNode(postorder[-1], left, right)
+
+
+
+
+class Solution:
+    def buildTree(self, inorder: list[int], postorder: list[int]) -> Optional[TreeNode]:
+        if not inorder:
+            return None
+            
+        # Root is the last element of postorder
+        root = TreeNode(postorder[-1])
+        stack = [root]
+        
+        # Pointer for inorder, starting from the end
+        in_idx = len(inorder) - 1
+        
+        # Traverse postorder from second-to-last down to 0
+        for i in range(len(postorder) - 2, -1, -1):
+            curr_val = postorder[i]
+            node = stack[-1]
+            
+            # If the top of the stack is NOT the current inorder root, 
+            # the next node must be the right child.
+            if node.val != inorder[in_idx]:
+                node.right = TreeNode(curr_val)
+                stack.append(node.right)
+            else:
+                # If it matches, we've finished the right subtree.
+                # Pop the stack to find the parent node for the left child.
+                while stack and stack[-1].val == inorder[in_idx]:
+                    node = stack.pop()
+                    in_idx -= 1
+                
+                # The next node in postorder is the left child of the last popped node.
+                node.left = TreeNode(curr_val)
+                stack.append(node.left)
+                
+        return root
+```
+
+
+
+<a id="lc-0102"></a>
+#### 102. [Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/) [M]
+`Tree` `Breadth-First Search` `Queue`
+Description: Return the level order traversal of a binary tree.
+
+##### Approach 1: BFS with deque
+Idea: Use a queue to visit nodes level by level.
+
+```python
+
+class Solution:
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        if root is None:
+            return []
+        ans = []
+        q = deque([root])
+        while q:
+            vals = []
+            for _ in range(len(q)):
+                node = q.popleft()
+                vals.append(node.val)
+                if node.left:  q.append(node.left)
+                if node.right: q.append(node.right)
+            ans.append(vals)
+        return ans
+
+class Solution:
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        res = []
+        def dfs(node, level):
+            if not node:
+                return
+            if level == len(res):
+                res.append([])
+            res[level].append(node.val)
+            dfs(node.left, level + 1)
+            dfs(node.right, level + 1)
+        dfs(root, 0)
+        return res
+
+# or if node: ...
+# because if not node doesn't return anything
+
+# problem XoX
+class Solution:
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        res = []
+        q = deque()
+        q.append(root)
+        while q:
+            cur = []
+            for _ in range(len(q)):
+                node = q.popleft()
+                if node:
+                    cur.append(node.val)
+                    q.append(node.left)
+                    q.append(node.right)
+            res.append(cur)
+        return res[:-1]
+        
+```
+
+<a id="lc-0103"></a>
+#### 103. [Binary Tree Zigzag Level Order Traversal](https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/) [M]
+`Tree` `Breadth-First Search` `Queue`
+Description: Return the zigzag level order traversal of a binary tree.
+
+##### Approach 1: BFS with alternating direction
+Idea: Use BFS, alternate the order of values at each level based on depth.
+
+```python
+class Solution:
+    def zigzagLevelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        if root is None:
+            return []
+        ans = []
+        cur = [root]
+        while cur:
+            nxt = []
+            vals = []
+            for node in cur:
+                vals.append(node.val)
+                if node.left:  nxt.append(node.left)
+                if node.right: nxt.append(node.right)
+            cur = nxt
+            ans.append(vals[::-1] if len(ans) % 2 else vals)
+        return ans
+```
+
+<a id="lc-0107"></a>
+#### 107. [Binary Tree Level Order Traversal II](https://leetcode.com/problems/binary-tree-level-order-traversal-ii/) [M]
+`Tree` `Breadth-First Search` `Queue`
+Description: Return the level order traversal of a binary tree in reverse order.
+
+##### Approach 1: DFS
+Idea: Use DFS to collect nodes level by level, then return reversed.
+
+```python
+class Solution:
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        res = []
+        def dfs(node, lv):
+            if node:
+                if lv == len(res):
+                    res.append([])
+                res[lv].append(node.val)
+                dfs(node.left, lv + 1)
+                dfs(node.right, lv + 1)
+        dfs(root, 0)
+        return res
+```
+
+##### Approach 2: BFS with reversal
+Idea: Standard BFS level-by-level, then reverse the result list.
+
+```python
+class Solution:
+    def levelOrderBottom(self, root: Optional[TreeNode]) -> List[List[int]]:
+        if not root:
+            return []
+        res = []
+        q = deque([root])
+        while q:
+            cur = []
+            for _ in range(len(q)):
+                node = q.popleft()
+                cur.append(node.val)
+                if node.left: q.append(node.left)
+                if node.right: q.append(node.right)
+            res.append(cur)
+        return res[::-1]
+```
+
+
+
+<a id="lc-0116"></a>
+#### 116. [Populating Next Right Pointers in Each Node](https://leetcode.com/problems/populating-next-right-pointers-in-each-node/) [M]
+`Tree` `Breadth-First Search` `Linked List` `Binary Tree`
+Description: Fill the next pointer for each node to point to its right sibling.
+
+##### Approach 1: DFS with level tracking
+Idea: Use DFS to visit nodes level by level, connecting siblings via next pointers.
+
+```python
+class Solution:
+    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        pre = []
+        def dfs(node, depth):
+            if node:
+                if depth == len(pre):
+                    pre.append(node)
+                else:
+                    pre[depth].next = node
+                    pre[depth] = node
+                dfs(node.left, depth + 1)
+                dfs(node.right, depth + 1)
+        dfs(root, 0)
+        return root
+
+##### Approach 2: BFS with pairwise
+Idea: Use BFS with pairwise() to connect adjacent nodes.
+
+```python
+class Solution:
+    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        if not root: return None
+        q = [root]
+        while q:
+            for x, y in pairwise(q):
+                x.next = y
+            tmp = q
+            q = []
+            for node in tmp:
+                if node.left: q.append(node.left)
+                if node.right: q.append(node.right)            
+        return root
+```
+
+##### Approach 3: Iterative with dummy node
+Idea: Iterate through levels, using a dummy node to build next level's connections.
+
+```python
+class Solution:
+    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        cur = root
+        while cur:
+            nxt = dummy = Node()
+            while cur:
+                if cur.left:
+                    nxt.next = cur.left
+                    nxt = nxt.next
+                if cur.right:
+                    nxt.next = cur.right
+                    nxt = nxt.next
+                cur = cur.next
+            cur = dummy.next
+        return root
+```
+
+##### Approach 4: BFS with deque and dummy node
+Idea: Use deque-based BFS with a dummy node to connect siblings.
+
+```python
+class Solution:
+    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        if not root: return None
+        q = deque([root])
+        while q:
+            dum = cur = Node()
+            for _ in range(len(q)):
+                node = q.popleft()
+                cur.next = node
+                cur = cur.next
+                if node.left: q.append(node.left)
+                if node.right: q.append(node.right)
+            cur.next = None
+            dum.next = None
+        return root
+```
+
+
+<a id="lc-0117"></a>
+#### 117. [Populating Next Right Pointers in Each Node II](https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/) [M]
+`Tree` `Breadth-First Search` `Linked List`
+Description: Connect each node to its immediate right neighbor when the binary tree is no longer perfect.
+
+##### Approach 1: Level traversal using existing next pointers
+Idea: Use a dummy node to build the next level while walking the current level through already connected `next` links.
+
+```python
+class Solution:
+    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        head = root
+        while head:
+            dummy = Node(0)
+            curr = dummy
+            node = head
+            while node:
+                if node.left:
+                    curr.next = node.left
+                    curr = curr.next
+                if node.right:
+                    curr.next = node.right
+                    curr = curr.next
+                node = node.next
+            head = dummy.next
+        return root
+# Time: O(n), Space: O(1)
+```
+
+<a id="lc-0199"></a>
+#### 199. [Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/) [M]
+`Tree` `Depth-First Search` `Breadth-First Search` `Queue`
+Description: Return the rightmost node at each level of the tree.
+
+##### Approach 1: BFS
+Idea: Use BFS to visit nodes level by level, keeping only the last node at each level.
+
+```python
+class Solution:
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        if not root: return []
+        res = []
+        q = deque([root])
+        while q:
+            lenth = len(q)
+            for i in range(lenth):
+                node = q.popleft()
+                if i == lenth - 1:
+                    res.append(node.val)
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+        return res
+```
+
+##### Approach 2: DFS (right subtree first)
+Idea: DFS, visiting right subtree first. Record node at each new depth.
+
+```python
+class Solution:
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+        res = []
+        def dfs(node, depth):
+            if node is None:
+                return
+            if depth == len(res):
+                res.append(node.val)
+            dfs(node.right, depth + 1)
+            dfs(node.left, depth + 1)
+        dfs(root, 0)
+        return res
+```
+
+##### Approach 3: Iterative DFS with stack
+Idea: Use a stack to track nodes and depths, store rightmost value per depth.
+
+```python
+class Solution:
+    def rightSideView(self, root: TreeNode) -> List[int]:
+        res = dict()
+        max_depth = -1
+
+        stack = [(root, 0)]
+        while stack:
+            node, depth = stack.pop()
+
+            if node is not None:
+                max_depth = max(max_depth, depth)
+                res.setdefault(depth, node.val)
+                stack.append((node.left, depth + 1))
+                stack.append((node.right, depth + 1))
+
+        return [res[depth] for depth in range(max_depth + 1)]
+```
+
+##### Approach 4: BFS with dict
+Idea: BFS with depth tracking in a dict, overwriting with each new rightmost value.
+
+```python
+class Solution:
+    def rightSideView(self, root: TreeNode) -> List[int]:
+        rightmost_value_at_depth = dict() # 深度为索引，存放节点的值
+        max_depth = -1
+
+        queue = deque([(root, 0)])
+        while queue:
+            node, depth = queue.popleft()
+
+            if node is not None:
+                max_depth = max(max_depth, depth)
+                #popleft, append left first, right = last in level
+                rightmost_value_at_depth[depth] = node.val
+                queue.append((node.left, depth + 1))
+                queue.append((node.right, depth + 1))
+
+        return [rightmost_value_at_depth[depth] for depth in range(max_depth + 1)]
+```
+
+##### Approach 5: Iterative DFS with dict
+Idea: Use DFS stack with depth tracking, only recording first encounter per depth (rightmost).
+
+```python
+class Solution:
+    def rightSideView(self, root: TreeNode) -> List[int]:
+        rightmost_value_at_depth = dict()
+        max_depth = -1
+        stack = [(root, 0)]
+        while stack:
+            node, depth = stack.pop()
+            if node is not None:
+                max_depth = max(max_depth, depth)
+                # set only if not exists
+                rightmost_value_at_depth.setdefault(depth, node.val)
+                stack.append((node.left, depth + 1))
+                stack.append((node.right, depth + 1))
+        return [rightmost_value_at_depth[depth] for depth in range(max_depth + 1)]
+```
+
+<a id="lc-0429"></a>
+#### 429. [N-ary Tree Level Order Traversal](https://leetcode.com/problems/n-ary-tree-level-order-traversal/) [H]
+`Tree` `Breadth-First Search` `Queue`
+Description: Return the level order traversal of an N-ary tree.
+
+##### Approach 1: BFS
+Idea: Use a queue to traverse the tree level by level.
+
+```python
+class Solution:
+    def levelOrder(self, root: 'Node') -> List[List[int]]:
+        if root is None:
+            return []
+        ans = []
+        q = [root]
+        while q:
+            ans.append([node.val for node in q])
+            q = [c for node in q for c in node.children]
+        return ans
+
+class Solution:
+    def levelOrder(self, root: 'Node') -> List[List[int]]:
+        if root is None:
+            return []
+        ans = []
+        q = deque([root])
+        while q:
+            vals = []
+            for _ in range(len(q)):
+                node = q.popleft()
+                vals.append(node.val)
+                q.extend(node.children)
+            ans.append(vals)
+        return ans
+```
+
+
+
+
+
+437. 路径总和 III (No solution)
+```python
+def pathSum(self, root: TreeNode, targetSum: int) -> int:
+    def rootSum(root, targetSum):
+        if root is None:
+            return 0
+
+        ret = 0
+        if root.val == targetSum:
+            ret += 1
+
+        ret += rootSum(root.left, targetSum - root.val)
+        ret += rootSum(root.right, targetSum - root.val)
+        return ret
+    
+    if root is None:
+        return 0
+        
+    ret = rootSum(root, targetSum)
+    ret += self.pathSum(root.left, targetSum)
+    ret += self.pathSum(root.right, targetSum)
+    return ret
+
+```
+
+114. 二叉树展开为链表
+```python
+
+
+```
+
+
+<a id="lc-lcr-413"></a>
+#### LCR 413. [Substructure Determination](https://leetcode.cn/problems/HGSZAm/) [H]
+`Tree` `Depth-First Search` `Binary Tree`
+Description: Check if a binary tree B is a substructure of tree A.
+
+##### Approach 1: DFS
+Idea: Search for a match starting from each node in tree A, then verify structure match.
+
+```python
+class Solution:
+    def isSubStructure(self, A: Optional[TreeNode], B: Optional[TreeNode]) -> bool:
+        def dfs(A, B):
+            if not B: return True
+            if not A or A.val != B.val: return False
+            return dfs(A.left, B.left) and dfs(A.right, B.right)
+        return bool(A and B) and (dfs(A,B) or self.isSubStructure(A.left, B) or self.isSubStructure(A.right, B))
+```
+
+<a id="lc-0096"></a>
+#### 96. [Unique Binary Search Trees](https://leetcode.com/problems/unique-binary-search-trees/) [H]
+`Tree` `Dynamic Programming` `Binary Search Tree` `Math`
+Description: Count the number of structurally unique BSTs with n nodes.
+
+##### Approach 1: DP (Catalan number)
+Idea: dp[i] = number of unique BSTs with i nodes = sum(dp[j] * dp[i-1-j]) for j=0..i-1.
+
+```python
+class Solution:
+    def numTrees(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        G = [0]*(n+1)
+        G[0], G[1] = 1, 1
+
+        for i in range(2, n+1):
+            for j in range(1, i+1):
+                G[i] += G[j-1] * G[i-j]
+
+        return G[n]
+```
+
+##### Approach 2: Catalan formula
+Idea: Use the mathematical formula for the nth Catalan number: C(2n, n) / (n+1).
+
+```python
+class Solution(object):
+    def numTrees(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        C = 1
+        for i in range(0, n):
+            C = C * 2*(2*i+1)/(i+2)
+        return int(C)
+```
+
+
+314. 二叉树的垂直遍历
+```python
+```
+
+
+
+---
+
+
+### Hard
+<a id="lc-0095"></a>
+#### 95. [Unique Binary Search Trees II](https://leetcode.com/problems/unique-binary-search-trees-ii/) [H]
+`Tree` `Backtracking` `Binary Search Tree` `Dynamic Programming`
+Description: Generate all structurally unique BSTs with n nodes.
+
+##### Approach 1: Recursive backtracking
+Idea: For each value i as root, recursively generate all left and right subtrees, then combine.
+
+```python
+class Solution:
+    def generateTrees(self, n: int) -> List[TreeNode]:
+        def generateTrees(start, end):
+            if start > end:
+                return [None,]
+            allTrees = []
+            for i in range(start, end + 1):  # 枚举可行根节点
+                leftTrees = generateTrees(start, i - 1)
+                rightTrees = generateTrees(i + 1, end)
+                for l in leftTrees:
+                    for r in rightTrees:
+                        currTree = TreeNode(i)
+                        currTree.left = l
+                        currTree.right = r
+                        allTrees.append(currTree)
+            return allTrees
+        return generateTrees(1, n) if n else []
+```
+
+##### Approach 2: Memoized backtracking
+Idea: Same as Approach 1, but use memoization to avoid recomputing subtrees.
+
+```python
+class Solution:
+    def generateTrees(self, n: int) -> List[Optional[TreeNode]]:
+        if n == 0: return []
+        memo = {}
+        def build(start, end):
+            if start > end: return [None]
+            if (start, end) in memo: return memo[(start, end)]
+            res = []
+            for i in range(start, end + 1):
+                for l, r in product(build(start, i - 1), build(i + 1, end)):
+                    res.append(TreeNode(i, l, r))
+            memo[(start, end)] = res
+            return res
+        return build(1, n)
+```
+
 
 <a id="lc-0297"></a>
 #### 297. [Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/) [H]
