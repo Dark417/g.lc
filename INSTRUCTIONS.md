@@ -218,6 +218,16 @@ Processing rules:
    Description: ...
    ```
 
+## `26U/Tiktok.md` — TikTok-specific workflow
+
+`26U/Tiktok.md` is another multi-category tracker. Keep the `## Category` section near the top and the detailed question sections below. Every new question you add needs a matching index entry so readers can jump straight to it:
+
+- Use the template `- [E/M/H] [N. Title](#anchor) — short description of the key idea` for each index bullet (for example: `- [M] [5. 最长回文子串](#5-最长回文子串) — Expand around centers to track the longest palindromic substring.`).
+- Pick the topic heading (Strings, Arrays & Hashing, Backtracking, etc.) that best reflects the primary technique before inserting the bullet so the index stays grouped sensibly.
+- Summarize the technique in the short description (DFS/backtracking, two pointers, digit math, etc.) so the index is still a useful skim sheet.
+- Make sure the anchor matches the `### N. Title` heading (lowercase, hyphenated, roman numerals lowercased) so the link lands on the right block.
+- After updating `Tiktok.md`, follow the log rules above to add the same questions to `26U/26u-log.md` so every addition is recorded.
+
 ## `26U/26u-log.md` — Daily progress log
 
 This file tracks every question added or updated, grouped by day in reverse-chronological order.

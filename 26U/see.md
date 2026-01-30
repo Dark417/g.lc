@@ -19,6 +19,71 @@ instruction to do it
  -->
 
 ## 心得
+
+### backtrack
+```python
+# permutation
+# visited
+def q():
+    res = []
+    path = []
+    used = [False] * n
+    def backtrack():
+        if len(path) == n:
+            res.append(path[:])
+            return
+        for i in range(n):
+            if used[i]:
+                continue
+            path.append(...)
+            used[i] = True
+            backtrack()
+            path.pop()
+            used[i] = False
+    backtrack()
+    return res
+
+# combination
+# No visited, iterate from i + 1
+def q():
+    res = []
+    path = []
+    def backtrack(start: int):
+        if len(path) == k:
+            res.append(path[:])
+            return
+        for i in range(start, n):
+            path.append(...)
+            backtrack(i + 1)
+            path.pop()
+    backtrack(0)
+    return res
+
+
+# pruning
+# NO explicit, loop
+# use i + 1 to increment
+def dfs(i: int, left: int) -> None:
+    if left == 0:
+        # 找到一个合法组合
+        ans.append(path.copy())
+        return
+
+    if i == len(candidates) or left < 0:
+        return
+
+    # 不选
+    dfs(i + 1, left)
+
+    # 选
+    path.append(candidates[i])
+    dfs(i, left - candidates[i])
+    path.pop()  # 恢复现场
+
+dfs(0, target)
+```
+
+
 ### recursion
 ```python
 # return dfs
