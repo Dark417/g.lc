@@ -1,5 +1,17 @@
 # Cadence
-### Jan 29
+#### Jan 30
+- [E] [496. Next Greater Element I](/26U/stack.md#lc-0496)
+- [E] [1475. Final Prices With a Special Discount in a Shop](/26U/stack.md#lc-1475)
+- [M] [739. Daily Temperatures](/26U/stack.md#lc-0739)
+- [M] [402. Remove K Digits](/26U/stack.md#lc-0402)
+- [M] [1673. Find the Most Competitive Subsequence](/26U/stack.md#lc-1673)
+- [M] [738. Monotone Increasing Digits](/26U/stack.md#lc-0738)
+- [M] [2259. Remove Digit From Number to Maximize Result](/26U/stack.md#lc-2259)
+- [M] [316. Remove Duplicate Letters](/26U/stack.md#lc-0316)
+- [M] [1504. Count Submatrices With All Ones](/26U/stack.md#lc-1504)
+- [M] [503. Next Greater Elements II](/26U/stack.md#lc-0503)
+- [M] [556. Next Greater Element III](/26U/stack.md#lc-0556)
+#### Jan 29
 - [M] [17. 电话号码的字母组合](/26U/Tiktok.md#17-电话号码的字母组合)
 - [M] [22. 括号生成](/26U/Tiktok.md#22-括号生成)
 - [M] [39. 组合总和](/26U/Tiktok.md#39-组合总和)
