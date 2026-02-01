@@ -19,6 +19,47 @@ instruction to do it
  -->
 
 ## 心得
+### monostack
+```python
+# if want increasing
+# iterate from left to right
+# maintain a decreasing stack
+# while stack and cur > stack[-1]: pop
+while stack and cur > nums[stack[-1]]:
+    idx = stack.pop()
+    res[idx] = cur # Next Greater found
+stack.append()
+
+# iterate from right to left
+# maintain a decreasing stack
+# while stack and cur >= stack[-1]: pop
+# if stack: res[cur] = stack[-1]
+while stack and cur >= stack[-1]: 
+    stack.pop()
+if stack: res[i] = stack[-1]
+stack.append()
+```
+
+### linkedlist
+```python
+slow = fast = head
+# [1,2,3,4] 3
+while fast and fast.next:
+# [1,2,3,4] 2
+while fast.next and fast.next.next:
+    slow = slow.next
+    fast = fast.next.next
+return slow
+
+# reverse
+# cur => cur.
+# check again, can be None
+while cur:
+    nxt = cur.next
+    cur.next = pre
+    pre = cur
+    cur = cur.next
+```
 
 ### backtrack
 ```python

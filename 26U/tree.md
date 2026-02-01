@@ -1,6 +1,6 @@
 # Tree
 
-## Category
+## Index
 
 ### Easy
 - [E] [100. Same Tree](#lc-0100)\

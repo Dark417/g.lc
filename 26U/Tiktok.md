@@ -1,45 +1,121 @@
 ## 以正合
 
-## Category
+## Index
 
 ### Strings
-- [M] [5. 最长回文子串](#5-最长回文子串) — Expand around centers to track the longest palindromic substring.
-- [M] [17. 电话号码的字母组合](#17-电话号码的字母组合) — Map digits to letter choices and backtrack the possible strings.
-- [M] [22. 括号生成](#22-括号生成) — Grow valid parentheses by choosing when to place left/right brackets.
-- [M] [79. 单词搜索](#79-单词搜索) — Backtracking search for a single word on a grid.
-- [M] [93. 复原 IP 地址](#93-复原-ip-地址) — Split the string into four valid octets with pruning.
+- [M] [5. 最长回文子串](#5-最长回文子串) \
+  Expand around every center (odd/even) to track the longest palindrome. \
+  `String` `Two Pointers`
+
+- [M] [17. 电话号码的字母组合](#17-电话号码的字母组合) \
+  Map digits to letter groups and backtrack over choices at each position. \
+  `String` `Backtracking` `Mapping`
+
+- [M] [22. 括号生成](#22-括号生成) \
+  Backtrack by adding '(' when available and ')' when valid to build well-formed sequences. \
+  `String` `Backtracking`
+
+- [M] [79. 单词搜索](#79-单词搜索) \
+  DFS through the board, marking visited cells to trace the input word sequentially. \
+  `Matrix` `Backtracking` `DFS`
+
+- [M] [93. 复原 IP 地址](#93-复原-ip-地址) \
+  Backtrack through four segments, pruning invalid octets and leading zeros early. \
+  `String` `Backtracking` `Validation`
 
 ### Arrays & Hashing
-- [M] [31. 下一个排列](#31-下一个排列) — Compute the lexicographically next permutation in place.
-- [M] [75. 颜色分类](#75-颜色分类) — Dutch national flag partition to collect similar colors.
-- [E] [88. 合并两个有序数组](#88-合并两个有序数组) — Merge into a sorted array using the spare tail of the first array.
-- [M] [249. 移位字符串分组](#249-移位字符串分组) — Group shifted strings by their cyclic differences.
+- [M] [31. 下一个排列](#31-下一个排列) \
+  Scan from the end to find the first decrease, swap with the next larger value, then reverse the suffix. \
+  `Array` `Greedy` `Two Pointers`
+
+- [M] [75. 颜色分类](#75-颜色分类) \
+  Partition colors by swapping zeros to the left and twos to the right in a single pass. \
+  `Array` `Two Pointers` `In-Place`
+
+- [E] [88. 合并两个有序数组](#88-合并两个有序数组) \
+  Merge from the back so the larger elements shift right without overwriting unprocessed values. \
+  `Array` `Two Pointers` `In-Place`
+
+- [M] [249. 移位字符串分组](#249-移位字符串分组) \
+  Normalize cyclic differences between adjacent letters to group shifted strings. \
+  `String` `Hash Table` `Grouping`
 
 ### Math & Geometry
-- [M] [54. 螺旋矩阵](#54-螺旋矩阵) — Traverse a matrix in spiral order.
-- [M] [59. 螺旋矩阵 II](#59-螺旋矩阵-ii) — Populate an n×n matrix in spiral order.
-- [M] [2326. 螺旋矩阵 IV](#2326-螺旋矩阵-iv) — Fill a spiral matrix using a linked list stream.
+- [M] [54. 螺旋矩阵](#54-螺旋矩阵) \
+  Simulate spiral traversal by marking visited cells and switching direction when needed. \
+  `Array` `Matrix` `Simulation`
+
+- [M] [59. 螺旋矩阵 II](#59-螺旋矩阵-ii) \
+  Fill an n×n matrix in spiral order by rotating through four directions as you assign consecutive values. \
+  `Array` `Matrix` `Simulation`
+
+- [M] [2326. 螺旋矩阵 IV](#2326-螺旋矩阵-iv) \
+  Stream nodes into a spiral matrix, rotating directions and stopping when the list runs out. \
+  `Linked List` `Matrix` `Simulation`
 
 ### Two Pointers
-- [E] [977. 有序数组的平方](#977-有序数组的平方) — Square and place values from the ends inward.
-- [M] [360. 有序转化数组](#360-有序转化数组) — Apply a quadratic function and merge the two increasing halves.
+- [E] [977. 有序数组的平方](#977-有序数组的平方) \
+  Square values from both ends and fill the output backwards to keep results sorted. \
+  `Array` `Two Pointers` `Math`
+
+- [M] [360. 有序转化数组](#360-有序转化数组) \
+  Apply two pointers to place transformed values in order, handling parabolas opening up/down separately. \
+  `Array` `Two Pointers` `Math`
 
 ### Backtracking
-- [M] [39. 组合总和](#39-组合总和) — Find combinations that sum to the target while reusing candidates.
-- [M] [40. 组合总和 II](#40-组合总和-ii) — Enumerate unique combinations without repeating the same index.
-- [M] [46. 全排列](#46-全排列) — Standard backtracking generation of all permutations.
-- [M] [47. 全排列 II](#47-全排列-ii) — Avoid duplicate permutations when numbers repeat.
-- [M] [60. 排列序列](#60-排列序列) — Use factorial numbering to compute the k-th permutation directly.
-- [M] [77. 组合](#77-组合) — Build k-element combinations from the first n numbers with DFS.
-- [M] [78. 子集](#78-子集) — Enumerate every subset by choosing to include or skip each element.
-- [M] [216. 组合总和 III](#216-组合总和-iii) — Choose k numbers from 1..9 that sum to n.
-- [M] [254. 因子的组合](#254-因子的组合) — Factor n into products of integers greater than 1.
-- [M] [784. 字母大小写全排列](#784-字母大小写全排列) — Toggle letter cases to generate every variant.
+- [M] [39. 组合总和](#39-组合总和) \
+  Reuse candidates recursively while tracking the remaining sum to build valid combinations. \
+  `Backtracking` `DFS`
+
+- [M] [40. 组合总和 II](#40-组合总和-ii) \
+  Sort candidates and skip duplicates during DFS to avoid repeated combination sets. \
+  `Backtracking` `DFS` `Dedup`
+
+- [M] [46. 全排列](#46-全排列) \
+  Use visited tracking to explore each unused number and collect full-length permutations. \
+  `Backtracking` `DFS`
+
+- [M] [47. 全排列 II](#47-全排列-ii) \
+  Sort and skip duplicates by checking previous elements to avoid repeating permutations. \
+  `Backtracking` `DFS`
+
+- [M] [60. 排列序列](#60-排列序列) \
+  Use factorial numbering to select digits one-by-one for the k-th permutation. \
+  `Math` `Permutation` `Factorial Number`
+
+- [M] [77. 组合](#77-组合) \
+  DFS from each start value to gather k-number combinations using pruning when size reaches k. \
+  `Backtracking` `DFS` `Combinatorics`
+
+- [M] [78. 子集](#78-子集) \
+  Recurse by choosing to include or skip each element, collecting every subset along the way. \
+  `Backtracking` `DFS`
+
+- [M] [216. 组合总和 III](#216-组合总和-iii) \
+  Choose k distinct digits from 1..9 via constrained DFS so their sum equals n. \
+  `Backtracking` `DFS` `Combinatorics`
+
+- [M] [254. 因子的组合](#254-因子的组合) \
+  Try divisors up to sqrt(n) and recurse with the quotient to collect factor combinations. \
+  `Math` `Backtracking` `DFS`
+
+- [M] [267. 回文排列 II](#267-回文排列-ii) \
+  Build palindromic halves by using characters in pairs and inserting the odd center when needed. \
+  `Backtracking` `DFS` `Palindrome`
+
+- [M] [784. 字母大小写全排列](#784-字母大小写全排列) \
+  Toggle letter cases recursively whenever a letter is encountered to build all variants. \
+  `Backtracking` `String` `DFS`
 
 ### Intervals
-- [M] [56. 合并区间](#56-合并区间) — Merge overlapping intervals after sorting by start.
+- [M] [56. 合并区间](#56-合并区间) \
+  Sort intervals by start and merge overlaps by extending the end when necessary. \
+  `Array` `Intervals` `Sorting`
 
 ### 5. 最长回文子串
+`String` `Two Pointers` \
+Expand around every center (odd/even) to track the longest palindrome.
+
 ```python
 class Solution:
     def longestPalindrome(self, s: str) -> str:
@@ -86,6 +162,9 @@ class Solution:
 ```
 
 ### 22. 括号生成
+`String` `Backtracking` \
+Backtrack by adding '(' when available and ')' when valid to build well-formed sequences.
+
 ```python
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
@@ -120,6 +199,9 @@ class Solution:
 ```
 
 ### 17. 电话号码的字母组合
+`String` `Backtracking` `Mapping` \
+Map digits to letter groups and backtrack over choices at each position.
+
 ```python
 class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
@@ -167,6 +249,9 @@ def letterCombinations(self, digits: str) -> List[str]:
 ```
 
 ### 93. 复原 IP 地址
+`String` `Backtracking` `Validation` \
+Backtrack through four segments, pruning invalid octets and leading zeros early.
+
 ```python
 class Solution:
     def restoreIpAddresses(self, s: str) -> List[str]:
@@ -222,6 +307,9 @@ class Solution:
 
 
 ### 31. 下一个排列
+`Array` `Greedy` `Two Pointers` \
+Scan from the end to find the first decrease, swap with the next larger value, then reverse the suffix.
+
 ```python
 [1, 5, 8, 4, 2]
 [1, 8, 5, 4, 2]
@@ -273,6 +361,9 @@ class Solution:
 ```
 
 ### 46. 全排列
+`Backtracking` `DFS` \
+Use visited tracking to explore each unused number and collect full-length permutations.
+
 ```python
 # visited
 # range 0 - n, so it always get from 0, to pick all nums
@@ -310,6 +401,9 @@ class Solution:
 ```
 
 ### 47. 全排列 II
+`Backtracking` `DFS` \
+Sort and skip duplicates by checking previous elements to avoid repeating permutations.
+
 ```python
 """
 If visited[i-1] is True: You are currently in a branch where the first duplicate is already part of your permutation. It is safe to use the second one now.
@@ -374,6 +468,9 @@ class Solution:
 
 
 ### 77. 组合
+`Backtracking` `DFS` `Combinatorics` \
+DFS from each start value to gather k-number combinations using pruning when size reaches k.
+
 ```python
 class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
@@ -392,6 +489,9 @@ class Solution:
 ```
 
 ### 78. 子集
+`Backtracking` `DFS` \
+Recurse by choosing to include or skip each element, collecting every subset along the way.
+
 ```python
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
@@ -424,6 +524,9 @@ class Solution:
 ```
 
 ### 39. 组合总和
+`Backtracking` `DFS` \
+Reuse candidates recursively while tracking the remaining sum to build valid combinations.
+
 ```python
 # reuse!
 # binary tree
@@ -465,6 +568,9 @@ class Solution:
         return res
 ```
 ### 40. 组合总和 II
+`Backtracking` `DFS` `Dedup` \
+Sort candidates and skip duplicates during DFS to avoid repeated combination sets.
+
 ```python
 # 1, 1, 2
 # i > start
@@ -540,6 +646,9 @@ class Solution:
 ```
 
 ### 216. 组合总和 III
+`Backtracking` `DFS` `Combinatorics` \
+Choose k distinct digits from 1..9 via constrained DFS so their sum equals n.
+
 ```python
 class Solution:
     def combinationSum3(self, k: int, n: int) -> List[List[int]]:
@@ -579,6 +688,9 @@ class Solution:
 ```
 
 ### 254. 因子的组合
+`Math` `Backtracking` `DFS` \
+Try divisors up to sqrt(n) and recurse with the quotient to collect factor combinations.
+
 ```python
 # don't return, keep going
 # dfs also satrt with i, reuse
@@ -600,6 +712,9 @@ class Solution:
 
 
 ### 60. 排列序列
+`Math` `Permutation` `Factorial Number` \
+Use factorial numbering to select digits one-by-one for the k-th permutation.
+
 ```python
 import math
 
@@ -629,6 +744,9 @@ def getPermutation(self, n: int, k: int) -> str:
 ```    
 
 ### 784. 字母大小写全排列
+`Backtracking` `String` `DFS` \
+Toggle letter cases recursively whenever a letter is encountered to build all variants.
+
 ```python
 class Solution:
     def letterCasePermutation(self, s: str) -> List[str]:
@@ -663,8 +781,145 @@ class Solution:
         return ans
 ```
 
-### 54. 螺旋矩阵
+### 267. 回文排列 II
+`Backtracking` `DFS` `Palindrome` \
+Build palindromic halves by using characters in pairs and inserting the odd center when needed.
+
 ```python
+!!!
+class Solution:
+    def generatePalindromes(self, s: str) -> List[str]:
+        ct = Counter(s)
+        odd = [k for k, v in ct.items() if v % 2]
+        if len(odd) > 1: return []
+        mid = odd[0] if odd else ""
+        half = [k for k, v in ct.items() for _ in range(v // 2)]
+        res = []
+        vis = [False] * len(half)
+        def dfs(cur):
+            if len(cur) == len(half):
+                res.append("".join(cur) + mid + "".join(cur[::-1]))
+                return
+            for i in range(len(half)):
+                if vis[i] or (i > 0 and half[i] == half[i-1] and not vis[i-1]): 
+                    continue
+                vis[i] = True
+                cur.append(half[i])
+                dfs(cur)
+                cur.pop()
+                vis[i] = False
+        dfs([])
+        return res
+
+class Solution:
+    def generatePalindromes(self, s: str) -> List[str]:
+        ct = Counter(s)
+        odd = [k for k, v in ct.items() if v % 2]
+        if len(odd) > 1: return []
+        mid = odd[0] if odd else ""
+        half = [k for k, v in ct.items() for _ in range(v // 2)]
+        res = []
+        def dfs(l):
+            if l == len(half): res.append("".join(half) + mid + "".join(half[::-1])); return
+            seen = set()
+            for i in range(l, len(half)):
+                if half[i] in seen: continue
+                seen.add(half[i])
+                half[l], half[i] = half[i], half[l]
+                dfs(l + 1)
+                half[l], half[i] = half[i], half[l]
+        dfs(0)
+        return res
+
+class Solution:
+    def generatePalindromes(self, s: str) -> List[str]:
+        ct = Counter(s)
+        odd = 0
+        for v in ct.values():
+            odd += v % 2
+        if odd > 1:
+            return []
+        
+        ctl = [k for k, v in ct.items() for _ in range(v // 2)]
+        mid = ""
+        for k, v in ct.items():
+            if v % 2 == 1:
+                mid = k
+        
+        res = []
+        def dfs(cur, remaining):
+            if len(cur) == len(ctl):
+                res.append("".join(cur) + mid + "".join(cur[::-1]))
+                return
+            for i in range(len(remaining)):
+                if i > 0 and remaining[i] == remaining[i-1]:
+                    continue
+                cur.append(remaining[i])
+                dfs(cur, remaining[:i] + remaining[i+1:])
+                cur.pop()
+        dfs([], ctl)
+        return res
+
+class Solution:
+    def generatePalindromes(self, s: str) -> list[str]:
+        cnt = Counter(s)
+        mid = ''
+        target_len = len(s)
+        for char, v in cnt.items():
+            if v % 2 == 1:
+                if mid: return []# More than one odd frequency char
+                mid = char
+                cnt[char] -= 1 # Use one for the center
+        ans = []
+        def dfs(path_str):
+            if len(path_str) == target_len:
+                ans.append(path_str)
+                return
+            for char in cnt:
+                if cnt[char] >= 2:
+                    cnt[char] -= 2      # Use two occurrences (one for each side)
+                    dfs(char + path_str + char)
+                    cnt[char] += 2      # Backtrack: restore the count
+        dfs(mid)
+        return ans
+
+#fix
+class Solution:
+    def generatePalindromes(self, s: str) -> List[str]:
+        ct = Counter(s)
+        odd = 0
+        for v in ct.values():
+            odd += v % 2
+        if odd > 1:
+            return []
+        ctl = [k for k, v in ct.items() for _ in range(v // 2)]
+        mid = ""
+        for k, v in ct.items():
+            if v % 2 == 1:
+                mid = k
+        res = []
+        def dfs(start, cur):
+            if len(cur) == len(ctl):
+                res.append("".join(cur) + mid + "".join(cur[::-1]))
+                return
+            for i in range(start, len(ctl)):
+                if i > start and ctl[i] == ctl[i-1]:
+                    continue
+                cur.append(ctl[i])
+                dfs(i, cur)
+                cur.pop()
+        dfs(0, [])
+        return res
+```
+
+
+
+### 54. 螺旋矩阵
+`Array` `Matrix` `Simulation` \
+Simulate spiral traversal by marking visited cells and switching direction when needed.
+
+```python
+# visited or short path
 class Solution:
     def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
         DIR = (0, 1), (1, 0), (0, -1), (-1, 0)
@@ -700,6 +955,9 @@ class Solution:
 ```
 
 ### 59. 螺旋矩阵 II
+`Array` `Matrix` `Simulation` \
+Fill an n×n matrix in spiral order by rotating through four directions as you assign consecutive values.
+
 ```python
 class Solution:
     def generateMatrix(self, n: int) -> List[List[int]]:
@@ -717,6 +975,9 @@ class Solution:
 ```
 
 ### 2326. 螺旋矩阵 IV
+`Linked List` `Matrix` `Simulation` \
+Stream nodes into a spiral matrix, rotating directions and stopping when the list runs out.
+
 ```python
 class Solution:
     def spiralMatrix(self, m: int, n: int, head: Optional[ListNode]) -> List[List[int]]:
@@ -735,13 +996,33 @@ class Solution:
 ```
 
 ### 75. 颜色分类
-```python
+`Array` `Two Pointers` `In-Place` \
+Partition colors by swapping zeros to the left and twos to the right in a single pass.
 
+```python
+class Solution:
+    def sortColors(self, nums: List[int]) -> None:
+        nxt0, cur, nxt2 = 0, 0, len(nums) - 1
+        while cur <= nxt2:
+            if nums[cur] == 0:
+                nums[nxt0], nums[cur] = nums[cur], nums[nxt0]
+                nxt0 += 1
+                cur += 1
+            elif nums[cur] == 2:
+                nums[nxt2], nums[cur] = nums[cur], nums[nxt2]
+                nxt2 -= 1
+            else:
+                cur += 1
+
+        # Time: O(n), Space: O(1)
 ```
 
 
 
 ### 249. 移位字符串分组
+`String` `Hash Table` `Grouping` \
+Normalize cyclic differences between adjacent letters to group shifted strings.
+
 ```python
 class Solution:
     def groupStrings(self, strings: List[str]) -> List[List[str]]:
@@ -757,14 +1038,107 @@ class Solution:
 
 
 ### 79. 单词搜索
+`Matrix` `Backtracking` `DFS` \
+DFS through the board, marking visited cells to trace the input word sequentially.
+
 ```python
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        def check(r, c, idx):
+            if idx == len(word):
+                return True
+            if (r < 0 or r >= row or c < 0 or c >= col or 
+                board[r][c] != word[idx]):
+                    return False
+            temp = board[r][c]
+            board[r][c] = '#'
+            res = check(r + 1, c, idx + 1) or check(r - 1, c, idx + 1) or check(r, c + 1, idx + 1) or check(r, c - 1, idx + 1)
+            board[r][c] = temp
+            return res
 
-
-
+        row, col = len(board), len(board[0])
+        for i in range(row):
+            for j in range(col):
+                if check(i, j, 0):
+                    return True
+        return False
 ```
 
+### 212. 单词搜索 II
+```python
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.word = None
+    def insert(self, word):
+        node = self
+        for char in word:
+            if char not in node.children: node.children[char] = TrieNode()
+            node = node.children[char]
+        node.word = word
+class Solution:
+    def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
+        root = TrieNode()
+        for w in words: root.insert(w)
+        m, n, res = len(board), len(board),
+        def dfs(r, c, parent):
+            char = board[r][c]
+            curr = parent.children[char]
+            if curr.word:
+                res.append(curr.word)
+                curr.word = None
+            board[r][c] = "#"
+            for nr, nc in [(r+c), (r-c), (r, c+), (r, c-)]:
+                if 0 <= nr < m and 0 <= nc < n and board[nr][nc] in curr.children:
+                    dfs(nr, nc, curr)
+            board[r][c] = char
+            if not curr.children: parent.children.pop(char)
+        for i in range(m):
+            for j in range(n):
+                if board[i][j] in root.children: dfs(i, j, root)
+        return res
+
+class Trie:
+    def __init__(self):
+        self.children = defaultdict(Trie)
+        self.word = ""
+    def insert(self, word):
+        cur = self
+        for c in word:
+            cur = cur.children[c]
+        cur.is_word = True
+        cur.word = word
+
+
+class Solution:
+    def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
+        trie = Trie()
+        for word in words:
+            trie.insert(word)
+        def dfs(now, i1, j1):
+            if board[i1][j1] not in now.children:
+                return
+            ch = board[i1][j1]
+            now = now.children[ch]
+            if now.word != "":
+                ans.add(now.word)
+            board[i1][j1] = "#"
+            for i2, j2 in [(i1 + 1, j1), (i1 - 1, j1), (i1, j1 + 1), (i1, j1 - 1)]:
+                if 0 <= i2 < m and 0 <= j2 < n:
+                    dfs(now, i2, j2)
+            board[i1][j1] = ch
+        ans = set()
+        m, n = len(board), len(board[0])
+        for i in range(m):
+            for j in range(n):
+                dfs(trie, i, j)
+        return list(ans)
+```
 
 ### 88. 合并两个有序数组
+`Array` `Two Pointers` `In-Place` \
+Merge from the back so the larger elements shift right without overwriting unprocessed values.
+
 ```python
 class Solution:
     def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
@@ -797,6 +1171,9 @@ class Solution:
 ```
 
 ### 977. 有序数组的平方
+`Array` `Two Pointers` `Math` \
+Square values from both ends and fill the output backwards to keep results sorted.
+
 ```python
 class Solution:
     def sortedSquares(self, nums: List[int]) -> List[int]:
@@ -815,6 +1192,9 @@ class Solution:
         return ans
 ```
 ### 360. 有序转化数组
+`Array` `Two Pointers` `Math` \
+Apply two pointers to place transformed values in order, handling parabolas opening up/down separately.
+
 ```python
 def sortTransformedArray(nums: List[int], a: int, b: int, c: int) -> List[int]:
     def f(x):
@@ -847,9 +1227,401 @@ def sortTransformedArray(nums: List[int], a: int, b: int, c: int) -> List[int]:
             
     return result
 ```
+### 146. LRU 缓存
+```python
+# 1 sentinel
+class Node:
+    # 提高访问属性的速度，并节省内存
+    __slots__ = 'prev', 'next', 'key', 'value'
+
+    def __init__(self, key=0, value=0):
+        self.key = key
+        self.value = value
+
+class LRUCache:
+
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.dummy = Node()
+        self.dummy.prev = self.dummy
+        self.dummy.next = self.dummy
+        self.nodes = {}
+
+    def get_node(self, key):
+        if key not in self.nodes:
+            return None
+        node = self.nodes[key]
+        self.remove(node)
+        self.push_front(node)
+        return node
+
+    def get(self, key: int) -> int:
+        node = self.get_node(key)
+        return node.value if node else -1
+        
+    def put(self, key: int, value: int) -> None:
+        node = self.get_node(key)
+        if node:
+            node.value = value
+            return
+        self.nodes[key] = node = Node(key, value)
+        self.push_front(node)
+        if len(self.nodes) > self.capacity:
+            back_node = self.dummy.prev
+            del self.nodes[back_node.key]
+            self.remove(back_node)
+        
+    def remove(self, x):
+        x.prev.next = x.next
+        x.next.prev = x.prev
+    
+    def push_front(self, x):
+        x.prev = self.dummy
+        x.next = self.dummy.next
+        x.prev.next = x
+        x.next.prev = x
+
+# head, tail
+class LRUCache:
+    def __init__(self, capacity: int):
+        self.cache = dict()
+        self.head = DLinkedNode()
+        self.tail = DLinkedNode()
+        self.head.next = self.tail
+        self.tail.prev = self.head
+        self.capacity = capacity
+        self.size = 0
+
+    def get(self, key: int) -> int:
+        if key not in self.cache:
+            return -1
+        node = self.cache[key]
+        self.moveToHead(node)
+        return node.value
+
+    def put(self, key: int, value: int) -> None:
+        if key not in self.cache:
+            node = DLinkedNode(key, value)
+            self.cache[key] = node
+            self.addToHead(node)
+            self.size += 1
+            if self.size > self.capacity:
+                removed = self.removeTail()
+                self.cache.pop(removed.key)
+                self.size -= 1
+        else:
+            node = self.cache[key]
+            node.value = value
+            self.moveToHead(node)
+    
+    def addToHead(self, node):
+        node.prev = self.head
+        node.next = self.head.next
+        self.head.next.prev = node
+        self.head.next = node
+    
+    def removeNode(self, node):
+        node.prev.next = node.next
+        node.next.prev = node.prev
+
+    def moveToHead(self, node):
+        self.removeNode(node)
+        self.addToHead(node)
+
+    def removeTail(self):
+        node = self.tail.prev
+        self.removeNode(node)
+        return node
+```
+
+### 460. LFU Cache
+```python
+class Node:
+    # 提高访问属性的速度，并节省内存
+    __slots__ = 'prev', 'next', 'key', 'value', 'freq'
+
+    def __init__(self, key=0, val=0):
+        self.key = key
+        self.value = val
+        self.freq = 1  #  新书只读了一次
+
+class LFUCache:
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.key_to_node = {}
+        def new_list() -> Node:
+            dummy = Node()  # 哨兵节点
+            dummy.prev = dummy
+            dummy.next = dummy
+            return dummy
+        self.freq_to_dummy = defaultdict(new_list)
+
+    def get_node(self, key: int) -> Optional[Node]:
+        if key not in self.key_to_node:  # 没有这本书
+            return None
+        node = self.key_to_node[key]  # 有这本书
+        self.remove(node)  # 把这本书抽出来
+        dummy = self.freq_to_dummy[node.freq]
+        if dummy.prev == dummy:  # 抽出来后，这摞书是空的
+            del self.freq_to_dummy[node.freq]  # 移除空链表
+            if self.min_freq == node.freq:  # 这摞书是最左边的
+                self.min_freq += 1
+        node.freq += 1  # 看书次数 +1
+        self.push_front(self.freq_to_dummy[node.freq], node)  # 放在右边这摞书的最上面
+        return node
+
+    def get(self, key: int) -> int:
+        node = self.get_node(key)
+        return node.value if node else -1
+
+    def put(self, key: int, value: int) -> None:
+        node = self.get_node(key)
+        if node:  # 有这本书
+            node.value = value  # 更新 value
+            return
+        if len(self.key_to_node) == self.capacity:  # 书太多了
+            dummy = self.freq_to_dummy[self.min_freq]
+            back_node = dummy.prev  # 最左边那摞书的最下面的书
+            del self.key_to_node[back_node.key]
+            self.remove(back_node)  # 移除
+            if dummy.prev == dummy:  # 这摞书是空的
+                del self.freq_to_dummy[self.min_freq]  # 移除空链表
+        self.key_to_node[key] = node = Node(key, value)  # 新书
+        self.push_front(self.freq_to_dummy[1], node)  # 放在「看过 1 次」的最上面
+        self.min_freq = 1
+
+    def remove(self, x: Node) -> None:
+        x.prev.next = x.next
+        x.next.prev = x.prev
+
+    def push_front(self, dummy: Node, x: Node) -> None:
+        x.prev = dummy
+        x.next = dummy.next
+        x.prev.next = x
+        x.next.prev = x
+
+# ordereddict
+# 为方便读者理解核心逻辑，该写法没有删除空字典，删除空字典的写法见【Python 写法二】
+class LFUCache:
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.key_to_value_and_freq = {}  # key -> [value, freq]
+        # from collections import OrderedDict
+        # OrderedDict = dict + 双向链表
+        self.freq_to_dict = defaultdict(OrderedDict)  # freq -> OrderedDict（只保存 key）
+
+    def get_list(self, key: int) -> Optional[List[int]]:
+        lst = self.key_to_value_and_freq.get(key, None)
+        if not lst:  # 没有这本书
+            return None
+        freq = lst[1]  # 获取这本书在第几摞
+        del self.freq_to_dict[freq][key]  # 把这本书抽出来
+        if not self.freq_to_dict[self.min_freq]:  # 最左边那摞书是空的
+            self.min_freq += 1
+        lst[1] += 1  # 看书次数 +1
+        self.freq_to_dict[freq + 1][key] = None
+        self.freq_to_dict[freq + 1].move_to_end(key, last=False)  # 放在右边这摞书的最上面
+        return lst
+
+    def get(self, key: int) -> int:
+        lst = self.get_list(key)
+        return lst[0] if lst else -1
+
+    def put(self, key: int, value: int) -> None:
+        lst = self.get_list(key)
+        if lst:  # 有这本书
+            lst[0] = value  # 更新 value
+            return
+        if len(self.key_to_value_and_freq) == self.capacity:  # 书太多了
+            # 移除最左边那摞书的最下面的书
+            k, _ = self.freq_to_dict[self.min_freq].popitem()
+            del self.key_to_value_and_freq[k]
+        self.key_to_value_and_freq[key] = [value, 1]  # 新书
+        self.freq_to_dict[1][key] = None
+        self.freq_to_dict[1].move_to_end(key, last=False)  # 放在「看过 1 次」的最上面
+        self.min_freq = 1
+
+# head, tail
+class Node:
+    def __init__(self, key, val, pre=None, nex=None, freq=0):
+        self.pre = pre
+        self.nex = nex
+        self.freq = freq
+        self.val = val
+        self.key = key
+        
+    def insert(self, nex):
+        nex.pre = self
+        nex.nex = self.nex
+        self.nex.pre = nex
+        self.nex = nex
+    
+def create_linked_list():
+    head = Node(0, 0)
+    tail = Node(0, 0)
+    head.nex = tail
+    tail.pre = head
+    return (head, tail)
+
+class LFUCache:
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.size = 0
+        self.minFreq = 0
+        self.freqMap = collections.defaultdict(create_linked_list)
+        self.keyMap = {}
+
+    def delete(self, node):
+        if node.pre:
+            node.pre.nex = node.nex
+            node.nex.pre = node.pre
+            if node.pre is self.freqMap[node.freq][0] and node.nex is self.freqMap[node.freq][-1]:
+                self.freqMap.pop(node.freq)
+        return node.key
+        
+    def increase(self, node):
+        node.freq += 1
+        self.delete(node)
+        self.freqMap[node.freq][-1].pre.insert(node)
+        if node.freq == 1:
+            self.minFreq = 1
+        elif self.minFreq == node.freq - 1:
+            head, tail = self.freqMap[node.freq - 1]
+            if head.nex is tail:
+                self.minFreq = node.freq
+
+    def get(self, key: int) -> int:
+        if key in self.keyMap:
+            self.increase(self.keyMap[key])
+            return self.keyMap[key].val
+        return -1
+
+    def put(self, key: int, value: int) -> None:
+        if self.capacity != 0:
+            if key in self.keyMap:
+                node = self.keyMap[key]
+                node.val = value
+            else:
+                node = Node(key, value)
+                self.keyMap[key] = node
+                self.size += 1
+            if self.size > self.capacity:
+                self.size -= 1
+                deleted = self.delete(self.freqMap[self.minFreq][0].nex)
+                self.keyMap.pop(deleted)
+            self.increase(node)
+```
+
+### 1756. Design Most Recently Used Queue
+`Design` `Queue` `Hash Table` \
+Use a list to maintain order and a set for quick membership checks; update on each fetch.
+```python
+```
+
+### 297. 二叉树的序列化与反序列化
+`Tree` `DFS` `BFS` \
+Serialize with pre-order traversal including nulls; deserialize by reconstructing the tree from the list.
+```python
+class Codec:
+    def serialize(self, root: TreeNode) -> str: 
+        res = []
+        def dfs(node):
+            if not node:
+                res.append("null")
+                return
+            res.append(str(node.val))
+            dfs(node.left)
+            dfs(node.right)
+        dfs(root)
+        return ','.join(res)
+
+    def deserialize(self, data: str) -> TreeNode:
+        vals = data.split(',')
+        def dfs():
+            if not vals:
+                return None
+            val = vals.pop(0)
+            if val == "null":
+                return None
+            node = TreeNode(int(val))
+            node.left = dfs()
+            node.right = dfs()
+            return node
+        return dfs()
+```
+
+### 428. 序列化和反序列化 N 叉树
+`Tree` `DFS` `BFS` \
+Serialize by recording node values and child counts; deserialize by reconstructing the tree using these counts.
+```python
+
+class Node:
+    def __init__(self, val=None, children=None):
+        self.val = val
+        self.children = children if children is not None else []
+
+class Codec:
+    def serialize(self, root: 'Node') -> str:
+        res = []
+        def dfs(node):
+            if not node:
+                return
+            res.append(str(node.val))
+            res.append(str(len(node.children)))
+            for child in node.children:
+                dfs(child)
+        dfs(root)
+        return ' '.join(res)
+
+    def deserialize(self, data: str) -> 'Node':
+        if not data:
+            return None
+        vals = data.split()
+        def dfs():
+            if not vals:
+                return None
+            val = int(vals.pop(0))
+            count = int(vals.pop(0))
+            node = Node(val)
+            node.children = [dfs() for _ in range(count)]
+            return node
+        return dfs()
+```
+
+### 449. 序列化和反序列化二叉搜索树
+`Tree` `DFS` `BST` \
+Serialize with pre-order traversal; deserialize by inserting values into the BST.
+```python
+class Codec:
+    def serialize(self, root: Optional[TreeNode]) -> str:
+        res = []
+        def dfs(node):
+            if not node:
+                return
+            res.append(str(node.val))
+            dfs(node.left)
+            dfs(node.right)
+        dfs(root)
+        return ','.join(res)
+
+    def deserialize(self, data: str) -> Optional[TreeNode]:
+        vals = data.split(',')
+        def dfs():
+            if not vals:
+                return None
+            val = int(vals.pop(0))
+            node = TreeNode(val)
+            node.left = dfs()
+            node.right = dfs()
+            return node
+        return dfs()
+```
 
 
 ### 56. 合并区间
+`Array` `Intervals` `Sorting` \
+Sort intervals by start and merge overlaps by extending the end when necessary.
+
 ```python
 class Solution:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
@@ -862,5 +1634,26 @@ class Solution:
                 merged[-1][1] = max(merged[-1][1], itv[1])
         return merged
 ```
+### 57. 插入区间
+`Array` `Intervals` `Sorting` \
+Insert and merge intervals by adding non-overlapping ones directly and merging overlaps.
 
-
+```python
+class Solution:
+    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        res = []
+        start, end = newInterval
+        i, n = 0, len(intervals)
+        while i < n and intervals[i][1] < start:
+            res.append(intervals[i])
+            i += 1
+        while i < n and intervals[i][0] <= end: 
+            start = min(start, intervals[i][0])
+            end = max(end, intervals[i][1])
+            i += 1
+        res.append([start, end])
+        while i < n:
+            res.append(intervals[i])
+            i += 1
+        return res
+```

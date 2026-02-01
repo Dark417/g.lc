@@ -1,41 +1,122 @@
 # Linked List
 ## 2026-01-04
 
-## Category
+## Index
 
 ### Easy
-- [E] [160. Intersection of Two Linked Lists](#lc-0160) — Return node where two singly linked lists intersect.
+- [E] [160. Intersection of Two Linked Lists](#lc-0160)\
+  Return node where two singly linked lists intersect.\
+  `Linked List` `Two Pointers`
 
 ### Medium
-- [M] [2. Add Two Numbers](#lc-0002) — Add two numbers represented by reverse-order linked lists.
-- [M] [19. Remove Nth Node From End of List](#lc-0019) — Remove the nth node from the end of the list.
-- [M] [24. Swap Nodes in Pairs](#lc-0024) — Swap every two adjacent nodes.
-- [M] [61. Rotate List](#lc-0061) — Rotate the list to the right by k places.
-- [M] [82. Remove Duplicates from Sorted List II](#lc-0082) — Remove all nodes with duplicate numbers.
-- [M] [86. Partition List](#lc-0086) — Partition list around x preserving relative order.
-- [M] [92. Reverse Linked List II](#lc-0092) — Reverse nodes between positions left and right.
-- [M] [114. Flatten Binary Tree to Linked List](#lc-0114) — Flatten tree to linked list in-place (preorder).
-- [M] [116. Populating Next Right Pointers in Each Node](#lc-0116) — Connect next pointers in a perfect binary tree.
-- [M] [138. Copy List with Random Pointer](#lc-0138) — Deep copy a list with next and random pointers.
-- [M] [142. Linked List Cycle II](#lc-0142) — Return the node where the cycle begins.
-- [M] [143. Reorder List](#lc-0143) — Reorder list by interleaving first and reversed second half.
-- [M] [146. LRU Cache](#lc-0146) — Design a cache with get and put in O(1).
-- [M] [148. Sort List](#lc-0148) — Sort a linked list in O(n log n) time.
-- [M] [445. Add Two Numbers II](#lc-0445) — Add two numbers represented by forward-order linked lists.
-- [M] [622. Design Circular Queue](#lc-0622) — Implement a fixed-size circular queue.
-- [M] [707. Design Linked List](#lc-0707) — Implement a linked list with common operations.
-- [M] [1721. Swapping Nodes in a Linked List](#lc-1721) — Swap kth node from start with kth from end.
-- [M] [2095. Delete the Middle Node of a Linked List](#lc-2095) — Delete the middle node of a linked list.
+- [M] [2. Add Two Numbers](#lc-0002)\
+  Add two numbers represented by reverse-order linked lists.\
+  `Linked List` `Math`
+
+- [M] [19. Remove Nth Node From End of List](#lc-0019)\
+  Remove the nth node from the end of the list.\
+  `Linked List` `Two Pointers`
+
+- [M] [24. Swap Nodes in Pairs](#lc-0024)\
+  Swap every two adjacent nodes.\
+  `Linked List` `Two Pointers`
+
+- [M] [61. Rotate List](#lc-0061)\
+  Rotate the list to the right by k places.\
+  `Linked List` `Two Pointers`
+
+- [M] [82. Remove Duplicates from Sorted List II](#lc-0082)\
+  Remove all nodes with duplicate numbers.\
+  `Linked List` `Two Pointers`
+
+- [M] [86. Partition List](#lc-0086)\
+  Partition list around x while preserving relative order.\
+  `Linked List` `Two Pointers`
+
+- [M] [92. Reverse Linked List II](#lc-0092)\
+  Reverse nodes between two positions.\
+  `Linked List` `Two Pointers`
+
+- [M] [114. Flatten Binary Tree to Linked List](#lc-0114)\
+  Flatten a binary tree into a linked list following preorder.\
+  `Binary Tree` `Linked List` `Depth-First Search`
+
+- [M] [116. Populating Next Right Pointers in Each Node](#lc-0116)\
+  Connect next pointers in a perfect binary tree.\
+  `Tree` `Binary Tree` `Linked List`
+
+- [M] [138. Copy List with Random Pointer](#lc-0138)\
+  Deep copy a list with random pointers.\
+  `Linked List` `Hash Table`
+
+- [M] [142. Linked List Cycle II](#lc-0142)\
+  Return the node where the cycle begins.\
+  `Linked List` `Two Pointers`
+
+- [M] [143. Reorder List](#lc-0143)\
+  Reorder list by interleaving first and reversed second half.\
+  `Linked List` `Two Pointers`
+
+- [M] [146. LRU Cache](#lc-0146)\
+  Design a cache with O(1) get and put operations.\
+  `Design` `Linked List` `Hash Table`
+
+- [M] [148. Sort List](#lc-0148)\
+  Sort a linked list in O(n log n) time.\
+  `Linked List` `Divide and Conquer` `Merge Sort`
+
+- [M] [445. Add Two Numbers II](#lc-0445)\
+  Add two numbers represented by forward-order linked lists.\
+  `Linked List` `Stack`
+
+- [M] [622. Design Circular Queue](#lc-0622)\
+  Implement a fixed-size circular queue.\
+  `Queue` `Design`
+
+- [M] [707. Design Linked List](#lc-0707)\
+  Implement a linked list with the standard operations.\
+  `Design` `Linked List`
+
+- [M] [1721. Swapping Nodes in a Linked List](#lc-1721)\
+  Swap the kth node from start with the kth from end.\
+  `Linked List` `Two Pointers`
+
+- [M] [2095. Delete the Middle Node of a Linked List](#lc-2095)\
+  Delete the middle node of a linked list.\
+  `Linked List` `Two Pointers`
 
 ### Hard
-- [H] [23. Merge K Sorted Lists](#lc-0023) — Merge k sorted linked lists into one sorted list.
-- [H] [25. Reverse Nodes in k-Group](#lc-0025) — Reverse nodes of a linked list k at a time.
-- [H] [432. All O`one Data Structure](#lc-0432) — Support inc, dec, getMaxKey, getMinKey in O(1) time.
-- [H] [460. LFU Cache](#lc-0460) — Design a cache with get/put and LFU eviction.
-- [H] [716. Max Stack](#lc-0716) — Stack supporting push, pop, top, peekMax, popMax.
-- [H] [1206. Design Skiplist](#lc-1206) — Implement a Skiplist with search, add, and erase.
-- [H] [2296. Design a Text Editor](#lc-2296) — Implement a text editor with cursor movement and editing.
-- [H] [3510. Minimum Pair Removal to Sort Array II](#lc-3510) — Minimum merge operations to make array non-decreasing.
+- [H] [23. Merge K Sorted Lists](#lc-0023)\
+  Merge k sorted lists into one sorted list.\
+  `Linked List` `Heap` `Divide and Conquer`
+
+- [H] [25. Reverse Nodes in k-Group](#lc-0025)\
+  Reverse nodes of a linked list k at a time.\
+  `Linked List` `Two Pointers`
+
+- [H] [432. All O`one Data Structure](#lc-0432)\
+  Support inc, dec, getMaxKey, and getMinKey in O(1).\
+  `Design` `Hash Table`
+
+- [H] [460. LFU Cache](#lc-0460)\
+  Design a cache with LFU eviction and O(1) ops.\
+  `Design` `Hash Table`
+
+- [H] [716. Max Stack](#lc-0716)\
+  Stack supporting push, pop, top, peekMax, and popMax.\
+  `Design` `Stack`
+
+- [H] [1206. Design Skiplist](#lc-1206)\
+  Implement a probabilistic skiplist with add/search/erase.\
+  `Design` `Linked List`
+
+- [H] [2296. Design a Text Editor](#lc-2296)\
+  Implement a text editor with cursor movement and editing.\
+  `Design` `String`
+
+- [H] [3510. Minimum Pair Removal to Sort Array II](#lc-3510)\
+  Minimize merges to make an array non-decreasing.\
+  `Linked List` `Heap`
 
 ## Solutions (Python)
 
@@ -152,6 +233,23 @@ Description: Reverse nodes of a linked list `k` at a time.
 Idea: For each group of `k`, reverse pointers and reconnect to the rest of the list.
 
 ```python
+class Solution:
+    def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        curr = head
+        for _ in range(k):
+            if not curr:
+                return head # Not enough nodes, return as is
+            curr = curr.next
+        prev = None
+        curr = head
+        for _ in range(k):
+            nxt = curr.next
+            curr.next = prev
+            prev = curr
+            curr = nxt
+        head.next = self.reverseKGroup(curr, k)
+        return prev
+
 class Solution:
     # 翻转一个子链表，并且返回新的头与尾
     def reverse(self, head: ListNode, tail: ListNode):
@@ -765,6 +863,50 @@ Description: Reorder `L0→L1→…→Ln` to `L0→Ln→L1→Ln-1→…` (in-pla
 Idea: Find middle, reverse second half, then merge two halves.
 
 ```python
+class Solution:
+    def reorderList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if not head: return None
+        stack = []
+        cur = head
+        while cur:
+            stack.append(cur)
+            cur = cur.next
+        cur = head
+        for _ in range((len(stack) - 1) // 2):
+            last = stack.pop()
+            nxt = cur.next
+            cur.next = last
+            last.next = nxt
+            cur = nxt
+        cur.next = stack[-1] if stack else None
+        if stack:
+            stack[-1].next = None
+
+class Solution:
+    def reorderList(self, head):
+        if not head or not head.next:
+            return
+
+        slow = fast = head
+        while fast.next and fast.next.next:
+            slow = slow.next
+            fast = fast.next.next
+
+        prev = None
+        cur = slow.next
+        slow.next = None
+        while cur:
+            nxt = cur.next
+            cur.next = prev
+            prev = cur
+            cur = nxt
+
+        first, second = head, prev
+        while second:
+            n1, n2 = first.next, second.next
+            first.next = second
+            second.next = n1
+            first, second = n1, n2
 
 # get the middle node
 # slow, fast pointers
@@ -799,32 +941,6 @@ class Solution:
             head2.next = nxt
             head = nxt
             head2 = nxt2
-
-class Solution:
-    def reorderList(self, head):
-        if not head or not head.next:
-            return
-
-        slow = fast = head
-        while fast.next and fast.next.next:
-            slow = slow.next
-            fast = fast.next.next
-
-        prev = None
-        cur = slow.next
-        slow.next = None
-        while cur:
-            nxt = cur.next
-            cur.next = prev
-            prev = cur
-            cur = nxt
-
-        first, second = head, prev
-        while second:
-            n1, n2 = first.next, second.next
-            first.next = second
-            second.next = n1
-            first, second = n1, n2
 # Time: O(n), Space: O(1)
 ```
 

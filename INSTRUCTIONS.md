@@ -8,6 +8,25 @@ Use this format for all problem writeups in this repo (category files like `26U/
 - Keep a **Category** section (bulleted) near the top so you can jump to problems quickly.
 - Put solutions under a `## Solutions (Python)` section.
 
+## Topic-specific format (topicname.md)
+
+`26U/tree.md` exhibits the canonical format for `topicname.md` files. Each registered topic file must match this structure:
+
+- **Title block**: `# <Topic>` plus any optional date heading.
+- **Category index**: Start with `## Category` (people often label it `## Index` instead) followed by `### <Difficulty>`, and list entries as multi-line groups. The entry line (line 1) must end with a single backslash (`\`) to force the description onto the next line, the description line (line 2) must also end with a single backslash, and the tag line (line 3) lists backtick-wrapped tags. Leave a blank line between entries; never put the description or tags inline with the entry line.
+- **Solutions**: Keep `## Solutions (Python)` with per-problem anchors, headers, tag lines, descriptions, and runnable `class Solution` blocks per the broader rules.
+- **Index tags**: Every index entry must include a tag line similar to those in `tree.md`; missing tags are a format violation.
+- **Update requests**: If the user asks to “update `**.md`” for a file in the registered list, refresh the entire file to align with this format—including all index entries and solution layout—even if only one question changed.
+
+### Registered topic files
+
+- `26U/tree.md`
+- `26U/linkedlist.md`
+- `26U/stack.md`
+- `26U/dp.md`
+
+Extend this list as other topic files adopt the same tree-style structure.
+
 ## Document types
 
 ### A. Multi-category (e.g., `26U/blind75.md`)
@@ -81,7 +100,7 @@ Use an anchor so the Category section can link to the solution section:
 <a id="lc-0001"></a>
 #### 1. [Two Sum](https://leetcode.com/problems/two-sum/) [E]
 `Array` `Hash Table`
-Description: One sentence summary of the task.
+- Find two indices whose values add up to a target using a hash map.
 
 ##### Approach 1: Hash map
 Idea: One sentence about the key invariant / data structure.
@@ -97,8 +116,10 @@ class Solution:
 - The **anchor** `<a id="lc-XXXX"></a>` (4-digit padded) lets the index link to the solution.
 - The **problem name** hyperlinks to the actual LeetCode problem URL.
 - **Tags** should be on the second line after the header, wrapped in backticks, to mirror the category index.
-- **Description** is a one-sentence summary of the problem and goes on the third line.
+- **Short description** immediately follows on the third line as a hyphen bullet (drop the `Description:` prefix).
 - Leave a blank line between the description and the first approach so the tags/description stand apart from the code.
+
+Each question detail must follow the ordered pattern: heading, tag line, `- short desc`, blank line, and then the solution approaches so readers can consistently glance at the synopsis before the code.
 
 ## Multiple solutions (when applicable)
 
@@ -256,4 +277,4 @@ This file tracks every question added or updated, grouped by day in reverse-chro
 
 ## Git push instructions
 
-Always add ., commit with a generated message, push to main
+When asked to “push” or “commit,” stage all modified files, craft a concise commit message describing what changed, and push to the `main` branch.

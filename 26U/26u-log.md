@@ -1,5 +1,16 @@
-# Cadence
-#### Jan 30
+# 🏔️Cadence
+### Feb 01
+
+
+### Jan 31
+- [M] [146. LRU 缓存](/26U/Tiktok.md#146-lru-缓存)
+- [H] [460. LFU Cache](/26U/Tiktok.md#460-lfu-cache)
+- [H] [1756. Design Most Recently Used Queue](/26U/Tiktok.md#1756-design-most-recently-used-queue)
+- [H] [297. 二叉树的序列化与反序列化](/26U/Tiktok.md#297-二叉树的序列化与反序列化)
+- [H] [428. 序列化和反序列化 N 叉树](/26U/Tiktok.md#428-序列化和反序列化-n-叉树)
+- [M] [449. 序列化和反序列化二叉搜索树](/26U/Tiktok.md#449-序列化和反序列化二叉搜索树)
+
+### Jan 30
 - [E] [496. Next Greater Element I](/26U/stack.md#lc-0496)
 - [E] [1475. Final Prices With a Special Discount in a Shop](/26U/stack.md#lc-1475)
 - [M] [739. Daily Temperatures](/26U/stack.md#lc-0739)
@@ -11,7 +22,7 @@
 - [M] [1504. Count Submatrices With All Ones](/26U/stack.md#lc-1504)
 - [M] [503. Next Greater Elements II](/26U/stack.md#lc-0503)
 - [M] [556. Next Greater Element III](/26U/stack.md#lc-0556)
-#### Jan 29
+### Jan 29
 - [M] [17. 电话号码的字母组合](/26U/Tiktok.md#17-电话号码的字母组合)
 - [M] [22. 括号生成](/26U/Tiktok.md#22-括号生成)
 - [M] [39. 组合总和](/26U/Tiktok.md#39-组合总和)
@@ -24,7 +35,7 @@
 - [M] [254. 因子的组合](/26U/Tiktok.md#254-因子的组合)
 - [M] [784. 字母大小写全排列](/26U/Tiktok.md#784-字母大小写全排列)
 
-#### Jan 28
+### Jan 28
 - [M] [5. 最长回文子串](/26U/Tiktok.md#5-最长回文子串)
 - [M] [31. 下一个排列](/26U/Tiktok.md#31-下一个排列)
 - [M] [46. 全排列](/26U/Tiktok.md#46-全排列)
@@ -40,7 +51,7 @@
 - [M] [360. 有序转化数组](/26U/Tiktok.md#360-有序转化数组)
 - [M] [56. 合并区间](/26U/Tiktok.md#56-合并区间)
 
-#### Jan 27
+### Jan 27
 - [M] [102. Binary Tree Level Order Traversal](/26U/tree.md#lc-0102)
     - [M] [103. Binary Tree Zigzag Level Order Traversal](/26U/tree.md#lc-0103)
     - [M] [107. Binary Tree Level Order Traversal II](/26U/tree.md#lc-0107)
@@ -55,17 +66,17 @@
 - [H] [LCR 413. Substructure Determination](/26U/tree.md#lc-lcr-413)
 - [E] [111. Minimum Depth of Binary Tree](/26U/tree.md#lc-0111)
 
-#### Jan 26
+### Jan 26
 - [H] [124. Binary Tree Maximum Path Sum](/26U/tree.md#lc-0124)
 - [H] [1483. Kth Ancestor of a Tree Node](/26U/tree.md#lc-1483)
 - [H] [2538. Difference Between Maximum and Minimum Price Sum](/26U/tree.md#lc-2538)
 
-#### Jan 25
+### Jan 25
 - [M] [236. Lowest Common Ancestor of a Binary Tree](/26U/tree.md#lc-0236)
 - [H] [297. Serialize and Deserialize Binary Tree](/26U/tree.md#lc-0297)
 - [H] [1028. Recover a Tree From Preorder Traversal](/26U/tree.md#lc-1028)
 
-#### Jan 24
+### Jan 24
 - [E] [100. Same Tree](/26U/tree.md#lc-0100)
 - [E] [104. Maximum Depth of Binary Tree](/26U/tree.md#lc-0104)
 - [E] [226. Invert Binary Tree](/26U/tree.md#lc-0226)
