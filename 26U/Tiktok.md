@@ -112,6 +112,43 @@
   Sort intervals by start and merge overlaps by extending the end when necessary. \
   `Array` `Intervals` `Sorting`
 
+### Dynamic Programming
+- [E] [70. 爬楼梯](#70-爬楼梯) \
+  用斐波那契思路统计不重复的上楼方式。 \
+  `Dynamic Programming` `Math`
+
+- [M] [198. 打家劫舍](#198-打家劫舍) \
+  选择不相邻的房屋以最大化偷盗收益。 \
+  `Dynamic Programming` `Greedy`
+
+- [M] [213. 打家劫舍 II](#213-打家劫舍-ii) \
+  处理环形房屋，分别排除首/尾形成线性 DP。 \
+  `Dynamic Programming` `Greedy` `Circular`
+
+- [M] [647. 回文子串](#647-回文子串) \
+  枚举每个中心或利用 DP 表，统计所有回文子串。 \
+  `String` `Dynamic Programming` `Center Expansion`
+
+- [M] [91. 解码方法](#91-解码方法) \
+  检查一位和两位组合是否合法，累加解码路径。 \
+  `Dynamic Programming` `Math`
+
+- [M] [322. 零钱兑换](#322-零钱兑换) \
+  把金额看作完全背包，更新最少硬币数。 \
+  `Dynamic Programming` `Knapsack`
+
+- [M] [152. 乘积最大子数组](#152-乘积最大子数组) \
+  维护当前区间的最大/最小值来应对负数翻转。 \
+  `Array` `Dynamic Programming`
+
+- [M] [139. 单词拆分](#139-单词拆分) \
+  DP 记录前缀是否可拆分，并据此延展后续。 \
+  `Dynamic Programming` `String`
+
+- [M] [300. 最长递增子序列](#300-最长递增子序列) \
+  通过 patience sort 或 DP+二分求出 LIS。 \
+  `Dynamic Programming` `Binary Search`
+
 ### 5. 最长回文子串
 `String` `Two Pointers` \
 Expand around every center (odd/even) to track the longest palindrome.
@@ -1656,4 +1693,260 @@ class Solution:
             res.append(intervals[i])
             i += 1
         return res
+```
+
+### 435. 无重叠区间
+`Array` `Sorting` `Intervals` \ 
+Sort intervals by end time and greedily select non-overlapping intervals to maximize count.
+```python
+# sort by start
+class Solution:
+    def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
+        intervals.sort()
+        res = 0
+        preEnd = intervals[0][1]
+        for start, end in intervals[1:]:
+            if start >= preEnd:
+                preEnd = end
+            else:
+                res += 1
+                preEnd = min(end, preEnd)
+        return res
+
+# sort by end
+class Solution:
+    def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
+        intervals.sort(key=lambda x: x[1])
+        res = 0
+        preEnd = intervals[0][1]
+        for i in range(1, len(intervals)):
+            if intervals[i][0] < preEnd:
+                res += 1
+                preEnd = min(preEnd, intervals[i][1])
+            else:
+                preEnd = intervals[i][1]
+        return res
+```
+
+### 252. 会议室
+`Array` `Sorting` `Intervals` \
+Sort intervals by start and check for overlaps.
+
+```python
+class Solution:
+    def canAttendMeetings(self, intervals: List[List[int]]) -> bool:
+        intervals.sort()
+        for i in range(1, len(intervals)):
+            if intervals[i][0] < intervals[i-1][1]:
+                return False
+        return True
+```
+
+### 253. 会议室 II
+`Array` `Sorting` `Heap` `Priority Queue` `Intervals` \
+Sort intervals by start and use a min-heap to track end times for room allocation.
+
+```python
+# if overlap, +1 room
+
+# pop and push
+class Solution:
+    def minMeetingRooms(self, intervals: List[List[int]]) -> int:
+        intervals.sort()
+        heap = []
+        for itv in intervals:
+            if heap and heap[0] <= itv[0]:
+                heapq.heappop(heap)
+            heapq.heappush(heap, itv[1])
+        return len(heap)
+
+# replace or push
+class Solution:
+    def minMeetingRooms(self, intervals: List[List[int]]) -> int:
+        intervals.sort()
+        rooms = [intervals[0][0]]   # 房间内保存最早结束时间
+        for s, e in intervals:
+            if rooms[0] <= s:       # 有空余房间
+                heapq.heapreplace(rooms, e)
+            else:                   # 没有空余房间
+                heapq.heappush(rooms, e)
+        return len(rooms) 
+```
+
+### 986. 区间列表的交集
+`Array` `Two Pointers` `Intervals` \
+Find intersections by advancing pointers based on interval ends and recording overlaps.
+```python
+class Solution:
+    def intervalIntersection(self, firstList: List[List[int]], secondList: List[List[int]]) -> List[List[int]]:
+        i = j = 0
+        res = []
+        while i < len(firstList) and j < len(secondList):
+            start = max(firstList[i][0], secondList[j][0])
+            end = min(firstList[i][1], secondList[j][1])
+
+            if start <= end:
+                res.append([start, end])
+            
+            if firstList[i][1] < secondList[j][1]:
+                i += 1
+            else:
+                j += 1
+        return res
+```        
+
+2848. 与车相交的点
+`Geometry` `Math` `Intervals` \
+Calculate intersection points of a line segment with a circle using geometric formulas.
+```python
+# diff arr
+class Solution:
+    def numberOfPoints(self, nums: List[List[int]]) -> int:
+        C = max(y for _, y in nums)
+        diff = [0] * (C + 2)
+        for x, y in nums:
+            diff[x] += 1
+            diff[y + 1] -= 1
+        
+        ans = count = 0
+        for i in range(1, C + 1):
+            count += diff[i]
+            if count > 0:
+                ans += 1
+        return ans
+
+class Solution:
+    def numberOfPoints(self, nums: List[List[int]]) -> int:
+        C = max(y for _, y in nums)
+        count = [0] * (C + 1)
+        for x, y in nums:
+            for i in range(x, y + 1):
+                count[i] += 1
+        
+        ans = sum(1 for i in range(1, C + 1) if count[i] > 0)
+        return ans
+```
+
+### 295. 数据流的中位数
+`Heap` `Design` `Data Stream` \
+Maintain two heaps to balance lower and upper halves of the data stream for median retrieval.
+```python
+class MedianFinder:
+    def __init__(self):
+        # small is a max-heap (invert values), large is a min-heap
+        self.small = [] 
+        self.large = []
+    def addNum(self, num: int) -> None:
+        heapq.heappush(self.small, -num)
+        heapq.heappush(self.large, -heapq.heappop(self.small))
+        if len(self.large) > len(self.small):
+            heapq.heappush(self.small, -heapq.heappop(self.large))
+    def findMedian(self) -> float:
+        if len(self.small) > len(self.large):
+            return -self.small[0]
+        return (-self.small[0] + self.large[0])/2
+
+class MedianFinder:
+    def __init__(self):
+        self.left = []  # 最大堆
+        self.right = []  # 最小堆
+    def addNum(self, num: int) -> None:
+        if len(self.left) == len(self.right):
+            heappush_max(self.left, heappushpop(self.right, num))
+        else:
+            heappush(self.right, heappushpop_max(self.left, num))
+    def findMedian(self) -> float:
+        if len(self.left) > len(self.right):
+            return self.left[0]
+        return (self.left[0] + self.right[0]) / 2
+```
+
+### 480. 滑动窗口中位数
+`Heap` `Sliding Window` `Data Stream` \
+Maintain two heaps for the sliding window and use a lazy deletion strategy to handle removals.
+```python
+
+```
+
+1094. 拼车
+1109. 航班预订统计
+2381. 字母移位 II
+2406. 将区间分为最少组数
+2772. 使数组中的所有元素都等于零
+2528. 最大化城市的最小供电站数目
+
+3355. 零数组变换 I
+
+
+
+### 70. 爬楼梯
+`Dynamic Programming` `Math` \
+用斐波那契思路统计不重复的上楼方法。
+
+```python
+
+```
+
+### 198. 打家劫舍
+`Dynamic Programming` `Greedy` \
+在不触发警报的前提下选择不相邻房屋以最大化收益。
+
+```python
+
+```
+
+### 213. 打家劫舍 II
+`Dynamic Programming` `Greedy` `Circular` \
+环形房屋经由拆成两段线性区间（去掉首或尾）完成 DP。
+
+```python
+
+```
+
+### 647. 回文子串
+`String` `Dynamic Programming` `Center Expansion` \
+对每个中心探索回文，或用 DP 表记录区间是否为回文。
+
+```python
+
+```
+
+### 91. 解码方法
+`Dynamic Programming` `Math` \
+验证一位或两位组合是否合法并累加解密路径数。
+
+```python
+
+```
+
+### 322. 零钱兑换
+`Dynamic Programming` `Knapsack` \
+把每种硬币视为完全背包，枚举金额更新最少硬币数。
+
+```python
+
+```
+
+### 152. 乘积最大子数组
+`Array` `Dynamic Programming` \
+维护区间最大值/最小值，应对负数造成的翻转。
+
+```python
+
+```
+
+### 139. 单词拆分
+`Dynamic Programming` `String` \
+dp 记录每个前缀是否可拆分，并据此延展后续状态。
+
+```python
+
+```
+
+### 300. 最长递增子序列
+`Dynamic Programming` `Binary Search` \
+用 patience sort 或 dp/二分组合求出 LIS。
+
+```python
+
 ```
