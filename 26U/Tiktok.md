@@ -113,47 +113,117 @@
   `Array` `Intervals` `Sorting`
 
 ### Dynamic Programming
-- [E] [70. 爬楼梯](#70-爬楼梯) \
-  用斐波那契思路统计不重复的上楼方式。 \
-  `Dynamic Programming` `Math`
-
-- [M] [198. 打家劫舍](#198-打家劫舍) \
-  选择不相邻的房屋以最大化偷盗收益。 \
-  `Dynamic Programming` `Greedy`
-
-- [M] [213. 打家劫舍 II](#213-打家劫舍-ii) \
-  处理环形房屋，分别排除首/尾形成线性 DP。 \
-  `Dynamic Programming` `Greedy` `Circular`
+- [M] [516. 最长回文子序列](#516-最长回文子序列) \
+  用 DP 记录每个子串的最⻓回文子序列长度并向外扩展。 \
+  `String` `Dynamic Programming`
 
 - [M] [647. 回文子串](#647-回文子串) \
-  枚举每个中心或利用 DP 表，统计所有回文子串。 \
+  对每个中心扩展或用 DP 表统计回文区间数。 \
   `String` `Dynamic Programming` `Center Expansion`
 
-- [M] [91. 解码方法](#91-解码方法) \
-  检查一位和两位组合是否合法，累加解码路径。 \
-  `Dynamic Programming` `Math`
+- [M] [55. 跳跃游戏](#55-跳跃游戏) \
+  贪心追踪最远可达位置，判断是否能到达末尾。 \
+  `Array` `Greedy` `Dynamic Programming`
 
-- [M] [322. 零钱兑换](#322-零钱兑换) \
-  把金额看作完全背包，更新最少硬币数。 \
-  `Dynamic Programming` `Knapsack`
+- [H] [337. 打家劫舍 III](#337-打家劫舍-iii) \
+  树形 DP 决定抢或不抢每个节点来最大化收益。 \
+  `Tree` `DFS` `Dynamic Programming`
 
-- [M] [152. 乘积最大子数组](#152-乘积最大子数组) \
-  维护当前区间的最大/最小值来应对负数翻转。 \
+- [M] [53. 最大子数组和](#53-最大子数组和) \
+  Kadane 或 DP 维护当前与全局最大子数组和。 \
   `Array` `Dynamic Programming`
 
-- [M] [139. 单词拆分](#139-单词拆分) \
-  DP 记录前缀是否可拆分，并据此延展后续。 \
-  `Dynamic Programming` `String`
+- [M] [628. 三个数的最大乘积](#628-三个数的最大乘积) \
+  排序后比较最大三数与两个最小一最大组合的乘积。 \
+  `Array` `Math`
 
-- [M] [300. 最长递增子序列](#300-最长递增子序列) \
-  通过 patience sort 或 DP+二分求出 LIS。 \
-  `Dynamic Programming` `Binary Search`
+- [M] [238. 除了自身以外数组的乘积](#238-除了自身以外数组的乘积) \
+  前缀与后缀乘积构造每个元素的答案，避开除法。 \
+  `Array` `Dynamic Programming`
+
+- [M] [256. 粉刷房子](#256-粉刷房子) \
+  记录三种颜色的最小费用，按层级转移。 \
+  `Dynamic Programming` `Matrix`
+
+- [M] [276. 栅栏涂色](#276-栅栏涂色) \
+  DP/组合公式计算相邻不同颜色的合法方案数。 \
+  `Dynamic Programming` `Math`
+
+- [M] [740. 删除并获得点数](#740-删除并获得点数) \
+  将值映射到点数，转化为打家劫舍求最大值。 \
+  `Array` `Dynamic Programming` `Hash Table`
+
+- [M] [2611. 老鼠和奶酪](#2611-老鼠和奶酪) \
+  按奶酪增益排序，先选收益最大的 k 份给第一只老鼠。 \
+  `Greedy` `Sorting`
 
 ### 5. 最长回文子串
 `String` `Two Pointers` \
 Expand around every center (odd/even) to track the longest palindrome.
 
 ```python
+# center expansion with memoization
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        @cache
+        def isP(i, j):
+            if i >= j:
+                return True
+            return s[i] == s[j] and isP(i + 1, j - 1)
+
+        begin = 0
+        mxL = 1
+        n = len(s)
+        for i in range(n):
+            for j in range(i + mxL, n):
+                if isP(i, j):
+                    mxL = j - i + 1
+                    begin = i
+        return s[begin: begin + mxL]
+
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        @cache
+        def expand(s, l, r):
+            while l >= 0 and r < len(s) and s[l] == s[r]:
+                l -= 1
+                r += 1
+            return l + 1, r - 1
+        start = end = 0
+        for i in range(len(s)):
+            l1, r1 = expand(s, i, i)
+            l2, r2 = expand(s, i, i + 1)
+            if r1 - l1 > end - start:
+                start, end = l1, r1
+            if r2 - l2 > end - start:
+                start, end = l2, r2
+        return s[start: end + 1]
+
+
+# dp
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        n = len(s)
+        if n < 2: return s
+        begin = 0
+        mxL = 1
+        dp = [[False] * n for _ in range(n)]
+        for i in range(n):
+            dp[i][i] = True
+        for i in range(n - 1, -1, -1):
+            for j in range(i, n):
+                if s[i] == s[j]:
+                    if j - i < 3:
+                        dp[i][j] = True
+                    else:
+                        dp[i][j] = dp[i+1][j-1]
+                    if dp[i][j] and (j - i + 1) > mxL:
+                        mxL = max(mxL, j - i + 1)
+                        begin = i
+        return s[begin: begin + mxL]
+
+
+# center, for both odd and even
 class Solution:
     def longestPalindrome(self, s: str) -> str:
         n = len(s)
@@ -170,7 +240,7 @@ class Solution:
 
         return s[ans_left: ans_right]
 
-
+# odd/even center
 class Solution:
     def longestPalindrome(self, s: str) -> str:
         n = len(s)
@@ -196,7 +266,244 @@ class Solution:
                 ans_left, ans_right = l + 1, r  # 左闭右开区间
 
         return s[ans_left: ans_right]
+
+# brute force
+# j in i, n
+# j - i + 1
+# sub = s[i:j+1]    get the last index
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        n = len(s)
+        mx = 0
+        res = ""
+        for i in range(n):
+            for j in range(i, n):
+                sub = s[i:j+1]
+                if sub == sub[::-1]:
+                    if j-i+1> mx:
+                        mx = max(mx, j-i+1)
+                        res = sub
+        return res
+
+# j - i
+for i in range(n):
+    for j in range(i + 1, n + 1): 
+        sub = s[i:j]
+        if sub == sub[::-1]:
+            if (j - i) > mx:
+                mx = j - i
+                res = sub
 ```
+
+### 131. 分割回文串
+`String` `Backtracking` `DFS`
+```python
+# backtrack with memoization
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
+        n = len(s)
+        res = []
+        cur = []
+        @cache
+        def isP(i, j):
+            if i >= j:
+                return True
+            return s[i] == s[j] and isP(i+1,j-1)
+        def dfs(i):
+            if i == n:
+                res.append(cur[:])
+                return
+            for j in range(i, n):
+                if isP(i, j):
+                    cur.append(s[i: j+1])
+                    dfs(j + 1)
+                    cur.pop()
+        dfs(0)
+        return res
+
+# dfs(i)
+# for i in (i, n)
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
+        n = len(s)
+        res = []
+        cur = []
+        def dfs(i):
+            if i == n:
+                res.append(cur[:])
+                return
+            for j in range(i, n):
+                t = s[i:j+1]
+                if t == t[::-1]:
+                    cur.append(t)
+                    dfs(j + 1)
+                    cur.pop()
+        dfs(0)
+        return res
+
+
+# dfs(start, i + 1)
+# dfs(i + 1, i + 1)   start = i + 1   append s[start: i + 1]
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
+        n = len(s)
+        res = []
+        cur = []
+        def dfs(start, i):
+            if i == n:
+                res.append(cur[:])
+                return
+            if i < n - 1:
+                dfs(start, i + 1)
+            t = s[start: i + 1]
+            if t == t[::-1]:
+                cur.append(t)
+                dfs(i + 1, i + 1)
+                cur.pop()
+        dfs(0, 0)
+        return res
+
+# dp[]
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
+        n = len(s)
+        
+        # 1. Precompute Palindromes using a 2D table (O(N^2))
+        # This makes checking s[j:i] a O(1) operation
+        is_pal = [[False] * n for _ in range(n)]
+        for i in range(n - 1, -1, -1):
+            for j in range(i, n):
+                if s[i] == s[j] and (j - i < 3 or is_pal[i + 1][j - 1]):
+                    is_pal[i][j] = True
+        
+        # 2. DP Tabulation: dp[i] stores all partitions for s[0:i]
+        dp = [[] for _ in range(n + 1)]
+        dp[0] = [[]] # Base case
+        
+        for i in range(1, n + 1):
+            # Check every potential "last cut" at index j
+            for j in range(i):
+                # If the tail s[j:i] is a palindrome
+                if is_pal[j][i - 1]:
+                    # Extend all partitions of the prefix s[0:j]
+                    for part in dp[j]:
+                        dp[i].append(part + [s[j:i]])
+                        
+        return dp[n]
+```
+
+### 516. 最长回文子序列
+`String` `Dynamic Programming` \
+Use DP to track longest palindromic subsequences in substrings, building up from length 1 to n.
+```python
+# 'aa'
+# dp[i+1][j-1] = dp[1][0] = 0
+# the tabulation is all 0, not just i++ j++
+class Solution:
+    def longestPalindromeSubseq(self, s: str) -> int:
+        n = len(s)
+        dp = [[0] * n for _ in range(n)]
+        for i in range(n):
+            dp[i][i] = 1
+        for i in range(n - 1, -1, -1):
+            for j in range(i + 1, n):
+                if s[i] == s[j]:
+                    dp[i][j] = dp[i+1][j-1] + 2
+                else:
+                    dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+        return dp[0][n-1]
+
+class Solution:
+    def longestPalindromeSubseq(self, s: str) -> int:
+        @cache  # 缓存装饰器，避免重复计算 dfs 的结果（记忆化）
+        def dfs(i: int, j: int) -> int:
+            if i > j:
+                return 0  # 空串
+            if i == j:
+                return 1  # 只有一个字母
+            if s[i] == s[j]:
+                return dfs(i + 1, j - 1) + 2  # 都选
+            return max(dfs(i + 1, j), dfs(i, j - 1))  # 枚举哪个不选
+        return dfs(0, len(s) - 1)
+```
+
+
+
+### 647. 回文子串
+`String` `Backtracking` `DP` \
+Count palindromic substrings by expanding around centers or using DP to track valid palindromes.
+
+```python
+# two pointers
+# i, i    i, i+1
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        res = 0
+        for i in range(len(s)):
+            res += self.countPali(s, i, i)
+            res += self.countPali(s, i, i + 1)
+        return res
+    def countPali(self, s, l, r):
+        res = 0
+        while l >= 0 and r < len(s) and s[l] == s[r]:
+            res += 1
+            l -= 1
+            r += 1
+        return res
+
+
+# center expansion
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        n = len(s)
+        ans = 0
+        for i in range(2 * n - 1):
+            l, r = i // 2, (i + 1) // 2
+            while l >= 0 and r < n and s[l] == s[r]:
+                ans += 1
+                l -= 1
+                r += 1
+        return ans
+
+
+# dp
+class Solution:
+    def countSubstrings(self, s: str) -> int:
+        n, res = len(s), 0
+        dp = [[False] * n for _ in range(n)]
+        for i in range(n - 1, -1, -1):
+            for j in range(i, n):
+                if s[i] == s[j] and (j - i <= 2 or dp[i + 1][j - 1]):
+                    dp[i][j] = True
+                    res += 1
+        return res
+```
+
+
+
+### 300. 最长递增子序列
+`Array` `Dynamic Programming` `Binary Search` \
+Use DP or binary search with a tails array to track the smallest tail of increasing subsequences.
+
+```python
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### 22. 括号生成
 `String` `Backtracking` \
@@ -1877,39 +2184,189 @@ Maintain two heaps for the sliding window and use a lazy deletion strategy to ha
 
 3355. 零数组变换 I
 
+### 55. 跳跃游戏
+`Array` `Greedy` `Dynamic Programming` \
+Greedily track the farthest reachable index to determine if the end is reachable.
+```python
+class Solution:
+    def canJump(self, nums: List[int]) -> bool:
+        mx = 0
+        for i, jump in enumerate(nums):
+            if i > mx:  # 无法到达 i
+                return False
+            mx = max(mx, i + jump)  # 从 i 最右可以跳到 i+jump
+        return True
 
+class Solution:
+    def canJump(self, nums: List[int]) -> bool:
+        mx = 0
+        for i, jump in enumerate(nums):
+            if i > mx:  # 无法到达 i
+                return False
+            mx = max(mx, i + jump)  # 从 i 最右可以跳到 i + jump
+            if mx >= len(nums) - 1:  # 可以跳到 n-1
+                return True
+
+class Solution:
+    def canJump(self, nums: List[int]) -> bool:
+        n = len(nums)
+        dp = [False] * n
+        dp[n-1] = True
+        for i in range(n - 2, -1, -1):
+            furthest_jump = min(i + nums[i], n - 1)
+            for j in range(i + 1, furthest_jump + 1):
+                if dp[j]:
+                    dp[i] = True
+                    break
+        return dp[0]
+```
 
 ### 70. 爬楼梯
 `Dynamic Programming` `Math` \
 用斐波那契思路统计不重复的上楼方法。
-
 ```python
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        if n <= 2: return n
+        dp = [0] * (n + 1)
+        dp[1] = 1
+        dp[2] = 2
+        for i in range(3, n + 1):
+            dp[i] = dp[i-1] + dp[i-2]
+        return dp[n]
 
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        cache = [-1] * n
+        def dfs(i):
+            if i >= n:
+                return i == n
+            if cache[i] != -1:
+                return cache[i]
+            cache[i] = dfs(i + 1) + dfs(i + 2)
+            return cache[i]
+        return dfs(0)
+
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        one, two = 1, 1
+        for i in range(n - 1):
+            temp = one
+            one = one + two
+            two = temp
+        return one
+
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        def dfs(i):
+            if i >= n:
+                return i == n
+            return dfs(i + 1) + dfs(i + 2)
+        return dfs(0)
 ```
 
 ### 198. 打家劫舍
 `Dynamic Programming` `Greedy` \
 在不触发警报的前提下选择不相邻房屋以最大化收益。
-
 ```python
+# init manual first 2, to get it rolling
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        if len(nums) == 1: return nums[0]
+        dp = [0] * len(nums)
+        dp[0] = nums[0]
+        dp[1] = max(nums[0], nums[1])
+        for i in range(2, len(nums)):
+            dp[i] = max(dp[i-1], dp[i-2] + nums[i])
+        return dp[-1]
+
+# init with extra 2
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        f = [0] * (len(nums) + 2)
+        for i, x in enumerate(nums):
+            f[i + 2] = max(f[i + 1], f[i] + x)
+        return f[-1]
+
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        # dfs(i) 表示从 nums[0] 到 nums[i] 最多能偷多少
+        @cache  # 缓存装饰器，避免重复计算 dfs 的结果
+        def dfs(i: int) -> int:
+            if i < 0:  # 递归边界（没有房子）
+                return 0
+            return max(dfs(i - 1), dfs(i - 2) + nums[i])
+
+        return dfs(len(nums) - 1)  # 从最后一个房子开始思考
+
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        f0 = f1 = 0
+        for x in nums:
+            f0, f1 = f1, max(f1, f0 + x)
+        return f1
+
+class Solution:
+    def rob(self, nums: list[int]) -> int:
+        rob1, rob2 = 0, 0
+        # [rob1, rob2, n, n+1, ...]
+        for n in nums:
+            temp = max(n + rob1, rob2)
+            rob1 = rob2
+            rob2 = temp
+        return rob2
 
 ```
 
 ### 213. 打家劫舍 II
 `Dynamic Programming` `Greedy` `Circular` \
 环形房屋经由拆成两段线性区间（去掉首或尾）完成 DP。
-
 ```python
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        def rob1(nums):
+            pre, cur  = 0, 0
+            for n in nums:
+                pre, cur = cur, max(pre + n, cur)
+            return cur
+        return max(rob1(nums[:-1]), rob1(nums[1:])) if len(nums) != 1 else nums[0]
 
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        n = len(nums)
+        if n == 1: return nums[0]
+        def rob_linear(h_list: List[int]) -> int:
+            m = len(h_list)
+            if m == 0: return 0
+            dp = [0] * m
+            dp[0] = h_list[0]
+            if m > 1:
+                dp[1] = max(h_list[0], h_list[1])
+            for i in range(2, m):
+                dp[i] = max(dp[i-1], h_list[i] + dp[i-2])
+            return dp[-1]
+        return max(rob_linear(nums[1:]), rob_linear(nums[:-1]))
 ```
 
-### 647. 回文子串
-`String` `Dynamic Programming` `Center Expansion` \
-对每个中心探索回文，或用 DP 表记录区间是否为回文。
-
+### 337. 打家劫舍 III
+`Tree` `DFS` `Dynamic Programming` \
+Use DFS to decide whether to rob the current node or its children for maximum gain.
 ```python
-
+# not_rob = max(rob, not_rob...)
+class Solution:
+    def rob(self, root: Optional[TreeNode]) -> int:
+        def dfs(node):
+            if not node:
+                return 0, 0
+            left_rob, left_not_rob = dfs(node.left)
+            right_rob, right_not_rob = dfs(node.right)
+            rob = left_not_rob + right_not_rob + node.val
+            not_rob = max(left_rob, left_not_rob) + max(right_rob, right_not_rob)
+            return rob, not_rob
+        return max(dfs(root))
 ```
+
+
 
 ### 91. 解码方法
 `Dynamic Programming` `Math` \
@@ -1922,18 +2379,183 @@ Maintain two heaps for the sliding window and use a lazy deletion strategy to ha
 ### 322. 零钱兑换
 `Dynamic Programming` `Knapsack` \
 把每种硬币视为完全背包，枚举金额更新最少硬币数。
-
 ```python
+# dp, top-down, memo {}
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        memo = {}
+        def dfs(rem):
+            if rem == 0: return 0
+            if rem in memo: return memo[rem]
+            res = float('inf')
+            for coin in coins:
+                if rem - coin >= 0:
+                    # Recursive call now returns an actual number
+                    res = min(res, 1 + dfs(rem - coin))
+            memo[rem] = res
+            return res # FIX: Return the calculated value
+        ans = dfs(amount)
+        return ans if ans != float('inf') else -1
+
+@cache
+def dfs(rem):
+
+# dp
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        dp = [amount + 1] * (amount + 1)
+        dp[0] = 0
+
+        for a in range(1, amount + 1):
+            for c in coins:
+                if a - c >= 0:
+                    dp[a] = min(dp[a], 1 + dp[a - c])
+        return dp[amount] if dp[amount] != amount + 1 else -1
+
+# bfs
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        if amount == 0:
+            return 0
+        q = deque([0])
+        seen = [False] * (amount + 1)
+        seen[0] = True
+        res = 0
+        while q:
+            res += 1
+            for _ in range(len(q)):
+                cur = q.popleft()
+                for coin in coins:
+                    nxt = cur + coin
+                    if nxt == amount:
+                        return res
+                    if nxt > amount or seen[nxt]:
+                        continue
+                    seen[nxt] = True
+                    q.append(nxt)
+        return -1
+
 
 ```
+
+
+### 53. 最大子数组和
+`Array` `Dynamic Programming` `Divide and Conquer` `Kadane's Algorithm` \
+Use Kadane's algorithm to track current and global maximum subarray sums.
+
+```python
+# kadane's algorithm
+# maintain cur and res
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        curmax = 0
+        res = -float('inf')
+        for n in nums:
+            curmax = max(curmax + n, n)
+            res = max(res, curmax)
+        return res
+
+# dp[]
+# max(dp[i-1] + n, n) -> max(dp)   potential negatives
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        dp = [0] * len(nums)
+        dp[0] = nums[0]
+        for i in range(1, len(nums)):
+            n = nums[i]
+            dp[i] = max(dp[i-1] + n, n)
+        return max(dp)
+```
+
 
 ### 152. 乘积最大子数组
 `Array` `Dynamic Programming` \
 维护区间最大值/最小值，应对负数造成的翻转。
 
 ```python
+# cur max/min
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        res = -float('inf')
+        cur_max, cur_min = 1, 1
+        for n in nums:
+            val1 = (cur_max * n, cur_min * n, n)
+            val2 = (cur_max * n, cur_min * n, n)
+            cur_max = max(val1)
+            cur_min = min(val2)
+            res = max(res, cur_max)
+        return res
 
+# dp
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        n = len(nums)
+        f_max = [0] * n
+        f_min = [0] * n
+        f_max[0] = f_min[0] = nums[0]
+        for i in range(1, n):
+            x = nums[i]
+            f_max[i] = max(f_max[i - 1] * x, f_min[i - 1] * x, x)
+            f_min[i] = min(f_max[i - 1] * x, f_min[i - 1] * x, x)
+        return max(f_max)
+
+
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        if not nums: return 0
+        res = -float('inf')
+        cur_min, cur_max = 1, 1
+        for n in nums:
+            if n < 0:
+                cur_max, cur_min = cur_min, cur_max
+            cur_max = max(n, n * cur_max)
+            cur_min = min(n, n * cur_min)
+            res = max(res, cur_max)
+        return res
 ```
+
+### 628. 三个数的最大乘积
+`Array` \
+Sort the array and consider the product of the top three numbers or the product of the two smallest (possibly negative) and the largest number.
+```python
+# case analysis
+# all positive
+# all negative
+# 3 - n n p,    n p p
+# 
+class Solution:
+    def maximumProduct(self, nums: List[int]) -> int:
+        nums.sort()
+        n = len(nums)
+        return max(nums[0] * nums[1] * nums[n-1], 
+                   nums[n-1] * nums[n-2] * nums[n-3])
+
+class Solution:
+    def maximumProduct(self, nums: list[int]) -> int:
+        max3 = heapq.nlargest(3, nums)
+        min2 = heapq.nsmallest(2, nums)
+        return max(max3[0] * max3[1] * max3[2], 
+                   min2[0] * min2[1] * max3[0])
+```
+
+### 238. 除了自身以外数组的乘积
+`Array` `Dynamic Programming` \
+Compute prefix and suffix products to get the product of all elements except the current one without using division
+```python
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        n = len(nums)
+        pre = [1] * n
+        for i in range(1, n):
+            pre[i] = pre[i - 1] * nums[i - 1]
+
+        suf = [1] * n
+        for i in range(n - 2, -1, -1):
+            suf[i] = suf[i + 1] * nums[i + 1]
+
+        return [p * s for p, s in zip(pre, suf)]
+```
+
 
 ### 139. 单词拆分
 `Dynamic Programming` `String` \
@@ -1950,3 +2572,99 @@ dp 记录每个前缀是否可拆分，并据此延展后续状态。
 ```python
 
 ```
+
+### 256. 粉刷房子
+`Dynamic Programming` `Matrix` \
+Paint each house with the minimum cost considering the previous house's color choices.
+```python
+class Solution:
+    def minCost(self, costs: List[List[int]]) -> int:
+        if not costs: return 0
+        r, b, g = 0, 0, 0
+        for c_r, c_b, c_g in costs:
+            r, b, g = c_r + min(b, g), c_b + min(r, g), c_g + min(r, b)
+        return min(r, b, g)
+
+class Solution:
+    def minCost(self, costs: List[List[int]]) -> int:
+        if len(costs) == 1: return min(costs[0])
+        n = len(costs)
+        dp = [[0, 0, 0] for _ in range(n)]
+        dp[0] = costs[0]
+        for i in range(1, n):
+            dp[i][0] = min(dp[i-1][1], dp[i-1][2]) + costs[i][0]
+            dp[i][1] = min(dp[i-1][0], dp[i-1][2]) + costs[i][1]
+            dp[i][2] = min(dp[i-1][0], dp[i-1][1]) + costs[i][2]
+        return min(dp[-1])
+```
+
+### 276. 栅栏涂色
+`Dynamic Programming` `Math` \
+Count ways to paint fences with constraints using DP or combinatorial formulas.
+```python
+# rolling vars
+class Solution:
+    def numWays(self, n: int, k: int) -> int:
+        if n == 1: return k
+        two_back = k
+        one_back = k*k
+        for i in range(3, n + 1):
+            one_back, two_back = (k - 1) * (one_back + two_back), one_back
+        return one_back
+
+# bottom-up, dp[]]
+class Solution:
+    def numWays(self, n: int, k: int) -> int:
+        if n == 1:
+            return k
+        if n == 2:
+            return k * k
+        total_ways = [0] * (n + 1)
+        total_ways[1] = k
+        total_ways[2] = k * k
+        for i in range(3, n + 1):
+            total_ways[i] = (k - 1) * (total_ways[i - 1] + total_ways[i - 2])
+        return total_ways[n]
+
+# top-down with lru_cache
+class Solution:
+   def numWays(self, n: int, k: int) -> int:
+       @lru_cache(None)
+       def total_ways(i):
+           if i == 1: 
+               return k
+           if i == 2: 
+               return k * k
+           
+           return (k - 1) * (total_ways(i - 1) + total_ways(i - 2))
+       
+       return total_ways(n)
+
+```
+
+
+### 740. 删除并获得点数
+`Array` `Dynamic Programming` `Hash Table` \
+Map values to their total points and apply house robber logic to maximize points.
+```python
+class Solution:
+    def deleteAndEarn(self, nums: List[int]) -> int:
+        store = [0] * (max(nums))
+        for x in nums:
+            store[x-1] += x
+        f0 = f1 = 0
+        for x in store:
+            f0, f1 = f1, max(f1, f0 + x)
+        return f1
+```
+
+### 2611. 老鼠和奶酪
+`Greedy` `Sorting` `Array` \
+Calculate the gain for each cheese and select the top k gains for the first mouse.
+```python
+
+```
+
+
+
+

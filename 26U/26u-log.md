@@ -1,8 +1,28 @@
 # 🏔️Cadence
+### todo
+707. Design Linked List
+- [M] [707. Design Linked List](/26U/linkedlist.md#707-design-linked-list)
+148. 排序链表
+- [M] [148. 排序链表](/26U/linkedlist.md#148-排序链表)
+200. 岛屿数量
+- [M] [200. 岛屿数量](/26U/linkedlist.md#200-岛屿数量)
+- Disjoint Set Union
+--- 
 
-#### Feb 03
+#### Feb 06
+- [E] [14. Longest Common Prefix](/26U/trie.md#lc-0014)
+- [M] [79. 单词搜索](/26U/trie.md#lc-0079)
+- [M] [208. 实现 Trie (前缀树)](/26U/trie.md#lc-0208)
+- [M] [211. 添加与搜索单词 - 数据结构设计](/26U/trie.md#lc-0211)
+- [H] [212. 单词搜索 II](/26U/trie.md#lc-0212)
+
+
+#### Feb 04
+- [M] [5. 最长回文子串](/26U/Tiktok.md#5-最长回文子串)
 - [M] [516. 最长回文子序列](/26U/Tiktok.md#516-最长回文子序列)
 - [M] [647. 回文子串](/26U/Tiktok.md#647-回文子串)
+
+#### Feb 03
 - [M] [55. 跳跃游戏](/26U/Tiktok.md#55-跳跃游戏)
 - [M] [337. 打家劫舍 III](/26U/Tiktok.md#337-打家劫舍-iii)
 - [M] [53. 最大子数组和](/26U/Tiktok.md#53-最大子数组和)
@@ -48,6 +68,7 @@
 - [M] [1504. Count Submatrices With All Ones](/26U/stack.md#lc-1504)
 - [M] [503. Next Greater Elements II](/26U/stack.md#lc-0503)
 - [M] [556. Next Greater Element III](/26U/stack.md#lc-0556)
+
 ### Jan 29
 - [M] [17. 电话号码的字母组合](/26U/Tiktok.md#17-电话号码的字母组合)
 - [M] [22. 括号生成](/26U/Tiktok.md#22-括号生成)
