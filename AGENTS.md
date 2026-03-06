@@ -35,6 +35,9 @@ For every chat, prepend to `msg-log.md` with:
 - `user-input` short ask summary
 - `response` concise result summary
 
+Also append one concise line to `msg-iter-log.md` using:
+- `mm-dd hh:mm - content`
+
 ## Agent Naming
 Use real roles, preferably `-ist` when natural. Example: `engineer`, `product-manager`, `strategist`, `architect`.
 

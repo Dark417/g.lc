@@ -2,6 +2,8 @@
 
 | time | user-input | response |
 | --- | --- | --- |
+| 260306-14:45 | Expand `sd/ax` solutions from template-level to full Alex Xu-style deep coverage | Rewrote all 22 `sd/ax/solutions/*` with detailed approach flow, APIs, mini-algorithms, failure handling, scaling, DR, security, ops, and interview scripts |
+| 260306-06:31 | Create `sd/ax` with Alex Xu system design questions and separate deep solution files | Added `sd/ax` index + 22 interview-ready solution packets, linked from `sd/questions.md`, and logged this chat entry |
 | 260305-23:48 | Commit and push current branch to main | Staged all tracked changes, created commit `a46fed2` with workspace + SD scaffolding updates, then pushed `HEAD -> main` via remote `lc` (since `origin` is not configured locally) |
 | 260305-22:46 | Rename `02.social-media`, reorder/rename question files by ranked order, and simplify questions index to hyperlink names only | Renamed social folder to dashed form, renumbered all 80 question files per type based on ranking order (with updated in-file IDs), and rewrote `sd/questions.md` to compact linked entries like `0101.rate limiter` without rank/id table columns |
 | 260305-22:41 | Reorganize SD question files into typed folders and rank each type by interview relevance/likelihood | Moved all 80 SD question files into type folders like `sd/01.core/` and `sd/02.social media/`, then rewrote `sd/questions.md` with per-type ranked tables ordered by likelihood then relevance |
