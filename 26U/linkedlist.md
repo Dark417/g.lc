@@ -3,6 +3,39 @@
 
 ## Index
 
+### Hard
+- [H] [23. Merge K Sorted Lists](#lc-0023)\
+  Merge k sorted lists into one sorted list.\
+  `Linked List` `Heap` `Divide and Conquer`
+
+- [H] [25. Reverse Nodes in k-Group](#lc-0025)\
+  Reverse nodes of a linked list k at a time.\
+  `Linked List` `Two Pointers`
+
+- [H] [460. LFU Cache](#lc-0460)\
+  Design a cache with LFU eviction and O(1) ops.\
+  `Design` `Hash Table`
+
+- [H] [432. All O`one Data Structure](#lc-0432)\
+  Support inc, dec, getMaxKey, and getMinKey in O(1).\
+  `Design` `Hash Table`
+
+- [H] [716. Max Stack](#lc-0716)\
+  Stack supporting push, pop, top, peekMax, and popMax.\
+  `Design` `Stack`
+
+- [H] [1206. Design Skiplist](#lc-1206)\
+  Implement a probabilistic skiplist with add/search/erase.\
+  `Design` `Linked List`
+
+- [H] [2296. Design a Text Editor](#lc-2296)\
+  Implement a text editor with cursor movement and editing.\
+  `Design` `String`
+
+- [H] [3510. Minimum Pair Removal to Sort Array II](#lc-3510)\
+  Minimize merges to make an array non-decreasing.\
+  `Linked List` `Heap`
+
 ### Easy
 - [E] [160. Intersection of Two Linked Lists](#lc-0160)\
   Return node where two singly linked lists intersect.\
@@ -85,38 +118,6 @@
   Delete the middle node of a linked list.\
   `Linked List` `Two Pointers`
 
-### Hard
-- [H] [23. Merge K Sorted Lists](#lc-0023)\
-  Merge k sorted lists into one sorted list.\
-  `Linked List` `Heap` `Divide and Conquer`
-
-- [H] [25. Reverse Nodes in k-Group](#lc-0025)\
-  Reverse nodes of a linked list k at a time.\
-  `Linked List` `Two Pointers`
-
-- [H] [432. All O`one Data Structure](#lc-0432)\
-  Support inc, dec, getMaxKey, and getMinKey in O(1).\
-  `Design` `Hash Table`
-
-- [H] [460. LFU Cache](#lc-0460)\
-  Design a cache with LFU eviction and O(1) ops.\
-  `Design` `Hash Table`
-
-- [H] [716. Max Stack](#lc-0716)\
-  Stack supporting push, pop, top, peekMax, and popMax.\
-  `Design` `Stack`
-
-- [H] [1206. Design Skiplist](#lc-1206)\
-  Implement a probabilistic skiplist with add/search/erase.\
-  `Design` `Linked List`
-
-- [H] [2296. Design a Text Editor](#lc-2296)\
-  Implement a text editor with cursor movement and editing.\
-  `Design` `String`
-
-- [H] [3510. Minimum Pair Removal to Sort Array II](#lc-3510)\
-  Minimize merges to make an array non-decreasing.\
-  `Linked List` `Heap`
 
 ## Solutions (Python)
 
@@ -864,25 +865,6 @@ Idea: Find middle, reverse second half, then merge two halves.
 
 ```python
 class Solution:
-    def reorderList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        if not head: return None
-        stack = []
-        cur = head
-        while cur:
-            stack.append(cur)
-            cur = cur.next
-        cur = head
-        for _ in range((len(stack) - 1) // 2):
-            last = stack.pop()
-            nxt = cur.next
-            cur.next = last
-            last.next = nxt
-            cur = nxt
-        cur.next = stack[-1] if stack else None
-        if stack:
-            stack[-1].next = None
-
-class Solution:
     def reorderList(self, head):
         if not head or not head.next:
             return
@@ -907,6 +889,25 @@ class Solution:
             first.next = second
             second.next = n1
             first, second = n1, n2
+
+class Solution:
+    def reorderList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if not head: return None
+        stack = []
+        cur = head
+        while cur:
+            stack.append(cur)
+            cur = cur.next
+        cur = head
+        for _ in range((len(stack) - 1) // 2):
+            last = stack.pop()
+            nxt = cur.next
+            cur.next = last
+            last.next = nxt
+            cur = nxt
+        cur.next = stack[-1] if stack else None
+        if stack:
+            stack[-1].next = None
 
 # get the middle node
 # slow, fast pointers
@@ -1115,6 +1116,25 @@ Idea: Fix the node before `left`, then do head-insertion for the sublist.
 
 ```python
 class Solution:
+    def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
+        p0 = dummy = ListNode(next=head)
+        for _ in range(left - 1):
+            p0 = p0.next
+
+        pre = None
+        cur = p0.next
+        for _ in range(right - left + 1):
+            nxt = cur.next
+            cur.next = pre  # 每次循环只修改一个 next，方便大家理解
+            pre = cur
+            cur = nxt
+
+        # 见视频
+        p0.next.next = cur  # 1.next => 2,  2.next => 5
+        p0.next = pre       # 1.next => 4
+        return dummy.next
+
+class Solution:
     def reverseBetween(self, head, left, right):
         if not head or left == right:
             return head
@@ -1135,25 +1155,6 @@ class Solution:
 
         return dummy.next
 # Time: O(n), Space: O(1)
-
-class Solution:
-    def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
-        p0 = dummy = ListNode(next=head)
-        for _ in range(left - 1):
-            p0 = p0.next
-
-        pre = None
-        cur = p0.next
-        for _ in range(right - left + 1):
-            nxt = cur.next
-            cur.next = pre  # 每次循环只修改一个 next，方便大家理解
-            pre = cur
-            cur = nxt
-
-        # 见视频
-        p0.next.next = cur  # 1.next => 2,  2.next => 5
-        p0.next = pre       # 1.next => 4
-        return dummy.next
 ```
 
 <a id="lc-0707"></a>
@@ -1163,12 +1164,61 @@ Description: Implement a linked list with common operations.
 Idea: Doubly-linked list with head/tail sentinels + size.
 
 ```python
+# singly-linked list
+class ListNode:
+    def __init__(self, val):
+        self.val = val
+        self.next = None
+
+class MyLinkedList:
+    def __init__(self):
+        self.size = 0
+        self.head = ListNode(0)
+
+    def get(self, index: int) -> int:
+        if index < 0 or index >= self.size:
+            return -1
+        cur = self.head
+        for _ in range(index + 1):
+            cur = cur.next
+        return cur.val
+
+
+    def addAtHead(self, val: int) -> None:
+        self.addAtIndex(0, val)
+
+
+    def addAtTail(self, val: int) -> None:
+        self.addAtIndex(self.size, val)
+
+
+    def addAtIndex(self, index: int, val: int) -> None:
+        if index > self.size:
+            return
+        index = max(0, index)
+        self.size += 1
+        pred = self.head
+        for _ in range(index):
+            pred = pred.next
+        to_add = ListNode(val)
+        to_add.next = pred.next
+        pred.next = to_add
+
+    def deleteAtIndex(self, index: int) -> None:
+        if index < 0 or index >= self.size:
+            return
+        self.size -= 1
+        pred = self.head
+        for _ in range(index):
+            pred = pred.next
+        pred.next = pred.next.next
+
+# doubly-linked list
 class _Node:
     def __init__(self, val=0):
         self.val = val
         self.prev = None
         self.next = None
-
 
 class MyLinkedList:
     def __init__(self):
@@ -1243,6 +1293,7 @@ Description: Return the node where the cycle begins, or `None`.
 Idea: Floyd's cycle detection; then reset one pointer to head.
 
 ```python
+!!!
 class Solution:
     def detectCycle(self, head):
         slow = fast = head

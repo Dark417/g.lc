@@ -135,9 +135,57 @@
 ## Solutions (Python)
 ###
 ### Easy
-111. 二叉树的最小深度
+<a id="lc-0100"></a>
+#### 100. [Same Tree](https://leetcode.com/problems/same-tree/) [E]
+`Tree` `Depth-First Search` `Binary Tree`
+Description: Check whether two binary trees are structurally identical with the same values.
+
+```python
+class Solution:
+    def isSameTree(self, p, q):
+        if not p and not q:
+            return True
+        if not p or not q or p.val != q.val:
+            return False
+        return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+# Time: O(n), Space: O(h)
+```
+
+<a id="lc-0104"></a>
+#### 104. [Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/) [E]
+`Tree` `Depth-First Search`
+Description: Compute the maximum depth (height) of a binary tree.
+
+```python
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        if root is None:
+            return 0
+        l_depth = self.maxDepth(root.left)
+        r_depth = self.maxDepth(root.right)
+        return max(l_depth, r_depth) + 1
+
+# 方法二：自顶向下
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        ans = 0
+        def dfs(node: Optional[TreeNode], depth: int) -> None:
+            if node is None:
+                return
+            depth += 1
+            nonlocal ans
+            ans = max(ans, depth)
+            dfs(node.left, depth)
+            dfs(node.right, depth)
+        dfs(root, 0)
+        return ans
+# Time: O(n), Space: O(h)
+```
+
 <a id="lc-0111"></a>
 #### 111. [Minimum Depth of Binary Tree](https://leetcode.com/problems/minimum-depth-of-binary-tree/) [E]
+`Tree` `Depth-First Search` `Breadth-First Search`
+Description: Find the minimum depth from the root node to the closest leaf.
 
 ```python
 class Solution:
@@ -177,33 +225,103 @@ class Solution:
 
 ```
 
-104. 二叉树的最大深度
+
+<a id="lc-0226"></a>
+#### 226. [Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/) [E]
+`Tree` `Depth-First Search` `Breadth-First Search`
+Description: Swap the left and right child pointers of every node.
+
 ```python
 class Solution:
-    def maxDepth(self, root: Optional[TreeNode]) -> int:
-        if root is None:
-            return 0
-        l_depth = self.maxDepth(root.left)
-        r_depth = self.maxDepth(root.right)
-        return max(l_depth, r_depth) + 1
+    def invertTree(self, root):
+        if not root:
+            return None
+        root.left, root.right = self.invertTree(root.right), self.invertTree(root.left)
+        return root
+# Time: O(n), Space: O(h) recursion stack
 
-# 方法二：自顶向下
+
 class Solution:
-    def maxDepth(self, root: Optional[TreeNode]) -> int:
-        ans = 0
-        def dfs(node: Optional[TreeNode], depth: int) -> None:
-            if node is None:
-                return
-            depth += 1
-            nonlocal ans
-            ans = max(ans, depth)
-            dfs(node.left, depth)
-            dfs(node.right, depth)
-        dfs(root, 0)
-        return ans
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if root:
+            root.left, root.right = root.right, root.left
+            self.invertTree(root.right)
+            self.invertTree(root.left)
+            return root
+
+
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root:
+            return None
+        queue = deque([root])
+        while queue:
+            node = queue.popleft()
+            node.left, node.right = node.right, node.left
+            if node.left:
+                queue.append(node.left)
+            if node.right:
+                queue.append(node.right)
+        return root
 ```
 
+<a id="lc-0572"></a>
+#### 572. [Subtree of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/) [E]
+`Tree` `Depth-First Search`
+Description: Determine whether one tree is a subtree of another by matching every pair of nodes.
 
+```python
+class Solution:
+    def isSubtree(self, root, subRoot):
+        def same(a, b):
+            if not a and not b:
+                return True
+            if not a or not b or a.val != b.val:
+                return False
+            return same(a.left, b.left) and same(a.right, b.right)
+
+        if not subRoot:
+            return True
+        if not root:
+            return False
+        if same(root, subRoot):
+            return True
+        return self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
+
+
+class Solution:
+    def serialize(self, root: Optional[TreeNode]) -> str:
+        if root == None:
+            return "$#"
+
+        return ("$" + str(root.val) + self.serialize(root.left) + self.serialize(root.right))
+
+    def z_function(self, s: str) -> list:
+        z = [0] * len(s)
+        l, r, n = 0, 0, len(s)
+        for i in range(1, n):
+            if i <= r:
+                z[i] = min(r - i + 1, z[i - l])
+            while i + z[i] < n and s[z[i]] == s[i + z[i]]:
+                z[i] += 1
+            if i + z[i] - 1 > r:
+                l, r = i, i + z[i] - 1
+        return z
+
+    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+        serialized_root = self.serialize(root)
+        serialized_subRoot = self.serialize(subRoot)
+        combined = serialized_subRoot + "|" + serialized_root
+
+        z_values = self.z_function(combined)
+        sub_len = len(serialized_subRoot)
+
+        for i in range(sub_len + 1, len(combined)):
+            if z_values[i] == sub_len:
+                return True
+        return False
+# Time: O(n * m) worst-case, Space: O(h) recursion stack
+```
 
 ---
 ### Medium
@@ -331,6 +449,95 @@ class Solution:
         return ans
 ```
 
+<a id="lc-0098"></a>
+#### 98. [Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/) [M]
+`Tree` `Depth-First Search` `Binary Search Tree`
+Description: Verify that a binary tree satisfies the binary search tree ordering.
+
+```python
+class Solution:
+    def isValidBST(self, root):
+        def dfs(node, low, high):
+            if not node:
+                return True
+            if not (low < node.val < high):
+                return False
+            return dfs(node.left, low, node.val) and dfs(node.right, node.val, high)
+
+        return dfs(root, float("-inf"), float("inf"))
+# Time: O(n), Space: O(h)
+
+
+class Solution:
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        if not root:
+            return True
+
+        q = deque([(root, float("-inf"), float("inf"))])
+
+        while q:
+            node, left, right = q.popleft()
+            if not (left < node.val < right):
+                return False
+            if node.left:
+                q.append((node.left, left, node.val))
+            if node.right:
+                q.append((node.right, node.val, right))
+
+        return True
+```
+
+##### Approach 2: In-order traversal
+Idea: In-order traversal of a BST yields a strictly increasing sequence.
+
+```python
+class Solution:
+    def isValidBST(self, root):
+        stack = []
+        cur = root
+        prev = None
+
+        while stack or cur:
+            while cur:
+                stack.append(cur)
+                cur = cur.left
+            cur = stack.pop()
+
+            if prev is not None and cur.val <= prev:
+                return False
+            prev = cur.val
+            cur = cur.right
+
+        return True
+# Time: O(n), Space: O(h)
+```
+
+### 235. [Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/) [M]
+`Tree` `Depth-First Search` `Binary Search Tree`
+Description: Find the lowest common ancestor of two given nodes in a binary search tree.
+
+```python
+class Solution:
+    def lowestCommonAncestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
+        if p.val < root.val and q.val < root.val:
+            return self.lowestCommonAncestor(root.left, p, q)
+        elif p.val > root.val and q.val > root.val:
+            return self.lowestCommonAncestor(root.right, p, q)
+        return root
+
+class Solution:
+    def lowestCommonAncestor(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
+        cur = root
+        while cur:
+            if p.val > cur.val and q.val > cur.val:
+                cur = cur.right
+            elif p.val < cur.val and q.val < cur.val:
+                cur = cur.left
+            else:
+                return cur
+```
+
+
 <a id="lc-0236"></a>
 #### 236. [Lowest Common Ancestor of a Binary Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/) [M]
 `Tree` `Depth-First Search` `Binary Tree`
@@ -352,6 +559,66 @@ class Solution:
             return root
         return left if left else right
 # Time: O(n), Space: O(n)
+```
+
+<a id="lc-0105"></a>
+#### 105. [Construct Binary Tree From Preorder And Inorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/) [M]
+`Tree` `Array` `Binary Tree` `Depth-First Search`
+Description: Reconstruct a binary tree given its preorder and inorder traversals.
+
+```python
+class Solution:
+    def buildTree(self, preorder, inorder):
+        idx = {val: i for i, val in enumerate(inorder)}
+        pre_i = 0
+
+        def build(l, r):
+            nonlocal pre_i
+            if l > r:
+                return None
+
+            root_val = preorder[pre_i]
+            pre_i += 1
+            root = TreeNode(root_val)
+
+            mid = idx[root_val]
+            root.left = build(l, mid - 1)
+            root.right = build(mid + 1, r)
+            return root
+
+        return build(0, len(inorder) - 1)
+# Time: O(n) with an inorder index map, Space: O(n) for the map + recursion stack
+
+
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        if not preorder or not inorder:
+            return None
+
+        root = TreeNode(preorder[0])
+        mid = inorder.index(preorder[0])
+        root.left = self.buildTree(preorder[1 : mid + 1], inorder[:mid])
+        root.right = self.buildTree(preorder[mid + 1 :], inorder[mid + 1 :])
+        return root
+
+
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        preIdx = inIdx = 0
+        def dfs(limit):
+            nonlocal preIdx, inIdx
+            if preIdx >= len(preorder):
+                return None
+            if inorder[inIdx] == limit:
+                inIdx += 1
+                return None
+
+            root = TreeNode(preorder[preIdx])
+            preIdx += 1
+            root.left = dfs(root.val)
+            root.right = dfs(limit)
+            return root
+        return dfs(float('inf'))
 ```
 
 <a id="lc-0106"></a>
@@ -696,6 +963,50 @@ class Solution:
             head = dummy.next
         return root
 # Time: O(n), Space: O(1)
+```
+
+<a id="lc-0230"></a>
+#### 230. [Kth Smallest Element In a BST](https://leetcode.com/problems/kth-smallest-element-in-a-bst/) [M]
+`Tree` `Depth-First Search` `Binary Search Tree`
+Description: Return the kth smallest value in a BST using in-order traversal.
+
+```python
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        cnt = k
+        res = root.val
+
+        def dfs(node):
+            nonlocal cnt, res
+            if not node:
+                return
+
+            dfs(node.left)
+            cnt -= 1
+            if cnt == 0:
+                res = node.val
+                return
+            dfs(node.right)
+
+        dfs(root)
+        return res
+
+
+class Solution:
+    def kthSmallest(self, root, k):
+        stack = []
+        cur = root
+
+        while stack or cur:
+            while cur:
+                stack.append(cur)
+                cur = cur.left
+            cur = stack.pop()
+            k -= 1
+            if k == 0:
+                return cur.val
+            cur = cur.right
+# Time: O(h + k) average, Space: O(h)
 ```
 
 <a id="lc-0199"></a>

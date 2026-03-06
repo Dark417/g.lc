@@ -733,6 +733,19 @@ class Solution:
         cur.next = a if a else b
         return dummy.next
 # Time: O(m + n), Space: O(1) (re-links existing nodes)
+
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        if list1 is None:
+            return list2
+        if list2 is None:
+            return list1
+        if list1.val <= list2.val:
+            list1.next = self.mergeTwoLists(list1.next, list2)
+            return list1
+        else:
+            list2.next = self.mergeTwoLists(list1, list2.next)
+            return list2
 ```
 
 <a id="lc-0141"></a>
@@ -810,6 +823,27 @@ class Solution:
 
         return dfs(head, None)
 # Time: O(n), Space: O(n) recursion stack
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        def dfs(cur, pre):
+            if not cur:
+                return pre
+            nxt = cur.next
+            cur.next = pre
+            pre = cur
+            return dfs(nxt, cur)
+        return dfs(head, None)
+
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if not head:
+            return None
+        newHead = head
+        if head.next:
+            newHead = self.reverseList(head.next)
+            head.next.next = head
+        head.next = None
+        return newHead
 ```
 
 <a id="lc-0019"></a>
@@ -874,6 +908,24 @@ class Solution:
             first = tmp1
             second = tmp2
 # Time: O(n), Space: O(1)
+
+class Solution:
+    def reorderList(self, head: Optional[ListNode]) -> None:
+        def rec(root: ListNode, cur: ListNode) -> ListNode:
+            if not cur:
+                return root
+            root = rec(root, cur.next)
+            if not root:
+                return None
+            tmp = None
+            if root == cur or root.next == cur:
+                cur.next = None
+            else:
+                tmp = root.next
+                root.next = cur
+                cur.next = tmp
+            return tmp
+        head = rec(head, head.next)
 ```
 
 <a id="lc-0023"></a>

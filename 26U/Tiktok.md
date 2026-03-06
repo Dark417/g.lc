@@ -1978,6 +1978,7 @@ class Solution:
                 merged[-1][1] = max(merged[-1][1], itv[1])
         return merged
 ```
+
 ### 57. 插入区间
 `Array` `Intervals` `Sorting` \
 Insert and merge intervals by adding non-overlapping ones directly and merging overlaps.
@@ -2197,16 +2198,21 @@ class Solution:
             mx = max(mx, i + jump)  # 从 i 最右可以跳到 i+jump
         return True
 
-class Solution:
-    def canJump(self, nums: List[int]) -> bool:
-        mx = 0
-        for i, jump in enumerate(nums):
-            if i > mx:  # 无法到达 i
-                return False
-            mx = max(mx, i + jump)  # 从 i 最右可以跳到 i + jump
-            if mx >= len(nums) - 1:  # 可以跳到 n-1
+def canJump(nums: List[int]) -> bool:
+    n = len(nums)
+    dp = [False] * n
+    dp[0] = True  # The start is always reachable
+    for i in range(n):
+        if not dp[i]:
+            continue
+        furthest_jump = min(i + nums[i], n - 1)
+        for j in range(i + 1, furthest_jump + 1):
+            dp[j] = True
+            if j == n - 1:
                 return True
+    return dp[n-1]
 
+# Bottom-up O(n^2)
 class Solution:
     def canJump(self, nums: List[int]) -> bool:
         n = len(nums)
@@ -2219,6 +2225,41 @@ class Solution:
                     dp[i] = True
                     break
         return dp[0]
+
+# Top-down O(n^2)
+class Solution:
+    def canJump(self, nums: List[int]) -> bool:
+        memo = {}
+        def dfs(i):
+            if i in memo:
+                return memo[i]
+            if i == len(nums) - 1:
+                return True
+            if nums[i] == 0:
+                return False
+            end = min(len(nums), i + nums[i] + 1)
+            for j in range(i + 1, end):
+                if dfs(j):
+                    memo[i] = True
+                    return True
+            memo[i] = False
+            return False
+        return dfs(0)
+
+# O(n!)
+class Solution:
+    def canJump(self, nums: List[int]) -> bool:
+        def dfs(i):
+            if i == len(nums) - 1:
+                return True
+            end = min(len(nums) - 1, i + nums[i])
+            for j in range(i + 1, end + 1):
+                if dfs(j):
+                    return True
+            return False
+        return dfs(0)
+
+
 ```
 
 ### 70. 爬楼梯
@@ -2666,5 +2707,10 @@ Calculate the gain for each cheese and select the top k gains for the first mous
 ```
 
 
+### 400. 第 N 位数字
+`Math` `String` \
+Calculate the range of numbers for each digit length and find the target digit by indexing into the appropriate number.
+```python
 
+```
 
