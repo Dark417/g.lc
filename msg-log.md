@@ -2,6 +2,8 @@
 
 | time | user-input | response |
 | --- | --- | --- |
+| 260307-07:22 | Deepen /sde modules with richer per-topic guidance on problem fit, implementations, tools, and tradeoffs | Expanded foundational SDE modules with interview-focused depth: use-cases, alternatives, component impacts, framework fit, and decision tradeoffs |
+| 260307-06:26 | Reorder and deepen /sde learning scope: FR/NFR → estimation → architecture → API → data model → deep dives | Rebuilt `sde/` into a 15-step interview progression, added new foundational modules, and reorganized existing deep-dive files without losing coverage |
 | 260306-14:45 | Expand `sd/ax` solutions from template-level to full Alex Xu-style deep coverage | Rewrote all 22 `sd/ax/solutions/*` with detailed approach flow, APIs, mini-algorithms, failure handling, scaling, DR, security, ops, and interview scripts |
 | 260306-06:31 | Create `sd/ax` with Alex Xu system design questions and separate deep solution files | Added `sd/ax` index + 22 interview-ready solution packets, linked from `sd/questions.md`, and logged this chat entry |
 | 260305-23:48 | Commit and push current branch to main | Staged all tracked changes, created commit `a46fed2` with workspace + SD scaffolding updates, then pushed `HEAD -> main` via remote `lc` (since `origin` is not configured locally) |
