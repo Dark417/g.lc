@@ -2,6 +2,7 @@
 
 | time | user-input | response |
 | --- | --- | --- |
+| 260315-04:51 | Create `26U/nc150.md` with NeetCode 150 index/order and solutions, reusing Blind75 answers when overlapping | Added `26U/nc150.md` with 150-question category index in NeetCode order and a full solutions section seeded from Blind75 overlaps plus placeholders for added NC150 entries |
 | 260307-07:22 | Deepen /sde modules with richer per-topic guidance on problem fit, implementations, tools, and tradeoffs | Expanded foundational SDE modules with interview-focused depth: use-cases, alternatives, component impacts, framework fit, and decision tradeoffs |
 | 260307-06:26 | Reorder and deepen /sde learning scope: FR/NFR → estimation → architecture → API → data model → deep dives | Rebuilt `sde/` into a 15-step interview progression, added new foundational modules, and reorganized existing deep-dive files without losing coverage |
 | 260306-14:45 | Expand `sd/ax` solutions from template-level to full Alex Xu-style deep coverage | Rewrote all 22 `sd/ax/solutions/*` with detailed approach flow, APIs, mini-algorithms, failure handling, scaling, DR, security, ops, and interview scripts |
