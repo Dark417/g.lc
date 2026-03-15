@@ -2,6 +2,11 @@
 
 | time | user-input | response |
 | --- | --- | --- |
+| 260315-09:49 | Push all current workspace changes | Staged all changes, committed with a concise message, and pushed to `main` on remote `lc` |
+| 260315-01:41 | Convert `26U/nc150.md` to PDF in repo root | Generated `nc150.pdf` at repo root via markdown->HTML->Playwright export and cleaned temp artifacts |
+| 260315-01:34 | Add hyperlinks for quick-reference plan rows (1,1,1,2,2,4) to detailed plan sections below | Linked all 6 quick-reference plan rows in `google_l4_prep_plans.md` to `#plan-1..#plan-6` and added matching section anchors |
+| 260315-00:46 | Diagnose Codex chat file links opening in browser and adjust config guidance | Verified config already uses IDE-local file links (`open_local_files_in_ide=true`, `file_links="local"`); root issue is response link format, so use IDE path refs like `26U/nc150.md:8` |
+| 260315-00:27 | Update `26U/nc150.md` so each index question link jumps to its detail section below | Rewrote category index links to local `#lc-XXXX` anchors and inserted matching `<a id="lc-XXXX"></a>` anchors above each solution header |
 | 260315-04:51 | Create `26U/nc150.md` with NeetCode 150 index/order and solutions, reusing Blind75 answers when overlapping | Added `26U/nc150.md` with 150-question category index in NeetCode order and a full solutions section seeded from Blind75 overlaps plus placeholders for added NC150 entries |
 | 260307-07:22 | Deepen /sde modules with richer per-topic guidance on problem fit, implementations, tools, and tradeoffs | Expanded foundational SDE modules with interview-focused depth: use-cases, alternatives, component impacts, framework fit, and decision tradeoffs |
 | 260307-06:26 | Reorder and deepen /sde learning scope: FR/NFR → estimation → architecture → API → data model → deep dives | Rebuilt `sde/` into a 15-step interview progression, added new foundational modules, and reorganized existing deep-dive files without losing coverage |
