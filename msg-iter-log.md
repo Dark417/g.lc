@@ -1,12 +1,5 @@
-# Message Iteration Log
-
-03-06 06:31 - Create sd/ax Alex Xu question bank with separate interview-ready solution files.
-03-06 14:45 - Expand sd/ax 22 solution files to deep interview-ready full-content format.
-03-07 06:26 - Reordered sde topics into step-first interview flow and expanded foundational modules.
-03-07 07:22 - Expanded sde foundational modules with richer decision frameworks and tooling tradeoffs.
-03-15 04:51 - Added `26U/nc150.md` for NC150 index + solutions with Blind75 overlap reuse.
-03-15 00:27 - Updated nc150 index links to jump to in-file solution detail anchors.
-03-15 00:46 - Confirmed Codex config already set for local IDE file links; advised IDE path-style references over markdown URL links.
-03-15 01:34 - Added internal hyperlinks from quick-reference plan rows (1,1,1,2,2,4) to Plan 1-6 detail sections.
-03-15 01:41 - Exported 26U/nc150.md to root nc150.pdf and removed temp export artifacts.
-03-15 09:49 - Staged all current changes and pushed commit to main (lc).
+03-15 16:25 - Removed all standalone neetcode150 tags from 26U/0.nc150.md index entries.
+03-15 16:32 - Reformatted 26U/0.nc150.md index so each question is one line and removed extra description lines.
+03-15 16:40 - Fixed jammed index spacing in 26U/0.nc150.md; kept one-line questions with clean separation.
+03-15 17:14 - Rewrote 26U/0.nc150.md index to match 26U/0.blind75.md bullet-line style.
+03-15 22:19 - Verified Blind75-to-NC150 solution transfer: all anchors and multi-approach counts match.

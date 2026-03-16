@@ -2,6 +2,11 @@
 
 | time | user-input | response |
 | --- | --- | --- |
+| 260315-22:19 | Verify whether all Blind75 solutions (including multi-approach ones) were copied into 0.nc150.md | Verified full Blind75 coverage in NC150: 75/75 anchors present and all 14 multi-approach blocks matched |
+| 260315-17:14 | Make 26U/0.nc150.md index exactly like 26U/0.blind75.md | Rewrote the index to blind75 style bullet entries with one-line descriptions under each category while preserving NC150 question set |
+| 260315-16:40 | Fix jammed index formatting in 26U/0.nc150.md while keeping one-line questions | Normalized category index spacing so each question remains one line with readable separation between entries |
+| 260315-16:32 | Make each index question one line in 26U/0.nc150.md | Removed per-question index description lines so each question is exactly one line and each next question starts on a new line |
+| 260315-16:13 | Remove every neetcode150 tag from each index question in 26U/0.nc150.md | Removed standalone `neetcode150` tag lines from the index section of `26U/0.nc150.md` (kept solution tags untouched) |
 | 260315-09:49 | Push all current workspace changes | Staged all changes, committed with a concise message, and pushed to `main` on remote `lc` |
 | 260315-01:41 | Convert `26U/nc150.md` to PDF in repo root | Generated `nc150.pdf` at repo root via markdown->HTML->Playwright export and cleaned temp artifacts |
 | 260315-01:34 | Add hyperlinks for quick-reference plan rows (1,1,1,2,2,4) to detailed plan sections below | Linked all 6 quick-reference plan rows in `google_l4_prep_plans.md` to `#plan-1..#plan-6` and added matching section anchors |
