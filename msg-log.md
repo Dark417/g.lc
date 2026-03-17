@@ -2,6 +2,9 @@
 
 | time | user-input | response |
 | --- | --- | --- |
+| 260317-06:38 | Fill unanswered placeholder details in 26U/0.nc150.md without copying from blind75.md | Replaced all remaining placeholder NC150 detail blocks with generated interview-style solutions and canonical signatures; verified zero `solve(*args, **kwargs)` stubs remain |
+| 260317-06:13 | Remove all `neetcode150` lines from 26U/0.nc150.md and strip leading `-` from following non-empty lines | Removed all `neetcode150` tags from `26U/0.nc150.md` and normalized the next placeholder description lines by removing leading list markers |
+| 260317-06:06 | Sync 26U/0.nc150.md detail formatting, remove neetcode tags, and fill unanswered NC150 solutions | Attempted bulk rewrite, detected block-misalignment risk, and restored 26U/0.nc150.md to committed state instead of leaving a corrupted file |
 | 260315-22:19 | Verify whether all Blind75 solutions (including multi-approach ones) were copied into 0.nc150.md | Verified full Blind75 coverage in NC150: 75/75 anchors present and all 14 multi-approach blocks matched |
 | 260315-17:14 | Make 26U/0.nc150.md index exactly like 26U/0.blind75.md | Rewrote the index to blind75 style bullet entries with one-line descriptions under each category while preserving NC150 question set |
 | 260315-16:40 | Fix jammed index formatting in 26U/0.nc150.md while keeping one-line questions | Normalized category index spacing so each question remains one line with readable separation between entries |
