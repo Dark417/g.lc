@@ -2,6 +2,23 @@
 
 | time | user-input | response |
 | --- | --- | --- |
+| 260327-17:25 | Add duplicate-count rule in 26U log and push | Added the durable repeat-count rule in `AGENTS.md` and `.ai/skills/update-ai/SKILL.md`, normalized Mar 27 tree raws in `26U/0.26u-log.md`, labeled repeated questions with `- 2/- 3/...`, regenerated both summary tables, and pushed current workspace changes to `main` |
+| 260327-16:33 | Verify March W4 count in 26U index | Confirmed `Mar W4 = 34` is correct from the per-day table and corrected stale January and February values in the first summary table |
+| 260327-16:25 | Add durable rule for deriving first 26U index table | Updated `AGENTS.md` and `.ai/skills/update-ai/SKILL.md` so the first `26U/0.26u-log.md` summary table must be computed from the second per-day table by week and month totals |
+| 260327-16:19 | Count Mar 27 linked-list record in 26U log | Converted the raw `Copy Linked List with Random Pointer` Mar 27 entry in `26U/0.26u-log.md` into the standard linked bullet; summary counts remain `Mar 50`, `W4 34`, `Mar 27 10` |
+| 260327-16:17 | Update 26U index sum counts | Recomputed the monthly cadence totals in `26U/0.26u-log.md` from the day-index counts and corrected stale January and February summary values |
+| 260327-16:16 | Add durable rule for 26U day updates | Added an AGENTS rule that updating any day section in `26U/0.26u-log.md` must refresh both top summary tables together |
+| 260327-16:14 | Fix missed Mar 27 26U log entry | Added the missing `51. N-Queens` link in `26U/0.26u-log.md` and refreshed March summary counts |
+| 260327-16:13 | Update 26U log so far | Normalized the documented Mar 27 Tiktok raw entries in `26U/0.26u-log.md` and refreshed March summary counts while leaving undocumented `N-Queens` as raw |
+| 260327-11:53 | Add `90. 子集 II` to Tiktok notes | Added the `90. 子集 II` index entry and detail block in `26U/0.Tiktok.md`, linked the documented record in `26U/0.26u-log.md`, and refreshed March counts |
+| 260327-09:17 | Update 26U log for one Mar 26 record | Normalized the new Mar 26 raw entry in `26U/0.26u-log.md` and refreshed the March summary tables |
+| 260326-10:05 | Update 26U log for raw entries | Normalized the raw Mar 25 and Mar 26 entries in `26U/0.26u-log.md` into linked bullets and refreshed the March summary tables |
+| 260325-06:15 | Update 26U log for new records | Normalized the new Mar 24 tree entries in `26U/0.26u-log.md` into linked bullets and refreshed both March summary tables |
+| 260324-10:25 | Add durable `push` workflow | Added `push-git` skill, mapped `push` to that workflow in AGENTS, and logged the new durable instruction |
+| 260324-10:19 | Add 26U log rule for daily month table and descending month prepends | Updated AGENTS and `update-ai` workflow rules, normalized Mar 24 entries in `26U/0.26u-log.md`, and added/refreshed both top summary tables in descending month order |
+| 260323-06:47 | Update 26U log formatting and summary table | Normalized the recent March entries in `26U/0.26u-log.md` into linked log bullets, moved the stray Mar 15 entry into chronological order, and refreshed the month summary table with March counts |
+| 260323-06:46 | Add AGENTS rule for `update log` handling in 26U log | Added a durable AGENTS rule that `update log` means updating `26U/0.26u-log.md`, preserving manually prepended entries, normalizing format, and refreshing the top summary table |
+| 260323-06:45 | Move weekly additions table from AGENTS.md into 26U log file beginning | Confirmed the table still lived in `AGENTS.md`, added it to the top of `26U/0.26u-log.md`, and kept the rest of the log intact |
 | 260317-06:38 | Fill unanswered placeholder details in 26U/0.nc150.md without copying from blind75.md | Replaced all remaining placeholder NC150 detail blocks with generated interview-style solutions and canonical signatures; verified zero `solve(*args, **kwargs)` stubs remain |
 | 260317-06:13 | Remove all `neetcode150` lines from 26U/0.nc150.md and strip leading `-` from following non-empty lines | Removed all `neetcode150` tags from `26U/0.nc150.md` and normalized the next placeholder description lines by removing leading list markers |
 | 260317-06:06 | Sync 26U/0.nc150.md detail formatting, remove neetcode tags, and fill unanswered NC150 solutions | Attempted bulk rewrite, detected block-misalignment risk, and restored 26U/0.nc150.md to committed state instead of leaving a corrupted file |
@@ -24,3 +41,4 @@
 | 260305-22:46 | Rename `02.social-media`, reorder/rename question files by ranked order, and simplify questions index to hyperlink names only | Renamed social folder to dashed form, renumbered all 80 question files per type based on ranking order (with updated in-file IDs), and rewrote `sd/questions.md` to compact linked entries like `0101.rate limiter` without rank/id table columns |
 | 260305-22:41 | Reorganize SD question files into typed folders and rank each type by interview relevance/likelihood | Moved all 80 SD question files into type folders like `sd/01.core/` and `sd/02.social media/`, then rewrote `sd/questions.md` with per-type ranked tables ordered by likelihood then relevance |
 | 260305-22:11 | Reorganize instructions into AGENTS, create `.ai` agents/skills, scaffold SD/SDE docs, and generate top 80 system design questions (no solutions) | Moved instruction system to `AGENTS.md`, created agent and skill hierarchy including `p-swe` and `update-ai`, generated `sd/questions.md` and 80 per-question files, added `sd/flow.md`, and created `sde/` knowledge graph index/modules |
+
