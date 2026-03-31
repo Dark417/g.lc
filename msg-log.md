@@ -2,6 +2,12 @@
 
 | time | user-input | response |
 | --- | --- | --- |
+| 260330-20:49 | Update 26U log for Mar 30 | Normalized the documented Mar 30 graph entries in `26U/0.26u-log.md`, applied the repeat suffix to `417`, updated the single-day count to `7`, and refreshed March weekly/month totals |
+| 260330-18:30 | Add stricter rule to preserve user-set 26U dates | Updated `AGENTS.md` and `.ai/skills/update-ai/SKILL.md` so manually added entries keep the user’s day/date exactly; only the question formatting changes before the day-count table and weekly summary table are refreshed |
+| 260330-08:40 | Recheck Mar 28 and Mar 29 per-day counts | Corrected the March per-day row in `26U/0.26u-log.md` so `Mar 28 = 0` and `Mar 29 = 6`; `W4` remains `42` because the week total is unchanged |
+| 260330-08:38 | Add stricter 26U day-update index rule | Updated `AGENTS.md` and `.ai/skills/update-ai/SKILL.md` so day/date edits in `26U/0.26u-log.md` must update the second table's single-day count first, then recompute the first table's week and month sums |
+| 260330-08:32 | Update 26U log for Mar 29 | Normalized the remaining documented Mar 29 graph raws in `26U/0.26u-log.md` and refreshed March summary counts to match the updated day row |
+| 260329-15:18 | Add missing Islands and Treasure to NC150 | Added `286. Islands and Treasure` in the NC150 graph sequence, normalized the documented Mar 29 graph raws in `26U/0.26u-log.md`, and refreshed March summary counts |
 | 260327-17:25 | Add duplicate-count rule in 26U log and push | Added the durable repeat-count rule in `AGENTS.md` and `.ai/skills/update-ai/SKILL.md`, normalized Mar 27 tree raws in `26U/0.26u-log.md`, labeled repeated questions with `- 2/- 3/...`, regenerated both summary tables, and pushed current workspace changes to `main` |
 | 260327-16:33 | Verify March W4 count in 26U index | Confirmed `Mar W4 = 34` is correct from the per-day table and corrected stale January and February values in the first summary table |
 | 260327-16:25 | Add durable rule for deriving first 26U index table | Updated `AGENTS.md` and `.ai/skills/update-ai/SKILL.md` so the first `26U/0.26u-log.md` summary table must be computed from the second per-day table by week and month totals |

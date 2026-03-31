@@ -114,6 +114,8 @@ End each code block with `# Time: ..., Space: ...`.
 - When the user says `update log`, update `26U` log content in `26U/0.26u-log.md`.
 - Keep two summary tables at the beginning of `26U/0.26u-log.md`: the monthly cadence table first, then a per-day month table with columns `Month | 1 | 2 | ... | 30 | 31`.
 - When updating any day section in `26U/0.26u-log.md`, update both summary tables together.
+- If the user manually adds entries under a specific day/date in `26U/0.26u-log.md`, do not change that date; only format the question entries under it.
+- When question formatting or entries change within a specific day/date section, update the second table's single-day count for that date first, then recompute the first table's week sums and month total from the updated per-day row.
 - Derive the first summary table from the second one: add the per-day counts into Monday-start week buckets for `W1..W5`, and sum the full month total from the same per-day row.
 - If a question already exists in `26U/0.26u-log.md`, append ` - 2`, ` - 3`, and so on to the repeated log titles based on chronological attempt count.
 - Both summary tables should list months in descending order, with the newest month prepended in future updates.
