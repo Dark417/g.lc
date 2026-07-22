@@ -24,6 +24,11 @@ Goal: reach Google L4 interview-ready depth (with L5 visibility) using structure
 - Keep quality bar high for Google-style interviews.
 - Prefer depth + tradeoffs + failure handling over shallow summaries.
 - Use index-first, details-later structure in knowledge docs.
+- When the user writes `++:`, treat the following text as durable instructions/rules to add to `AGENTS.md` and any relevant workflow file.
+
+## Topic Files
+
+- `26U/1.sw.md`: sliding window (`sw`)
 
 ## Update Rule (`update-ai`)
 
@@ -71,6 +76,17 @@ Track weekly additions with the `常` table in this file context; weeks start Mo
 - Work relative to `26U/` and log updates in `26U/26u-log.md`.
 - Similar/extended questions go below parent in index and solution area.
 
+### Content Update Patterns
+
+- If the user provides a fully formatted question, keep the index entry and solution block aligned with repo conventions.
+- If the user pastes raw question details into a topic file and says `update this file` or `update`, find newly added questions in the detail section, normalize their format, add matching entries to the top index, and keep solution order aligned with the index.
+- For every chat request related to a format rule, add the rule to the proper place in `AGENTS.md`, mirror it into the relevant workflow file when applicable, then apply it to the current file.
+- In a single topic file, both the index section and details/solutions section must be grouped by difficulty in this order: `### Hard`, `### Medium`, `### Easy`.
+- When the user appends a new question to a specific detail difficulty section, append the matching index entry to that same difficulty section; if the question is placed under the wrong difficulty, move it to the correct difficulty without asking.
+- After formatting a fully documented new question, prepend its linked bullet to the current day in `26U/0.26u-log.md` and refresh both summary tables.
+- If the user says `update log`, update `26U/0.26u-log.md` from documented solutions only.
+- If the user manually inserts raw log items under a day in `26U/0.26u-log.md`, preserve the user-provided date, normalize only the question entries, and refresh both summary tables.
+
 ### File layout
 
 1. Title
@@ -82,8 +98,8 @@ Track weekly additions with the `常` table in this file context; weeks start Mo
 
 Each entry: 3 lines + blank line
 
-1. `[E/M/H] [N. Name](https://leetcode.cn/problems/slug/)`
-2. Two-space short description
+1. `[E/M/H] [N. Name](https://leetcode.cn/problems/slug/)` with a Markdown hard break (`two trailing spaces`)
+2. Two-space short description with a Markdown hard break (`two trailing spaces`)
 3. Two-space backtick tags
 4. Blank line
 
@@ -93,8 +109,8 @@ Anchors in solutions must match: `<a id="lc-XXXX"></a>`.
 
 1. `<a id="lc-XXXX"></a>`
 2. `#### N. [Title](https://leetcode.cn/problems/slug/) [E/M/H]`
-3. tags line
-4. `-` description
+3. Plain description line with a Markdown hard break (`two trailing spaces`), no bullet
+4. Backtick tags line
 
 Add `##### Approach 1: ...`, keep 2-3 approaches max, and runnable `class Solution:`.
 End each code block with `# Time: ..., Space: ...`.

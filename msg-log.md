@@ -2,6 +2,15 @@
 
 | time | user-input | response |
 | --- | --- | --- |
+| 260722-17:21 | Add requested prefix-sum problems, solutions, and push | Added 31 indexed prefix-sum problems with interview-ready Python solutions, updated the Jul 22 practice log and summary tables, then committed and pushed all repository changes |
+| 260517-15:20 | Add difficulty-section rule and update SW file | Persisted the Hard/Medium/Easy grouping rule, added difficulty groups to the index, formatted `1984`, and updated the May 17 26U log count |
+| 260517-15:10 | Apply hard-break rule to solution details | Updated the solution-detail format rule and added Markdown hard breaks before tag lines in `26U/1.sw.md` |
+| 260517-15:09 | Fix solution detail description and tags order | Updated the solution-block format rule so descriptions are plain second lines and tags are third lines, then applied it to `26U/1.sw.md` |
+| 260517-15:08 | Add index hard-break format rule and update SW file | Persisted the format-rule workflow, fixed `26U/1.sw.md` index rendering, formatted `643. Maximum Average Subarray I`, and updated the May 17 26U log count |
+| 260517-15:04 | Add `++:` durable rules and update sliding-window file | Updated `AGENTS.md` and `update-ai`, formatted `219. Contains Duplicate II` in `26U/1.sw.md`, added its index entry, and prepended the May 17 log entry |
+| 260517-14:15 | Create base structure for `26U/1.sw.md` | Added the sliding window note scaffold with index and Python solution/detail sections |
+| 260404-14:19 | Update 26U log for Apr 1 | Normalized the Apr 1 NC150 DP entries in `26U/0.26u-log.md`, added the new April per-day row with `Apr 1 = 4`, and refreshed April weekly/month totals |
+| 260331-22:40 | Update 26U log for Mar 31 | Normalized the Mar 31 raw DP entries in `26U/0.26u-log.md`, added repeat suffixes where needed, set `Mar 31 = 6`, and refreshed March weekly/month totals |
 | 260330-20:49 | Update 26U log for Mar 30 | Normalized the documented Mar 30 graph entries in `26U/0.26u-log.md`, applied the repeat suffix to `417`, updated the single-day count to `7`, and refreshed March weekly/month totals |
 | 260330-18:30 | Add stricter rule to preserve user-set 26U dates | Updated `AGENTS.md` and `.ai/skills/update-ai/SKILL.md` so manually added entries keep the user’s day/date exactly; only the question formatting changes before the day-count table and weekly summary table are refreshed |
 | 260330-08:40 | Recheck Mar 28 and Mar 29 per-day counts | Corrected the March per-day row in `26U/0.26u-log.md` so `Mar 28 = 0` and `Mar 29 = 6`; `W4` remains `42` because the week total is unchanged |
