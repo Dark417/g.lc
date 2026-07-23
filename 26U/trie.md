@@ -243,8 +243,6 @@ class Solution:
 ### 386. 字典序排数
 `Trie`
 ```python
-
-
 ```
 ### 440. 字典序第 K 小的数字
 `Trie`

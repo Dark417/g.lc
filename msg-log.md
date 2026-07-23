@@ -2,6 +2,11 @@
 
 | time | user-input | response |
 | --- | --- | --- |
+| 260723-00:31 | Stage all changes and push | Staged all repository updates, committed the prefix-sum additions and durable Python formatting rules, and pushed `main` |
+| 260722-23:28 | Remove blank lines before Python complexity comments | Persisted the closing-code spacing rule and removed blank lines immediately before `# Time:` across all repository Markdown files |
+| 260722-23:18 | Ban blank lines after Python fences and remove `defaultdict` | Persisted both Python-example rules, removed every blank line after a Python fence, and converted all `defaultdict` examples across repository Markdown files to ordinary dictionaries |
+| 260722-21:21 | Ban `typing.List` and add six Hard prefix-sum problems | Added the durable built-in-generics rule, converted the prefix-sum note away from `typing.List`, added six indexed Hard problems with solutions, and refreshed the Jul 22 log counts |
+| 260722-17:23 | Make single-topic index links target local details | Updated the durable topic-file rule and workflow so index titles link to local detail anchors and detail titles link to LeetCode, then applied it to `26U/2.prefixsum.md` |
 | 260722-17:21 | Add requested prefix-sum problems, solutions, and push | Added 31 indexed prefix-sum problems with interview-ready Python solutions, updated the Jul 22 practice log and summary tables, then committed and pushed all repository changes |
 | 260517-15:20 | Add difficulty-section rule and update SW file | Persisted the Hard/Medium/Easy grouping rule, added difficulty groups to the index, formatted `1984`, and updated the May 17 26U log count |
 | 260517-15:10 | Apply hard-break rule to solution details | Updated the solution-detail format rule and added Markdown hard breaks before tag lines in `26U/1.sw.md` |

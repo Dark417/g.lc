@@ -22,7 +22,12 @@ description: Persist durable instruction updates into AGENTS.md, agent files, or
 - group both topic-file index and solution/detail sections by `### Hard`, `### Medium`, `### Easy` in that order
 - append new questions to the matching difficulty group in both index and details; if the user put a question in the wrong difficulty group, move it to the correct group without asking
 - index entries must render as three separate lines by adding Markdown hard breaks after the title/link line and description line
+- in a single topic Markdown file, each index title must link to its matching local `#lc-XXXX` detail anchor; each solution/detail title must link to the problem on `leetcode.com`
 - solution blocks must place the plain description line directly under the title with a Markdown hard break, then the tags line, with no bullet before the description
+- Python solution blocks must use built-in generic annotations such as `list[int]` and must not import or use `typing.List`
+- Python code must start immediately after the opening Python code fence with no intervening blank line
+- the `# Time: ..., Space: ...` comment must immediately follow the final code line with no intervening blank line
+- Python examples must use ordinary dictionaries with `dict.get` or `setdefault` and must not import or use `defaultdict`
 - when a fully documented question is added, prepend its linked bullet to the current day in `26U/0.26u-log.md` and refresh both summary tables
 7. For `26U/0.26u-log.md` updates, normalize any manually added raw day entries into linked bullets, then refresh both top summary tables:
 - monthly cadence table first

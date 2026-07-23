@@ -57,8 +57,7 @@ while q:
     node = q.popleft()
 
 # Graph
-from collections import defaultdict
-graph = defaultdict(list)
+graph = {}
 
 # Frequency
 from collections import Counter

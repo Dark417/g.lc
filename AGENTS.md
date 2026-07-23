@@ -98,7 +98,7 @@ Track weekly additions with the `常` table in this file context; weeks start Mo
 
 Each entry: 3 lines + blank line
 
-1. `[E/M/H] [N. Name](https://leetcode.cn/problems/slug/)` with a Markdown hard break (`two trailing spaces`)
+1. `[E/M/H] [N. Name](#lc-XXXX)` with a Markdown hard break (`two trailing spaces`); the link must target that question's detail anchor in the same topic file
 2. Two-space short description with a Markdown hard break (`two trailing spaces`)
 3. Two-space backtick tags
 4. Blank line
@@ -108,16 +108,21 @@ Anchors in solutions must match: `<a id="lc-XXXX"></a>`.
 ### Solution block format
 
 1. `<a id="lc-XXXX"></a>`
-2. `#### N. [Title](https://leetcode.cn/problems/slug/) [E/M/H]`
+2. `#### N. [Title](https://leetcode.com/problems/slug/) [E/M/H]`; the title link must target the LeetCode problem page
 3. Plain description line with a Markdown hard break (`two trailing spaces`), no bullet
 4. Backtick tags line
 
 Add `##### Approach 1: ...`, keep 2-3 approaches max, and runnable `class Solution:`.
 End each code block with `# Time: ..., Space: ...`.
 
+- In Python solutions, use built-in generic annotations such as `list[int]`; do not import or use `typing.List`.
+- Start Python code on the line immediately after every opening Python code fence; do not insert a blank line after the opening fence.
+- Place the `# Time: ..., Space: ...` comment immediately after the final code line; do not insert a blank line before it.
+- Use ordinary dictionaries with `dict.get` or `setdefault`; do not import or use `defaultdict` in Python examples.
+
 ### Additional rules
 
-- Use `leetcode.com` links in solution titles.
+- In a single topic Markdown file, index title links point to the matching local detail anchor, while solution/detail title links point to `leetcode.com`.
 - Keep solution order aligned with index.
 - Parse pasted tags by splitting on known keywords and removing suffix noise (`N+`).
 - `26U/Tiktok.md`: keep `## Category` on top and add matching headings for each indexed question.
