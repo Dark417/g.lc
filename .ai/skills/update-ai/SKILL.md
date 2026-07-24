@@ -37,4 +37,6 @@ description: Persist durable instruction updates into AGENTS.md, agent files, or
 - derive the first table from the second by summing Monday-start week buckets and the month total from the per-day row
 - append ` - 2`, ` - 3`, and so on to repeated `26U/0.26u-log.md` question titles based on chronological attempt count
 - both in descending month order with newest month prepended
+- when the user says `update`, `update record`, or `update log`, add manually provided questions under today and inspect the past few days of file modification timestamps for individually edited solution code, logging each under its edit date
+- exclude bulk whole-file/list additions requested as an entire-file update (for example, a complete prefix-sum list); only individual question or code edits count as practice records
 8. Summarize what was changed.

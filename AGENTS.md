@@ -84,7 +84,8 @@ Track weekly additions with the `常` table in this file context; weeks start Mo
 - In a single topic file, both the index section and details/solutions section must be grouped by difficulty in this order: `### Hard`, `### Medium`, `### Easy`.
 - When the user appends a new question to a specific detail difficulty section, append the matching index entry to that same difficulty section; if the question is placed under the wrong difficulty, move it to the correct difficulty without asking.
 - After formatting a fully documented new question, prepend its linked bullet to the current day in `26U/0.26u-log.md` and refresh both summary tables.
-- If the user says `update log`, update `26U/0.26u-log.md` from documented solutions only.
+- If the user says `update`, `update record`, or `update log`, add every manually provided question to today's section in `26U/0.26u-log.md`, and add individually edited solution code to the date indicated by the file's recent modification timestamp.
+- Inspect solution changes from the past few days when updating the record; do not log bulk whole-file/list additions requested as an entire-file update (for example, adding a complete prefix-sum list).
 - If the user manually inserts raw log items under a day in `26U/0.26u-log.md`, preserve the user-provided date, normalize only the question entries, and refresh both summary tables.
 
 ### File layout
@@ -133,6 +134,8 @@ End each code block with `# Time: ..., Space: ...`.
 - Format: `- [E/M/H] [N. Title](/26U/<file>.md#lc-XXXX)`
 - Log only fully documented solutions.
 - When the user says `update log`, update `26U` log content in `26U/0.26u-log.md`.
+- Treat `update` and `update record` as log-update requests too: log manually provided questions under today and individually edited solution code under the edit date inferred from recent file timestamps.
+- Exclude bulk whole-file/list additions from practice records when the user requested the entire file update; only later individual question/code edits qualify.
 - Keep two summary tables at the beginning of `26U/0.26u-log.md`: the monthly cadence table first, then a per-day month table with columns `Month | 1 | 2 | ... | 30 | 31`.
 - When updating any day section in `26U/0.26u-log.md`, update both summary tables together.
 - If the user manually adds entries under a specific day/date in `26U/0.26u-log.md`, do not change that date; only format the question entries under it.
