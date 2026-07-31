@@ -1,0 +1,4 @@
+interface:
+  display_name: "Push Git Changes"
+  short_description: "Review, commit, and push repository changes"
+  default_prompt: "Use $push-git to review, commit, and push these changes."

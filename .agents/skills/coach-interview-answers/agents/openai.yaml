@@ -1,0 +1,4 @@
+interface:
+  display_name: "Principal Engineer Interview Coach"
+  short_description: "Challenge and strengthen defensible interview answers"
+  default_prompt: "Use $coach-interview-answers to coach me through and pressure-test this interview answer."

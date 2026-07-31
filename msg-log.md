@@ -2,6 +2,8 @@
 
 | time | user-input | response |
 | --- | --- | --- |
+| 260731-09:52 | Consolidate system-design execution and plan, migrate agent workflows, refresh core/Alex Xu material, and push | Merged interview execution into `0flow.md`, rebuilt the customizable two/three-week SD plan, renamed and validated `1index.md`, migrated workflows to official `.agents/skills` plus scoped `AGENTS.md`, added principal-engineer answer coaching, refreshed 00.base/core/1AX packets under the build contract, and prepared all workspace changes for `main` |
+| 260730-18:02 | Add system-design knowledge and skills; consolidate and deduplicate question structure | Added `generate-knowledge` and `system-design-answer`, built canonical `1AX`, moved unique general questions into domain folders, retired AX-covered duplicates, and rebuilt the validated question map |
 | 260724-18:14 | Push all repository changes | Staged all current changes, committed the stack solutions, practice-log rules, and recent code edits, then pushed `main` |
 | 260724-14:20 | Add 1047 and 844, persist update-record rule, and update recent log | Added both Easy stack solutions, persisted timestamp-aware practice logging with bulk-file exclusions, and logged five individual attempts across Jul 23-24 with refreshed summaries |
 | 260723-00:31 | Stage all changes and push | Staged all repository updates, committed the prefix-sum additions and durable Python formatting rules, and pushed `main` |

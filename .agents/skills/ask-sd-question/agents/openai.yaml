@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ask System Design Question"
+  short_description: "Create calibrated, deduplicated design prompts"
+  default_prompt: "Use $ask-sd-question to create calibrated system design interview questions."

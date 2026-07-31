@@ -1,0 +1,4 @@
+interface:
+  display_name: "Update Repository Instructions"
+  short_description: "Persist durable repository workflow rules"
+  default_prompt: "Use $update-ai to persist these durable repository instructions."

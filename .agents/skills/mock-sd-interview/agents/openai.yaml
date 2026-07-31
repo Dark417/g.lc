@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mock System Design Interview"
+  short_description: "Run and grade adversarial design practice"
+  default_prompt: "Use $mock-sd-interview to run a realistic system design mock interview."

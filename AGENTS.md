@@ -5,7 +5,7 @@
 This repository is mostly:
 
 - LeetCode training solutions + logs under `24_G/` and `26U/`
-- System design prep under `sd/` and `sde/`
+- System design prep under `1sd/`
 
 Goal: reach Google L4 interview-ready depth (with L5 visibility) using structured practice artifacts.
 
@@ -13,10 +13,12 @@ Goal: reach Google L4 interview-ready depth (with L5 visibility) using structure
 
 - `26U/`: topic notes + `26u-log.md`
 - `24_G/`: historical LeetCode solutions
-- `sd/`: system design targets, question bank, flow, and per-question docs
-- `sde/`: system design knowledge graph modules
-- `.ai/agents/`: role definitions
-- `.ai/skills/`: reusable workflows (`verb-object` naming)
+- `1sd/00.base/`: system design knowledge graph modules
+- `1sd/1AX/`: canonical Alex Xu Volume 1 and Volume 2 chapter packets
+- `1sd/01.core/` through `1sd/10.enterprise security/`: deduplicated question packets by domain
+- `1sd/1index.md`: authoritative system-design question map
+- `.agents/skills/`: official repository-scoped reusable workflows (`verb-object` naming)
+- `AGENTS.md` files: durable global or directory-scoped role and workflow instructions
 - `msg-log.md`: prepend one row per chat
 
 ## Global Rules
@@ -36,8 +38,8 @@ For every chat:
 
 1. Check if user added durable instructions.
 2. Persist global rules in `AGENTS.md`.
-3. Persist role-specific rules in `.ai/agents/*.md`.
-4. Persist workflow rules in `.ai/skills/*/SKILL.md`.
+3. Persist role- or directory-specific rules in the closest applicable `AGENTS.md`.
+4. Persist reusable workflow rules in `.agents/skills/*/SKILL.md`.
 5. Keep edits minimal and non-duplicative.
 
 ## Message Log Rule

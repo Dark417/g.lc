@@ -1,0 +1,4 @@
+interface:
+  display_name: "System Design Answer"
+  short_description: "Build timed L4/L5 system design answers"
+  default_prompt: "Use $system-design-answer to build a defensible 45-minute L4/L5 answer."

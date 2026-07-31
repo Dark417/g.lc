@@ -1,0 +1,4 @@
+interface:
+  display_name: "Generate Knowledge"
+  short_description: "Create rigorous interview knowledge references"
+  default_prompt: "Use $generate-knowledge to create reference documents from a topic manifest."

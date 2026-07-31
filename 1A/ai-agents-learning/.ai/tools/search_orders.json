@@ -1,0 +1,16 @@
+{
+  "name": "search_orders",
+  "description": "Search the orders table by customer email or order ID. Read-only.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "email":    { "type": "string", "description": "Customer email" },
+      "order_id": { "type": "string", "description": "Order ID, format ORD-xxxx" },
+      "limit":    { "type": "integer", "default": 10, "maximum": 100 }
+    },
+    "anyOf": [
+      { "required": ["email"] },
+      { "required": ["order_id"] }
+    ]
+  }
+}
