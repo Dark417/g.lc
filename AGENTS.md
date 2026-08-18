@@ -33,7 +33,7 @@ Goal: reach Google L4 interview-ready depth (with L5 visibility) using structure
 - `26U/1.sw.md`: sliding window (`sw`)
 - `26U/0.nc150-java.md`: Java syntax toolkit + NeetCode 150 in Java (converted from `26U/0.nc150.md`)
 - `26U/1.java-oop.md`: Java OOP / object-oriented design interview questions
-- `26U/1.ds-design-java.md`: data structure design in Java (converted from `26U/1.ds-design.md`)
+- `26U/1.ds-design-java.md`: data structure design in Java (converted from `26U/1.ds-design.md`), plus a `## Synchronization` section of concurrent-design questions
 
 ## Update Rule (`update-ai`)
 
