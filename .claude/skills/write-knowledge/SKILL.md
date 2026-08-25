@@ -19,12 +19,11 @@ Use this exact structure. Do not omit sections.
 # <Topic Name>
 
 ## Index
-- Core concepts
-- <thematic section 2>
-- <thematic section 3>
+- [Core concepts](#concepts)
+- <topic/section entries — EVERY entry is a hyperlink to its section>
 - ...
-- Popular frameworks
-- Interview pitfalls
+- [Popular frameworks](#frameworks)
+- [Interview pitfalls](#pitfalls)
 
 ---
 
@@ -57,6 +56,12 @@ Use this exact structure. Do not omit sections.
 - Use concrete numbers (latency, throughput, storage sizes) not just prose
 - If a concept has a formula (e.g., Little's Law, Amdahl's Law), include it with a worked example
 
+### Index
+- Every index entry must be a markdown hyperlink to its section — no bare text entries
+- Place an explicit `<a id="short-slug"></a>` anchor immediately before each linked heading and link with `[Title](#short-slug)`; explicit anchors survive heading renames and work in GitHub, VS Code, and rendered previews
+- The index is a bullet list: one item per line, always — never join multiple entries on one line with `·` or commas
+- For files with many subsections, group by topic using nested bullets: a `- **Topic**` line with one indented `- [Sub](#slug)` bullet per subsection
+
 ### Style
 - No filler — every sentence adds information or contrast
 - Code blocks for: algorithms, config, API shapes, pseudocode, data formats
@@ -84,6 +89,7 @@ Use this exact structure. Do not omit sections.
 
 Before finishing, verify:
 
+- [ ] Every index entry is a working hyperlink to an `<a id>` anchor in the file
 - [ ] Core concepts define vocabulary needed to understand everything else
 - [ ] Each approach has explicit tradeoffs (not "it depends")
 - [ ] At least 4 frameworks with real detail
