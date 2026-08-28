@@ -17,6 +17,8 @@ Goal: reach Google L4 interview-ready depth (with L5 visibility) using structure
 - `1sd/1AX/`: canonical Alex Xu Volume 1 and Volume 2 chapter packets
 - `1sd/01.core/` through `1sd/10.enterprise security/`: deduplicated question packets by domain
 - `1sd/1index.md`: authoritative system-design question map
+- `1sde/<domain>/`: technology topic pairs (`{topic}.md` concept/interview, `{topic}1.md` implementation), e.g. `1sde/2.messaging/1.kafka.md` + `1.kafka1.md`
+- `.agents/rules.md`: knowledge-file authoring rules (format, method, doc structure, question format, quality bar, topic pair rule)
 - `.agents/skills/`: official repository-scoped reusable workflows (`verb-object` naming)
 - `AGENTS.md` files: durable global or directory-scoped role and workflow instructions
 - `msg-log.md`: prepend one row per chat
@@ -26,6 +28,8 @@ Goal: reach Google L4 interview-ready depth (with L5 visibility) using structure
 - Keep quality bar high for Google-style interviews.
 - Prefer depth + tradeoffs + failure handling over shallow summaries.
 - Use index-first, details-later structure in knowledge docs.
+- When generating or updating any knowledge file (system design, technology deep dive, interview notes), read and follow `.agents/rules.md` (format, mechanism-first method, comparison rule, doc structure, question format, quality bar).
+- When the user says `in xx/{topic}/ explain {topic}`, generate the two-file pair defined in `.agents/rules.md` §10: `{topic}.md` (concept + 30–50 L4/L5 questions) and `{topic}1.md` (Python + Java/Spring Boot implementation snippets, same section order).
 - When the user writes `++:`, treat the following text as durable instructions/rules to add to `AGENTS.md` and any relevant workflow file.
 
 ## Topic Files

@@ -7,6 +7,10 @@ description: Generate rigorous, principal-engineer-reviewable technical knowledg
 
 Produce interview-review reference documents for a backend engineer preparing for Amazon SDE II and Google L4 loops. Write Markdown files in this repository.
 
+## Rules file
+
+Always read `.agents/rules.md` first and follow it: bullets-only formatting, hyperlinked index, mechanism-first §4 order per component, comparison tables (§5), doc structure (§6), L4/L5 question format (§7), quality bar (§8), and the topic pair rule (§10: `{topic}.md` + `{topic}1.md` when the user says `in xx/{topic}/ explain {topic}`). Where this skill and `.agents/rules.md` differ, `.agents/rules.md` wins.
+
 ## Quality bar
 
 Make every document survive a principal engineer attacking it line by line.
