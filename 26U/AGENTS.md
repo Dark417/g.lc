@@ -11,10 +11,10 @@ Directory-scoped rules for `26U/` (interview prep). Root `AGENTS.md` still appli
 
 ### File naming
 
-- One full design per file: `sd##.problem-name.md` (two digits, no dot after `sd`, kebab-case problem name), e.g. `sd04.kv-store.md`.
+- One full design per file: `sd##.problem-name.md` (two digits, no dot after `sd`, kebab-case problem name), e.g. `sd17.kv-store.md`.
 - Number = priority order from the `2.sd.md` question bank, not creation order.
 
-### Full-design template (follow `sd01.job-scheduler.md`)
+### Full-design template (follow `sd16.job-scheduler.md`)
 
 - Sections §0–§17: time budget · why hard (naive → what breaks → minimum primitive) · crux · clarifying questions (with assumed answers) · FR / NFR (table with targets + "enforced by") · back-of-envelope (end each with "so what") · HLD (ASCII diagram with `[hot path]` / `[async]` / `[control plane]` tags + walkthroughs) · API · data model · 3–4 deep dives · hygiene checklist · ops readiness · pop-up questions · trade-offs + defeaters · wrap-up script · memorization card · references.
 - `❓` marks a likely follow-up with the answer to give; `🗣` marks a line to say aloud verbatim; `**L5:**` marks senior-level extensions.
