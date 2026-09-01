@@ -132,6 +132,10 @@ End each code block with `# Time: ..., Space: ...`.
 
 ### Additional rules
 
+- When a topic file aggregates a company question bank plus an extra/OJ list (e.g. `26U/1o/1.coding/1.coding0.md`): within every topic section, list the curated question-bank entries first, then a `---` horizontal rule, then the OJ-only extras — in both the index and the details/solutions section, keeping the two orders aligned.
+- Aggregated company-bank files use the standard 3-line index entry format (name link line, then description on its own line, then tags on its own line, each with a Markdown hard break).
+- First-hand report files (e.g. `26U/1o/1.coding/0.1p3a.md`): every index entry's name links to its local detail anchor; entries are 3 lines — linked `N. Name` (+ ★★/★★★ after the name when asked by 2/3+ reports; single-report entries unmarked, no ×N counters), then `[E/M]` + 要点, then the anchor link. No ⟂ marker. Preserve user strikethroughs (`~~...~~`) on index entries across any regeneration.
+- Solution/detail blocks in those files: `#### N. [Name](url) ...` heading, tags on the immediately following line (no blank line between), then `Description:`.
 - In a single topic Markdown file, index title links point to the matching local detail anchor, while solution/detail title links point to `leetcode.com`.
 - Keep solution order aligned with index.
 - Parse pasted tags by splitting on known keywords and removing suffix noise (`N+`).
