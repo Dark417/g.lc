@@ -1,0 +1,313 @@
+# REST — Relearn: 101 → Full Design
+
+Order: what REST is → anatomy of a request → what a resource is → design principles & naming → status codes mapped to scenarios → error handling → caching → idempotency (incl. client-side key design) → retry → pagination → client end-to-end. Intuition first, then mechanism, then defeater. Anchor: instrument platform (Aurora + corrections overlay).
+
+---
+
+## 1. What REST actually is (101)
+
+```
+Client ──(HTTP: verb + URL + headers + body)──▶ Server
+  ◀──(status + headers + representation)──
+        stateless per request; resources named by URLs
+```
+
+- REST is an **architectural style**, not a protocol or a library — a set of constraints from Fielding's 2000 thesis. Follow the constraints and you inherit properties: cacheability, scalability, evolvability.
+  → The constraints: **client-server** (separated concerns), **stateless** (each request self-contained — server holds no session; any server can answer any request → horizontal scaling for free), **cacheable** (responses declare cacheability), **uniform interface** (resources identified by URIs, manipulated through representations, standard methods), layered system (proxies/gateways can sit in between invisibly).
+  → Defeater: almost nobody ships "true REST" (full hypermedia/HATEOAS). What the industry calls REST is "HTTP APIs with resource-oriented URLs and correct method/status semantics." Say that plainly if asked "is your API RESTful?" — it reads as understanding, not confession.
+- **The core mental flip vs RPC**: RPC exposes *functions* (`/getInstrument`, `/createCorrection`); REST exposes *things* (nouns) and reuses ~5 verbs on all of them.
+  → Why that's not cosmetic: fixed verb semantics are what let generic infrastructure — caches, retries, proxies, monitors — act on your API without knowing your domain. A cache can cache any GET; it can't know `/getInstrument` is safe.
+  → 🗣 "REST trades a bigger URL vocabulary for a tiny, machine-understood verb vocabulary — and that's what makes commodity HTTP infrastructure work for you."
+
+
+#### Best practices — §1
+- **Keep every request self-contained (auth token, cursor, idempotency key in the request itself); never server-side sessions.** → Prevents: sticky-session routing, which turns a rolling deploy or a scale-in event into user-visible logouts and breaks any horizontal scaling story you claim in an interview.
+- **Never let GET mutate state — not even "just a counter" or a lazy-init.** → Prevents: prefetchers, browser preview panes, link scanners in email clients, and retrying proxies silently firing your side effect N times. This is a real class of incident, not theory.
+- **Say "HTTP API" internally, "REST" externally, and don't argue purity in design reviews.** → Prevents: hour-long HATEOAS debates that produce no user value; keep the constraint discussion on statelessness, cacheability, and correct verb/status semantics, which are the parts that actually buy you infrastructure.
+- **Decide the API's "shape owner" up front — one team owns conventions across all services.** → Prevents: five services with five pagination envelopes and five error formats, so every consumer writes five clients (canonical failure pattern in large orgs, and exactly what an API style guide + linter in CI exists to stop).
+
+## 2. Anatomy — what a request consists of
+
+```
+POST /v1/instruments/abc123/corrections?dryRun=false HTTP/1.1
+─┬── ─┬─ ────────────┬──────────────── ─────┬──────
+verb version   path (identity)          query param
+Headers: Authorization, Content-Type, Accept, Idempotency-Key, If-Match, X-Correlation-Id
+Body:    {"field":"couponRate","newValue":"4.25","reason":"vendor typo"}
+```
+
+- **Method (verb)** — what kind of operation: GET read, POST create/action, PUT full replace, PATCH partial update, DELETE remove.
+- **Path** — *which* resource. **Path variable** (`{id}`) = identity segment, required, hierarchical.
+- **Query parameters** — *optional modifiers on reads*: filter, sort, page, projection (`?status=ACTIVE&first=50`). Never identity, never payload, never secrets.
+- **Headers** — *metadata about the request*, orthogonal to the business payload.
+- **Body** — the representation itself (JSON). GET/DELETE: no body. POST/PUT/PATCH: the thing being created/replaced/patched.
+- Terminology nit that trips people: "parameter" is ambiguous — always say **path variable** vs **query parameter** vs **header** vs **body field**. Decision rule:
+
+| It is… | Put it in | Why |
+|---|---|---|
+| Identity of the thing | Path variable | Cache key, routable, required |
+| Optional read modifier | Query param | Cache key (URL), bookmarkable |
+| Cross-cutting metadata (auth, content type, idempotency, concurrency, tracing) | Header | Orthogonal to payload; infra can read it |
+| The data itself | Body | Typed, sized, not logged in URLs |
+| Anything sensitive | Header or body — never path/query | URLs leak into logs, history, Referer |
+
+### 2.1 What the UI must send (headers/body checklist)
+
+- `Authorization: Bearer <JWT>` — who you are. Every request; server validates every hop.
+- `Content-Type: application/json` — what the *body I'm sending* is. Required on POST/PUT/PATCH; server answers `415` if unsupported.
+- `Accept: application/json` — what I can *receive*. Server answers `406` if it can't comply (in practice most APIs serve JSON only and ignore it — know the header anyway).
+- `Idempotency-Key: <uuid>` — on unsafe-to-repeat POSTs (§8).
+- `If-Match: "<etag>"` — on updates, optimistic concurrency (§7): "apply only if it's still the version I saw."
+- `If-None-Match: "<etag>"` — on reads: "only send the body if it changed" → `304`.
+- `X-Correlation-Id` — trace id for support; server echoes it into logs and error bodies.
+- Body: only the representation. No auth in body, no action verbs in body, no envelope wrappers (`{"data": ..., "status": "ok"}` — status lives in the status line).
+
+### 2.2 What the server sends back
+
+- Status line (§5), `Content-Type`, and per case: `Location` (201/202 — where the new thing lives), `ETag` (version tag of this representation), `Cache-Control` (may you cache, how long), `Retry-After` (429/503 — when to come back), the correlation id echoed.
+
+
+#### Best practices — §2
+- **Version the path from day one (`/v1`) even when you're sure you'll never need v2.** → Prevents: the retrofit, where adding `/v1` later is itself a breaking change for every existing consumer.
+- **Cap and validate every query parameter (page size, date ranges, list-valued filters) at the edge.** → Prevents: `?first=1000000` becoming an unintentional DoS, and unbounded `IN` lists blowing past DB parameter limits.
+- **Require `Content-Type` on write methods and reject unknown JSON fields (`FAIL_ON_UNKNOWN_PROPERTIES`) on internal APIs.** → Prevents: the silent typo — client sends `reasonText`, server ignores it, correction is stored with no reason and nobody notices until audit.
+- **Never accept `Authorization` data in the body or query string, and never log full URLs with query strings on sensitive endpoints.** → Prevents: credentials and PII landing in access logs, APM traces, and CDN logs — a compliance incident with no code bug behind it.
+- **Generate the client from the OpenAPI spec instead of hand-writing HTTP calls in the UI.** → Prevents: drift between documented and actual headers, and the class of bug where one screen forgets `If-Match` and silently overwrites concurrent edits.
+- **Echo a correlation id (accept one if the client sends it, mint one if not) and return it in every response and error body.** → Prevents: support tickets that can't be traced — "it failed around 2pm" with no way to find the request.
+
+## 3. What a "resource" is
+
+```
+Resource (concept: "instrument abc123")
+   ├─ identified by URI:  /instruments/abc123
+   ├─ has state on server (rows in Aurora)
+   └─ exchanged as REPRESENTATIONS (a JSON view of it — not the rows themselves)
+```
+
+- A resource is a **named concept with identity and state** — not a table, not a class. The JSON you exchange is a *representation* — one of possibly several views of it.
+  → That's why "resource ≠ DB table" matters: `/instruments/{id}` merges an Aurora row + corrections overlay + computed fields into one representation; no single table looks like it.
+- **How to define a resource** — my three-boundary test (this is the actual design skill):
+  - **Unit of consistency**: things that must change atomically are one resource; things that change independently are separate resources. Vendor data and corrections change on different triggers → separate.
+  - **Authorization boundary**: if two chunks of data need different permissions, splitting them into resources makes authz declarative (grant on the corrections resource) instead of field-level ifs.
+  - **Cache granularity**: a resource is what gets one cache entry and one invalidation. Bundling volatile + stable data into one resource means the stable part churns with the volatile part's invalidations.
+  → 🗣 "A resource is a consistency unit, an authz unit, and a cache unit — if those three don't coincide, split it."
+- **Querying resources**: collection GET + query params. `GET /instruments?status=ACTIVE&type=BOND&sort=-issuedAt&first=50`. Filters are a *closed vocabulary* — each filter param is a capacity commitment (an index behind it), reviewed as such. Not a generic query language.
+- Sub-resources express ownership: `/instruments/{id}/corrections` — a correction has no identity without its instrument. If it can be addressed independently, it's top-level with a filter instead.
+
+
+#### Best practices — §3
+- **Model resources from consumer use cases, not from your ER diagram.** → Prevents: the API that forces three round trips to render one screen because it mirrors normalized tables instead of the view the client needs.
+- **Use server-generated opaque IDs (UUID/ULID) in URLs, never sequential integers or composite natural keys.** → Prevents: enumeration attacks (`/instruments/1..N` scraping) and the migration trap where the natural key changes and every stored URL dies.
+- **Keep sub-resources only for true ownership; if the child can be addressed independently, promote it to top level with a filter.** → Prevents: four-level paths where a client must know the whole ancestry to fetch one document, and the duplicate-route problem (`/a/{x}/b/{y}` and `/b/{y}` both existing with different authz).
+- **Return the full updated representation on writes (or `201` + `Location`), not a bare `{"success": true}`.** → Prevents: the mandatory follow-up GET after every mutation — a 2× round trip tax and a stale-read race in between.
+- **Treat each filter parameter as a capacity commitment: no filter ships without an index or search mapping behind it.** → Prevents: a seq scan discovered by a consumer in production rather than by you in review.
+- **Freeze the response envelope shape early (items + pageInfo, errors) and reuse it everywhere.** → Prevents: per-endpoint parsing logic in clients, which is the thing that makes API changes expensive later.
+
+## 4. General design principles & naming
+
+- **Nouns, plural, no verbs in paths**: `/instruments`, not `/getInstruments`. The method is the verb.
+  → Exception, done deliberately: domain actions that aren't CRUD on any noun → action sub-resource `POST /instruments/{id}/corrections` or `POST /payments/{id}/capture`. Never PATCH-with-magic-fields — that destroys auditability, separable permissions, and retry semantics at once.
+- **Method semantics are a contract** (infra depends on them):
+
+| Method | Meaning | Safe? | Idempotent? | Body |
+|---|---|---|---|---|
+| GET | read | ✅ | ✅ | no |
+| POST | create / action | ❌ | ❌ (unless keyed) | yes |
+| PUT | full replace at known URI | ❌ | ✅ | yes |
+| PATCH | partial update | ❌ | ❌ (✅ if patch is absolute) | yes |
+| DELETE | remove | ❌ | ✅ | no |
+
+  → Violating these (GET that mutates, POST for reads that could be GETs) breaks caches, retries, and prefetchers that trusted the contract.
+- **Consistency across the API beats local perfection**: same casing (kebab paths, camelCase JSON), same pagination envelope, same error shape everywhere. Clients build one client, not one per endpoint.
+- **Design for the reader of the contract**: additive evolution by default (§ versioning in the depth doc); every field you expose is a permanent liability — expose what consumers need, not what the table has.
+- Stateless per request: no server session affinity — auth in the token, pagination position in the cursor, not in server memory. That's the constraint that makes horizontal scaling and zero-downtime deploys boring.
+
+
+#### Best practices — §4
+- **One convention per axis, documented: kebab-case paths, camelCase JSON, ISO-8601 UTC timestamps with offset, decimal-as-string for money.** → Prevents: float rounding on monetary/rate fields (`4.25` becoming `4.249999`) and the timezone bug where a "date" means different days to two consumers.
+- **Never expose enum values you can't keep forever, and require clients to treat enums as open sets.** → Prevents: adding `SUSPENDED` to `InstrumentStatus` throwing `IllegalArgumentException` in every client `switch` that had no default.
+- **Prefer PUT for full replaces you control end-to-end; use PATCH only with a defined patch semantic (JSON Merge Patch, RFC 7396) and document which.** → Prevents: the ambiguity of "field absent" meaning both "don't change" and "set to null" — a silent data-loss bug.
+- **Keep the API surface additive: new optional fields, never renamed or repurposed ones.** → Prevents: the semantic change under a stable shape — same field name, new meaning — which no schema-diff tool catches and only a changelog + review discipline stops.
+- **Run a spec linter and a breaking-change diff (e.g. Spectral + oasdiff) as a CI gate on the OpenAPI file.** → Prevents: an incompatible change failing in the consumer's runtime instead of your build — mechanical verification over review.
+- **Design the batch/bulk endpoint before someone loops your single-item endpoint 10,000 times.** → Prevents: a client-side for-loop becoming your traffic spike; give them a capped batch route with per-item results.
+
+## 5. Status codes — mapped to scenarios
+
+```
+2xx you succeeded │ 3xx go elsewhere │ 4xx you (client) erred — don't retry
+                  │                  │ 5xx I (server) erred — retry with backoff
+```
+
+| Scenario | Code | Notes |
+|---|---|---|
+| Read OK / update OK returning body | **200** | |
+| Created a resource | **201** + `Location` | body = the created representation |
+| Accepted for async processing | **202** + `Location: /operations/{id}` | LRO pattern; poll the operation |
+| Success, nothing to return (DELETE, some PUTs) | **204** | no body |
+| Conditional GET — unchanged | **304** | empty body; client uses its cached copy |
+| Malformed JSON, wrong types, missing required field | **400** | |
+| Semantically invalid (well-formed but rule-breaking) | **422** (or stay with 400 — pick one convention) | |
+| No/invalid credentials | **401** | "who are you?" |
+| Authenticated but not allowed | **403** | "you can't do that" |
+| Doesn't exist — or exists but caller may not know it exists | **404** | concealment: return 404 for both, or you built an existence oracle |
+| Business-state conflict (duplicate natural key, illegal transition, key-reuse with different body) | **409** | |
+| `If-Match` failed — caller's view is stale | **412** | client re-reads, re-applies |
+| Unsupported `Content-Type` sent | **415** | |
+| Body/batch too large | **413** | |
+| Rate limited | **429** + `Retry-After` | client must back off |
+| Server bug / unmapped exception | **500** | opaque body + trace id; alert on rate |
+| Upstream dependency returned garbage | **502** | |
+| Overloaded / down / shedding load | **503** + `Retry-After` | |
+| Upstream dependency timed out | **504** | |
+
+- The mapping *is* the retry protocol: 4xx = deterministic, fix the request, never retry; 429/5xx/timeouts = retryable with backoff. The costliest miscodes: 500-for-validation (retry storms of hopeless requests) and 200-with-error-body (invisible to every monitor and retry policy).
+- 🗣 "Status codes aren't decoration — they're machine-readable instructions to every cache, retrier, and monitor between us."
+
+
+#### Best practices — §5
+- **Pick 400-vs-422 once for the whole org and write it in the style guide.** → Prevents: clients branching on both, and reviewers relitigating it every PR.
+- **Return 404 (not 403) for objects the caller isn't allowed to know exist; reserve 403 for actions on objects they can see.** → Prevents: an existence oracle — probing `/instruments/{id}` to learn which instruments other desks hold.
+- **Never return 200 with an error payload, and never return 500 for a client's bad input.** → Prevents: the two failure modes that break every generic monitor and retrier in the path — invisible failures, and retry storms of hopeless requests exactly when you're already degraded.
+- **Always pair 429/503 with `Retry-After`.** → Prevents: well-behaved clients guessing backoff and synchronizing into waves against a recovering service.
+- **Always send `Location` with 201 and 202.** → Prevents: the client having to guess the new resource's URL or invent polling paths.
+- **Alert on the *rate* of 5xx and of unmapped-exception 500s, not on individual occurrences.** → Prevents: both alert fatigue and the opposite failure — a slow-burning 2% error rate nobody notices because no single request paged anyone.
+
+## 6. Error handling design
+
+```
+Exception (domain) ─▶ @RestControllerAdvice ─▶ ProblemDetail JSON + status
+unmapped ──────────▶ catch-all ─▶ opaque 500 + traceId + ERROR log + metric
+```
+
+- One global handler owns the exception→response mapping; controllers never hand-roll error JSON. The handler is *taxonomy enforcement*: every domain exception maps to exactly one status + stable machine code.
+- Body = RFC 9457 Problem Details: `type` (stable URI clients branch on), `title`, `status`, `detail`, `instance`, plus extensions: `errors[]` per-field array for validation (all violations at once — collect, don't fail-fast, or clients ping-pong one fix per round trip), and `traceId` echoed so a client screenshot is greppable in Splunk.
+- Never leak internals: stack traces, SQL, class names — sanitized by default; catch-all is opaque by design and its hit-rate is an alertable metric.
+- Client contract: branch on status class first, then `type`/`code` — never parse English messages (you reword them freely because of this rule).
+
+
+#### Best practices — §6
+- **Define the error taxonomy as a reviewed artifact — every domain exception maps to exactly one status + stable `type` URI.** → Prevents: the same business condition surfacing as 400 on one endpoint and 409 on another, so clients can't branch reliably.
+- **Return all validation violations in one response; never fail fast on the first bad field.** → Prevents: the fix-one-resubmit loop that doubles round trips and support tickets.
+- **Keep `errors[].field` in the *request's* JSON pointer shape, not your entity's field names.** → Prevents: leaking internal model names and coupling clients to your persistence layer's naming.
+- **Make the catch-all handler opaque by construction (no message, no stack, just status + traceId) rather than relying on reviewers to sanitize each new exception.** → Prevents: a raw SQL string or class path reaching a client — the default-deny version of leak prevention.
+- **Log at ERROR only for genuine server faults; log 4xx at INFO/DEBUG with the code.** → Prevents: an ERROR log stream that's 95% user typos, which trains everyone to ignore it.
+- **Never let error messages be the API contract — clients branch on `type`/`code`, so you can reword freely.** → Prevents: a copy-edit becoming a breaking change (it happens, and it's infuriating to debug).
+
+## 7. Caching (server design → client behavior)
+
+```
+Browser/UI cache ─ CDN/proxy ─ [service] ─ Caffeine/Redis ─ Aurora
+   Cache-Control     Vary        ETag        version-in-key
+```
+
+- Declare cacheability per resource: `Cache-Control: private, max-age=60` (per-user data) vs `public` (shared). The bound is a *contract statement*: "instrument reads may be ≤60s stale."
+- **ETag flow** (one header pair, two features):
+  → Read: server sends `ETag: "v17"` (derived from a version column — cheap, no body render needed). Client re-reads with `If-None-Match: "v17"` → `304` empty if unchanged.
+  → Write: client sends `If-Match: "v17"` → server applies only if still v17, else `412` → optimistic concurrency over HTTP; the human with the stale screen gets told to refresh — the merge decision lands on the person who can make it.
+- App-layer: version-in-key (`instrument:{id}:v{n}`) — a correction bumps the version, the old cache entry is simply never read again; invalidation becomes a pointer swap. TTL is the guarantee, eviction events are an optimization (they get lost).
+- Defeater: hot-key expiry without request coalescing = hundreds of concurrent rebuilds hitting the primary at once.
+
+
+#### Best practices — §7
+- **Set an explicit `Cache-Control` on every response — including `no-store` for the ones you don't want cached.** → Prevents: heuristic caching by intermediaries filling in a default you never chose, and per-user data landing in a shared proxy cache.
+- **Use `private` for anything user-scoped and add `Vary: Authorization` where a shared cache could see it.** → Prevents: the worst cache bug there is — serving one user's instruments to another.
+- **Derive ETags from a version column, not by hashing the rendered body, when you want to save compute and not just bandwidth.** → Prevents: claiming a caching win you didn't get; a body-hash ETag still executes the full query and render.
+- **Treat TTL as the correctness guarantee and event-driven eviction as an optimization; never set TTL to infinity because "we invalidate on write."** → Prevents: one dropped invalidation message pinning stale financial data forever.
+- **Coalesce concurrent loads per key (loading cache / singleflight) and jitter TTLs across keys.** → Prevents: a hot key expiring into hundreds of simultaneous rebuilds against the primary, and synchronized mass expiry.
+- **Treat the shared cache as optional: on Redis failure, degrade to source with load shedding, never fail the request.** → Prevents: a cache outage escalating into a full service outage — the cache was supposed to be the safety net, not a new SPOF.
+- **State the staleness bound in the API docs ("reads may be ≤60s stale").** → Prevents: a downstream building an exact-consistency assumption on top of your cached read, then blaming you when it breaks.
+
+## 8. Idempotency — and how the *client* does the key
+
+- Server side (recap): claim the key via `INSERT` (PK constraint arbitrates the race) **in the same transaction** as the business write; replay → stored response; same key + different body → 409/422; in-flight → 409 + Retry-After; TTL keys (~24h, Stripe convention).
+- **Client-side key design — the part people skip:**
+  ```
+  user clicks "Submit correction"
+    └─ generate UUID once per LOGICAL ATTEMPT ── persist it ── send
+         retry (timeout/5xx/network) ──▶ SAME key            │
+         user edits & resubmits ───────▶ NEW key             │
+         server 2xx/4xx received ──────▶ key retired         │
+  ```
+  → **Scope**: one key per *logical operation*, not per HTTP attempt. Generated when the user commits intent (button click / form submit), not inside the retry loop — a key minted per attempt is no idempotency at all.
+  → **Persist before first send**: browser → `sessionStorage`/app state keyed by form instance; backend caller → alongside the outbox row / job record. If the client crashes mid-flight and reloads, it must *find the same key* to safely resume — a key held only in a local variable dies with the tab, and the reload double-submits.
+  → **Retire on outcome**: any definitive response (2xx or 4xx) ends the attempt; a *new* user intent gets a *new* key. Reusing a key across genuinely different submissions gets you 409s (server compares request hash).
+  → **Double-click defense** comes free: both clicks race with the same key; server executes once, second gets the stored response. UI-disabling the button is UX polish, not the correctness mechanism.
+  → 🗣 "Key per intent, minted at intent time, persisted before send, constant across retries, retired on outcome."
+
+
+#### Best practices — §8
+- **Claim the idempotency key and perform the effect in one transaction, arbitrated by a PK/unique constraint.** → Prevents: the double-execution race where two concurrent retries both pass a check-then-act and both commit.
+- **Store the request hash with the key and reject a same-key-different-body request with 409/422.** → Prevents: a client reusing a key across genuinely different submissions and silently getting the wrong stored response back.
+- **Scope keys per caller/tenant, never globally.** → Prevents: a key collision replaying another tenant's response — an access-control bug wearing a caching costume.
+- **Client: mint the key at the moment of user intent and persist it before the first send.** → Prevents: the tab-crash double-submit — a key held only in a local variable dies with the page, and the reload creates a second correction.
+- **Client: never regenerate the key inside the retry loop; retire it only on a definitive 2xx/4xx.** → Prevents: idempotency that does nothing at all, which is the most common way this is implemented wrong.
+- **TTL the key table and index it for cleanup (24h is the common convention).** → Prevents: unbounded table growth and the slow degradation of the lookup that now sits in every write path.
+- **Make the effect itself deduplicable when it spans systems (outbox + consumer dedupe on business key).** → Prevents: the stored-response/effect divergence on crash, where the key says DONE but the SNS publish never happened — or happened twice.
+
+## 9. Retry (client policy)
+
+- Retry **only**: idempotent methods or keyed POSTs; **only on**: 429, 502/503/504, connect/read timeouts. Never on 4xx (deterministic), never on 500-that-is-really-validation (which is why server miscoding matters).
+- Exponential backoff **with full jitter** (decorrelates the herd — synchronized backoff re-kills a recovering server), cap attempts (~3) and total time budget, honor `Retry-After`.
+- **One layer owns retries** — pick the outermost caller holding the idempotency key; disable in SDK/mesh/gateway or 3×3×3 = 27 attempts per user click during an outage.
+- Timeout ≠ failure: the write may have committed — the entire reason unkeyed retry-on-timeout is a data-corruption bug, not a resilience feature.
+
+
+#### Best practices — §9
+- **Retry only idempotent methods or keyed POSTs, and only on 429/502/503/504/timeouts.** → Prevents: duplicate writes, and pointless retries of deterministic 4xx failures.
+- **Use exponential backoff with full jitter — never fixed intervals, never bare exponential.** → Prevents: retry waves re-killing a service the moment it recovers.
+- **Cap both attempts (~3) and a total time budget, and honour `Retry-After` over your own schedule.** → Prevents: a request queued behind 40s of client-side backoff that the user abandoned 35 seconds ago.
+- **Pick exactly one layer to own retries and disable them everywhere else (SDK, mesh, gateway, app).** → Prevents: multiplicative amplification — 3×3×3 = 27 attempts per user click during the exact window your service is weakest.
+- **Adopt a retry budget (cap retries at ~10–20% of live traffic) rather than only per-request caps.** → Prevents: the retry storm — offered load multiplying 3–4× precisely when capacity is lowest.
+- **Pair retries with a circuit breaker and per-dependency bulkheads.** → Prevents: 200 request threads parked on one sick dependency, spreading its outage sideways into healthy endpoints.
+- **Set timeouts that nest: your downstream read timeout must be comfortably inside your own SLO.** → Prevents: your caller timing out on you while you're still politely waiting on someone else.
+
+## 10. Pagination
+
+- Contract: `GET /instruments?first=50&after=<cursor>` → `{items, pageInfo:{hasNext, endCursor}}`. `first` required and server-clamped; cursor **opaque** (base64 of `(sortKey,id)`) so encoding can change without breaking clients.
+- Engine: keyset — `WHERE (issued_at,id) > (:k,:id) ORDER BY issued_at,id LIMIT 51` — fetch n+1, the 51st row's existence = `hasNext`. O(1) at any depth; needs the id tiebreaker in *both* clauses and a composite index matching the sort.
+- Offset (`?page=800&size=50`): Postgres reads and discards 40k rows — depth-linear latency — and shifts under concurrent inserts (dupes/skips). Acceptable only bounded (cap max page) when product truly needs page numbers.
+- Client behavior: treat `endCursor` as a bookmark — resume, don't recompute; never fabricate cursors; stop on `hasNext=false`.
+
+
+#### Best practices — §10
+- **Default to keyset pagination; use offset only bounded (cap max page) when product genuinely needs page numbers.** → Prevents: depth-linear latency where page 800 times out while page 1 is instant.
+- **Include the unique tiebreaker in both `ORDER BY` and the cursor predicate, and build the composite index to match exactly.** → Prevents: rows skipped or duplicated at page boundaries — silent data loss in an export, the kind nobody notices for months.
+- **Make cursors opaque (base64) and validate/sign them if they're user-visible.** → Prevents: clients parsing and hand-crafting cursors, which freezes your encoding forever and hands you a query-injection surface.
+- **Require `first` and clamp it server-side; return the clamped value in the response.** → Prevents: unbounded page requests, and the client that thinks it got 10,000 rows when it got 100.
+- **Fetch n+1 rows to compute `hasNext` instead of running a separate COUNT.** → Prevents: a `COUNT(*)` that costs more than the page itself.
+- **Make `totalCount` opt-in and allow it to be approximate.** → Prevents: an exact-count requirement quietly doubling the cost of every list call.
+- **For exports and reconciliation, paginate over an immutable key range (ingest id, snapshot id), not a mutable sort column.** → Prevents: rows migrating across your cursor mid-scan because someone updated `updated_at` while you were paging.
+
+## 11. Client end-to-end (tie it together)
+
+```
+UI submits a correction:
+1  generate key K, persist                       (§8)
+2  POST /instruments/abc123/corrections
+   Authorization, Content-Type, Idempotency-Key:K, If-Match:"v17", X-Correlation-Id
+3a 201 → render correction, retire K; next GET shows new ETag "v18"
+3b 412 → view stale → re-GET, user re-applies → new intent, NEW key
+3c 422 → render errors[] per field (all at once), fix, NEW key
+3d timeout/503 → backoff+jitter, resend SAME key (≤3)
+3e 429 → wait Retry-After, resend SAME key
+```
+
+Every earlier section appears in that one flow — it's the 60-second whiteboard answer to "how does a client correctly use your API."
+
+#### Best practices — §11
+- **Write the client flow (headers, outcomes, retry branches) into the API docs, not just the endpoint list.** → Prevents: every consumer team re-deriving idempotency and concurrency semantics, half of them wrongly.
+- **Disable the submit button on click *and* send the idempotency key.** → Prevents: relying on UI state for correctness — the button is UX, the key is the mechanism.
+- **Handle 412 in the UI as "someone else changed this," showing a diff or forcing a re-read — never auto-retry it.** → Prevents: blind auto-retry silently clobbering a colleague's correction.
+- **Surface the correlation id in the UI error toast.** → Prevents: unactionable bug reports; a user screenshot becomes a log query.
+- **Test the client against injected 429/503/timeout/412 responses, not just the happy path.** → Prevents: the discovery that your retry logic was never exercised until the first real outage.
+
+
+---
+
+## References
+
+1. RFC 9110 (HTTP semantics: methods, status codes, conditional requests) — https://www.rfc-editor.org/rfc/rfc9110
+2. RFC 9457 Problem Details — https://www.rfc-editor.org/rfc/rfc9457
+3. Stripe idempotent requests (client key conventions) — https://docs.stripe.com/api/idempotent_requests
+4. Fielding dissertation ch.5 (what REST actually constrains) — https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm
+5. AWS "Exponential Backoff and Jitter" — https://aws.amazon.com/blogs/architecture/exponential-backoff-and-jitter/
