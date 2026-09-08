@@ -58,6 +58,14 @@ Search in Rotated Sorted Array
 
 ```
 
+```python
+# same obj type or None
+def searchPrefix(self, word: str) -> Self | None:
+
+# forward reference, class def is not finished
+def searchPrefix(self, word: str) -> Optional["PrefixTree"]:
+```
+
 ```
 150
 min max
@@ -143,6 +151,53 @@ class LRUCacheTTL:
         heapq.heappush(self.expiry_heap, (expire_at, self.version, key))
 ```
 
-```
+```python
+text.capitalize()                          # Converts the first character to uppercase and the rest to lowercase
+text.casefold()                            # Converts string to aggressive lowercase, suitable for caseless matching
+text.center(width, fillchar=' ')           # Centers the string within a field of specified width, padded with fillchar
+text.count(sub, start=0, end=None)         # Counts non-overlapping occurrences of substring 'sub' in text[start:end]
+text.encode(encoding='utf-8', errors='strict')  # Returns an encoded version of the string as a bytes object
+text.endswith(suffix, start=0, end=None)   # Returns True if text[start:end] ends with suffix, otherwise False
+text.expandtabs(tabsize=8)                 # Expands all tab characters (\t) into spaces using the given tabsize
+text.find(sub, start=0, end=None)          # Returns the lowest index where sub is found in text[start:end], or -1
+text.format(*args, **kwargs)               # Formats the string using positional and keyword arguments
+text.format_map(mapping)                   # Formats string using a dictionary/mapping without copying keys
+text.index(sub, start=0, end=None)         # Like find(), but raises ValueError if the substring is not found
+text.isalnum()                             # Returns True if all characters are alphanumeric and length > 0
+text.isalpha()                             # Returns True if all characters are alphabetic and length > 0
+text.isascii()                             # Returns True if all characters in the string are ASCII (0-127)
+text.isdecimal()                           # Returns True if all characters are decimal characters (base 10)
+text.isdigit()                             # Returns True if all characters are digits (includes subscripts/superscripts)
+text.isidentifier()                        # Returns True if the string is a valid Python identifier
+text.islower()                             # Returns True if all cased characters are lowercase and there is at least one
+text.isnumeric()                           # Returns True if all characters are numeric (includes fractions, Roman numerals)
+text.isprintable()                         # Returns True if all characters are printable or empty
+text.isspace()                             # Returns True if all characters are whitespace characters
+text.istitle()                             # Returns True if the string is titlecased (words start with uppercase)
+text.isupper()                             # Returns True if all cased characters are uppercase and there is at least one
+text.join(iterable)                        # Concatenates an iterable of strings using the string as the delimiter
+text.ljust(width, fillchar=' ')            # Left-justifies the string in a field of given width, padded with fillchar
+text.lower()                               # Converts all cased characters in the string to lowercase
+text.lstrip(chars=None)                    # Strips leading characters (whitespace by default) from the left
+text.maketrans(x, y=None, z=None)          # Static method returning a translation table usable for text.translate()
+text.partition(sep)                        # Splits string at the first occurrence of sep; returns (before, sep, after)
+text.removeprefix(prefix)                  # Removes the specified prefix if present, otherwise returns original string
+text.removesuffix(suffix)                  # Removes the specified suffix if present, otherwise returns original string
+text.replace(old, new, count=-1)           # Replaces occurrences of 'old' with 'new', up to 'count' times
+text.rfind(sub, start=0, end=None)         # Returns the highest index where sub is found in text[start:end], or -1
+text.rindex(sub, start=0, end=None)        # Like rfind(), but raises ValueError if the substring is not found
+text.rjust(width, fillchar=' ')            # Right-justifies the string in a field of given width, padded with fillchar
+text.rpartition(sep)                       # Splits string at the last occurrence of sep; returns (before, sep, after)
+text.rsplit(sep=None, maxsplit=-1)         # Splits string from the right using sep, up to maxsplit times
+text.rstrip(chars=None)                    # Strips trailing characters (whitespace by default) from the right
+text.split(sep=None, maxsplit=-1)          # Splits string by separator into a list, up to maxsplit times
+text.splitlines(keepends=False)            # Splits string at line breaks; keeps line break characters if keepends is True
+text.startswith(prefix, start=0, end=None) # Returns True if text[start:end] starts with prefix, otherwise False
+text.strip(chars=None)                     # Strips leading and trailing characters (whitespace by default)
+text.swapcase()                            # Swaps uppercase characters to lowercase and vice versa
+text.title()                               # Converts the first character of each word to uppercase
+text.translate(table)                      # Returns a copy of the string mapped through a translation table
+text.upper()                               # Converts all cased characters in the string to uppercase
+text.zfill(width)                          # Pads the string on the left with ASCII '0' digits to fill given width
 
 ```

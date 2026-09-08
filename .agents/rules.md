@@ -34,10 +34,41 @@
   - no full runnable projects
 
 ## 3. Formatting rules
-- Bullets only
-  - sub-bullets, indents
-  - break paragraphs into bullets
-  - break long sentences into bullets
+- Apply this structure to **every Markdown draft and update**
+  - Check it before writing
+  - Review all changed prose before finishing
+  - Preserve code syntax, tables, headings, and explicitly required specialized layouts
+- Use strong layered bullets for parallel information
+  - One concept, statement, sentence, or keyword per line
+  - Put sibling ideas on separate bullets, even when each is only a keyword
+  - Nest explanations, constraints, examples, and remedies under their owning concept
+  - Split multi-sentence paragraphs and bullets into separate logical lines
+  - Do not hide parallel lists inside comma-separated or semicolon-separated prose
+- Use standalone arrow lines for a flow
+  - `→` means the next action, ordered step, or data movement
+  - `⇒` means a consequence, implication, or resulting failure
+  - `↔` means a genuinely bidirectional interaction
+  - Put each step, consequence, and remedy on a new line
+  - Never prefix an arrow line with a bullet marker such as `- →`
+  - Use two trailing spaces for Markdown hard breaks between adjacent arrow lines
+  - Keep independent failure cases in separate blocks
+- Example
+
+  **Defeaters to volunteer**
+
+  → Deduplication TTL is shorter than the client's maximum retry window.  
+  ⇒ A late retry can repeat the business write.  
+  → Retain the deduplication record for at least the supported retry horizon.
+
+  → The deduplication store is separate from the business database.  
+  ⇒ The check and business write are not atomic.  
+  ⇒ A crash between them can allow a duplicate.  
+  → Commit the deduplication record and business write in one transaction.
+
+  → The key is scoped per user instead of per operation.  
+  ⇒ A legitimate second purchase can be rejected.  
+  → Scope the key by caller and operation.
+
 - Diagram whenever possible
   - ASCII or Mermaid
   - flow, layers, architecture
@@ -98,6 +129,7 @@
 
 ## 7. Interview questions format
 - 4–8 per topic
+- When requested, use `L4` + `L5 extra` for every knowledge item and interview question; L5 extras extend the L4 baseline rather than repeating it.
 - Each question:
   ```
   **Q:** <question>
@@ -146,6 +178,8 @@
 - Trigger: user says **`in xx/{topic}/ explain {topic}`** (or "explain {topic}" while pointing at a folder)
 - Generate **two files** in that folder
   - `{topic}.md` — concept / interview file
+    - keep implementation code in the companion file
+    - retain conceptual diagrams and links to the relevant implementations
     - follows §6 doc structure, §4 order, §5 comparisons, §8 quality bar
     - core-less: broad coverage of every concept an interviewer can reach, interview-ready
     - **30–50 interview questions**, each with L4 + L5 answers (§7 format), plus L5-only set
@@ -153,6 +187,8 @@
   - `{topic}1.md` — implementation file
     - same section order / rank / priority as `{topic}.md`, so the two files line up
     - actual code: **Python** and **Java / Spring Boot** snippets per operation
+    - precede every implementation item with concise pseudocode or a semantic arrow flow
+    - use the same flow-before-code order for each variant and follow-up
     - covers the common ops for that tech (for messaging: produce, consume, pub/sub, consumer groups, streams/join/merge/aggregate, idempotency, cache, retry/DLQ, transactions, ops/admin)
     - every config knob listed with default, what it trades, and when to change it
     - snippets are short, focused, compilable in isolation; not a runnable project (§2)

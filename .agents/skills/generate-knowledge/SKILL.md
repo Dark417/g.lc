@@ -9,7 +9,7 @@ Produce interview-review reference documents for a backend engineer preparing fo
 
 ## Rules file
 
-Always read `.agents/rules.md` first and follow it: bullets-only formatting, hyperlinked index, mechanism-first §4 order per component, comparison tables (§5), doc structure (§6), L4/L5 question format (§7), quality bar (§8), and the topic pair rule (§10: `{topic}.md` + `{topic}1.md` when the user says `in xx/{topic}/ explain {topic}`). Where this skill and `.agents/rules.md` differ, `.agents/rules.md` wins.
+Always read `.agents/rules.md` first and follow it: layered bullets and standalone semantic arrows (§3), hyperlinked index, mechanism-first §4 order per component, comparison tables (§5), doc structure (§6), L4/L5 question format (§7), quality bar (§8), and the topic pair rule (§10: `{topic}.md` + `{topic}1.md` when the user says `in xx/{topic}/ explain {topic}`). Where this skill and `.agents/rules.md` differ, `.agents/rules.md` wins.
 
 ## Quality bar
 
@@ -102,8 +102,16 @@ Include depth, scale, ambiguity, and design-ownership questions not appropriate 
 ## Writing rules
 
 - Write tersely and technically. Remove filler and heading restatements.
+- Apply `.agents/rules.md` §3 to every draft and update, including a final review of changed prose.
+  - Give parallel concepts and keywords separate nested bullets.
+  - Put each flow step or consequence on its own rendered arrow line without a bullet marker.
+  - When requested, structure knowledge items and interview questions as `L4` plus additive `L5 extra` bullets.
 - Use Java 17 for code unless the topic requires another language.
-- Prefer runnable minimal code over pseudocode.
+- Keep implementation snippets minimal and runnable.
+- For concept/implementation pairs, place implementation code in the companion file.
+  - Precede each implementation item with explanatory pseudocode or a semantic arrow flow.
+  - Include this introduction before every variant and follow-up code pair.
+  - Retain the actual Python/Java snippets after the explanation.
 - Prefer a table over three paragraphs.
 - Bold a term only on first definition.
 

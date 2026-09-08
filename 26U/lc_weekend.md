@@ -11,9 +11,8 @@
 ## Solutions (Python)
 
 <a id="wc486-q1"></a>
-### Q1. [Minimum Prefix Removal to Make Array Strictly Increasing](https://leetcode.com/problems/minimum-prefix-removal-to-make-array-strictly-increasing/) [E]
-
-Description: Find minimum prefix length to remove so remaining array is strictly increasing.
+### Q1. [Minimum Prefix Removal to Make Array Strictly Increasing](https://leetcode.com/problems/minimum-prefix-removal-to-make-array-strictly-increasing/) [E]  
+Description: Find minimum prefix length to remove so remaining array is strictly increasing.  
 
 Idea: Scan from right; find first violation where `nums[i] >= nums[i+1]`.
 
@@ -31,9 +30,8 @@ class Solution:
 ```
 
 <a id="wc486-q2"></a>
-### Q2. [Rotate Non Negative Elements](https://leetcode.com/problems/rotate-non-negative-elements/) [M]
-
-Description: Left-rotate only non-negative elements by k positions in-place.
+### Q2. [Rotate Non Negative Elements](https://leetcode.com/problems/rotate-non-negative-elements/) [M]  
+Description: Left-rotate only non-negative elements by k positions in-place.  
 
 Idea: Extract non-negative indices/values, rotate, write back.
 
@@ -56,9 +54,8 @@ class Solution:
 ```
 
 <a id="wc486-q4"></a>
-### Q4. [Find Nth Smallest Integer With K One Bits](https://leetcode.com/problems/find-nth-smallest-integer-with-k-one-bits/) [H]
-
-Description: Return the n-th smallest non-negative integer with exactly k set bits.
+### Q4. [Find Nth Smallest Integer With K One Bits](https://leetcode.com/problems/find-nth-smallest-integer-with-k-one-bits/) [H]  
+Description: Return the n-th smallest non-negative integer with exactly k set bits.  
 
 Idea: Combinatorics — find MSB position via counting, then unrank remaining bits.
 

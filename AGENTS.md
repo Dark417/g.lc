@@ -1,4 +1,4 @@
-﻿# AGENTS
+# AGENTS
 
 ## Project Understanding
 
@@ -28,6 +28,17 @@ Goal: reach Google L4 interview-ready depth (with L5 visibility) using structure
 - Keep quality bar high for Google-style interviews.
 - Prefer depth + tradeoffs + failure handling over shallow summaries.
 - Use index-first, details-later structure in knowledge docs.
+- For **every Markdown draft and update**, apply `.agents/rules.md` §3 before writing and review the changed content against it before finishing.
+  - Use layered bullets for parallel concepts, statements, and keywords; give each its own line, including keyword-level siblings.
+  - Split multiple sentences into separate lines; nest supporting details beneath their parent concept.
+  - Use standalone arrow lines for flows: `→` for the next action or step, `⇒` for a consequence, and `↔` only for a bidirectional interaction.
+  - Never combine a bullet marker with a flow arrow; preserve separate rendered lines with Markdown hard breaks.
+  - Preserve tables, code blocks, headings, and explicitly required specialized layouts.
+- In knowledge notes, use knowledge sections plus interview questions, with an L4 baseline and additive L5 extras for each item when that format is requested.
+- For concept/implementation document pairs, keep implementation code in the implementation companion.
+  - Keep conceptual diagrams and interview explanations in the concept file.
+  - Precede every implementation item with pseudocode or a semantic arrow flow.
+  - Apply the same ordering to variants and follow-ups before their Python/Java code pair.
 - When generating or updating any knowledge file (system design, technology deep dive, interview notes), read and follow `.agents/rules.md` (format, mechanism-first method, comparison rule, doc structure, question format, quality bar).
 - When the user says `in xx/{topic}/ explain {topic}`, generate the two-file pair defined in `.agents/rules.md` §10: `{topic}.md` (concept + 30–50 L4/L5 questions) and `{topic}1.md` (Python + Java/Spring Boot implementation snippets, same section order).
 - When the user writes `++:`, treat the following text as durable instructions/rules to add to `AGENTS.md` and any relevant workflow file.
@@ -137,7 +148,13 @@ End each code block with `# Time: ..., Space: ...`.
 - First-hand report files (e.g. `26U/1o/1.coding/0.1p3a.md`): every index entry's name links to its local detail anchor; entries are 3 lines — linked `N. Name` (+ ★★/★★★ after the name when asked by 2/3+ reports; single-report entries unmarked, no ×N counters), then `[E/M]` + 要点, then the anchor link. No ⟂ marker. Preserve user strikethroughs (`~~...~~`) on index entries across any regeneration.
 - Solution/detail blocks in those files: `#### N. [Name](url) ...` heading, tags on the immediately following line (no blank line between, two trailing spaces for a hard break), then `Description:`.
 - In each block: the interview-primary solution comes first; then a labeled `Follow-up —` section with the second approach / extension / variant (prefer follow-ups actually asked in reports).
-- In a single topic Markdown file, index title links point to the matching local detail anchor, while solution/detail title links point to `leetcode.com`.
+- Unless the user specifies a narrower scope, apply coding-question Markdown formatting and link updates to **all coding-question documents in the repository**, including nested folders.
+  - Index question titles link to the matching detail anchor in the same file.
+  - Detail question titles link to the actual LeetCode problem page.
+  - Preserve existing anchors and add missing anchors when required for local navigation.
+  - Preserve solution code, question wording, ordering, and source evidence during link-only updates.
+  - Keep original sources for custom questions without an actual LeetCode equivalent.
+  - Practice logs, inventories, and study plans retain their record/reference role instead of receiving invented solution sections.
 - Keep solution order aligned with index.
 - Parse pasted tags by splitting on known keywords and removing suffix noise (`N+`).
 - `26U/Tiktok.md`: keep `## Category` on top and add matching headings for each indexed question.

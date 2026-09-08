@@ -1,13 +1,27 @@
 # AGENTS — 26U
 
-Directory-scoped rules for `26U/` (interview prep). Root `AGENTS.md` still applies (LeetCode formats, logs, push behavior).
+Directory-scoped rules for `26U/` (interview prep).  
+Root `AGENTS.md` still applies (LeetCode formats, logs, push behavior).
+
+## Formatting-only passes
+
+- When asked to change only line breaks, limit study-note edits to whitespace outside code.
+  - Preserve fenced and unfenced code exactly.
+  - Separate existing index titles, descriptions, and tags without inventing missing content.
+  - Preserve wording, links, anchors, question order, and practice-log counts.
+  - A request for root Markdown files covers direct children of `26U/` only.
 
 ## System design rules (`26U/1O/2.sd/` and any future SD folder)
 
 ### Sources of truth
 
-- The JD and recruiter docs live in `26U/1O/0.req/` (`oracle senior ic3.pdf` = JD, PKI team; `oracle interview.pdf` = recruiter process + scoring; `OCI Interview Prep Pack…pdf` = official prep + core values). Every SD file should tie its framing back to them where relevant (a `> JD tie-in:` line in the header quote).
+- The JD and recruiter docs live in `26U/1O/0.req/` (`oracle senior ic3.pdf` = JD, PKI team; `oracle interview.pdf` = recruiter process + scoring; `OCI Interview Prep Pack…pdf` = official prep + core values).  
+  Every SD file should tie its framing back to them where relevant (a `> JD tie-in:` line in the header quote).
 - `2.sd.md` is the question bank + coverage map; full designs live in their own files.
+- For Oracle question-ranking requests, use `1infra` (collected infrastructure), `1infra-pki` (certificate, key, and trust questions), `1infra+` (general platform supplements), and `2business` (collected business), in that order, each descending by role relevance and infrastructure depth.  
+  Keep supplemental questions bounded at roughly 10–15 across the two supplement groups.  
+  Keep the existing table style: `# | Prompt | Evidence | Type | Priority`, including P0/P1/P2 and source evidence.  
+  Distinguish report evidence from preparation suggestions and do not generate full answers unless asked.
 
 ### File naming
 
@@ -28,13 +42,16 @@ Directory-scoped rules for `26U/` (interview prep). Root `AGENTS.md` still appli
 
 ### Schema code — mandatory when data is designed
 
-- If the design has a DB/entity model, write actual `CREATE TABLE` DDL (or the KV/logical record layout) in §9 — keys, state columns, the indexes that serve the hot queries, and comments for state machines. No prose-only schemas.
+- If the design has a DB/entity model, write actual `CREATE TABLE` DDL (or the KV/logical record layout) in §9 — keys, state columns, the indexes that serve the hot queries, and comments for state machines.  
+  No prose-only schemas.
 - Redis/queue key layouts count as schema: show the exact key format and TTL.
 
 ### Drafts
 
-- Bank questions without a full `sd##` file get a **draft** in `2.sd.md` (§ Drafts): crux in one line, HLD one-liner, data/API hint, key code pointer (which `sd##` mechanism it reuses), one defeater. Promote a draft to a full file when its priority rises.
+- Bank questions without a full `sd##` file get a **draft** in `2.sd.md` (§ Drafts): crux in one line, HLD one-liner, data/API hint, key code pointer (which `sd##` mechanism it reuses), one defeater.  
+  Promote a draft to a full file when its priority rises.
 
 ## OCI architecture file
 
-- `26U/1O/4.oci-architecture.md` is the "sound native in the OCI interview" file: OCI concepts always paired with the AWS analogy (user's real experience is AWS at JPMC) so any pop-up question can be answered by mapping. Keep the honesty script ("I haven't run OCI, here's the AWS equivalent I ran") current.
+- `26U/1O/4.oci-architecture.md` is the "sound native in the OCI interview" file: OCI concepts always paired with the AWS analogy (user's real experience is AWS at JPMC) so any pop-up question can be answered by mapping.  
+  Keep the honesty script ("I haven't run OCI, here's the AWS equivalent I ran") current.

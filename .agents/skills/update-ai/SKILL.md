@@ -12,6 +12,9 @@ description: Persist durable instruction updates into AGENTS.md, agent files, or
 - Role- or directory-specific -> the closest applicable `AGENTS.md`
 - Reusable workflow -> `.agents/skills/<skill>/SKILL.md`
 4. Keep edits minimal and avoid duplication.
+   - For every Markdown draft and update, apply `.agents/rules.md` §3 before writing and review changed prose before finishing.
+   - Use layered bullets down to keyword-level siblings.
+   - Use separate rendered arrow lines for flow steps and consequences, without bullet markers.
 5. Treat `++:` in a user message as a durable instruction/rule request and persist it to `AGENTS.md` plus any relevant workflow file.
 6. For topic-file updates:
 - if the user says `update this file` or `update` after adding raw question details, inspect the current topic file detail section for newly added questions
@@ -19,10 +22,19 @@ description: Persist durable instruction updates into AGENTS.md, agent files, or
 - add matching entries to the top index section
 - keep index order aligned with solution order
 - for format-rule requests, persist the rule in the proper `AGENTS.md` section, mirror it here when workflow-related, then apply it to the current file
+- for a line-break-only pass, preserve code exactly and change only whitespace in study notes
+  - preserve existing wording, links, anchors, question order, and log counts
+  - separate existing title, description, and tag content without adding missing fields
+  - limit root-file requests to direct children of the named directory
 - group both topic-file index and solution/detail sections by `### Hard`, `### Medium`, `### Easy` in that order
 - append new questions to the matching difficulty group in both index and details; if the user put a question in the wrong difficulty group, move it to the correct group without asking
 - index entries must render as three separate lines by adding Markdown hard breaks after the title/link line and description line
-- in a single topic Markdown file, each index title must link to its matching local `#lc-XXXX` detail anchor; each solution/detail title must link to the problem on `leetcode.com`
+- unless the user specifies a narrower scope, apply coding-question Markdown formatting and link updates across all coding-question documents in the repository, including nested folders
+  - index question titles link to their matching local detail anchors
+  - detail question titles link to the actual LeetCode problem pages
+  - preserve anchors, code, question wording, ordering, and original source evidence
+  - retain original sources for custom questions without a LeetCode equivalent
+  - preserve the reference role of logs, inventories, and study plans without inventing solution sections
 - solution blocks must place the plain description line directly under the title with a Markdown hard break, then the tags line, with no bullet before the description
 - Python solution blocks must use built-in generic annotations such as `list[int]` and must not import or use `typing.List`
 - Python code must start immediately after the opening Python code fence with no intervening blank line
