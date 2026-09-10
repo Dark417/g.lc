@@ -18,23 +18,35 @@ Goal: reach Google L4 interview-ready depth (with L5 visibility) using structure
 - `1sd/01.core/` through `1sd/10.enterprise security/`: deduplicated question packets by domain
 - `1sd/1index.md`: authoritative system-design question map
 - `1sde/<domain>/`: technology topic pairs (`{topic}.md` concept/interview, `{topic}1.md` implementation), e.g. `1sde/2.messaging/1.kafka.md` + `1.kafka1.md`
+- `1o/`: Oracle OCI PKI loop prep (`0.1o.md` loop/role notes, `1.coding/`, `2.sd/` ranked system-design bank, `3.bq.md`, `4.1o-arch.md`)
 - `.agents/rules.md`: knowledge-file authoring rules (format, method, doc structure, question format, quality bar, topic pair rule)
+- `.claude/CLAUDE.md` + `.claude/skills/`: Claude Code entry point and skills; they defer to `AGENTS.md` and `.agents/`
 - `.agents/skills/`: official repository-scoped reusable workflows (`verb-object` naming)
 - `AGENTS.md` files: durable global or directory-scoped role and workflow instructions
 - `msg-log.md`: prepend one row per chat
 
 ## Global Rules
 
+- Both Codex and Claude Code agents read and obey **both** rule trees: `AGENTS.md` + `.agents/` (rules, skills) and `CLAUDE.md` + `.claude/` (skills).
+  - `AGENTS.md` and `.agents/rules.md` are the source of truth for content and format rules.
+  - `.claude/CLAUDE.md` only points at them; never let the two trees diverge.
+  - A skill under either `.agents/skills/` or `.claude/skills/` is available to both tools.
+  - Persist durable instructions in `AGENTS.md` (and the closest scoped `AGENTS.md`), not in `CLAUDE.md`.
 - Keep quality bar high for Google-style interviews.
 - Prefer depth + tradeoffs + failure handling over shallow summaries.
 - Use index-first, details-later structure in knowledge docs.
 - For **every Markdown draft and update**, apply `.agents/rules.md` §3 before writing and review the changed content against it before finishing.
   - Use layered bullets for parallel concepts, statements, and keywords; give each its own line, including keyword-level siblings.
   - Split multiple sentences into separate lines; nest supporting details beneath their parent concept.
+  - Write explanatory prose as nested bullets instead of long paragraphs.
   - Use standalone arrow lines for flows: `→` for the next action or step, `⇒` for a consequence, and `↔` only for a bidirectional interaction.
   - Never combine a bullet marker with a flow arrow; preserve separate rendered lines with Markdown hard breaks.
   - Preserve tables, code blocks, headings, and explicitly required specialized layouts.
 - In knowledge notes, use knowledge sections plus interview questions, with an L4 baseline and additive L5 extras for each item when that format is requested.
+- For pure-core-Java concurrency guides, use Java language and Java SE/JDK APIs without external libraries.
+  - Present a prioritized concept catalog before concept snippets and grouped application cases.
+  - Give each case its context, invariant, flow, core code, composed primitives, and failure boundaries.
+  - Label Java release requirements and preview APIs; distinguish JDBC interfaces from the database/driver needed to execute them.
 - For concept/implementation document pairs, keep implementation code in the implementation companion.
   - Keep conceptual diagrams and interview explanations in the concept file.
   - Precede every implementation item with pseudocode or a semantic arrow flow.
@@ -42,6 +54,20 @@ Goal: reach Google L4 interview-ready depth (with L5 visibility) using structure
 - When generating or updating any knowledge file (system design, technology deep dive, interview notes), read and follow `.agents/rules.md` (format, mechanism-first method, comparison rule, doc structure, question format, quality bar).
 - When the user says `in xx/{topic}/ explain {topic}`, generate the two-file pair defined in `.agents/rules.md` §10: `{topic}.md` (concept + 30–50 L4/L5 questions) and `{topic}1.md` (Python + Java/Spring Boot implementation snippets, same section order).
 - When the user writes `++:`, treat the following text as durable instructions/rules to add to `AGENTS.md` and any relevant workflow file.
+
+## Oracle Loop Status (updated 2026-09-09)
+
+- Round 1 (HackerRank coding) is passed.
+- Final round is scheduled next: 4 rounds in about 4 hours.
+  - 2 system design rounds.
+  - 1 bar-raiser round (key interviewer / "bartender").
+  - 1 coding round.
+- Preparation focus is **system design** in `1o/2.sd/`.
+  - Goal: pass the SD rounds and sound like a solid IC3 at minimum, with IC4-level signals where they cost nothing.
+  - The req targets IC3; IC4 is unlikely to be negotiable, but prepare to the higher bar to raise the pass probability.
+  - Label depth in the Oracle bank as `IC3 baseline` and `IC4 stretch` (prep labels, not Oracle's official rubric).
+  - Every SD answer must make sense end to end: mechanism, numbers that force decisions, failure behavior, and tradeoffs with flip conditions.
+- Question files under `1o/2.sd/` follow the scoped `1o/2.sd/AGENTS.md` (naming, structure, quality checklist).
 
 ## Topic Files
 

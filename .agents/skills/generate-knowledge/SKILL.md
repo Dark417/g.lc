@@ -107,6 +107,9 @@ Include depth, scale, ambiguity, and design-ownership questions not appropriate 
   - Put each flow step or consequence on its own rendered arrow line without a bullet marker.
   - When requested, structure knowledge items and interview questions as `L4` plus additive `L5 extra` bullets.
 - Use Java 17 for code unless the topic requires another language.
+- For an explicitly pure-core-Java guide, use only Java language and Java SE/JDK APIs, with release and preview labels.
+  - Order the guide as a prioritized concept catalog, concept snippets, then grouped cases with context, invariants, flow, code, composition, and failure boundaries.
+  - Keep the requested Java-only file scope instead of adding unrequested framework or Python companions.
 - Keep implementation snippets minimal and runnable.
 - For concept/implementation pairs, place implementation code in the companion file.
   - Precede each implementation item with explanatory pseudocode or a semantic arrow flow.

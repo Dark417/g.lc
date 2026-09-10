@@ -92,6 +92,15 @@ Include numbers with arithmetic/source, precise vocabulary, Amazon-vs-Google emp
 ## Defensibility rules
 
 - Write verbatim scripts for requirements and wrap.
+  - Keep each spoken sentence on its own bullet.
+- Write explanations as layered bullets.
+  - Split parallel concepts into sibling bullets.
+  - Indent supporting reasoning beneath the owning concept.
+  - Preserve tables and diagrams as specialized layouts.
+- For the Oracle bank under `1o/2.sd/`, follow its scoped `AGENTS.md` for filenames, section order, and the quality checklist.
+  - Use OCI IC3 as the role framing; label depth `IC3 baseline` and `IC4 stretch` without claiming an official company-level equivalence.
+  - Assume a 60-minute round (intro slice + 45-minute design + questions) unless the prompt states otherwise.
+  - An explicit request to upgrade a named batch authorizes those full answers in place.
 - Attach a number to every non-functional requirement.
 - Make every estimate change a decision or remove it.
 - Pair every named service with the mechanism bought and cost paid.

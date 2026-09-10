@@ -39,6 +39,7 @@
   - Review all changed prose before finishing
   - Preserve code syntax, tables, headings, and explicitly required specialized layouts
 - Use strong layered bullets for parallel information
+  - Write explanatory prose as nested bullets instead of long paragraphs
   - One concept, statement, sentence, or keyword per line
   - Put sibling ideas on separate bullets, even when each is only a keyword
   - Nest explanations, constraints, examples, and remedies under their owning concept

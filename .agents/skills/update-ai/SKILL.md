@@ -14,6 +14,7 @@ description: Persist durable instruction updates into AGENTS.md, agent files, or
 4. Keep edits minimal and avoid duplication.
    - For every Markdown draft and update, apply `.agents/rules.md` §3 before writing and review changed prose before finishing.
    - Use layered bullets down to keyword-level siblings.
+   - Write explanatory prose as nested bullets instead of long paragraphs.
    - Use separate rendered arrow lines for flow steps and consequences, without bullet markers.
 5. Treat `++:` in a user message as a durable instruction/rule request and persist it to `AGENTS.md` plus any relevant workflow file.
 6. For topic-file updates:

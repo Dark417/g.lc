@@ -11,11 +11,11 @@ Root `AGENTS.md` still applies (LeetCode formats, logs, push behavior).
   - Preserve wording, links, anchors, question order, and practice-log counts.
   - A request for root Markdown files covers direct children of `26U/` only.
 
-## System design rules (`26U/1O/2.sd/` and any future SD folder)
+## System design rules (`1o/2.sd/` and any future SD folder)
 
 ### Sources of truth
 
-- The JD and recruiter docs live in `26U/1O/0.req/` (`oracle senior ic3.pdf` = JD, PKI team; `oracle interview.pdf` = recruiter process + scoring; `OCI Interview Prep Pack…pdf` = official prep + core values).  
+- The JD and recruiter docs live in `1o/0.req/` (`oracle senior ic3.pdf` = JD, PKI team; `oracle interview.pdf` = recruiter process + scoring; `OCI Interview Prep Pack…pdf` = official prep + core values).  
   Every SD file should tie its framing back to them where relevant (a `> JD tie-in:` line in the header quote).
 - `2.sd.md` is the question bank + coverage map; full designs live in their own files.
 - For Oracle question-ranking requests, use `1infra` (collected infrastructure), `1infra-pki` (certificate, key, and trust questions), `1infra+` (general platform supplements), and `2business` (collected business), in that order, each descending by role relevance and infrastructure depth.  
@@ -53,5 +53,5 @@ Root `AGENTS.md` still applies (LeetCode formats, logs, push behavior).
 
 ## OCI architecture file
 
-- `26U/1O/4.oci-architecture.md` is the "sound native in the OCI interview" file: OCI concepts always paired with the AWS analogy (user's real experience is AWS at JPMC) so any pop-up question can be answered by mapping.  
+- `1o/4.1o-arch.md` is the "sound native in the OCI interview" file: OCI concepts always paired with the AWS analogy (user's real experience is AWS at JPMC) so any pop-up question can be answered by mapping.  
   Keep the honesty script ("I haven't run OCI, here's the AWS equivalent I ran") current.
