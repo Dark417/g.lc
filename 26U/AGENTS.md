@@ -15,7 +15,10 @@ Root `AGENTS.md` still applies (LeetCode formats, logs, push behavior).
 
 ### Sources of truth
 
-- The JD and recruiter docs live in `1o/0.req/` (`oracle senior ic3.pdf` = JD, PKI team; `oracle interview.pdf` = recruiter process + scoring; `OCI Interview Prep Pack…pdf` = official prep + core values).  
+- The JD and recruiter docs live in `1o/0.req/`; `1o/0.req/0.req.md` is the 3-in-1 Markdown consolidation and the file to read first.
+  - `Senior Platform Software Engineer - OCI - Oracle Careers.pdf` = JD for req 338592, PKI team.
+  - `oracle interview.pdf` = recruiter process, loop shape, and coding scoring.
+  - `OCI Interview Prep Pack - Technical_02052024.pdf` = official prep guidance and the ten core values.  
   Every SD file should tie its framing back to them where relevant (a `> JD tie-in:` line in the header quote).
 - `2.sd.md` is the question bank + coverage map; full designs live in their own files.
 - For Oracle question-ranking requests, use `1infra` (collected infrastructure), `1infra-pki` (certificate, key, and trust questions), `1infra+` (general platform supplements), and `2business` (collected business), in that order, each descending by role relevance and infrastructure depth.  

@@ -93,7 +93,26 @@
     - Wrap-up script: 4 verbatim sentences.
   - `## References`
     - Bank link, role framing, API/schema companion, primary sources with the mechanism each supports.
-- `s5` reference files keep their own structure; only their headers and links follow the naming rule.
+- `s5` reference files are mechanism packets, not 60-minute question answers.
+  - They carry no opening script, no phase table, and no level-signal table.
+  - They use this section order and these headings.
+    - `# s5.<nn> — <Title> — supporting reference`
+    - Header note block: bank link, what the file backs, depth-label line, JD tie-in.
+    - `## Index` with a hyperlink to every `##` section and an explicit `<a id="s5nn-<n>"></a>` anchor before each.
+    - `## 1. Crux and why it is hard` — naive approach, first break, minimum primitives, 🗣 one-liner.
+    - `## 2. Clarifying questions` — table `Question | Assumed answer | Why it changes the design`.
+    - `## 3. Requirements` — NFR table `Requirement | Target | Enforced by`; every row carries a number.
+    - `## 4. Capacity and consequence` — every estimate ends with the decision it forces.
+    - `## 5. Architecture and flow` — diagram first, then ownership bullets, then one trace on arrow lines.
+    - `## 6. API and data model` — endpoint or operation table, keyed state table, reference DDL where relational state exists.
+    - Mechanism deep-dive sections in the middle, each labelled `— IC3 baseline`.
+    - `## Failure, operations, and security` — table `Failure | Blast radius | Detection | Degraded behavior | Recovery`.
+    - `## Alternatives and IC4 stretch` — option table `Option | What it is | Strength | Weakness | Choose when`, then stretch items, weakest assumption, over-engineering warning.
+    - `## Interview pushback and validation` — 6–8 pushbacks, each with an `IC3 baseline` and an `IC4 stretch` answer; at least one reverses a premise.
+    - `## Recall card` — 4–5 quotable one-liners.
+    - `## References` — bank link, siblings, primary sources with the mechanism each supports.
+  - Use `IC3 baseline` and `IC4 stretch` labels; do not use the retired `L4` and `L5 extra` labels.
+  - A file whose subject has no relational state says so explicitly instead of inventing DDL.
 
 ## Answer depth and formatting
 
@@ -116,7 +135,7 @@
 
 ## Quality checklist
 
-- Run before finishing any `s1`–`s4` file; fix every "no".
+- Run before finishing any `s1`–`s4` file, and every applicable row before finishing an `s5` file; fix every "no".
   - Does every NFR row carry a number and an enforcing mechanism?
   - Does every estimate force a decision or get removed?
   - Is the diagram drawn before the prose that explains it?
