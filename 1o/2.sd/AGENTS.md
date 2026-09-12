@@ -93,6 +93,31 @@
     - Wrap-up script: 4 verbatim sentences.
   - `## References`
     - Bank link, role framing, API/schema companion, primary sources with the mechanism each supports.
+- Plain-language companion files: `{oldname}1.md`.
+  - Trigger: the user asks for a simpler or explained version of an `s1`–`s4` question file.
+  - Name: append `1` to the source basename, for example `s1.01.Distributed-rate-limiter1.md`.
+  - Purpose: the source file is the compressed interview answer; the companion is the version that teaches it.
+    - The source file stays unchanged. The companion never replaces it.
+    - A reader who does not already know the vocabulary should be able to follow the companion alone.
+  - Structure
+    - Same `##` section order and the same section names as the source, so the two files read side by side.
+    - Hyperlinked index with an explicit anchor per section.
+    - Inside each section, walk the source content in its original order.
+      - Quote the source line as a Markdown blockquote.
+      - Follow it with what the line says in plain words.
+      - Follow that with why it matters, or what breaks without it.
+      - Split any source line that packs several ideas into a numbered list, one idea per entry.
+      - Make every abstract claim concrete with a worked example carrying real numbers.
+    - End every section with `### Terms in this section`.
+      - Define every piece of jargon used in that section, including terms defined in earlier sections when they are load-bearing again.
+      - One term per row: `Term | Plain meaning | Why it appears here`.
+  - Language rules
+    - Short sentences. One idea per sentence.
+    - Expand every acronym on first use in each section.
+    - Prefer a concrete number over a qualifier: "100,000 hosts" rather than "many hosts".
+    - Never introduce a term in an explanation without defining it in that section's term table.
+  - Length is not a constraint. Completeness and clarity win over brevity.
+
 - `s5` reference files are mechanism packets, not 60-minute question answers.
   - They carry no opening script, no phase table, and no level-signal table.
   - They use this section order and these headings.
