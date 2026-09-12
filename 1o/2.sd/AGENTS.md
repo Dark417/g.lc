@@ -109,14 +109,24 @@
       - Split any source line that packs several ideas into a numbered list, one idea per entry.
       - Make every abstract claim concrete with a worked example carrying real numbers.
     - End every section with `### Terms in this section`.
-      - Define every piece of jargon used in that section, including terms defined in earlier sections when they are load-bearing again.
+      - Define the non-obvious jargon used in that section, including terms defined in earlier sections when they are load-bearing again.
       - One term per row: `Term | Plain meaning | Why it appears here`.
+    - Term selection (added 2026-09-12)
+      - Skip terms a 4-year backend engineer already uses daily: load balancer, cache, database, HTTP, TLS, REST, queue, thread, index, primary key, retry, timeout.
+      - Explain the terms that are specific, non-obvious, or easy to misuse: Bloom filter, fencing token, quorum, Raft, lease, HMAC, OCSP stapling, consistent hashing, backpressure, write-ahead log, idempotency key, hot partition, and the like.
+      - Explain any term that the source uses with a narrower meaning than its everyday meaning, for example `drain`, `epoch`, `watermark`.
+      - When in doubt, explain; the cost of one unneeded row is lower than the cost of one undefined term.
   - Language rules
     - Short sentences. One idea per sentence.
     - Expand every acronym on first use in each section.
     - Prefer a concrete number over a qualifier: "100,000 hosts" rather than "many hosts".
-    - Never introduce a term in an explanation without defining it in that section's term table.
+    - Never introduce a non-obvious term in an explanation without defining it in that section's term table.
   - Length is not a constraint. Completeness and clarity win over brevity.
+    - Density guide: cover every source line, but spend words in proportion to difficulty.
+      - A one-idea source line gets 2–5 lines of unpacking.
+      - A packed or mechanism-bearing line gets a numbered split plus a worked example.
+    - Authoring discipline: write one section at a time with the file-write tool into part files, then concatenate.
+      - Never pass file content through a shell heredoc or `echo`; long content trips the shell argument limit.
 
 - `s5` reference files are mechanism packets, not 60-minute question answers.
   - They carry no opening script, no phase table, and no level-signal table.
