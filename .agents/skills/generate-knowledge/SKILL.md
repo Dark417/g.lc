@@ -111,6 +111,11 @@ Include depth, scale, ambiguity, and design-ownership questions not appropriate 
   - Order the guide as a prioritized concept catalog, concept snippets, then grouped cases with context, invariants, flow, code, composition, and failure boundaries.
   - Keep the requested Java-only file scope instead of adding unrequested framework or Python companions.
 - Keep implementation snippets minimal and runnable.
+- For the single-file catalog in `1sde/1.core/design-patterns/`, follow its scoped content rule in root `AGENTS.md`.
+  - Preserve the classic GoF category and pattern order.
+  - Keep explanations and examples together in one guide.
+  - Use Java before Python for each pattern.
+  - Include analogies and meaningful variations with explicit production failure boundaries.
 - For concept/implementation pairs, place implementation code in the companion file.
   - Precede each implementation item with explanatory pseudocode or a semantic arrow flow.
   - Include this introduction before every variant and follow-up code pair.

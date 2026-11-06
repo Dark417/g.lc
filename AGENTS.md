@@ -54,6 +54,15 @@ Goal: reach Google L4 interview-ready depth (with L5 visibility) using structure
 - When generating or updating any knowledge file (system design, technology deep dive, interview notes), read and follow `.agents/rules.md` (format, mechanism-first method, comparison rule, doc structure, question format, quality bar).
 - When the user says `in xx/{topic}/ explain {topic}`, generate the two-file pair defined in `.agents/rules.md` §10: `{topic}.md` (concept + 30–50 L4/L5 questions) and `{topic}1.md` (Python + Java/Spring Boot implementation snippets, same section order).
 - When the user writes `++:`, treat the following text as durable instructions/rules to add to `AGENTS.md` and any relevant workflow file.
+- For `1sde/1.core/design-patterns/`, keep the requested catalog in one Markdown guide.
+  - Group the 23 GoF patterns by type in classic catalog order.
+  - Explain each pattern's:
+    - Problem and mechanism.
+    - Everyday analogy.
+    - Common uses.
+    - Pros and cons.
+  - Follow its explanation with Java, then Python, using classic examples and meaningful variations.
+  - Connect relevant variations to production concerns such as transactions, idempotency, and ACID boundaries.
 
 ## Oracle Loop Status (updated 2026-09-09)
 

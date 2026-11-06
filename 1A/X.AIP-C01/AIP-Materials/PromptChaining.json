@@ -1,0 +1,7 @@
+{
+  "prompts": [
+    "Name a random city. You must provide only one non-fictitious city. You must only provide the city's name, followed by a comma and the city's country of origin.",
+    "Write two to three sentences describing the city mentioned above",
+    "Write a few sentences about the local cuisine of the city"
+  ]
+}

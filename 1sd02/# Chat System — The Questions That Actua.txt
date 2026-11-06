@@ -1,0 +1,223 @@
+# Chat System — The Questions That Actually Decide the Loop
+
+> Interviewers don't fail you on the HLD box diagram. They fail you on these eight.
+> Each entry: the question → the escalation chain they'll walk you down → L4 answer → L5 answer → the defeater.
+
+## Index
+
+1. Where does the socket live, and how does a message find it?
+2. Ordering in a group chat
+3. Delivery semantics — "exactly once"
+4. Fan-out: write vs read, and the 100K-member group
+5. Multi-device sync and offline catch-up
+6. Unread counts and read receipts (the N² trap)
+7. Presence — the hidden fan-out bomb
+8. Storage: partition key and the hot conversation
+9. Three tradeoff tables
+10. Escalation ladder cheat sheet
+11. References
+
+---
+
+## 1. Where does the socket live, and how does a message find it?
+
+```
+A ── ws ──► GW-7 ──► chat-svc ──► session registry: "B is on GW-3"
+                          └──► pub/sub topic gw-3 ──► GW-3 ── ws ──► B
+```
+
+**Q:** "A and B are connected to different gateway boxes. Walk me through how A's message reaches B's socket."
+
+Escalation chain they will walk:
+→ how does chat-svc know B's gateway? → what if B reconnects mid-send? → what if the registry is stale? → what if GW-3 dies? → do you need a registry at all?
+
+- **L4:** Stateful WebSocket gateways, stateless business services.
+  → Session registry in Redis: `session:{user_id} → {gateway_id, conn_id, ts}`, TTL ~60 s, refreshed by heartbeat.
+  → chat-svc persists the message, looks up B's gateway, publishes to a per-gateway channel; that gateway pushes down the socket.
+  → B offline (no entry) → skip push, message sits in the store; deliver on reconnect via sync cursor.
+- **L5:** The registry is a **hint, not truth**. Never make correctness depend on it.
+  → Race: B reconnects to GW-9 while chat-svc is publishing to GW-3. GW-3 has no such socket → drops it.
+  → That is fine **only because** the message is already durably in the store and B's client pulls everything after its cursor on connect. Push is an optimization; pull is the guarantee.
+  → 🗣 "Persist first, then push. Push failure is invisible; persist failure is a bug."
+  → Alternative I'd reject: consistent-hash users to gateways so no registry is needed. Buys determinism, costs you the ability to rebalance without mass disconnects, and one gateway death takes out a fixed user slice instead of a random one.
+  → Scale note: don't broadcast to all gateways. At 10K gateways a fan-out-to-all pub/sub is 10K× amplification per message.
+- **Defeater:** Redis registry down → you lose real-time push entirely, but no messages are lost. Degraded mode = clients fall back to polling their cursor every 5 s. State this explicitly; it's the graceful-degradation answer they're fishing for.
+
+---
+
+## 2. Ordering in a group chat
+
+**Q:** "Three people send in a 4-person group at the same moment. What order does everyone see, and are all four screens identical?"
+
+Escalation: per-sender or global order? → what if clocks skew? → what about the sender's optimistic local echo? → what if a message arrives late, do you insert it in the middle?
+
+- **L4:** Order per **conversation**, not per sender.
+  → All writes for a conversation go through one partition; the store assigns a monotonic `seq` per conversation (Cassandra clustering key, or a Postgres sequence per conversation, or Kafka partitioned by `conversation_id`).
+  → Clients sort by `seq`. Everyone sees the identical order because one authority assigned it.
+  → Client-generated timestamps are display-only, never sort keys.
+- **L5:** The interesting part is that per-conversation total order is **achievable and cheap**, while global order across conversations is neither needed nor affordable.
+  → Mechanism: partition by `conversation_id` → single-writer per partition → sequence assignment is a local operation, no consensus.
+  → Cost: a hot conversation cannot be scaled horizontally. That is the price of the guarantee and I'd pay it — chat is naturally partitioned by conversation.
+  → Optimistic local echo: sender renders immediately with `client_msg_id` and no `seq`; on ack, the message is repositioned to its assigned `seq`. Yes, it can visibly jump. Slack, iMessage, and WhatsApp all do this; users tolerate a reorder within the sub-second window.
+  → Late arrival (client was offline): insert by `seq`, which puts it in the middle of history. That's correct. Showing it at the bottom would break the shared order.
+  → 🗣 "Ordering is a partitioning decision, not a timestamp decision."
+- **Defeater:** "monotonic per conversation" breaks if you ever multi-write a conversation across regions. Cross-region active-active chat needs either a conversation home region or CRDT/hybrid-logical clocks and an admission that order is only causal, not total.
+
+---
+
+## 3. Delivery semantics — "exactly once"
+
+**Q:** "Guarantee me exactly-once delivery."
+
+Escalation: what if the ack is lost? → what if the client retries with a new id? → does the recipient see a duplicate or does the sender? → what about push notifications?
+
+- **L4:** Exactly-once **delivery** over a network is not achievable. What's achievable is at-least-once transport + idempotent write + client dedup = **effectively-once display**.
+  → Sender attaches `client_msg_id` (UUID) generated once and reused across all retries.
+  → Server: `INSERT … ON CONFLICT (conversation_id, client_msg_id) DO NOTHING RETURNING seq` — a retry returns the original `seq`, no second message.
+  → Recipient dedups on `(conversation_id, seq)` in local storage.
+- **L5:** The failure the whole design turns on is: **server committed, ack lost**.
+  → Without a stable `client_msg_id` the retry creates a second message and the sender sees their own text twice — the single most common bug in chat systems.
+  → The id must be minted at compose time and survive app restart (persist to local DB before the first send), otherwise a crash-then-retry generates a fresh id and duplicates anyway.
+  → Dedup window: keep the unique constraint permanent per conversation, not TTL'd — a client can retry from a queued outbox hours later.
+  → Push notification is a **separate at-least-once channel** and can duplicate independently of the socket. Dedup at the client on `message_id` before rendering a notification.
+  → 🗣 "At-least-once on the wire, idempotent at the store, deduped at the client. Anyone who says exactly-once is describing one of those three layers and not saying which."
+- **Defeater:** idempotency only holds within the dedup scope. If you shard by `conversation_id` and a conversation ever migrates shards, the unique index has to migrate with it or the guarantee lapses during cutover.
+
+---
+
+## 4. Fan-out: write vs read, and the 100K-member group
+
+```
+fan-out on write: 1 msg → N inbox rows   (fast read, N× write)
+fan-out on read : 1 msg → 1 row          (cheap write, N-way merge on read)
+```
+
+**Q:** "A 1:1 chat and a 100,000-member announcement channel. Same design?"
+
+Escalation: how many inbox writes per message? → what's your write amplification at peak? → what does the unread badge cost? → do you fan out to offline users?
+
+- **L4:** Hybrid, split on member count.
+  → Small conversations (≤ ~1K members): fan-out on write into a per-user inbox/timeline. Read is a single partition scan — the common case is fast.
+  → Large channels: fan-out on read. Store the message once in the conversation log; each client pulls from `conversation_id` using its own cursor.
+  → Threshold is a config value, not a constant; pick it from the write-amplification budget.
+- **L5:** The deciding variable isn't member count, it's **write amplification × message rate**.
+  → 100K members × 10 msgs/min = 1M inbox writes/min for one channel. That's a single-channel workload larger than most systems' total. Non-starter.
+  → But fan-out on read moves the cost to the unread badge and the conversation-list query, which now needs a per-user cursor and a count-since-cursor — cheap if you store `last_read_seq` and compute `latest_seq - last_read_seq`, not if you count rows.
+  → Real design also splits by **activity**: don't fan out to users who haven't opened the app in N days; materialize their inbox lazily on next open. Cuts fan-out cost by the inactive fraction, which is usually most of the user base.
+  → 🗣 "Fan-out on write for conversations, fan-out on read for broadcasts. The line is where inbox writes stop being cheaper than a merge."
+- **Defeater:** hybrid means two read paths and two unread-count implementations. That's real complexity and a real source of inconsistency (badge says 3, list shows 4). Mitigate with one interface over two impls and a reconciliation job.
+
+---
+
+## 5. Multi-device sync and offline catch-up
+
+**Q:** "I have a phone and a laptop. I was offline for a week on the laptop. What happens when I open it?"
+
+Escalation: how does the client know what it missed? → what if it missed 50K messages? → what if it was offline past your retention? → who tracks per-device state?
+
+- **L4:** Cursor-based sync, per device.
+  → Client stores `last_seq` per conversation. On connect: `GET /conversations/sync?since=<per-conv cursors>` returns changes in pages.
+  → Server never tracks "delivered" per device; the device's cursor is the state. Simpler and survives device loss.
+  → Bound the response: return at most K messages per conversation plus a `gap: true` flag → client shows "load earlier" instead of downloading a week of history.
+- **L5:** Two things separate a real answer here.
+  → **Sync is a diff, not a replay.** A week offline shouldn't replay 50K message events; it should return the current conversation list with `latest_seq` + a small tail per conversation, and let the user pull history on demand. Replaying every event is the design that dies at scale.
+  → **Per-device read state vs per-user read state.** Read receipts are per-user (I read it on my phone → laptop badge clears). Delivery/sync is per-device. Conflating them makes badges wrong across devices.
+  → Ordering of the catch-up matters: deliver conversation-list metadata first so the UI paints, then hydrate tails lazily. Blocking the first paint on full sync is what makes an app feel broken after a long offline period.
+  → 🗣 "The client's cursor is the source of truth for what it has; the server should be stateless about devices."
+- **Defeater:** cursor sync assumes an immutable, append-only log. Edits, deletions, and reactions are mutations of existing `seq` — they need their own change-log stream (`updates_since`) or your client will never see that a message from last week was deleted.
+
+---
+
+## 6. Unread counts and read receipts (the N² trap)
+
+**Q:** "Show me the unread badge. Now add read receipts to a 500-person group."
+
+- **L4:** Unread = `latest_seq − last_read_seq`. Two integers, no counting, no counter contention.
+  → `last_read_seq` updated on read, per user per conversation. Idempotent, monotonic (`GREATEST(last_read_seq, :seq)`).
+- **L5:** The trap is read **receipts** in groups, not unread counts.
+  → 500 members reading a message = 500 receipt events × 500 recipients to notify = 250K events per message if you push every receipt to everyone.
+  → Mitigations, in the order I'd apply them: (1) don't send per-user receipts in groups above a threshold — show a count; (2) aggregate receipts in a time window (batch every 2–5 s per conversation); (3) compute the count on read from `last_read_seq` rows rather than pushing events at all.
+  → Counter anti-pattern: an `unread_count` column incremented on every fan-out. That's a hot row per user, contention under group traffic, and drift you can never reconcile. The `latest_seq − last_read_seq` form has no write on the message path at all.
+  → 🗣 "Unread is a subtraction, not a counter."
+- **Defeater:** subtraction breaks when a conversation has messages the user shouldn't count (their own, system events, deleted). Either exclude them from `seq` assignment or store `last_read_seq` plus a small correction — decide, don't hand-wave.
+
+---
+
+## 7. Presence — the hidden fan-out bomb
+
+**Q:** "Add online/offline status."
+
+- **L4:** Heartbeat every 30 s into Redis with a 60–90 s TTL. Key absent = offline. Subscribers query on conversation open.
+- **L5:** Presence is usually the largest-volume subsystem in a chat product and almost nobody budgets for it.
+  → Naive push: every state change notified to every contact. A user with 500 contacts, all flapping on subway wifi, generates more traffic than the messages do.
+  → Design rules: presence is (1) **pull on demand or subscribe per visible view only** — you only need presence for the ~20 rows on screen; (2) **debounced** — don't publish offline until the TTL actually lapses, avoids flap; (3) **best-effort and lossy** — it's the one subsystem allowed to be wrong, so keep it entirely out of the durable path.
+  → Typing indicators: same class. Ephemeral pub/sub only, never persisted, dropped under load first.
+  → 🗣 "Presence is the first thing I shed under load and the last thing I make durable."
+- **Defeater:** TTL-based presence shows a user online for up to 90 s after they lose connection. If the product needs faster, you need socket-close-driven eviction — which is unreliable on mobile, so you end up with both.
+
+---
+
+## 8. Storage: partition key and the hot conversation
+
+**Q:** "Pick the store and the partition key. Now the company all-hands channel has 2M messages. What happens?"
+
+- **L4:** Wide-column store (Cassandra/DynamoDB) for the message log.
+  → Partition key `conversation_id`, clustering/sort key `seq DESC`. Reads are "last N in a conversation" — a single-partition range scan, the exact access pattern this store is built for.
+  → Metadata (users, conversation membership) in Postgres. Blobs in S3, message row holds a pointer.
+- **L5:** `conversation_id` alone gives an **unbounded partition** — the classic Cassandra failure.
+  → Fix: bucket the key → `(conversation_id, time_bucket)` where bucket = month or a fixed message-count block. Reads walk buckets backwards; almost always the first bucket answers.
+  → Hot-partition on writes: one very busy channel concentrates all writes on one node. Accept it if the rate fits a single node's budget; if not, the honest answer is that you cannot both preserve total order and shard the writes — pick one. For chat, keep the order.
+  → Retention/tiering: hot bucket in the online store, older buckets to object storage with an index. Chat reads are overwhelmingly recent.
+  → Why not Postgres: it works to a surprising scale with monthly partitions, and I'd start there for a product with < ~10K conversations. The move to Cassandra is triggered by write volume and multi-region, not by "chat = NoSQL."
+  → 🗣 "Partition by conversation, bucket by time, or you've built a partition that grows forever."
+- **Defeater:** bucketing breaks "search my whole history" and "jump to a message from 2019" — those need a separate search index (OpenSearch) keyed differently, which is a second consistency problem.
+
+---
+
+## 9. Three tradeoff tables
+
+### 9.1 Transport
+
+| Option                 | Buys you                                           | Costs you                                                            | Choose when                               |
+| ---------------------- | -------------------------------------------------- | -------------------------------------------------------------------- | ----------------------------------------- |
+| WebSocket              | True bidirectional, lowest latency, one connection | Stateful gateways, connection storms on deploy, LB/proxy config pain | Default for chat                          |
+| SSE + POST             | Simpler, HTTP-native, works through more proxies   | One-way; separate upstream channel; header overhead per send         | Read-heavy feeds, not chat                |
+| Long polling           | Works everywhere, no special infra                 | Latency floor, request amplification, thread/conn cost               | Fallback tier only                        |
+| Push notification only | No persistent connection, battery-friendly         | Seconds of latency, vendor-dependent, unreliable                     | Background/offline path, never foreground |
+
+### 9.2 Fan-out
+
+| Option              | Buys you                                   | Costs you                                            | Choose when                        |
+| ------------------- | ------------------------------------------ | ---------------------------------------------------- | ---------------------------------- |
+| Fan-out on write    | O(1) reads, trivial unread, cheap timeline | N× write amplification; inactive users cost the same | Conversations ≤ ~1K members        |
+| Fan-out on read     | O(1) writes, no amplification              | Merge cost on read, harder unread/badges             | Broadcast channels, huge groups    |
+| Hybrid on threshold | Best of both for the actual distribution   | Two code paths, two badge impls, inconsistency risk  | Real products — this is what ships |
+
+### 9.3 Message store
+
+| Option                             | Buys you                                                               | Costs you                                                 | Choose when                              |
+| ---------------------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------- | ---------------------------------------- |
+| Postgres, partitioned by month     | Transactions, joins, one unique index does dedup, easy ops             | Single-primary write ceiling; manual partition mgmt       | < ~10K conversations, single region, MVP |
+| Cassandra / DynamoDB               | Horizontal writes, multi-region, perfect fit for range-by-conversation | No joins, unbounded-partition footgun, weaker dedup story | High write volume, multi-region          |
+| Kafka as the log + a serving store | Natural ordering per partition, replay, easy fan-out to consumers      | Not a queryable store; you still need the serving DB      | You already need an event backbone       |
+
+---
+
+## 10. Escalation ladder cheat sheet
+
+- Every one of these questions ends at the same three places. Pre-empt them:
+  → **"What if the ack is lost?"** → stable client id + idempotent write.
+  → **"What if that component is down?"** → name the degraded mode and what is still correct.
+  → **"What at 10× / 100×?"** → name which shared resource saturates first, not "add more servers".
+- Volunteer the consistency boundary before they ask: message persistence is strongly consistent; presence, typing, receipts, and unread badges are eventual and lossy by design.
+- 🗣 One-liner for the whole system: "Persist first, push second, dedup at the client. Order per conversation, fan out by group size, and keep presence out of the durable path."
+
+---
+
+## 11. References
+
+- WhatsApp / Erlang connection-handling talks — "The WhatsApp Architecture Facebook Bought For $19B" (highscalability.com) — connection density and stateful gateway reality
+- Discord Engineering — "How Discord Stores Trillions of Messages" (discord.com/blog) — Cassandra→ScyllaDB, bucketed partition key, the hot-partition failure described first-hand
+- Slack Engineering — "Real-time Messaging" (slack.engineering) — gateway/session registry and reconnect-and-catch-up model
+- Cassandra docs — partition sizing guidance and clustering keys (cassandra.apache.org/doc/latest/)
+- Signal protocol docs (signal.org/docs/) — only if the loop drifts to E2EE; then multi-device sync becomes a key-distribution problem, not a data problem
