@@ -3,7 +3,7 @@
 - Titan Text Embeddings V2 (amazon.titan-embed-text-v2:0): one text per call, dimensions 256/512/1024,
   normalize flag, embeddingTypes float/binary. Input limit: 8,192 tokens (Bedrock model parameters page).
 - Cohere Embed v3 on Bedrock: up to 96 texts per call, asymmetric input_type (document vs query).
-- IAM: bedrock:InvokeModel on the embedding model ARN is granted in terraform/01.01 (not here).
+- IAM: bedrock:InvokeModel on the embedding model ARNs belongs in terraform/01.01.bedrock-converse.tf (not here).
 - Clients come from app.shared.aws (adaptive retries); nothing runs at import time.
 """
 

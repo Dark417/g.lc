@@ -1,4 +1,4 @@
-"""Slice settings, env prefix A_EMBEDDINGS_. No Terraform of its own (InvokeModel grant lives in 01.01)."""
+"""Slice settings, env prefix A_EMBEDDINGS_. No Terraform of its own (InvokeModel grant belongs in terraform/01.01.bedrock-converse.tf)."""
 
 from functools import lru_cache
 
