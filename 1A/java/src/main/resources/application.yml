@@ -1,0 +1,28 @@
+# 1A application config.
+# - Every slice is off by default: the base app starts with no cloud access.
+# - Resource names match Terraform outputs in 1A/terraform (prefix "a").
+spring:
+  application:
+    name: a
+  main:
+    banner-mode: off
+
+server:
+  port: 8081
+
+a:
+  aws:
+    region: us-east-1
+  models:
+    text: us.anthropic.claude-sonnet-4-5-20250929-v1:0
+    fast: us.anthropic.claude-haiku-4-5-20251001-v1:0
+
+  # 01.01 Bedrock Converse API (terraform/01.01.bedrock-converse.tf)
+  converse:
+    enabled: false
+
+  # 04.01 Bedrock Guardrails (terraform/04.01.guardrails.tf)
+  guardrails:
+    enabled: false
+    guardrail-id: GUARDRAIL_ID   # terraform output guardrail_id
+    guardrail-version: "1"       # terraform output guardrail_version; DRAFT for testing only

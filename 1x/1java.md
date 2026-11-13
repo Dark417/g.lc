@@ -18,16 +18,19 @@
 java/src/main/java/com/lc/x/
   XApplication.java
   shared/                 AwsConfig, Retry
-  x03_01_aurora/{api,service,domain,infra}
-  x03_02_dynamodb/...
+  x02_01_principles/{solid,general,spring,api}
+  x03_01_aurora/{api,service,domain,infra}   + resources/x03_01_aurora/schema.sql
+  x03_02_dynamodb/{api,service,domain,infra}
+  x03_03_s3/{api,domain,infra}
 ```
 
 ## 3. Slices
 | Number | Package | Status |
 |---|---|---|
-| 03.01 | `x03_01_aurora` | ⬜ X-010 |
-| 03.02 | `x03_02_dynamodb` | ⬜ X-011 |
-| 03.03 | `x03_03_s3` | ⬜ X-012 |
+| 02.01 | `x02_01_principles` | ✅ X-020 |
+| 03.01 | `x03_01_aurora` | ✅ X-010 |
+| 03.02 | `x03_02_dynamodb` | ✅ X-011 |
+| 03.03 | `x03_03_s3` | ✅ X-012 |
 | 04.01 | `x04_01_athena` | ⬜ X-013 |
 | 04.02 | `x04_02_redshift` | ⬜ X-014 |
 | 05.01 | `x05_01_kinesis` | ⬜ X-015 |

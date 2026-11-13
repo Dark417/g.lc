@@ -1,0 +1,84 @@
+# 1x application config.
+# - Every slice is off by default: the base app starts with no cloud access.
+# - Resource names match Terraform outputs in 1x/terraform (prefix "x").
+# - Override with env vars, e.g. X_AURORA_ENABLED=true, X_AWS_REGION=us-west-2.
+spring:
+  application:
+    name: x
+  main:
+    banner-mode: off
+
+server:
+  port: 8080
+
+x:
+  aws:
+    region: us-east-1
+
+  # 02.01 core principles (no cloud)
+  principles:
+    enabled: false
+    notifier: log        # log | sms: which Notifier bean is wired (conditional bean demo)
+    max-attempts: 3      # validated @ConfigurationProperties: must be >= 1
+    timeout: 2s
+    tax-rate: 0.08
+
+  # 03.01 Aurora PostgreSQL (terraform/03.01.aurora-postgres.tf)
+  aurora:
+    enabled: false
+    writer-endpoint: x-aurora.cluster-EXAMPLE.us-east-1.rds.amazonaws.com
+    reader-endpoint: x-aurora.cluster-ro-EXAMPLE.us-east-1.rds.amazonaws.com
+    port: 5432
+    database: xdb
+    username: x_app
+    iam-auth: true
+    password: ""              # local Postgres only (env X_AURORA_PASSWORD); IAM token is used when iam-auth=true
+    ssl-mode: verify-full
+    ssl-root-cert: /etc/ssl/certs/rds-global-bundle.pem
+    statement-timeout-ms: 15000
+    application-name: x-aurora
+    pool:
+      max-size: 10
+      connection-timeout-ms: 3000
+      max-lifetime-ms: 840000   # 14 min: < 15 min IAM token life; recycles pools after failover
+      idle-timeout-ms: 300000
+
+  # 03.02 DynamoDB (terraform/03.02.dynamodb.tf)
+  dynamodb:
+    enabled: false
+    orders-table: x-orders
+    idempotency-table: x-idempotency
+    gsi1-name: GSI1
+    endpoint-override: ""        # e.g. http://localhost:8000 for DynamoDB Local
+    idempotency-retention: PT24H
+
+  # 03.03 S3 (terraform/03.03.s3.tf)
+  s3:
+    enabled: false
+    lake-bucket: x-lake-ACCOUNT_ID
+    athena-results-bucket: x-athena-results-ACCOUNT_ID
+    kms-key-alias: alias/x-data
+
+  # 04.01 Athena (terraform/04.01.athena.tf)
+  athena:
+    enabled: false
+    workgroup: x-wg
+    database: x_lake
+
+  # 04.02 Redshift (terraform/04.02.redshift.tf)
+  redshift:
+    enabled: false
+    workgroup: x-dw
+    database: dev
+
+  # 05.01 Kinesis + Firehose (terraform/05.01.kinesis.tf)
+  kinesis:
+    enabled: false
+    stream: x-clicks
+    firehose: x-events
+
+  # 05.02 Kafka on MSK (terraform/05.02.kafka-msk.tf)
+  kafka:
+    enabled: false
+    bootstrap-servers: localhost:9092
+    iam-auth: false

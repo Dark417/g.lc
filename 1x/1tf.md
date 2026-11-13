@@ -20,7 +20,7 @@
 | `00.03.iam.tf` | app role `x-app` | ✅ |
 | `03.01.aurora-postgres.tf` | Aurora PG cluster, writer + reader | ✅ |
 | `03.02.dynamodb.tf` | `x-orders`, `x-idempotency` | ✅ |
-| `03.03.s3.tf` | lake + Athena results buckets | ✅ |
+| `03.03.s3.tf` | lake + Athena results buckets (app policy incl. version reads, 2026-11-13) | ✅ |
 | `04.01.athena.tf` | Glue db/table, workgroup `x-wg` | ✅ |
 | `04.02.redshift.tf` | Serverless namespace + workgroup `x-dw` | ✅ |
 | `05.01.kinesis.tf` | stream `x-clicks`, 2 Firehose streams | ✅ |
