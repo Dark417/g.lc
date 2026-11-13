@@ -19,6 +19,7 @@
 - [10. Python rules](#10-python-rules)
 - [11. Checks before commit or PR](#11-checks-before-commit-or-pr)
 - [12. Adding a new component](#12-adding-a-new-component)
+- [13. Delegation](#13-delegation)
 
 ---
 
@@ -33,7 +34,17 @@
      - Python (FastAPI) in `python/`
      - Cloud resources (Terraform) in `terraform/`
 - A concept with code carries `[C]` at the start of its manifest line
-  - `[C]` = coded; every `[C]` item has Java + Python, and Terraform when it is a cloud component
+  - `[C]` = coded
+- Which code a concept gets (language rule)
+  - General concept (SOLID, DRY, retries, any database) → Java + Python
+  - Java-only concept (Spring IoC / DI / AOP, JVM, Java language features) → Java only
+  - Python-only concept (asyncio, FastAPI DI, GIL) → Python only
+  - Cloud service (Aurora, DynamoDB, S3, Kinesis, MSK, Bedrock, ...) → Terraform is required
+    - Add `terraform/GG.CC.<name>.tf` in the same change when it does not exist yet
+    - The code never creates cloud resources itself; Terraform declares them
+- One doc may hold several sibling concepts
+  - Example: `02.01.core-principles.md` = SOLID + general principles + Spring principles
+  - Mark each section with its language scope (`Java + Python` or `Java only`)
 - Sync model
   - The repo is on GitHub
   - Codex (cloud / phone) works through PRs; the user merges, then pulls on the PC
@@ -43,12 +54,12 @@
 ```
 1x/
   AGENTS.md        rules (this file)
-  x.md             manifest = master index of all knowledge (mirror: Project 1D/X/XMap.md)
+  x.md             master manifest = index of all knowledge (mirror: Project 1D/X/XMap.md)
   task.md          to-do queue that Codex can pick from
-  1java.md         Java project guide + slice index
-  1python.md       Python project guide + slice index
-  1tf.md           Terraform guide + file index
-  docs/            knowledge docs, NN.NN.<name>.md
+  1java.md         Java manifest: build guide + slice index
+  1python.md       Python manifest: setup guide + slice index
+  1tf.md           Terraform manifest: checks + file index
+  docs/            knowledge concept docs, GG.CC.<name>.md
   java/            one Maven project (Spring Boot 3, Java 17)
   python/          one FastAPI project (Python 3.11+)
   terraform/       one Terraform root, one component per file
@@ -56,6 +67,12 @@
 - One project per language
   - Every slice lives inside it, flat
   - No per-concept sub-projects, no Maven modules
+- Manifests: four files index everything, and every change updates them
+  - `x.md` = master manifest (all concepts, status, files)
+  - `1java.md`, `1python.md`, `1tf.md` = per-language manifests (one row per slice / `.tf` file)
+  - A slice is not done until each manifest it touches lists it
+- `docs/` = knowledge concept files only
+  - Pure concepts + interview questions; code lives in `java/`, `python/`, `terraform/`
 
 ## 3. Numbering
 - Plain idea: a two-level number orders every concept, the same in every folder
@@ -165,6 +182,9 @@ infra    (outbound adapter) the SDK / driver code = the showcase
 
   - Required per slice: `domain` + `infra`
   - `service` + `api`: only where they teach something (transactions, idempotency, pagination contracts)
+  - Concept slices with no outbound system (principles, patterns, language core)
+    - Organize by concept instead: one sub-package / module per concept group (`solid`, `general`, `spring`)
+    - Each concept shows `Violation` then `Fix` side by side, plus a runnable `demo` entry point
 - Showcase style
   - One public method per concept or scenario
   - Every method starts with a 1–3 line comment: what it shows, when to use it, the catch
@@ -211,3 +231,12 @@ infra    (outbound adapter) the SDK / driver code = the showcase
 → Terraform file if it is a cloud component (`terraform/AGENTS.md`)  
 → Run §11 checks  
 → Update `x.md` (✅), the three guides, `0X-log` row, Project XMap
+
+## 13. Delegation
+- Split independent slices across subagents when the work is large
+- Model by difficulty
+  - Complicated (knowledge doc + multi-scenario code, transactions, concurrency) → Opus, high reasoning
+  - Simpler (single-service CRUD showcase, manifest edits, formatting) → Sonnet, medium reasoning
+- Subagents never edit shared files (`x.md`, `task.md`, the three language manifests, `application.yml`, `app/main.py`)
+  - The coordinating agent owns those and merges once all slices land
+
