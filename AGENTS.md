@@ -17,6 +17,7 @@ Goal: reach Google L4 interview-ready depth (with L5 visibility) using structure
 - `1sd/1AX/`: canonical Alex Xu Volume 1 and Volume 2 chapter packets
 - `1sd/01.core/` through `1sd/10.enterprise security/`: deduplicated question packets by domain
 - `1sd/1index.md`: authoritative system-design question map
+- `1A/`: AI and agentic-AI knowledge docs (`A` = AI / agentic AI, `klg` = knowledge/concepts); default home for any A-klg request, e.g. `1A/1.aa-msg.md` (agent component messaging)
 - `1sde/<domain>/`: technology topic pairs (`{topic}.md` concept/interview, `{topic}1.md` implementation), e.g. `1sde/2.messaging/1.kafka.md` + `1.kafka1.md`
 - `1o/`: Oracle OCI PKI loop prep (`0.1o.md` loop/role notes, `1.coding/`, `2.sd/` ranked system-design bank, `3.bq.md`, `4.1o-arch.md`)
 - `.agents/rules.md`: knowledge-file authoring rules (format, method, doc structure, question format, quality bar, topic pair rule)

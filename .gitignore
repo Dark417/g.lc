@@ -1,3 +1,28 @@
 .idea
 .vscode
 .git
+
+# build / env artifacts
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+dist/
+target/
+.terraform/
+*.tfstate*
+.env
+.env.*
+
+# nested repos (own remotes; not submodules)
+1sde/0databricks/1sde-edgar-0*/
+1sde/2angular/
+
+# bundled runtimes / binaries
+1sde/0databricks/2.spark/jdk/
+*.jar
+*.jmod
+*.dll
+*.exe
+

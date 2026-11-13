@@ -2,6 +2,9 @@
 
 | time | user-input | response |
 | --- | --- | --- |
+| 261113-00:50 | Set up 1x (knowledge + code) with rules, manifest, task queue; push 1lc | Created 1x/AGENTS.md, terraform/AGENTS.md, x.md (mirror Project 1D/X/XMap.md), task.md (X-001..X-016 + backlog), 1java/1python/1tf guides, 11 validated Terraform files; added build/nested-repo ignores to .gitignore; pushed all pending work to lc/main |
+| 261111-15:37 | Connect D:\1lc to the session | Read AGENTS.md and .agents/rules.md; noted 1sd2 now uses hiNN.name naming (hi01–hi05) and the ytb-doc-hw skill for Hello Interview videos |
+| 261109-00:26 | Create 1A/1.aa-msg.md: agentic AI component communication, every node pair, protocols, contracts, exact header/payload fields | Wrote 1A/1.aa-msg.md: 20 components in 6 zones, 19 edges plus forbidden pairs, protocol and framing comparisons, six envelope field classes, data-load sizing, field-level wire detail for 16 edges (UI/AG-UI, ADK, Anthropic/OpenAI/Gemini/Bedrock, MCP 2025-06-18 incl. sampling, elicitation and OAuth, subagents, A2A 0.3, stores, retrieval, sandbox, guardrail, HITL, queue, OTel GenAI), failure tables, 6 L4/L5 + 3 L5-only questions; recorded 1A/ purpose in AGENTS.md |
 | 261008-17:09 | Create one classic design-pattern guide with analogies, Java then Python, variations, and production concerns | Added 1sde/1.core/design-patterns/design-patterns.md covering all 23 GoF patterns in classic order; verified all 48 examples plus concurrent idempotent transfers on H2 and SQLite; recorded the guide format in AGENTS.md and generate-knowledge |
 | 261004-16:47 | Pull latest 1a-applied-ai | Fast-forwarded main by 15 commits to 493b977; local main matches origin/main and the working tree is clean |
 | 261004-00:58 | Push all three workspace repos | Commit pending message-log changes in 1lc; 1a-all-you-can-think already synchronized; updated applied-AI from its remote branch and pushed the new Bedrock example as f76d864 to main |
