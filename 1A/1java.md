@@ -26,5 +26,5 @@ java/src/main/java/com/lc/a/
 ## 3. Slices
 | Number | Package | Status |
 |---|---|---|
-| 01.01 | `a01_01_converse` | 🔧 A-010 |
-| 04.01 | `a04_01_guardrails` | 🔧 A-040 |
+| 01.01 | `a01_01_converse` | ✅ A-010 |
+| 04.01 | `a04_01_guardrails` | ✅ A-040 |

@@ -21,19 +21,19 @@
 | `00.03.iam.tf` | app role `a-app` | ✅ |
 | `00.04.billing-alarm.tf` | SNS `a-alerts`, billing alarm | ✅ |
 | `00.05.data-bucket.tf` | shared bucket `a-ai-data-<account>` | ✅ |
-| `01.01.bedrock-converse.tf` | model invoke policy | 🔧 |
-| `01.02.model-customization.tf` | customization service role | 🔧 |
-| `01.03.prompt-management.tf` | managed prompt | 🔧 |
-| `01.04.prompt-flows.tf` | flow + execution role | 🔧 |
-| `02.02.opensearch-serverless.tf` | AOSS collection + policies, KB role | 🔧 |
-| `02.04.knowledge-bases.tf` | knowledge base + S3 data source | 🔧 |
-| `03.01.data-automation.tf` | BDA blueprint + project | 🔧 |
-| `03.02.glue-data-quality.tf` | catalog table + DQ ruleset | 🔧 |
-| `03.03.transcribe.tf` | vocabulary + filter | 🔧 |
-| `03.04.comprehend.tf` | Comprehend policy | 🔧 |
-| `04.01.guardrails.tf` | guardrail + version | 🔧 |
-| `04.02.pii-redaction.tf` | Comprehend async role (if needed) | 🔧 |
-| `04.03.evaluations.tf` | evaluation service role | 🔧 |
-| `05.01.observability.tf` | invocation logging, log group, alarms | 🔧 |
+| `01.01.bedrock-converse.tf` | model invoke policy | ✅ |
+| `01.02.model-customization.tf` | customization service role | ✅ |
+| `01.03.prompt-management.tf` | managed prompt | ✅ |
+| `01.04.prompt-flows.tf` | flow + execution role | ✅ |
+| `02.02.opensearch-serverless.tf` | AOSS collection + policies, KB role | ✅ |
+| `02.04.knowledge-bases.tf` | knowledge base + S3 data source | ✅ |
+| `03.01.data-automation.tf` | BDA blueprint + project | ✅ |
+| `03.02.glue-data-quality.tf` | catalog table + DQ ruleset | ✅ |
+| `03.03.transcribe.tf` | vocabulary + filter | ✅ |
+| `03.04.comprehend.tf` | Comprehend policy | ✅ |
+| `04.01.guardrails.tf` | guardrail + version | ✅ |
+| `04.02.pii-redaction.tf` | Comprehend async PII job role | ✅ |
+| `04.03.evaluations.tf` | evaluation service role | ✅ |
+| `05.01.observability.tf` | invocation logging, log group, alarms | ✅ |
 
-- Foundation validated 2026-11-13 with Terraform 1.9.8, aws provider 6.73.0
+- All 20 files validated 2026-11-13 with Terraform 1.9.8, aws provider 6.73.0
