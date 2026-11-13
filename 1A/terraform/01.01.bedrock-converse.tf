@@ -6,6 +6,7 @@
 #   - aws_bedrock_inference_profile.app  "a-app-profile" (copy of the text model's system profile, tagged)
 # Used by
 #   - Python app/a01_01_converse (and 01.05 prompting, which reuses these permissions)
+#   - Python app/a02_01_embeddings (InvokeModel on the embedding models in var.embed_model_ids)
 #   - Java   com.lc.a.a01_01_converse
 # Lectures: AIP-C01 #7–#10, #22
 #
@@ -28,6 +29,15 @@ variable "converse_model_ids" {
   ]
 }
 
+variable "embed_model_ids" {
+  description = "Embedding models the app may call with InvokeModel (02.01 embeddings slice). In-Region, on-demand."
+  type        = list(string)
+  default = [
+    "amazon.titan-embed-text-v2:0", # A_EMBED_MODEL_ID (shared default)
+    "cohere.embed-english-v3",      # 02.01 comparison function
+  ]
+}
+
 variable "converse_profile_prefix" {
   description = "System inference profile geography prefix: us, eu, apac, or global (where offered)."
   type        = string
@@ -40,6 +50,10 @@ locals {
   converse_foundation_model_arns = [
     # "*" Region on purpose: a cross-Region profile may route to any Region in its set.
     for id in var.converse_model_ids : "arn:aws:bedrock:*::foundation-model/${id}"
+  ]
+  # Embedding models are called in-Region by bare model ID (no inference profile) ⇒ this Region only.
+  embed_foundation_model_arns = [
+    for id in var.embed_model_ids : "arn:aws:bedrock:${var.region}::foundation-model/${id}"
   ]
   converse_system_profile_arns = [
     for id in var.converse_model_ids :
@@ -92,6 +106,13 @@ data "aws_iam_policy_document" "converse" {
       "bedrock:InvokeModelWithResponseStream",
     ]
     resources = local.converse_foundation_model_arns
+  }
+
+  # Embeddings (02.01): InvokeModel only; embedding models have no streaming or Converse support.
+  statement {
+    sid       = "InvokeEmbeddingModels"
+    actions   = ["bedrock:InvokeModel"]
+    resources = local.embed_foundation_model_arns
   }
 
   # Read-only model discovery (control plane).
