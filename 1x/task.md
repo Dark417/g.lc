@@ -9,8 +9,6 @@
 
 ## Index
 - [Queue](#queue)
-  - [X-001 Java base project](#x-001-java-base-project)
-  - [X-002 Python base project](#x-002-python-base-project)
   - [X-010 [C] 03.01 Aurora PostgreSQL](#x-010-c-0301-aurora-postgresql)
   - [X-011 [C] 03.02 DynamoDB](#x-011-c-0302-dynamodb)
   - [X-012 [C] 03.03 S3](#x-012-c-0303-s3)
@@ -24,29 +22,6 @@
 ---
 
 ## Queue
-
-### X-001 Java base project
-- Status: `todo`
-- Spec
-  - `java/pom.xml`: Spring Boot 3.5.x parent, Java 17, group `com.lc`, artifact `x`
-  - Deps: web, jdbc, postgresql, spring-kafka, AWS SDK v2 BOM (dynamodb, dynamodb-enhanced, s3, athena, redshiftdata, kinesis, firehose, rds), `software.amazon.msk:aws-msk-iam-auth`
-  - `com.lc.x.XApplication`; exclude `DataSourceAutoConfiguration` (Aurora slice builds its own Hikari pool)
-  - `com.lc.x.shared`: `AwsConfig` (region + credentials provider beans), `Retry` helper (exponential backoff + full jitter)
-  - `application.yml`: every `x.<slice>.enabled: false`, resource names matching Terraform outputs (`x-orders`, `x-clicks`, ...)
-- Done when
-  - `mvn -q -DskipTests compile` passes
-  - App starts with no AWS access (all slices off)
-
-### X-002 Python base project
-- Status: `todo`
-- Spec
-  - `python/pyproject.toml` (Python 3.11+): fastapi, uvicorn, boto3, psycopg[binary,pool], confluent-kafka, pydantic-settings
-  - `app/main.py`: mounts a slice router only when listed in `X_ENABLED` (comma list)
-  - `app/shared/config.py` (settings from env), `app/shared/aws.py` (one boto3 Session, client factory with retry config `mode="adaptive"`)
-  - `README` section in `1python.md`: venv create, install, run
-- Done when
-  - `python -m compileall -q app` passes
-  - `uvicorn app.main:app` starts with `X_ENABLED` empty
 
 ### X-010 [C] 03.01 Aurora PostgreSQL
 - Status: `todo` · Needs X-001, X-002 · Terraform: `terraform/03.01.aurora-postgres.tf` (exists)
@@ -165,4 +140,6 @@
 
 ## Done
 - 2026-11-13 · X-000 Skeleton: `AGENTS.md`, `terraform/AGENTS.md`, `x.md`, `task.md`, guides
+- 2026-11-13 · X-001 Java base project: Spring Boot 3.5.16, Java 17, AWS SDK BOM 2.59.0, `AwsConfig`, `Retry`, `application.yml` (all slices off); `mvn compile` passed
+- 2026-11-13 · X-002 Python base project: FastAPI, `X_ENABLED` slice mounting, `config.py`, `aws.py` (adaptive retries), `retry.py`; `compileall` + import smoke test passed
 - 2026-11-13 · X-003 Terraform foundation + 7 component files (`00.00`–`00.03`, `03.01`–`05.02`); `terraform validate` passed (v1.9.8, aws ~> 5.80)
