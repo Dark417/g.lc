@@ -7,6 +7,7 @@ import com.lc.a.a01_01_converse.domain.TokenUsage;
 import com.lc.a.a01_01_converse.domain.ToolCall;
 import com.lc.a.a01_01_converse.infra.ConverseProperties;
 import com.lc.a.shared.Retry;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -63,7 +64,7 @@ public class ConverseService {
     private final BedrockRuntimeClient client;
     private final BedrockRuntimeAsyncClient asyncClient;
     private final ConverseProperties props;
-    private final Retry retry = new Retry(3, java.time.Duration.ofMillis(500), java.time.Duration.ofSeconds(8));
+    private final Retry retry = new Retry(3, Duration.ofMillis(500), Duration.ofSeconds(8));
 
     public ConverseService(BedrockRuntimeClient client, BedrockRuntimeAsyncClient asyncClient, ConverseProperties props) {
         this.client = client;
@@ -88,7 +89,7 @@ public class ConverseService {
                 .build();
         try {
             ConverseResponse response = retry.call(() -> client.converse(request), ConverseService::isRetryable);
-            return toResult(response, 1, null);
+            return toResult(response, 1);
         } catch (ValidationException | AccessDeniedException e) {
             // Fix the request: role order, unsupported field, bare ID of a profile-only model, missing IAM.
             throw new ConverseException(e.awsErrorDetails().errorCode() + ": " + e.awsErrorDetails().errorMessage(), e);
@@ -126,7 +127,7 @@ public class ConverseService {
                     .inferenceConfig(inferenceConfig())
                     .toolConfig(toolConfig)
                     .build());
-            ConverseResult result = toResult(response, round, null);
+            ConverseResult result = toResult(response, round);
             total = total.plus(result.usage());
             messages.add(response.output().message()); // assistant message unchanged
             if (!"tool_use".equals(response.stopReasonAsString())) {
@@ -220,7 +221,7 @@ public class ConverseService {
     }
 
     /** Converse response -> domain result: text blocks joined, toolUse blocks mapped, usage + latency. */
-    public static ConverseResult toResult(ConverseResponse r, int rounds, TokenUsage usageOverride) {
+    public static ConverseResult toResult(ConverseResponse r, int rounds) {
         StringBuilder text = new StringBuilder();
         List<ToolCall> calls = new ArrayList<>();
         for (ContentBlock block : r.output().message().content()) {
@@ -232,7 +233,7 @@ public class ConverseService {
                 calls.add(new ToolCall(tu.toolUseId(), tu.name(), asMap(tu.input())));
             }
         }
-        TokenUsage usage = usageOverride != null ? usageOverride : new TokenUsage(r.usage().inputTokens(),
+        TokenUsage usage = new TokenUsage(r.usage().inputTokens(),
                 r.usage().outputTokens(), r.usage().totalTokens(), nz(r.usage().cacheReadInputTokens()));
         return new ConverseResult(text.toString(), r.stopReasonAsString(), usage, r.metrics().latencyMs(), calls, rounds);
     }
