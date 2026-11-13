@@ -18,6 +18,10 @@ x:
   # 02.01 core principles (no cloud)
   principles:
     enabled: false
+    notifier: log        # log | sms: which Notifier bean is wired (conditional bean demo)
+    max-attempts: 3      # validated @ConfigurationProperties: must be >= 1
+    timeout: 2s
+    tax-rate: 0.08
 
   # 03.01 Aurora PostgreSQL (terraform/03.01.aurora-postgres.tf)
   aurora:
@@ -28,6 +32,11 @@ x:
     database: xdb
     username: x_app
     iam-auth: true
+    password: ""              # local Postgres only (env X_AURORA_PASSWORD); IAM token is used when iam-auth=true
+    ssl-mode: verify-full
+    ssl-root-cert: /etc/ssl/certs/rds-global-bundle.pem
+    statement-timeout-ms: 15000
+    application-name: x-aurora
     pool:
       max-size: 10
       connection-timeout-ms: 3000
@@ -40,6 +49,8 @@ x:
     orders-table: x-orders
     idempotency-table: x-idempotency
     gsi1-name: GSI1
+    endpoint-override: ""        # e.g. http://localhost:8000 for DynamoDB Local
+    idempotency-retention: PT24H
 
   # 03.03 S3 (terraform/03.03.s3.tf)
   s3:

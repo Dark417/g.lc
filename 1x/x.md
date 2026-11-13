@@ -24,12 +24,12 @@
 - 01 Language core
   - (empty)
 - 02 Design principles and patterns
-  - ⬜ [C] 02.01 SOLID — X-020
+  - ✅ [C] 02.01 Core principles (SOLID, general, Spring) — X-020
   - ⬜ [C] 02.02 GoF design patterns — X-021
 - 03 Databases and storage
-  - ⬜ [C] 03.01 Aurora PostgreSQL — X-010
-  - ⬜ [C] 03.02 DynamoDB — X-011
-  - ⬜ [C] 03.03 S3 — X-012
+  - ✅ [C] 03.01 Aurora PostgreSQL — X-010
+  - ✅ [C] 03.02 DynamoDB — X-011
+  - ✅ [C] 03.03 S3 — X-012
 - 04 Analytics and warehouses
   - ⬜ [C] 04.01 Athena — X-013
   - ⬜ [C] 04.02 Redshift — X-014
@@ -44,9 +44,7 @@
 - 07 Distributed systems concepts
   - ⬜ 07.01 Tech-choice guide (DB / stream by requirement) — X-026
 - 08 AI and agents
-  - ⬜ [C] 08.01 Bedrock basics — X-027
-  - ⬜ [C] 08.02 Step Functions + Bedrock — X-028
-  - ⬜ [C] 08.03 Agent SDKs side by side — X-029
+  - Moved to `1A/` (see `1A/a.md`)
 
 ---
 
@@ -62,19 +60,29 @@
 - (empty — add Java / Python core items here)
 
 ## 02 Design principles and patterns
-- ⬜ [C] 02.01 SOLID — task X-020
+- ✅ [C] 02.01 Core principles — task X-020
+  - Doc `docs/02.01.core-principles.md` · Java `com.lc.x.x02_01_principles.{solid,general,spring,api}` · Python `app/x02_01_principles/`
+  - Part A SOLID (Java + Python) · Part B 13 general principles (Java + Python) · Part C 7 Spring principles (Java only)
+  - Each principle: `Violation` vs `Fix` + `demo()`; Spring: IoC/DI, proxy AOP + self-invocation trap, conditional beans, validated `@ConfigurationProperties`, template method
+  - 2026-11-13 · Claude · javac + context run passed; 25 demos return 200
 - ⬜ [C] 02.02 GoF design patterns — task X-021
 
 ## 03 Databases and storage
-- ⬜ [C] 03.01 Aurora PostgreSQL — task X-010
-  - Doc `docs/03.01.aurora-postgres.md` · Java `com.lc.x.x03_01_aurora` · Python `app/x03_01_aurora/`
+- ✅ [C] 03.01 Aurora PostgreSQL — task X-010
+  - Doc `docs/03.01.aurora-postgres.md` · Java `com.lc.x.x03_01_aurora` (all 4 layers + `resources/x03_01_aurora/schema.sql`) · Python `app/x03_01_aurora/`
+  - Writer/reader Hikari pools, IAM token per new connection, batch, upsert, keyset vs OFFSET, optimistic + pessimistic locks, SKIP LOCKED queue, JSONB/GIN, propagation + isolation, retry on 40001/40P01/08xxx with idempotency keys
+  - 2026-11-13 · Claude · javac + Spring context start passed; Python 17 routes
   - Terraform ✅ `terraform/03.01.aurora-postgres.tf` (writer + reader, Serverless v2, IAM auth)
-- ⬜ [C] 03.02 DynamoDB — task X-011
-  - Doc `docs/03.02.dynamodb.md` · Java `x03_02_dynamodb` · Python `app/x03_02_dynamodb/`
+- ✅ [C] 03.02 DynamoDB — task X-011
+  - Doc `docs/03.02.dynamodb.md` · Java `x03_02_dynamodb` (low-level + Enhanced Client) · Python `app/x03_02_dynamodb/` (client + resource)
+  - Conditions, optimistic lock, cursors, batch retry, idempotent TransactWriteItems with cancellation parsing, streams shape, write sharding
+  - 2026-11-13 · Claude · javac + offline Stubber tests passed
   - Terraform ✅ `terraform/03.02.dynamodb.tf` (`x-orders` PK/SK + GSI1, TTL, streams; `x-idempotency`)
-- ⬜ [C] 03.03 S3 — task X-012
+- ✅ [C] 03.03 S3 — task X-012
   - Doc `docs/03.03.s3.md` · Java `x03_03_s3` · Python `app/x03_03_s3/`
-  - Terraform ✅ `terraform/03.03.s3.tf` (lake bucket with lifecycle; Athena results bucket)
+  - Terraform ✅ `terraform/03.03.s3.tf` (lake bucket with lifecycle; Athena results bucket; app policy now includes version reads)
+  - Put/get/head/delete + SSE-KMS, paginated list, presign GET/PUT (+ POST in Python), multipart + Transfer Manager, conditional create, versions, ranged GET
+  - 2026-11-13 · Claude · javac + compileall passed
 
 ## 04 Analytics and warehouses
 - ⬜ [C] 04.01 Athena — task X-013
@@ -102,9 +110,8 @@
 - ⬜ 07.01 Tech-choice guide — task X-026
 
 ## 08 AI and agents
-- ⬜ [C] 08.01 Bedrock basics — task X-027
-- ⬜ [C] 08.02 Step Functions + Bedrock — task X-028
-- ⬜ [C] 08.03 Agent SDKs side by side — task X-029
+- Moved to `1A/` (AI knowledge tree): Bedrock basics → `1A` 01.01, Step Functions + Bedrock → `1A` A-072, agent SDKs → `1A` A-062/A-063
 
 ## Change log
+- 2026-11-13 · Done: base projects, 02.01 core principles, 03.01 Aurora, 03.02 DynamoDB, 03.03 S3; AI group moved to `1A/`
 - 2026-11-13 · Created: rules, manifest, task queue, Terraform foundation + 7 component files

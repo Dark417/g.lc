@@ -218,7 +218,8 @@ infra    (outbound adapter) the SDK / driver code = the showcase
 - Type hints everywhere; `dataclass` or Pydantic for models; built-in generics (`list[int]`)
 
 ## 11. Checks before commit or PR
-- Python: `cd 1x/python && python -m compileall -q app`
+- Python: `cd 1x/python && python -m compileall -q app` and `X_ENABLED=<slices> python -c "from app.main import app; print(sorted(app.openapi()['paths']))"`
+  - Use `app.openapi()` paths, not `app.routes[].path`: newer FastAPI puts router objects without `.path` in `app.routes`
 - Java: `cd 1x/java && mvn -q -DskipTests compile`
 - Terraform: `cd 1x/terraform && terraform fmt -check && terraform init -backend=false && terraform validate`
   - Never `plan` or `apply`
