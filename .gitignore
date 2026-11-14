@@ -1,3 +1,4 @@
+
 .idea
 .vscode
 .git
@@ -16,13 +17,20 @@ target/
 .env.*
 
 # nested repos (own remotes; not submodules)
-1sde/0databricks/1sde-edgar-0*/
-1sde/2angular/
+2de/0databricks/1sde-edgar-0*/
+1x/ddd/2angular/
+1A/A/1AWS/ccar-f/
 
 # bundled runtimes / binaries
-1sde/0databricks/2.spark/jdk/
+2de/0databricks/2.spark/jdk/
 *.jar
 *.jmod
 *.dll
 *.exe
 
+
+# local API keys (never commit)
+1A/apis
+
+# nested clone of external repo (own git history)
+1A/mcp/mcp/context7/

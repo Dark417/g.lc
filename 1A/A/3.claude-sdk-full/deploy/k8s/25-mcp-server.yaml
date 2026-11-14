@@ -1,0 +1,37 @@
+# The MCP server as its own deployable (built from backend/Dockerfile.mcp).
+# Locally the backend spawns it over stdio; here it's a network service. Same code.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcp-server
+  namespace: claude-sdk-full
+  labels: { app: mcp-server }
+spec:
+  replicas: 1   # the demo server keeps tickets in memory; a real one would be stateless + DB
+  selector:
+    matchLabels: { app: mcp-server }
+  template:
+    metadata:
+      labels: { app: mcp-server }
+    spec:
+      containers:
+        - name: mcp-server
+          image: REGISTRY/claude-sdk-full-mcp:latest
+          ports: [{ containerPort: 8001 }]
+          readinessProbe:
+            tcpSocket: { port: 8001 }
+          resources:
+            requests: { cpu: 50m, memory: 128Mi }
+            limits: { cpu: 500m, memory: 256Mi }
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mcp-server
+  namespace: claude-sdk-full
+spec:
+  selector: { app: mcp-server }
+  ports: [{ port: 8001, targetPort: 8001 }]

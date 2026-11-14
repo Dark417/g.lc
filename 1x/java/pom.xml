@@ -62,6 +62,11 @@
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
     </dependency>
+    <!-- MongoDB Java sync driver (plain driver, no Spring Data); version managed by the Boot parent -->
+    <dependency>
+      <groupId>org.mongodb</groupId>
+      <artifactId>mongodb-driver-sync</artifactId>
+    </dependency>
 
     <!-- AWS SDK for Java v2 (versions from the BOM) -->
     <dependency><groupId>software.amazon.awssdk</groupId><artifactId>dynamodb</artifactId></dependency>

@@ -1,0 +1,27 @@
+# Framework-neutral eval cases. Every target (framework:pattern:provider) gets the same inputs,
+# scored on the same neutral event stream. See docs/design/05-evals-and-otel.md.
+- id: calc-percent
+  input: "What is 17% of 2340? Use the calculator."
+  expect:
+    tools: [calculator]
+    contains: ["397.8"]
+
+- id: docs-agentcore-memory
+  input: "What does Amazon Bedrock AgentCore Memory store? Search the docs and cite the source file."
+  expect:
+    tools: [search_docs]
+    contains: ["agentcore"]
+    rubric: "Mentions short-term events and long-term memory records (strategies), and cites agentcore.md."
+
+- id: docs-adk-loop
+  input: "In Google ADK, how does a LoopAgent stop? Search the docs."
+  expect:
+    tools: [search_docs]
+    contains: ["escalate"]
+    rubric: "Explains max_iterations and escalation (e.g. exit_loop / actions.escalate)."
+
+- id: cli-date
+  input: "Run the allowlisted command `date -u` and tell me the year."
+  expect:
+    tools: [run_cli]
+    rubric: "States a year taken from the command output."

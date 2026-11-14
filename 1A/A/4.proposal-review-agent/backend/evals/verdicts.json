@@ -1,0 +1,74 @@
+[
+  {
+    "id": "kids-game-no-consent",
+    "proposal": "Launch a mobile game for 10-year-olds that asks players for their email address at sign-up so we can send them level updates. Parents are not involved.",
+    "expected_verdict": "NON_COMPLIANT",
+    "must_cite": ["PRIV-003"],
+    "must_not_verdict": ["COMPLIANT", "CONDITIONALLY_COMPLIANT"]
+  },
+  {
+    "id": "email-purchased-list",
+    "proposal": "Send a promotional email about our spring sale to a list of 50,000 addresses we bought from a data broker. The email will have an unsubscribe link.",
+    "expected_verdict": "NON_COMPLIANT",
+    "must_cite": ["MKT-001"],
+    "must_not_verdict": ["COMPLIANT"]
+  },
+  {
+    "id": "ga-without-security-review",
+    "proposal": "Ship the new invoicing module to all customers next Monday. The security review is scheduled for the following month because the team is busy.",
+    "expected_verdict": "NON_COMPLIANT",
+    "must_cite": ["LAUNCH-001"],
+    "must_not_verdict": ["COMPLIANT", "CONDITIONALLY_COMPLIANT"]
+  },
+  {
+    "id": "eu-data-to-us-no-scc",
+    "proposal": "Move our EU customers' profile database to a US data center to save costs. Legal has not been involved and there are no transfer agreements.",
+    "expected_verdict": "NON_COMPLIANT",
+    "must_cite": ["PRIV-002"],
+    "must_not_verdict": ["COMPLIANT"]
+  },
+  {
+    "id": "train-vendor-model-on-tickets",
+    "proposal": "Fine-tune a third-party vendor's language model on our customers' support tickets to build a better chatbot. We have not asked customers for consent.",
+    "expected_verdict": "NON_COMPLIANT",
+    "must_cite": ["AI-002"],
+    "must_not_verdict": ["COMPLIANT"]
+  },
+  {
+    "id": "comparative-ad-no-testing",
+    "proposal": "Run a web ad saying our backup product is twice as fast as Acme Backup. We believe it is faster but have no documented test results. The campaign targets existing customers who opted in, the product has been generally available for two years, and no personal data is collected by the ad.",
+    "expected_verdict": "CONDITIONALLY_COMPLIANT",
+    "must_cite": ["MKT-002"],
+    "must_not_verdict": ["COMPLIANT"]
+  },
+  {
+    "id": "english-only-launch-germany",
+    "proposal": "Launch our existing, security-reviewed SaaS product in Germany next month with English-only terms of service and privacy notice while the German translation is being prepared. Data stays in our EU region, prices shown include VAT, and cookie consent is already implemented.",
+    "expected_verdict": "CONDITIONALLY_COMPLIANT",
+    "must_cite": ["LAUNCH-002"],
+    "must_not_verdict": ["NON_COMPLIANT"]
+  },
+  {
+    "id": "big-discount-no-cfo",
+    "proposal": "Announce a 60% off Black Friday discount on all plans tomorrow. The CFO has not been asked yet.",
+    "expected_verdict": "NON_COMPLIANT",
+    "must_cite": ["FIN-001"],
+    "must_not_verdict": ["COMPLIANT"]
+  },
+  {
+    "id": "internal-lunch-menu-bot",
+    "proposal": "Build an internal Slack bot that tells employees today's cafeteria lunch menu from a public menu file. It stores no personal data, is not customer-facing, and does not use AI.",
+    "expected_verdict": "NEEDS_MORE_INFO",
+    "acceptable_verdicts": ["COMPLIANT", "NEEDS_MORE_INFO"],
+    "must_cite": [],
+    "must_not_verdict": ["NON_COMPLIANT"]
+  },
+  {
+    "id": "ai-support-drafts-disclosed",
+    "proposal": "Add AI-drafted replies to our customer support widget. Replies are labelled 'AI-generated'. We use a vendor model for inference only and the contract forbids training on our data. The feature passed its security review, data is encrypted at rest and in transit, and the vendor risk assessment was completed three months ago.",
+    "expected_verdict": "COMPLIANT",
+    "acceptable_verdicts": ["COMPLIANT", "CONDITIONALLY_COMPLIANT"],
+    "must_cite": [],
+    "must_not_verdict": ["NON_COMPLIANT"]
+  }
+]

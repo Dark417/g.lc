@@ -53,6 +53,9 @@
   - Never prefix an arrow line with a bullet marker such as `- →`
   - Use two trailing spaces for Markdown hard breaks between adjacent arrow lines
   - Keep independent failure cases in separate blocks
+- Use ✅ as the done / passed / recommended marker
+  - Status sets: ⬜ planned · 🔧 wip · ✅ done
+  - Checklists and finished-task lines may lead with ✅
 - Example
 
   **Defeaters to volunteer**
@@ -70,6 +73,11 @@
   ⇒ A legitimate second purchase can be rejected.  
   → Scope the key by caller and operation.
 
+- Spell out every abbreviation first: `Full Name (ABBR)`
+  - Applies to the `#` title and to the first use in the body
+  - Later uses in the same file may use the bare abbreviation
+  - Example: `Liskov Substitution Principle (LSP)`, then `LSP`
+  - Exempt: file names, links, anchors, code, and identifiers
 - Diagram whenever possible
   - ASCII or Mermaid
   - flow, layers, architecture

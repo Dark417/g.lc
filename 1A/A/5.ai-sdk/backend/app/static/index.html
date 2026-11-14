@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Playground</title>
+<style>
+  :root { --bg:#f7f7f5; --panel:#fff; --fg:#1d1d1b; --muted:#6b6b66; --line:#e2e2dc; --accent:#2457d6;
+          --tool:#7a4cc2; --ok:#1f7a4d; --err:#b3261e; --mono:ui-monospace,SFMono-Regular,Menlo,monospace; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#141413; --panel:#1d1d1b; --fg:#ecece6; --muted:#a3a39b; --line:#33332f; --accent:#7ea2ff;
+            --tool:#b99cf0; --ok:#6fcf9b; --err:#ff8a80; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.5 system-ui,sans-serif; }
+  main { max-width:960px; margin:0 auto; padding:24px 16px; }
+  h1 { font-size:20px; margin:0 0 4px; } p.sub { color:var(--muted); margin:0 0 16px; }
+  .row { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px; }
+  select, input, textarea, button { font:inherit; color:inherit; background:var(--panel); border:1px solid var(--line);
+          border-radius:8px; padding:8px 10px; }
+  textarea { width:100%; min-height:72px; resize:vertical; }
+  button { background:var(--accent); color:#fff; border:none; cursor:pointer; } button:disabled { opacity:.5; }
+  .components { color:var(--muted); font-size:13px; margin:4px 0 12px; }
+  .components code { font-family:var(--mono); font-size:12px; background:var(--panel); border:1px solid var(--line);
+          border-radius:4px; padding:0 4px; margin-right:4px; display:inline-block; margin-bottom:4px; }
+  #log { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:8px; min-height:120px; }
+  .ev { font-family:var(--mono); font-size:12.5px; padding:4px 6px; border-bottom:1px dashed var(--line); white-space:pre-wrap;
+        overflow-wrap:anywhere; }
+  .ev:last-child { border-bottom:none; }
+  .t { font-weight:600; margin-right:6px; }
+  .tool_call .t, .tool_result .t { color:var(--tool); } .done .t { color:var(--ok); } .error .t { color:var(--err); }
+  .agent .t { color:var(--accent); }
+  .answer { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:12px; margin:12px 0;
+            white-space:pre-wrap; }
+  small { color:var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Agent playground</h1>
+  <p class="sub">One entrance (<code>POST /v1/runs/stream</code>), four frameworks, three providers. API docs at <a href="/docs">/docs</a>.</p>
+  <div class="row">
+    <select id="framework" aria-label="framework"></select>
+    <select id="pattern" aria-label="pattern"></select>
+    <select id="provider" aria-label="provider"></select>
+    <input id="user" value="demo-user" aria-label="user id" size="12">
+    <input id="session" placeholder="session id (new)" aria-label="session id" size="20">
+  </div>
+  <div class="components" id="components"></div>
+  <textarea id="message">What is 17% of 2340? Then search the docs: what does AgentCore Memory store?</textarea>
+  <div class="row" style="margin-top:8px">
+    <button id="send">Run</button>
+    <button id="approve" hidden>Approve paused step</button>
+    <small id="status"></small>
+  </div>
+  <div class="answer" id="answer" hidden></div>
+  <div id="log"></div>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+let catalog = null;
+
+function fill(select, items) {
+  select.innerHTML = "";
+  for (const it of items) select.add(new Option(it.label, it.value));
+}
+function selectedFramework() { return catalog.frameworks.find(f => f.name === $("framework").value); }
+function refreshPatterns() {
+  const fw = selectedFramework();
+  fill($("pattern"), fw.patterns.map(p => ({label: p.name, value: p.name})));
+  fill($("provider"), catalog.providers.filter(p => fw.providers.includes(p.name))
+    .map(p => ({label: p.name + (p.available ? "" : " (not configured)"), value: p.name})));
+  refreshComponents();
+}
+function refreshComponents() {
+  const p = selectedFramework().patterns.find(p => p.name === $("pattern").value);
+  $("components").innerHTML = p ? `${p.description}<br>` + p.components.map(c => `<code>${c}</code>`).join("") : "";
+}
+async function load() {
+  catalog = await (await fetch("/v1/catalog")).json();
+  fill($("framework"), catalog.frameworks.filter(f => f.available).map(f => ({label: f.name, value: f.name})));
+  refreshPatterns();
+}
+function addEvent(ev) {
+  const div = document.createElement("div");
+  div.className = "ev " + ev.type;
+  const {type, ...rest} = ev;
+  div.innerHTML = `<span class="t">${type}</span>`;
+  div.append(JSON.stringify(rest));
+  $("log").append(div);
+}
+async function run(resume) {
+  $("send").disabled = true; $("approve").hidden = true; $("status").textContent = "running…";
+  if (!resume) { $("log").innerHTML = ""; $("answer").hidden = true; }
+  const body = {
+    framework: $("framework").value, pattern: $("pattern").value, provider: $("provider").value,
+    user_id: $("user").value, session_id: $("session").value || null,
+    message: resume ? "" : $("message").value, resume: resume || null,
+  };
+  try {
+    const resp = await fetch("/v1/runs/stream", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(body)});
+    if (!resp.ok) { addEvent({type: "error", message: (await resp.json()).detail}); return; }
+    const reader = resp.body.getReader(); const dec = new TextDecoder(); let buf = "";
+    for (;;) {
+      const {value, done} = await reader.read(); if (done) break;
+      buf += dec.decode(value, {stream: true});
+      let i; while ((i = buf.indexOf("\n\n")) >= 0) {
+        const line = buf.slice(0, i); buf = buf.slice(i + 2);
+        if (!line.startsWith("data: ")) continue;
+        const ev = JSON.parse(line.slice(6)); addEvent(ev);
+        if (ev.type === "session") $("session").value = ev.data.session_id;
+        if (ev.type === "done") { $("answer").hidden = false; $("answer").textContent = typeof ev.output === "string" ? ev.output : JSON.stringify(ev.output, null, 2); }
+        if (ev.type === "interrupt") $("approve").hidden = false;
+      }
+    }
+  } finally { $("send").disabled = false; $("status").textContent = ""; }
+}
+$("framework").onchange = () => { refreshPatterns(); $("session").value = ""; };
+$("pattern").onchange = () => { refreshComponents(); $("session").value = ""; };
+$("provider").onchange = () => { $("session").value = ""; };
+$("send").onclick = () => run();
+$("approve").onclick = () => run({approve: true});
+load();
+</script>
+</body>
+</html>

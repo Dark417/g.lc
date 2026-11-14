@@ -13,26 +13,38 @@ Goal: reach Google L4 interview-ready depth (with L5 visibility) using structure
 
 - `26U/`: topic notes + `26u-log.md`
 - `24_G/`: historical LeetCode solutions
-- `1sd/00.base/`: system design knowledge graph modules
-- `1sd/1AX/`: canonical Alex Xu Volume 1 and Volume 2 chapter packets
-- `1sd/01.core/` through `1sd/10.enterprise security/`: deduplicated question packets by domain
-- `1sd/1index.md`: authoritative system-design question map
+- `1sd/`: system design prep (merged from old `1sd` + `1sd2` on 2026-11-13)
+  - Top-level docs use a single-digit prefix with no dot: `1sd.md` (flow), `2messaging.md`, `3persistence.md`, `3storage-by-question.md`, `4api.md`, `5reliability-security.md`, `6lld.md`, `1qs.md`; a `1` suffix marks the Chinese copy (`1sd1.md`, `2messaging1.md`)
+  - `1sd/hello-interview/`: Hello Interview video docs (`hiNN.name-r.md` raw, `hiNN.name.md` own design), `sd-img/`, `_src/`
+  - `1sd/_tools/`: video-doc scripts (`yt-excal.js`)
+  - `1sd/1sd02/`: older knowledge graph (`00.base/`, domain question packets)
 - `1A/`: AI and agentic-AI knowledge docs (`A` = AI / agentic AI, `klg` = knowledge/concepts); default home for any A-klg request, e.g. `1A/1.aa-msg.md` (agent component messaging)
-- `1sde/<domain>/`: technology topic pairs (`{topic}.md` concept/interview, `{topic}1.md` implementation), e.g. `1sde/2.messaging/1.kafka.md` + `1.kafka1.md`
-- `1x/`: knowledge + code (`X` = standalone concepts): `docs/` concept files, `java/` (Spring Boot), `python/` (FastAPI), `terraform/` (one `.tf` per cloud component); manifests `x.md` (master), `1java.md`, `1python.md`, `1tf.md`; rules in `1x/AGENTS.md`
+  - Knowledge + code tree mirrors `1x/` (shared `AGENTS.md`); knowledge docs live in `1A/a-md/` (renamed from `x-md/` on 2026-11-14), code blocks mainly Python, no Java blocks
+  - Also holds `A/` (agent chat apps), `claudecode/`, `mcp/`, and `apis` (local keys, gitignored, never commit)
+- `2de/`: data engineering (Databricks, Spark, Glue, Snowflake, k8s, ...), moved from the retired `1sde/`; to be reorganized later
+  - Knowledge topics from `1sde/` now migrate into `1x/x-md/` groups
+- `1x/`: knowledge + code (`X` = standalone concepts): `x-md/<group>/` flat concept files with Java + Python blocks (groups `00java` `01core` `02messaging` `03db` `04dissys` `05analytics` `06framework`), `ddd/` sample projects, `java/` + `python/` (layer-first, `_03db_01aurora` packages), `terraform/` (project with `envs/` + `modules/`); manifests `x.md`, `task.md` (Queue / Backlog / Finish + Java/Python guide), `1tf.md`
+  - `1x/AGENTS.md` and `1A/AGENTS.md` are one shared rule file kept byte-identical; edit one → copy to the other (`cmp` to verify)
+  - Work in `1x/` → `1x` column of its §1 table; work in `1A/` → `1A` column
+- `back-to-claude.md`: message log the user writes from the IDE or locally to send back to Claude
+  - Two tiers: `## Queue` and `## Finish`
+  - Local agents (IDE, Claude Code, Codex) write only to Queue, newest on top: `yymmdd-hh:mm · <ask>`
+  - Claude Cowork acts on Queue entries and moves each to Finish with ✅ + one-line result
 - `1o/`: Oracle OCI PKI loop prep (`0.1o.md` loop/role notes, `1.coding/`, `2.sd/` ranked system-design bank, `3.bq.md`, `4.1o-arch.md`)
 - `.agents/rules.md`: knowledge-file authoring rules (format, method, doc structure, question format, quality bar, topic pair rule)
-- `.claude/CLAUDE.md` + `.claude/skills/`: Claude Code entry point and skills; they defer to `AGENTS.md` and `.agents/`
+- `CLAUDE.md`: Claude Code entry point; imports `AGENTS.md` and `.agents/rules.md` (there is no `.claude/` dir; all skills live in `.agents/skills/`)
 - `.agents/skills/`: official repository-scoped reusable workflows (`verb-object` naming)
 - `AGENTS.md` files: durable global or directory-scoped role and workflow instructions
 - `msg-log.md`: prepend one row per chat
 
 ## Global Rules
 
-- Both Codex and Claude Code agents read and obey **both** rule trees: `AGENTS.md` + `.agents/` (rules, skills) and `CLAUDE.md` + `.claude/` (skills).
+- **Never push automatically.** Push only when the user explicitly says to push in the current message.
+  - Commit only when asked; a finished task, a passing check, or an earlier "push" never implies a new push.
+
+- Codex and Claude Code share one rule tree: `AGENTS.md` + `.agents/` (rules, skills); `CLAUDE.md` only imports it.
   - `AGENTS.md` and `.agents/rules.md` are the source of truth for content and format rules.
-  - `.claude/CLAUDE.md` only points at them; never let the two trees diverge.
-  - A skill under either `.agents/skills/` or `.claude/skills/` is available to both tools.
+  - Skills live only in `.agents/skills/`; never recreate `.claude/skills/`.
   - Persist durable instructions in `AGENTS.md` (and the closest scoped `AGENTS.md`), not in `CLAUDE.md`.
 - Keep quality bar high for Google-style interviews.
 - Prefer depth + tradeoffs + failure handling over shallow summaries.
@@ -56,7 +68,7 @@ Goal: reach Google L4 interview-ready depth (with L5 visibility) using structure
 - When generating or updating any knowledge file (system design, technology deep dive, interview notes), read and follow `.agents/rules.md` (format, mechanism-first method, comparison rule, doc structure, question format, quality bar).
 - When the user says `in xx/{topic}/ explain {topic}`, generate the two-file pair defined in `.agents/rules.md` §10: `{topic}.md` (concept + 30–50 L4/L5 questions) and `{topic}1.md` (Python + Java/Spring Boot implementation snippets, same section order).
 - When the user writes `++:`, treat the following text as durable instructions/rules to add to `AGENTS.md` and any relevant workflow file.
-- For `1sde/1.core/design-patterns/`, keep the requested catalog in one Markdown guide.
+- For design patterns (`1x` `01core.02patterns`), keep the requested catalog in one guide.
   - Group the 23 GoF patterns by type in classic catalog order.
   - Explain each pattern's:
     - Problem and mechanism.

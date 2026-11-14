@@ -1,0 +1,64 @@
+[project]
+name = "proposal-review-backend"
+version = "0.1.0"
+description = "Compliance proposal review agent: FastAPI + Google ADK on Vertex AI"
+requires-python = ">=3.11"
+dependencies = [
+    "google-adk>=2.9,<3",
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "pydantic-settings>=2.4",
+    "python-multipart>=0.0.9",
+    # relational: rules, assessments, sessions, memories, chunks
+    "sqlalchemy[asyncio]>=2.0",
+    "aiosqlite>=0.20",
+    "asyncpg>=0.29",
+    # document store (MongoDB locally, Firestore with MongoDB compatibility on GCP)
+    "pymongo>=4.9",
+    # blobs
+    "google-cloud-storage>=2.18",
+    # parsers
+    "pypdf>=5.0",
+    "python-docx>=1.1",
+    # IAP JWT verification
+    "google-auth[requests]>=2.30",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "pytest-asyncio>=0.24",
+    "httpx>=0.27",
+    "ruff>=0.6",
+    "fpdf2>=2.7",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+# `ruff format` owns line length; long prompt strings and docstrings are allowed.
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+markers = [
+    "eval: calls the real model; needs GOOGLE_API_KEY or Vertex credentials",
+    "integration: needs TEST_PG_URL / TEST_MONGO_URL",
+]
+addopts = "-m 'not eval'"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
+[tool.ruff.lint.flake8-bugbear]
+# FastAPI's dependency markers are designed to be used as defaults.
+extend-immutable-calls = ["fastapi.File", "fastapi.Form", "fastapi.Query", "fastapi.Depends"]

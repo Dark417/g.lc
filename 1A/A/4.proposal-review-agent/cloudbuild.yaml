@@ -1,0 +1,57 @@
+# Build + push the three images, then (optionally) roll them out to Cloud Run.
+#
+#   gcloud builds submit --config cloudbuild.yaml --substitutions _TAG=$(git rev-parse --short HEAD) .
+#   gcloud builds submit --config cloudbuild.yaml --substitutions _DEPLOY=false,_TAG=latest .   # phase 1
+#
+# Terraform owns the services; this only changes their image (Terraform ignores image drift).
+substitutions:
+  _REGION: us-central1
+  _REPO: proposal-review
+  _TAG: manual
+  _DEPLOY: "true"
+options:
+  logging: CLOUD_LOGGING_ONLY
+  dynamic_substitutions: true
+
+steps:
+  - id: backend
+    name: gcr.io/cloud-builders/docker
+    waitFor: ["-"]
+    args: ["build", "-t", "${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/backend:${_TAG}",
+           "-t", "${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/backend:latest", "backend"]
+  - id: frontend
+    name: gcr.io/cloud-builders/docker
+    waitFor: ["-"]
+    args: ["build", "-t", "${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/frontend:${_TAG}",
+           "-t", "${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/frontend:latest", "frontend"]
+  - id: mcp
+    name: gcr.io/cloud-builders/docker
+    waitFor: ["-"]
+    args: ["build", "-t", "${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/mcp-server:${_TAG}",
+           "-t", "${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/mcp-server:latest", "mcp-server"]
+
+  - id: push
+    name: gcr.io/cloud-builders/docker
+    waitFor: [backend, frontend, mcp]
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        for img in backend frontend mcp-server; do
+          docker push --all-tags ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/$img
+        done
+
+  - id: deploy
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    waitFor: [push]
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        [ "${_DEPLOY}" = "true" ] || { echo "skipping deploy (_DEPLOY=${_DEPLOY})"; exit 0; }
+        set -e
+        R=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}
+        gcloud run deploy backend    --region ${_REGION} --image $R/backend:${_TAG}
+        gcloud run deploy frontend   --region ${_REGION} --image $R/frontend:${_TAG}
+        gcloud run deploy mcp-server --region ${_REGION} --image $R/mcp-server:${_TAG}
+        gcloud run jobs update ingest --region ${_REGION} --image $R/backend:${_TAG}

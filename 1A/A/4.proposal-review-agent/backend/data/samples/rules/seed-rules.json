@@ -1,0 +1,130 @@
+{
+  "rules": [
+    {
+      "code": "PRIV-001",
+      "title": "Documented lawful basis for personal data",
+      "statement": "Personal data must only be collected or processed when a lawful basis is documented in the data inventory before processing starts.",
+      "severity": "hard",
+      "category": "privacy",
+      "rationale": "GDPR Art. 6 and our Data Privacy Standard section 2.",
+      "exception_process": ""
+    },
+    {
+      "code": "PRIV-002",
+      "title": "EU personal data stays in the EU unless a transfer mechanism is approved",
+      "statement": "Personal data of EU residents must not be stored or processed outside the EU/EEA unless Legal has approved a transfer mechanism such as Standard Contractual Clauses.",
+      "severity": "hard",
+      "category": "privacy",
+      "rationale": "GDPR Chapter V international transfers.",
+      "exception_process": ""
+    },
+    {
+      "code": "PRIV-003",
+      "title": "Verifiable parental consent for children under 13",
+      "statement": "Products or features directed at children under 13 must obtain verifiable parental consent before collecting any personal information from the child, including email addresses.",
+      "severity": "hard",
+      "category": "privacy",
+      "rationale": "COPPA and GDPR Art. 8.",
+      "exception_process": ""
+    },
+    {
+      "code": "PRIV-004",
+      "title": "Retention limit of 24 months",
+      "statement": "Personal data should not be retained for more than 24 months after the last customer interaction.",
+      "severity": "flexible",
+      "category": "privacy",
+      "rationale": "Storage limitation principle.",
+      "exception_process": "The Data Protection Officer may approve a longer retention period with a documented justification."
+    },
+    {
+      "code": "MKT-001",
+      "title": "Marketing email requires opt-in and unsubscribe",
+      "statement": "Marketing emails must only be sent to recipients who have opted in, and every marketing email must contain a working unsubscribe link.",
+      "severity": "hard",
+      "category": "marketing",
+      "rationale": "CAN-SPAM, ePrivacy Directive, brand trust.",
+      "exception_process": ""
+    },
+    {
+      "code": "MKT-002",
+      "title": "Comparative claims need documented testing",
+      "statement": "Advertising that compares our product with a named competitor must be substantiated by documented, reproducible testing kept on file.",
+      "severity": "flexible",
+      "category": "marketing",
+      "rationale": "Misleading-advertising law; Marketing Claims Guidelines section 3.",
+      "exception_process": "Legal may approve a comparative claim based on published third-party data."
+    },
+    {
+      "code": "MKT-003",
+      "title": "Superlative claims need third-party evidence",
+      "statement": "Claims such as \"best\", \"#1\" or \"fastest\" should be backed by independent third-party evidence cited in the material.",
+      "severity": "flexible",
+      "category": "marketing",
+      "rationale": "Marketing Claims Guidelines section 2.",
+      "exception_process": "The VP of Marketing may approve clearly subjective puffery."
+    },
+    {
+      "code": "LAUNCH-001",
+      "title": "Security review before general availability",
+      "statement": "Every new product or major feature must complete a security review and have all critical findings resolved before general availability.",
+      "severity": "hard",
+      "category": "product-launch",
+      "rationale": "Product Launch Policy section 1.",
+      "exception_process": ""
+    },
+    {
+      "code": "LAUNCH-002",
+      "title": "Localised terms and privacy notice in new markets",
+      "statement": "Launching in a new country requires terms of service and a privacy notice in the official local language.",
+      "severity": "flexible",
+      "category": "product-launch",
+      "rationale": "Consumer protection law in most markets.",
+      "exception_process": "Regional counsel may approve an English-only launch for up to 90 days."
+    },
+    {
+      "code": "SEC-001",
+      "title": "Encrypt customer data at rest and in transit",
+      "statement": "Customer data must be encrypted at rest and in transit using approved algorithms (AES-256 at rest, TLS 1.2+ in transit).",
+      "severity": "hard",
+      "category": "security",
+      "rationale": "Security Baseline section 1.",
+      "exception_process": ""
+    },
+    {
+      "code": "SEC-002",
+      "title": "Vendor risk assessment for data processors",
+      "statement": "Third-party vendors that process customer data should have a completed vendor risk assessment from the last 12 months before data is shared.",
+      "severity": "flexible",
+      "category": "security",
+      "rationale": "Supply-chain risk.",
+      "exception_process": "The CISO may grant a 60-day exception while the assessment is completed."
+    },
+    {
+      "code": "AI-001",
+      "title": "Disclose AI-generated interactions",
+      "statement": "Customer-facing features that use AI to generate content or responses should clearly disclose to users that AI is involved.",
+      "severity": "flexible",
+      "category": "ai",
+      "rationale": "Transparency obligations (EU AI Act Art. 50).",
+      "exception_process": "Product counsel may approve omitting the disclosure for internal-only tools."
+    },
+    {
+      "code": "AI-002",
+      "title": "No customer data for third-party model training without consent",
+      "statement": "Customer data must not be used to train or fine-tune third-party AI models without explicit, recorded customer consent.",
+      "severity": "hard",
+      "category": "ai",
+      "rationale": "Contractual commitments and privacy law.",
+      "exception_process": ""
+    },
+    {
+      "code": "FIN-001",
+      "title": "CFO approval for discounts above 40 percent",
+      "statement": "Discounts or promotions above 40 percent off list price must be approved in writing by the CFO before they are announced.",
+      "severity": "hard",
+      "category": "finance",
+      "rationale": "Revenue recognition and margin control.",
+      "exception_process": ""
+    }
+  ]
+}

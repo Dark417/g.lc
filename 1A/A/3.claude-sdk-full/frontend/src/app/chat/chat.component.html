@@ -1,0 +1,36 @@
+<section class="chat">
+  <div class="toolbar">
+    <label><input type="checkbox" [checked]="streaming()" (change)="streaming.set(!streaming())" /> stream</label>
+    <label><input type="checkbox" [checked]="showTrace()" (change)="showTrace.set(!showTrace())" /> show trace</label>
+    <span class="muted">session: {{ sessionId() ?? 'new' }}</span>
+  </div>
+
+  <ul class="messages">
+    @for (m of messages(); track $index) {
+      <li [class]="m.role">
+        @if (m.role === 'assistant' && showTrace() && m.events.length) {
+          <ol class="trace">
+            @for (ev of m.events; track $index) {
+              <li [class]="ev.type">{{ label(ev) }}</li>
+            }
+          </ol>
+        }
+        <div class="text">{{ m.text || (busy() && $last ? '…' : '') }}</div>
+      </li>
+    }
+  </ul>
+
+  @if (error(); as e) {
+    <p class="error">{{ e }}</p>
+  }
+
+  <form (ngSubmit)="send()">
+    <input name="message" [(ngModel)]="input" placeholder="Try: how many orders does Ada have?" autofocus />
+    <button type="submit" [disabled]="busy() || !input.trim()">Send</button>
+  </form>
+
+  <p class="muted hints">
+    Try: "What's your return window?" · "Total revenue from pro customers?" · "Weather in Berlin?" ·
+    "Write a short email announcing free express shipping"
+  </p>
+</section>

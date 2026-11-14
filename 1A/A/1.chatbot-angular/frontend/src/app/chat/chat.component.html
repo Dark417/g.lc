@@ -1,0 +1,21 @@
+<section class="chat">
+  <ul class="messages">
+    @for (m of messages(); track $index) {
+      <li [class]="m.role">{{ m.text }}</li>
+    }
+    @if (busy()) {
+      <li class="assistant muted">…</li>
+    }
+  </ul>
+
+  @if (error(); as e) {
+    <p class="error">{{ e }}</p>
+  }
+
+  <form (ngSubmit)="send()">
+    <input name="message" [(ngModel)]="input" placeholder="Say something" autofocus />
+    <button type="submit" [disabled]="busy() || !input.trim()">Send</button>
+  </form>
+
+  <p class="muted">session: {{ sessionId() ?? 'new' }}</p>
+</section>

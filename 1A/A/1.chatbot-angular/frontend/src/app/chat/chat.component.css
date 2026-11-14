@@ -1,0 +1,10 @@
+.messages { list-style: none; padding: 0; margin: 0 0 12px; display: flex; flex-direction: column; gap: 8px; min-height: 240px; }
+.messages li { padding: 10px 14px; border-radius: 12px; max-width: 85%; white-space: pre-wrap; }
+.messages .user { align-self: flex-end; background: var(--user); }
+.messages .assistant { align-self: flex-start; background: var(--bot); }
+form { display: flex; gap: 8px; }
+input { flex: 1; padding: 10px 12px; font: inherit; border: 1px solid #8884; border-radius: 8px; background: transparent; color: inherit; }
+button { padding: 10px 16px; font: inherit; border: 0; border-radius: 8px; background: #dd0031; color: #fff; cursor: pointer; }
+button:disabled { opacity: .5; cursor: default; }
+.muted { color: var(--muted); font-size: 13px; }
+.error { color: #dc2626; }

@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+  namespace: claude-sdk-full
+data:
+  MODEL: claude-opus-5
+  JUDGE_MODEL: claude-opus-5
+  EFFORT: medium
+  WORKDIR: /app/data/generated/agent
+  APP_NAME: claude-sdk-full
+  CORS_ORIGINS: '["https://assistant.example.com"]'
+  LOG_LEVEL: INFO
+  DB_PATH: /app/data/generated/app.db
+  EMBEDDER: hashing   # or voyage
+  VECTOR_STORE: memory
+  # PRODUCTION shape: MCP server is its own Deployment (25-mcp-server.yaml), reached over HTTP.
+  MCP_TRANSPORT: http
+  MCP_URL: http://mcp-server:8001/mcp
+---
+# Do NOT commit a real secret. Create it out-of-band:
+#   kubectl -n claude-sdk-full create secret generic backend-secrets --from-literal=ANTHROPIC_API_KEY=...
+apiVersion: v1
+kind: Secret
+metadata:
+  name: backend-secrets
+  namespace: claude-sdk-full
+type: Opaque
+stringData:
+  ANTHROPIC_API_KEY: REPLACE_ME

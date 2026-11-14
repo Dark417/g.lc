@@ -1,0 +1,31 @@
+# Dev-only in-cluster cache server. In production use a managed one:
+#   AWS ElastiCache for Valkey / MemoryDB, GCP Memorystore for Valkey, then set REDIS_URL.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: valkey
+  namespace: ai-sdk
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: valkey}
+  template:
+    metadata:
+      labels: {app: valkey}
+    spec:
+      containers:
+        - name: valkey
+          image: valkey/valkey:8.0
+          ports: [{containerPort: 6379}]
+          resources:
+            requests: {cpu: 100m, memory: 128Mi}
+            limits: {memory: 512Mi}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: valkey
+  namespace: ai-sdk
+spec:
+  selector: {app: valkey}
+  ports: [{port: 6379, targetPort: 6379}]

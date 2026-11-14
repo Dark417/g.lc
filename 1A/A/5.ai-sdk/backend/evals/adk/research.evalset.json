@@ -1,0 +1,37 @@
+{
+  "eval_set_id": "research",
+  "name": "research",
+  "description": "ADK-native eval set for the `single` pattern (AgentEvaluator / adk eval).",
+  "eval_cases": [
+    {
+      "eval_id": "utc-time",
+      "conversation": [
+        {
+          "invocation_id": "inv-1",
+          "user_content": {"role": "user", "parts": [{"text": "What is the current time in UTC? Use the current_time tool."}]},
+          "final_response": {"role": "model", "parts": [{"text": "The current time in UTC is shown above."}]},
+          "intermediate_data": {
+            "tool_uses": [{"name": "current_time", "args": {"timezone": "UTC"}}],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": {"app_name": "adk_eval_agent", "user_id": "adk-eval", "state": {}}
+    },
+    {
+      "eval_id": "loopagent-docs",
+      "conversation": [
+        {
+          "invocation_id": "inv-1",
+          "user_content": {"role": "user", "parts": [{"text": "Search the docs: how does an ADK LoopAgent stop?"}]},
+          "final_response": {"role": "model", "parts": [{"text": "A LoopAgent stops at max_iterations or when a sub-agent escalates, e.g. via exit_loop (adk.md)."}]},
+          "intermediate_data": {
+            "tool_uses": [{"name": "search_docs", "args": {"query": "ADK LoopAgent stop"}}],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": {"app_name": "adk_eval_agent", "user_id": "adk-eval", "state": {}}
+    }
+  ]
+}

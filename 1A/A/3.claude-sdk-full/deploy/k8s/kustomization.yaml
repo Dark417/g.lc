@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - 00-namespace.yaml
+  - 10-backend-config.yaml
+  - 20-backend.yaml
+  - 25-mcp-server.yaml
+  - 30-frontend.yaml
+  - 40-ingress.yaml
+images:
+  - name: REGISTRY/claude-sdk-full-backend
+    newTag: latest
+  - name: REGISTRY/claude-sdk-full-mcp
+    newTag: latest
+  - name: REGISTRY/claude-sdk-full-frontend
+    newTag: latest

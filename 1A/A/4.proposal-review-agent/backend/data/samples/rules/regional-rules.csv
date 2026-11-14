@@ -1,0 +1,4 @@
+code,title,statement,severity,category,rationale,exception_process
+REG-001,Price display includes VAT in the EU,"Prices shown to EU consumers must include VAT.",hard,regional,EU consumer pricing directive,
+REG-002,Cookie consent banner in the EU and UK,"Non-essential cookies must not be set for EU or UK visitors before they give consent through a cookie banner.",hard,regional,ePrivacy Directive and UK PECR,
+REG-003,Sweepstakes need official rules,"Sweepstakes and giveaways should publish official rules including eligibility and odds.",flexible,regional,US state sweepstakes laws,Legal may approve a short-form rules page for campaigns under 1000 USD in prizes.

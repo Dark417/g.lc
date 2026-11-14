@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: ai-sdk
+  labels: {app: backend}
+spec:
+  # ONE replica by default. With REDIS_URL set the session lock and registry are already shared
+  # across replicas; what still pins state to one pod is SQLite (DIY checkpoints, local memory,
+  # LangGraph sqlite) and the Claude CLI's session files. Use the managed branches (bedrock /
+  # vertex) or Postgres, and RedisSessionStore for Claude, before scaling out.
+  # See docs/design/07-state-and-memory.md.
+  replicas: 1
+  strategy: {type: Recreate}
+  selector:
+    matchLabels: {app: backend}
+  template:
+    metadata:
+      labels: {app: backend}
+    spec:
+      serviceAccountName: backend   # bind to an IAM role (IRSA) or GCP SA (Workload Identity)
+      securityContext: {runAsNonRoot: true, runAsUser: 1000, fsGroup: 1000}
+      containers:
+        - name: backend
+          image: ai-sdk-backend:latest
+          ports: [{containerPort: 8000}]
+          envFrom:
+            - configMapRef: {name: backend-config}
+            - secretRef: {name: backend-secrets}
+          readinessProbe:
+            httpGet: {path: /healthz, port: 8000}
+          livenessProbe:
+            httpGet: {path: /healthz, port: 8000}
+            initialDelaySeconds: 20
+          resources:
+            requests: {cpu: 500m, memory: 1Gi}
+            limits: {cpu: "2", memory: 3Gi}   # Chromium + Claude CLI subprocesses
+          volumeMounts:
+            - {name: data, mountPath: /app/data/generated}
+      volumes:
+        - name: data
+          persistentVolumeClaim: {claimName: backend-data}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: backend
+  namespace: ai-sdk
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: backend-data
+  namespace: ai-sdk
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests: {storage: 2Gi}

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: chatbot-angular
+  labels: { app: frontend }
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: frontend }
+  template:
+    metadata:
+      labels: { app: frontend }
+    spec:
+      containers:
+        - name: frontend
+          image: REGISTRY/chatbot-angular-frontend:latest
+          ports: [{ containerPort: 8080 }]
+          env:
+            # nginx inside the pod proxies /api to the backend Service.
+            - { name: BACKEND_URL, value: "http://backend:80" }
+          readinessProbe:
+            httpGet: { path: /, port: 8080 }
+          resources:
+            requests: { cpu: 25m, memory: 32Mi }
+            limits: { cpu: 200m, memory: 64Mi }
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: chatbot-angular
+spec:
+  selector: { app: frontend }
+  ports: [{ port: 80, targetPort: 8080 }]

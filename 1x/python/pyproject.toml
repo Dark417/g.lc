@@ -12,6 +12,7 @@ dependencies = [
   "psycopg[binary]>=3.2",
   "psycopg-pool>=3.3",  # callable kwargs: fresh IAM token per new connection
   "confluent-kafka>=2.5",
+  "pymongo>=4.9",  # 03db.04mongodb: sync driver (4.9+ also ships AsyncMongoClient)
 ]
 
 [build-system]

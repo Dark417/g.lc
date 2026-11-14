@@ -1,0 +1,19 @@
+# PRODUCTION shape: the MCP server as its own deployable, reached over streamable-http.
+# Same code as the stdio version; only the transport differs. Set MCP_TRANSPORT=http on the backend.
+FROM python:3.11-slim AS build
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+WORKDIR /app
+ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen --no-dev --no-install-project
+COPY app ./app
+RUN uv sync --frozen --no-dev
+
+FROM python:3.11-slim
+RUN useradd -m -u 1000 appuser
+WORKDIR /app
+COPY --from=build --chown=appuser:appuser /app /app
+ENV PATH="/app/.venv/bin:$PATH" PYTHONUNBUFFERED=1
+USER appuser
+EXPOSE 8001
+CMD ["python", "-m", "app.mcp.server", "--http"]

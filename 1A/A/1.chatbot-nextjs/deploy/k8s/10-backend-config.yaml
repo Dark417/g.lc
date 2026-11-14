@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+  namespace: chatbot-nextjs
+data:
+  MODEL: gemini-2.5-flash
+  APP_NAME: chatbot
+  CORS_ORIGINS: '["https://chatbot.example.com"]'
+  LOG_LEVEL: INFO
+---
+# Do NOT commit a real secret. Create it out-of-band:
+#   kubectl -n chatbot-nextjs create secret generic backend-secrets --from-literal=GOOGLE_API_KEY=...
+# PRODUCTION: External Secrets Operator / Sealed Secrets / cloud secret manager CSI driver.
+apiVersion: v1
+kind: Secret
+metadata:
+  name: backend-secrets
+  namespace: chatbot-nextjs
+type: Opaque
+stringData:
+  GOOGLE_API_KEY: REPLACE_ME

@@ -17,11 +17,11 @@ a:
     text: us.anthropic.claude-sonnet-4-5-20250929-v1:0
     fast: us.anthropic.claude-haiku-4-5-20251001-v1:0
 
-  # 01.01 Bedrock Converse API (terraform/01.01.bedrock-converse.tf)
+  # 01.01 Bedrock Converse API (terraform/modules/01bedrock_01converse/)
   converse:
     enabled: false
 
-  # 04.01 Bedrock Guardrails (terraform/04.01.guardrails.tf)
+  # 04.01 Bedrock Guardrails (terraform/modules/04safety_01guardrails/)
   guardrails:
     enabled: false
     guardrail-id: GUARDRAIL_ID   # terraform output guardrail_id

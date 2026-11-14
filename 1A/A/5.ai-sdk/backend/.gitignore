@@ -1,0 +1,5 @@
+.venv/
+.env
+data/generated/
+__pycache__/
+evals/out/

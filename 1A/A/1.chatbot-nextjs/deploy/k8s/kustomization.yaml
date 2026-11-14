@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - 00-namespace.yaml
+  - 10-backend-config.yaml
+  - 20-backend.yaml
+  - 30-frontend.yaml
+  - 40-ingress.yaml
+# CI overrides image tags:
+#   kustomize edit set image REGISTRY/chatbot-nextjs-backend=ghcr.io/you/chatbot-nextjs-backend:sha
+images:
+  - name: REGISTRY/chatbot-nextjs-backend
+    newTag: latest
+  - name: REGISTRY/chatbot-nextjs-frontend
+    newTag: latest

@@ -1,0 +1,59 @@
+AWS ORG — account map (private, gitignored; no passwords or keys in here)
+Last checked: 2026-10-26
+
+AWS Organization (r-3sq0)
+│
+├── Management account  381492022873  "Xiaoxiao Lei"   ← the boss: billing, org, SSO
+│     ├── root user:   xiaoxiaolei417@gmail.com
+│     ├── alias:       admin0   (IAM sign-in: https://admin0.signin.aws.amazon.com/console)
+│     ├── IAM user:    xx_ai0   (group ai_0; console password + access keys → CLI profile `default`)
+│     ├── IAM Identity Center (SSO, us-east-1, instance ssoins-7223e276d38d4572)
+│     │     ├── SSO users:        xiao_ai0, dark417            ← people who log in
+│     │     └── permission sets:  EdgarAdmin, StudyAdmin       ← both AdministratorAccess, 12h
+│     └── Budget: study-monthly ($20/mo, filter = study account,
+│                 email alerts at 80% forecast / 100% actual → xiaoxiaolei417+aws-study)
+│
+├── OU "ai"  ou-3sq0-pyvew185   (empty)
+│
+├── Member account  806168459926  "demo"   (EDGAR lakehouse project, us-east-2)
+│     └── root user: xiaoxiaolei417+demo@gmail.com   (was xxlei1997@gmail.com; changed 2026-10-26)
+│
+└── Member account  548545900010  "study"  (cert labs, us-east-1)
+      └── root user: xiaoxiaolei417+aws-study@gmail.com   (no password yet → "Forgot password" if ever needed)
+
+
+SIGN IN
+  SSO portal (everyday):  https://d-9067f2be7b.awsapps.com/start
+                          → sign in as xiao_ai0 → pick account → role → Management console
+  Root (rare):            https://console.aws.amazon.com → Root user → account email
+  IAM user (mgmt only):   https://admin0.signin.aws.amazon.com/console → xx_ai0
+
+
+SSO ASSIGNMENTS (user + permission set + account)
+  xiao_ai0, dark417  →  EdgarAdmin  →  demo  (806168459926)
+  xiao_ai0, dark417  →  StudyAdmin  →  study (548545900010)
+
+
+CLI PROFILES (~/.aws/config)
+  profile      account        how                                         region
+  default      management     xx_ai0 permanent keys (~/.aws/credentials)  us-west-2
+  edgar-sso    demo           SSO → EdgarAdmin                            us-east-2
+  edgar        demo           default keys → OrganizationAccountAccessRole us-east-2
+  study-sso    study          SSO → StudyAdmin                            us-east-1
+  study        study          default keys → OrganizationAccountAccessRole us-east-1
+
+  SSO login (lasts ~8h; one login covers edgar-sso and study-sso, sso-session "edgar"):
+    aws sso login --profile study-sso
+  Labs: set the profile first, or commands without --profile hit the MANAGEMENT account:
+    $env:AWS_PROFILE="study-sso"      # PowerShell
+    export AWS_PROFILE=study-sso      # Git Bash
+
+
+ROOT EMAILS
+  Each AWS account needs a root email unique across all of AWS.
+  Use Gmail plus-addresses for new accounts, e.g. xiaoxiaolei417+lab2@gmail.com.
+  xxlei1997@gmail.com is no longer used by any account in this org (freed 2026-10-26).
+  Org has trusted access for AWS Account Management (account.amazonaws.com), so the
+  management account can change member root emails:
+    aws account start-primary-email-update --account-id <id> --primary-email <new>
+    aws account accept-primary-email-update --account-id <id> --primary-email <new> --otp <code from email>

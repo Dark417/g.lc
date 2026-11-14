@@ -1,0 +1,18 @@
+# Everything goes to the frontend pod; its nginx forwards /api to the backend Service.
+# Alternative: route /api at the Ingress like 1.chatbot-nextjs does. Both work; pick one and be consistent.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: chatbot
+  namespace: chatbot-angular
+  annotations:
+    # cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: chatbot.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend: { service: { name: frontend, port: { number: 80 } } }

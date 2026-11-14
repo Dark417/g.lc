@@ -7,6 +7,10 @@ spring:
     name: x
   main:
     banner-mode: off
+  autoconfigure:
+    # The MongoDB driver on the classpath would make Boot auto-create a MongoClient that dials localhost.
+    # The 03db.04mongodb slice builds its own client only when x.mongodb.enabled=true.
+    exclude: org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration
 
 server:
   port: 8080
@@ -23,7 +27,7 @@ x:
     timeout: 2s
     tax-rate: 0.08
 
-  # 03.01 Aurora PostgreSQL (terraform/03.01.aurora-postgres.tf)
+  # 03.01 Aurora PostgreSQL (terraform/modules/03db_01aurora/)
   aurora:
     enabled: false
     writer-endpoint: x-aurora.cluster-EXAMPLE.us-east-1.rds.amazonaws.com
@@ -43,7 +47,7 @@ x:
       max-lifetime-ms: 840000   # 14 min: < 15 min IAM token life; recycles pools after failover
       idle-timeout-ms: 300000
 
-  # 03.02 DynamoDB (terraform/03.02.dynamodb.tf)
+  # 03.02 DynamoDB (terraform/modules/03db_02dynamodb/)
   dynamodb:
     enabled: false
     orders-table: x-orders
@@ -52,6 +56,17 @@ x:
     endpoint-override: ""        # e.g. http://localhost:8000 for DynamoDB Local
     idempotency-retention: PT24H
 
+  # 03db.04 MongoDB (local: 1x/local/mongodb; AWS: terraform/modules/03db_04mongodb = DocumentDB)
+  mongodb:
+    enabled: false
+    uri: ${X_MONGODB_URI:mongodb://localhost:27017/?replicaSet=rs0}
+    database: xdb
+    app-name: x-mongodb
+    max-pool-size: 50
+    server-selection-timeout: 5s   # "no primary" fails here (driver default 30 s)
+    max-time: 2s                   # default maxTimeMS for user-facing queries
+    tls-ca-file: ""                # DocumentDB: path to global-bundle.pem (env X_MONGODB_TLS_CA_FILE)
+
   # 03.03 S3 (terraform/03.03.s3.tf)
   s3:
     enabled: false
@@ -59,25 +74,25 @@ x:
     athena-results-bucket: x-athena-results-ACCOUNT_ID
     kms-key-alias: alias/x-data
 
-  # 04.01 Athena (terraform/04.01.athena.tf)
+  # 04.01 Athena (terraform/modules/05analytics_01athena/)
   athena:
     enabled: false
     workgroup: x-wg
     database: x_lake
 
-  # 04.02 Redshift (terraform/04.02.redshift.tf)
+  # 04.02 Redshift (terraform/modules/05analytics_02redshift/)
   redshift:
     enabled: false
     workgroup: x-dw
     database: dev
 
-  # 05.01 Kinesis + Firehose (terraform/05.01.kinesis.tf)
+  # 05.01 Kinesis + Firehose (terraform/modules/02messaging_01kinesis/)
   kinesis:
     enabled: false
     stream: x-clicks
     firehose: x-events
 
-  # 05.02 Kafka on MSK (terraform/05.02.kafka-msk.tf)
+  # 05.02 Kafka on MSK (terraform/modules/02messaging_02kafka/)
   kafka:
     enabled: false
     bootstrap-servers: localhost:9092

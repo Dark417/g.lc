@@ -2,7 +2,7 @@
 
 - A slice router is imported and mounted only when its name is in A_ENABLED.
 - With A_ENABLED empty the app starts with no cloud access and no slice imports.
-- Each slice module exposes `router` in app/<package>/api.py.
+- Each slice module exposes `router` in app/api/<component>.py.
 """
 
 import importlib
@@ -11,25 +11,25 @@ from fastapi import FastAPI
 
 from app.shared.config import get_settings
 
-# slice name (used in A_ENABLED) -> package under app/
+# slice name (used in A_ENABLED) -> component module name under app/api/
 SLICES: dict[str, str] = {
-    "converse": "a01_01_converse",
-    "customization": "a01_02_customization",
-    "prompts": "a01_03_prompt_management",
-    "flows": "a01_04_prompt_flows",
-    "prompting": "a01_05_prompt_engineering",
-    "embeddings": "a02_01_embeddings",
-    "opensearch": "a02_02_opensearch",
-    "chunking": "a02_03_chunking",
-    "kb": "a02_04_knowledge_bases",
-    "bda": "a03_01_data_automation",
-    "glue_dq": "a03_02_glue_data_quality",
-    "transcribe": "a03_03_transcribe",
-    "comprehend": "a03_04_comprehend",
-    "guardrails": "a04_01_guardrails",
-    "pii": "a04_02_pii_redaction",
-    "evals": "a04_03_evaluations",
-    "observability": "a05_01_observability",
+    "converse": "_01bedrock_01converse",
+    "customization": "_01bedrock_02customization",
+    "prompts": "_01bedrock_03prompt_management",
+    "flows": "_01bedrock_04prompt_flows",
+    "prompting": "_01bedrock_05prompt_engineering",
+    "embeddings": "_02rag_01embeddings",
+    "opensearch": "_02rag_02opensearch",
+    "chunking": "_02rag_03chunking",
+    "kb": "_02rag_04knowledge_bases",
+    "bda": "_03data_01data_automation",
+    "glue_dq": "_03data_02glue_data_quality",
+    "transcribe": "_03data_03transcribe",
+    "comprehend": "_03data_04comprehend",
+    "guardrails": "_04safety_01guardrails",
+    "pii": "_04safety_02pii_redaction",
+    "evals": "_04safety_03evaluations",
+    "observability": "_05ops_01observability",
 }
 
 
@@ -40,7 +40,7 @@ def create_app() -> FastAPI:
     if unknown:
         raise ValueError(f"Unknown slices in A_ENABLED: {sorted(unknown)}")
     for name in sorted(enabled):
-        module = importlib.import_module(f"app.{SLICES[name]}.api")
+        module = importlib.import_module(f"app.api.{SLICES[name]}")
         app.include_router(module.router, prefix=f"/{name}", tags=[name])
 
     @app.get("/health")

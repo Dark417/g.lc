@@ -1,0 +1,37 @@
+[
+  {
+    "id": "math_uses_calculate",
+    "input": "What is 12 * 7?",
+    "expected_tools": ["calculate"],
+    "rubric": "States that 12 * 7 = 84.",
+    "min_score": 4
+  },
+  {
+    "id": "time_uses_tool",
+    "input": "What time is it in UTC right now?",
+    "expected_tools": ["get_current_time"],
+    "rubric": "Gives a specific current time in UTC, not a refusal or a guess.",
+    "min_score": 3
+  },
+  {
+    "id": "orders_via_data_agent",
+    "input": "How many orders does Ada Lovelace have and what's their total value?",
+    "expected_tools": ["Task"],
+    "rubric": "Says Ada has 3 orders totalling 443.00 USD (149 + 229 + 65). No invented orders.",
+    "min_score": 4
+  },
+  {
+    "id": "return_window_grounded",
+    "input": "How long do I have to return an unused item?",
+    "expected_tools": ["Task"],
+    "rubric": "Mentions the 60-day window for unused items in original packaging, refund to original payment method. Does not invent other conditions.",
+    "min_score": 4
+  },
+  {
+    "id": "weather_via_mcp",
+    "input": "What's the weather in Berlin?",
+    "expected_tools": ["Task"],
+    "rubric": "Reports 14 C and overcast for Berlin.",
+    "min_score": 4
+  }
+]

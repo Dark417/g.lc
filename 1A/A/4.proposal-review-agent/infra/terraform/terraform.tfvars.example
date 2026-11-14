@@ -1,0 +1,10 @@
+# cp terraform.tfvars.example terraform.tfvars   (never commit terraform.tfvars)
+project_id   = "your-gcp-project"
+region       = "us-central1"
+admin_emails = ["you@company.com"]
+user_emails  = ["group:compliance-users@company.com"]
+mcp_invokers = ["user:you@company.com"]
+
+# Phase 1: false. Phase 2 (after images are pushed and Firestore Mongo credentials exist): true.
+deploy_services = false
+# mongo_url = "mongodb://USER:PASSWORD@UID.LOCATION.firestore.goog:443/proposal-review-docs?loadBalanced=true&tls=true&authMechanism=SCRAM-SHA-256&retryWrites=false"

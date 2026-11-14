@@ -1,0 +1,46 @@
+[project]
+name = "angular-full-backend"
+version = "0.1.0"
+description = "FastAPI + Google ADK: orchestrator, tools, SQLite, RAG, MCP, streaming, evals"
+requires-python = ">=3.11"
+dependencies = [
+    # db  -> DatabaseSessionService (SQLAlchemy). mcp -> McpToolset + FastMCP server.
+    "google-adk[db,mcp]>=2.9,<3",
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "pydantic-settings>=2.4",
+]
+
+[project.optional-dependencies]
+# Heavy (vertex eval, pandas, nltk). Only needed to run `adk eval` / `pytest -m eval`.
+eval = ["google-adk[eval]>=2.9,<3"]
+# PRODUCTION vector store example. See app/rag/vector_store.py.
+chroma = ["chromadb>=0.5"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "pytest-asyncio>=0.24",
+    "httpx>=0.27",
+    "ruff>=0.6",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+markers = ["eval: needs GOOGLE_API_KEY and the eval extra; run with -m eval"]
+addopts = "-m 'not eval'"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]

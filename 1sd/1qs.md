@@ -287,7 +287,7 @@
 <a id="s2"></a>
 ## 2. Product Questions By Type
 
-- Each question: core features (3–5) + key challenge + patterns used (see 1.sd.md section 6)
+- Each question: core features (3–5) + key challenge + patterns used (see 1sd.md section 6)
 
 <a id="s2-1"></a>
 ### 2.1 Realtime messaging

@@ -1,0 +1,36 @@
+{
+  "eval_set_id": "local_tools",
+  "name": "Root agent uses local tools instead of guessing",
+  "eval_cases": [
+    {
+      "eval_id": "math_uses_calculate",
+      "conversation": [
+        {
+          "invocation_id": "inv-1",
+          "user_content": { "role": "user", "parts": [{ "text": "What is 12 * 7?" }] },
+          "final_response": { "role": "model", "parts": [{ "text": "12 * 7 = 84." }] },
+          "intermediate_data": {
+            "tool_uses": [{ "name": "calculate", "args": { "expression": "12 * 7" } }],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": { "app_name": "angular-full", "user_id": "eval", "state": {} }
+    },
+    {
+      "eval_id": "time_uses_get_current_time",
+      "conversation": [
+        {
+          "invocation_id": "inv-1",
+          "user_content": { "role": "user", "parts": [{ "text": "What time is it in UTC right now?" }] },
+          "final_response": { "role": "model", "parts": [{ "text": "The current time in UTC is ..." }] },
+          "intermediate_data": {
+            "tool_uses": [{ "name": "get_current_time", "args": { "timezone": "UTC" } }],
+            "intermediate_responses": []
+          }
+        }
+      ],
+      "session_input": { "app_name": "angular-full", "user_id": "eval", "state": {} }
+    }
+  ]
+}

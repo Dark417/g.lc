@@ -1,0 +1,36 @@
+{
+  "eval_set_id": "policies",
+  "name": "Policy answers are grounded in the knowledge base",
+  "eval_cases": [
+    {
+      "eval_id": "return_window",
+      "conversation": [
+        {
+          "invocation_id": "inv-1",
+          "user_content": { "role": "user", "parts": [{ "text": "How long do I have to return an unused item?" }] },
+          "final_response": {
+            "role": "model",
+            "parts": [{ "text": "Unused items in original packaging can be returned within 60 days of delivery for a refund to the original payment method." }]
+          },
+          "intermediate_data": { "tool_uses": [], "intermediate_responses": [] }
+        }
+      ],
+      "session_input": { "app_name": "angular-full", "user_id": "eval", "state": {} }
+    },
+    {
+      "eval_id": "wash_sleeping_bag",
+      "conversation": [
+        {
+          "invocation_id": "inv-1",
+          "user_content": { "role": "user", "parts": [{ "text": "Can I dry clean my down sleeping bag?" }] },
+          "final_response": {
+            "role": "model",
+            "parts": [{ "text": "No. Never dry clean a down sleeping bag. Wash it with a down-specific detergent in a front-loading machine and tumble dry on low with dryer balls." }]
+          },
+          "intermediate_data": { "tool_uses": [], "intermediate_responses": [] }
+        }
+      ],
+      "session_input": { "app_name": "angular-full", "user_id": "eval", "state": {} }
+    }
+  ]
+}

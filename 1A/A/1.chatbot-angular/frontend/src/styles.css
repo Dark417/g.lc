@@ -1,0 +1,13 @@
+:root {
+  --bg: #fff;
+  --fg: #111;
+  --muted: #777;
+  --user: #fde2e4;
+  --bot: #f3f4f6;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #111; --fg: #eee; --muted: #999; --user: #5f1e2a; --bot: #222; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.4 system-ui, sans-serif; }
+main { max-width: 720px; margin: 0 auto; padding: 24px 16px; }

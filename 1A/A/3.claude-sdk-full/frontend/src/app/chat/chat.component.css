@@ -1,0 +1,17 @@
+.toolbar { display: flex; gap: 16px; align-items: center; margin-bottom: 12px; font-size: 14px; }
+.messages { list-style: none; padding: 0; margin: 0 0 12px; display: flex; flex-direction: column; gap: 8px; min-height: 240px; }
+.messages > li { padding: 10px 14px; border-radius: 12px; max-width: 90%; }
+.messages .user { align-self: flex-end; background: var(--user); }
+.messages .assistant { align-self: flex-start; background: var(--bot); }
+.text { white-space: pre-wrap; }
+.trace { margin: 0 0 8px; padding-left: 18px; font: 12px/1.5 ui-monospace, monospace; color: var(--muted); }
+.trace .tool_call { color: #2563eb; }
+.trace .tool_result { color: #059669; }
+.trace .agent_text { color: #7c3aed; }
+form { display: flex; gap: 8px; }
+input[type="text"], input:not([type]) { flex: 1; padding: 10px 12px; font: inherit; border: 1px solid #8884; border-radius: 8px; background: transparent; color: inherit; }
+button { padding: 10px 16px; font: inherit; border: 0; border-radius: 8px; background: #dd0031; color: #fff; cursor: pointer; }
+button:disabled { opacity: .5; cursor: default; }
+.muted { color: var(--muted); font-size: 13px; }
+.hints { margin-top: 12px; }
+.error { color: #dc2626; }
