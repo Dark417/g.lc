@@ -52,11 +52,11 @@
 
 - 2026-11-13 · A-092 Move-in: `A/` (agent chat apps), `claudecode/`, `mcp/` from `1a-all-you-can-think`; `apis` copied (gitignored); Terraform foundation → unnumbered `base_*` modules
 - 2026-11-13 · A-090 Restructure: group names (`01bedrock`, `02rag`, …), layer-first Java + Python with `_GGgroup_CCcomp` packages, `docs/` → `x-md/<group>/` flat concept files with Python blocks, Terraform project (base files, `envs/` local/dev/uat/prod, `modules/`), shared AGENTS.md synced with 1x, `1java.md` + `1python.md` merged into this Guide
-- 2026-11-13 · A-050 [C] 05ops.01observability (lecture 46)
-- 2026-11-13 · A-040..A-042 [C] 04safety: 01guardrails (Python + Java), 02pii-redaction, 03evaluations (lectures 21, 23–26, 34, 49–51)
-- 2026-11-13 · A-030..A-033 [C] 03data: 01data-automation, 02glue-data-quality, 03transcribe, 04comprehend (lectures 38–39, 43–52)
-- 2026-11-13 · A-020..A-023 [C] 02rag: 01embeddings, 02opensearch, 03chunking, 04knowledge-bases (lectures 13–21, 53–59)
-- 2026-11-13 · A-010..A-014 [C] 01bedrock: 01converse (Python + Java), 02customization, 03prompt-management, 04prompt-flows, 05prompt-engineering (lectures 7–12, 22, 27–34)
+- 2026-11-13 · A-050 [C] observability (lecture 46)
+- 2026-11-13 · A-040..A-042 [C] 04safety: guardrails (Python + Java), pii-redaction, evaluations (lectures 21, 23–26, 34, 49–51)
+- 2026-11-13 · A-030..A-033 [C] 03data: data-automation, glue-data-quality, transcribe, comprehend (lectures 38–39, 43–52)
+- 2026-11-13 · A-020..A-023 [C] 02rag: embeddings, opensearch, chunking, knowledge-bases (lectures 13–21, 53–59)
+- 2026-11-13 · A-010..A-014 [C] 01bedrock: converse (Python + Java), customization, prompt-management, prompt-flows, prompt-engineering (lectures 7–12, 22, 27–34)
 - 2026-11-13 · Checks for the 17 concepts: `mvn compile`, compileall + 91-route import, `terraform validate` passed
 - 2026-11-13 · A-003 Terraform foundation `base_*`; `terraform validate` passed (1.9.8, aws 6.73.0)
 - 2026-11-13 · A-002 Java base: Spring Boot 3.5.16, Java 17, SDK BOM 2.59.0 (`bedrockruntime`, `bedrock`, `bedrockagentruntime`)

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>jarvis-t</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mind-elixir@6.0.1/dist/MindElixir.css">
+<style>
+  :root { --bg:#fafaf8; --fg:#1d1d1f; --muted:#8a8a8e; --line:#e6e6e3; --accent:#2f6fde; --sel:#eef3fd; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#151517; --fg:#ececec; --muted:#8d8d92; --line:#2a2a2e; --accent:#6ea0ff; --sel:#1e2635; } }
+  * { box-sizing: border-box; }
+  body { margin:0; font:16px/1.45 -apple-system, "Segoe UI", system-ui, sans-serif; background:var(--bg); color:var(--fg); }
+  header { position:sticky; top:0; background:var(--bg); border-bottom:1px solid var(--line); padding:10px 14px; display:flex; gap:8px; align-items:center; z-index:2; }
+  header h1 { font-size:17px; margin:0 auto 0 0; }
+  button { font:inherit; border:1px solid var(--line); background:transparent; color:var(--fg); border-radius:8px; padding:6px 10px; cursor:pointer; }
+  button.on { background:#7c3aed; color:#fff; border-color:#7c3aed; }
+  .pick { display:flex; align-items:center; gap:4px; border:1px solid var(--line); border-radius:8px; padding:3px 6px; font-weight:600; color:var(--fg); }
+  .pick input { width:26px; height:24px; border:none; padding:0; background:transparent; cursor:pointer; }
+  .map-container { --main-color: var(--fg) !important; --color: var(--fg) !important; }
+  #status { font-size:13px; color:var(--muted); min-width:60px; text-align:right; }
+  main { max-width:820px; margin:0 auto; padding:10px 8px 120px; }
+  .add { display:flex; gap:6px; margin:6px 6px 12px; }
+  .add input { flex:1; font:inherit; padding:8px 10px; border:1px solid var(--line); border-radius:8px; background:transparent; color:var(--fg); }
+  ul { list-style:none; margin:0 0 0 9px; padding-left:18px; border-left:2px solid var(--line); }
+  #tree > ul { padding-left:0; margin-left:0; border-left:none; }
+  .sq { width:8px; height:8px; flex:none; margin-top:8px; border-radius:2px; background:#7c3aed; }
+  .sq.l2 { background:#2563eb; } .sq.l3 { background:#0d9488; } .sq.l4 { background:#ea580c; }
+  .done > .row .sq { opacity:.35; }
+  .row { display:flex; align-items:flex-start; gap:6px; padding:5px 6px; border-radius:8px; }
+  .row.sel { background:var(--sel); }
+  .tw { width:20px; flex:none; color:var(--muted); text-align:center; cursor:pointer; user-select:none; }
+  .row input[type=checkbox] { width:18px; height:18px; margin-top:3px; flex:none; accent-color:var(--accent); }
+  .dot { width:18px; flex:none; text-align:center; color:var(--muted); }
+  .txt { flex:1; word-break:break-word; cursor:text; min-height:22px; }
+  .done > .row .txt, .txt.struck { color:var(--muted); text-decoration:line-through; text-decoration-thickness:2px; }
+  .done > .row .txt .tag { text-decoration:inherit; }
+  .mdone .text, .mdone .text * { text-decoration:line-through !important; text-decoration-thickness:2px; opacity:.55; }
+  #map.hand, #map.hand * { cursor:grab !important; } #map.hand.grabbing, #map.hand.grabbing * { cursor:grabbing !important; }
+  .cnt { font-size:12px; color:var(--muted); flex:none; margin-top:2px; }
+  .tag { color:var(--accent); }
+  .edit { flex:1; font:inherit; padding:2px 6px; border:1px solid var(--accent); border-radius:6px; background:transparent; color:var(--fg); }
+  #bar { position:fixed; left:0; right:0; bottom:0; display:none; gap:6px; justify-content:center; flex-wrap:wrap; padding:10px 10px calc(10px + env(safe-area-inset-bottom)); background:var(--bg); border-top:1px solid var(--line); }
+  #bar.show { display:flex; }
+  #banner { display:none; margin:8px; padding:10px; border-radius:8px; background:#fff3cd; color:#5c4400; }
+  #map { display:none; width:100%; height:calc(100vh - 120px); }
+  #mapbar { display:none; position:fixed; left:0; right:0; bottom:0; gap:6px; justify-content:center; flex-wrap:wrap; padding:10px 10px calc(10px + env(safe-area-inset-bottom)); background:var(--bg); border-top:1px solid var(--line); z-index:3; }
+  .map-mode #mapbar { display:flex; }
+  .map-mode #map { display:block; } .map-mode main { display:none; }
+</style>
+</head>
+<body>
+<header>
+  <h1>jarvis-t</h1>
+  <label class="pick" title="Text color">A<input type="color" id="fgPick"></label>
+  <button id="hideDone">Hide done</button>
+  <button id="l4Btn" title="Show level 4 under opened level-3 items">L4</button>
+  <button id="treeBtn" class="on">Tree</button>
+  <button id="mapBtn">Map</button>
+  <span id="status"></span>
+</header>
+<div id="banner"></div>
+<main>
+  <div class="add"><input id="newTop" placeholder="New task, press Enter" enterkeyhint="done"><button id="addTop">Add</button></div>
+  <div id="tree"></div>
+</main>
+<div id="map"></div>
+<div id="mapbar">
+  <button data-m="child">+ Sub</button><button data-m="sibling">+ Below</button>
+  <button data-m="edit">Edit</button><button data-m="done">✓ Done</button><button id="handBtn" title="Hand tool (H): drag the canvas">✋ Hand</button><button data-m="del">Delete</button>
+</div>
+<div id="bar">
+  <button data-a="child">+ Sub</button><button data-a="sibling">+ Below</button>
+  <button data-a="outdent">⇤</button><button data-a="indent">⇥</button>
+  <button data-a="up">↑</button><button data-a="down">↓</button>
+  <button data-a="edit">Edit</button><button data-a="del">Delete</button>
+</div>
+
+<script>
+// ---------- model: node = {text, done: true|false|null(plain note), kids: [], open} ----------
+const MAX_TREE = 4;   // tree and map both show 4 levels
+let pre = [], root = { kids: [] }, mtime = null, dirty = false, saving = false, sel = null, editing = null;
+let hideDone = localStorageGet('hideDone') === '1';
+let showL4 = localStorageGet('showL4') === '1';
+
+function localStorageGet(k){ try { return localStorage.getItem(k); } catch { return null; } }
+function localStorageSet(k,v){ try { localStorage.setItem(k,v); } catch {} }
+
+let uidN = 0; function uid() { return 'n' + Date.now().toString(36) + (uidN++).toString(36); }
+function parse(md) {
+  const lines = md.replace(/\r/g, '').split('\n');
+  const r = { kids: [] }, stack = [{ ind: -1, node: r }], head = [];
+  let started = false;
+  for (const line of lines) {
+    const m = line.match(/^([ \t]*)[-*+] (?:\[([ xX])\] ?)?(.*)$/);
+    if (!m) { if (!started) head.push(line); continue; }
+    started = true;
+    const ind = m[1].replace(/\t/g, '    ').length;
+    while (stack[stack.length - 1].ind >= ind) stack.pop();
+    const node = { id: uid(), text: m[3], done: m[2] === undefined ? null : m[2] !== ' ', kids: [], open: stack.length < 3 };
+    stack[stack.length - 1].node.kids.push(node);
+    stack.push({ ind, node });
+  }
+  while (head.length && !head[head.length - 1].trim()) head.pop();
+  return { pre: head, root: r };
+}
+
+function serialize() {
+  const out = [...pre]; if (pre.length) out.push('');
+  (function walk(nodes, d) {
+    for (const n of nodes) {
+      const box = n.done === null ? '' : (n.done ? '[x] ' : '[ ] ');
+      out.push('  '.repeat(d) + '- ' + box + n.text);
+      walk(n.kids, d + 1);
+    }
+  })(root.kids, 0);
+  return out.join('\n') + '\n';
+}
+
+// ---------- helpers ----------
+function parentOf(target, nodes = root.kids, p = root) {
+  for (const n of nodes) { if (n === target) return p; const f = parentOf(target, n.kids, n); if (f) return f; }
+  return null;
+}
+function counts(n) { let d = 0, t = 0; (function w(ns){ for (const k of ns){ if (k.done !== null){ t++; if (k.done) d++; } w(k.kids); } })(n.kids); return [d, t]; }
+function esc(s) { return s.replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c])); }
+function pretty(s) { return esc(s).replace(/(^|\s)(#[\w/-]+)/g, '$1<span class="tag">$2</span>'); }
+
+// ---------- render ----------
+function render() {
+  const tree = document.getElementById('tree');
+  tree.innerHTML = '';
+  tree.appendChild(list(root.kids, 1));
+  document.getElementById('bar').classList.toggle('show', !!sel && !editing);
+  document.getElementById('hideDone').classList.toggle('on', hideDone);
+  if (editing) { const i = document.querySelector('.edit'); if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }
+}
+function list(nodes, depth) {
+  const ul = document.createElement('ul');
+  for (const n of nodes) {
+    if (hideDone && n.done === true) continue;
+    const li = document.createElement('li'); if (n.done === true) li.className = 'done';
+    const row = document.createElement('div'); row.className = 'row' + (n === sel ? ' sel' : '');
+    const tw = document.createElement('span'); tw.className = 'tw';
+    const deep = depth === 3 && n.kids.length && !showL4;   // level 4 hidden until the L4 switch is on
+    tw.textContent = n.kids.length && !deep ? (n.open ? '▾' : '▸') : '';
+    tw.onclick = e => { e.stopPropagation(); n.open = !n.open; render(); };
+    const sq = document.createElement('span'); sq.className = 'sq l' + depth; row.appendChild(sq);
+    row.appendChild(tw);
+    if (n.done === null) { const d = document.createElement('span'); d.className = 'dot'; d.textContent = '•'; row.appendChild(d); }
+    else {
+      const cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = n.done;
+      cb.onclick = e => { e.stopPropagation(); n.done = cb.checked; changed(); };
+      row.appendChild(cb);
+    }
+    if (n === editing) {
+      const inp = document.createElement('input'); inp.className = 'edit'; inp.value = n.text; inp.enterKeyHint = 'done';
+      inp.onkeydown = e => {
+        if (e.key === 'Enter') { e.preventDefault(); finishEdit(inp.value, true); }
+        if (e.key === 'Escape') { editing = null; render(); }
+        if (e.key === 'Tab') { e.preventDefault(); n.text = inp.value; act(e.shiftKey ? 'outdent' : 'indent'); }
+      };
+      inp.onblur = () => { if (editing === n) finishEdit(inp.value, false); };
+      inp.onclick = e => e.stopPropagation();
+      row.appendChild(inp);
+    } else {
+      const t = document.createElement('span'); t.className = 'txt' + (n.done === true ? ' struck' : ''); t.innerHTML = pretty(n.text) || '&nbsp;';
+      t.onclick = e => { e.stopPropagation(); if (sel === n) { editing = n; } sel = n; render(); };
+      row.appendChild(t);
+      const [d, tot] = counts(n);
+      if (tot) { const c = document.createElement('span'); c.className = 'cnt'; c.textContent = (deep ? 'L4 +' + n.kids.length + ' · ' : '') + d + '/' + tot; row.appendChild(c); }
+    }
+    row.onclick = () => { sel = n; render(); };
+    li.appendChild(row);
+    if (n.kids.length && n.open && !deep && depth < MAX_TREE) li.appendChild(list(n.kids, depth + 1));
+    ul.appendChild(li);
+  }
+  return ul;
+}
+function finishEdit(val, addNext) {
+  const n = editing; editing = null;
+  if (!val.trim() && !n.kids.length) { const p = parentOf(n); p.kids.splice(p.kids.indexOf(n), 1); sel = null; changed(); return; }
+  n.text = val.trim();
+  if (addNext) { const p = parentOf(n); const m = { id: uid(), text: '', done: false, kids: [], open: true }; p.kids.splice(p.kids.indexOf(n) + 1, 0, m); sel = editing = m; }
+  changed();
+}
+
+// ---------- actions ----------
+function height(n) { return 1 + Math.max(0, ...n.kids.map(height)); }
+function depthOf(t, ns = root.kids, d = 1) { for (const n of ns) { if (n === t) return d; const f = depthOf(t, n.kids, d + 1); if (f) return f; } return 0; }
+function act(a) {
+  const n = sel; if (!n) return;
+  if ((a === 'child' && depthOf(n) >= MAX_TREE) || (a === 'indent' && depthOf(n) + height(n) - 1 >= MAX_TREE)) { status('max 4 levels'); return; }
+  const p = parentOf(n), sib = p.kids, i = sib.indexOf(n);
+  const fresh = () => ({ id: uid(), text: '', done: false, kids: [], open: true });
+  if (a === 'child') { const m = fresh(); n.kids.push(m); n.open = true; sel = editing = m; }
+  if (a === 'sibling') { const m = fresh(); sib.splice(i + 1, 0, m); sel = editing = m; }
+  if (a === 'indent' && i > 0) { sib.splice(i, 1); sib[i - 1].kids.push(n); sib[i - 1].open = true; }
+  if (a === 'outdent' && p !== root) { const gp = parentOf(p); sib.splice(i, 1); gp.kids.splice(gp.kids.indexOf(p) + 1, 0, n); }
+  if (a === 'up' && i > 0) { [sib[i - 1], sib[i]] = [sib[i], sib[i - 1]]; }
+  if (a === 'down' && i < sib.length - 1) { [sib[i + 1], sib[i]] = [sib[i], sib[i + 1]]; }
+  if (a === 'edit') { editing = n; }
+  if (!showL4 && sel && depthOf(sel) === 4) { setL4(true); const pp = parentOf(sel); if (pp) pp.open = true; }
+  if (a === 'del') {
+    if (n.kids.length && !confirmDelete(n)) return;
+    sib.splice(i, 1); sel = null;
+  }
+  changed();
+}
+function confirmDelete(n) {   // inline two-tap confirm instead of a browser dialog
+  if (n._armed) return true;
+  n._armed = true; status('tap Delete again'); setTimeout(() => { n._armed = false; }, 3000); return false;
+}
+
+// ---------- sync ----------
+let timer = null;
+function changed() { dirty = true; render(); if (mapOn && !fromMap) drawMap(); clearTimeout(timer); timer = setTimeout(save, 600); status('…'); }
+function status(s) { document.getElementById('status').textContent = s; }
+async function load(force) {
+  try {
+    const r = await fetch('/api/todo'); const j = await r.json();
+    if (!force && (dirty || editing || j.mtime === mtime)) return;
+    ({ pre, root } = parse(j.text)); mtime = j.mtime; sel = null; render(); if (mapOn) drawMap(); status('synced');
+  } catch { status('offline'); }
+}
+async function save() {
+  if (saving) { timer = setTimeout(save, 300); return; }
+  saving = true;
+  try {
+    const r = await fetch('/api/todo', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: serialize(), mtime }) });
+    const j = await r.json();
+    if (r.status === 409) {
+      showBanner('The file changed somewhere else (Obsidian or another device). Your last edit was not saved.');
+      dirty = false; mtime = null; await load(true);
+    } else { mtime = j.mtime; dirty = false; status('saved'); }
+  } catch { status('offline, retrying'); timer = setTimeout(save, 3000); }
+  saving = false;
+}
+function showBanner(msg) { const b = document.getElementById('banner'); b.textContent = msg; b.style.display = 'block'; setTimeout(() => b.style.display = 'none', 6000); }
+
+// ---------- mind map (Mind Elixir: drag to move, add, delete, edit) ----------
+const MAX_MAP = 4;
+let mapOn = false, mind = null, MindElixir = null, fromMap = false;
+function icon(n) { return n.done === null ? [] : [n.done ? '✅' : '⬜']; }
+function toME() {
+  const conv = n => ({ id: n.id, topic: n.text || ' ', icons: icon(n), expanded: true, children: n.kids.map(conv) });
+  return { nodeData: { id: 'root', topic: 'jarvis-t', root: true, children: root.kids.map(conv) } };
+}
+function byId() { const m = {}; (function w(ns){ for (const n of ns){ m[n.id] = n; w(n.kids); } })(root.kids); return m; }
+function fromME(nd) {
+  const old = byId();
+  const conv = c => { const o = old[c.id]; return { id: c.id, text: (c.topic || '').trim(), done: o ? o.done : false, kids: (c.children || []).map(conv), open: o ? o.open : true }; };
+  return { kids: (nd.children || []).map(conv) };
+}
+function depthMax(ns, d = 1) { let m = ns.length ? d : d - 1; for (const n of ns) m = Math.max(m, depthMax(n.kids, d + 1)); return m; }
+async function drawMap() {
+  try {
+    if (!MindElixir) MindElixir = (await import('https://cdn.jsdelivr.net/npm/mind-elixir@6.0.1/dist/MindElixir.js')).default;
+    if (!mind) {
+      mind = new MindElixir({ el: '#map', direction: MindElixir.RIGHT, toolBar: true, keypress: true, contextMenu: true });
+      mind.init(toME());
+      setTimeout(() => mind.toCenter(), 50);   // normal size; pinch or the + / - buttons to zoom
+      mind.bus.addListener('operation', op => {
+        if (op.name === 'beginEdit') return;
+        const nr = fromME(mind.getData().nodeData);
+        if (depthMax(nr.kids) > MAX_MAP) { showBanner('Max 4 levels in the map.'); mind.refresh(toME()); return; }
+        root = nr; fromMap = true; changed(); fromMap = false;
+      });
+    } else mind.refresh(toME());
+  } catch (e) { console.error(e); showBanner('Map needs internet to load the Mind Elixir library.'); }
+}
+function selectedMapNode() { const c = mind && (mind.currentNodes ? mind.currentNodes[0] : mind.currentNode); return c || null; }
+function mapAct(a) {
+  if (!mind) return; const el = selectedMapNode();
+  if (!el) { status('tap a node first'); return; }
+  if (a === 'child') mind.addChild(el);
+  if (a === 'sibling') mind.insertSibling('after', el);
+  if (a === 'edit') mind.beginEdit(el);
+  if (a === 'del') mind.removeNodes(mind.currentNodes || [el]);
+  if (a === 'done') {
+    const n = byId()[el.nodeObj.id]; if (!n) return;
+    n.done = n.done === true ? false : true; fromMap = true; changed(); fromMap = false;
+    mind.refresh(toME());
+  }
+}
+// ---------- hand tool (H) ----------
+let hand = false, pan = null;
+function setHand(v) { hand = v; const m = document.getElementById('map'); m.classList.toggle('hand', v); document.getElementById('handBtn').classList.toggle('on', v); status(v ? 'hand: drag the canvas (H to exit)' : ''); }
+function panBy(dx, dy) {
+  if (!mind) return;
+  if (typeof mind.move === 'function') mind.move(dx, dy);
+  else { const c = mind.container; c.scrollLeft -= dx; c.scrollTop -= dy; }
+}
+(function () {
+  const m = document.getElementById('map');
+  const stop = e => { if (hand && !e.target.closest('.mind-elixir-toolbar')) { e.stopPropagation(); e.preventDefault(); } };
+  for (const t of ['mousedown', 'click', 'dblclick', 'dragstart', 'contextmenu', 'touchstart']) m.addEventListener(t, stop, true);
+  m.addEventListener('pointerdown', e => {
+    if (!hand || e.target.closest('.mind-elixir-toolbar')) return;
+    e.stopPropagation(); e.preventDefault(); pan = { x: e.clientX, y: e.clientY }; m.classList.add('grabbing');
+    try { m.setPointerCapture(e.pointerId); } catch {}
+  }, true);
+  m.addEventListener('pointermove', e => { if (!pan) return; panBy(e.clientX - pan.x, e.clientY - pan.y); pan = { x: e.clientX, y: e.clientY }; }, true);
+  const end = () => { pan = null; m.classList.remove('grabbing'); };
+  m.addEventListener('pointerup', end, true); m.addEventListener('pointercancel', end, true);
+})();
+document.getElementById('handBtn').onclick = e => { e.stopPropagation(); setHand(!hand); };
+document.addEventListener('keydown', e => {
+  if (!mapOn || e.target.tagName === 'INPUT' || e.target.isContentEditable || e.ctrlKey || e.metaKey || e.altKey) return;
+  if (e.key === 'h' || e.key === 'H') { e.preventDefault(); setHand(!hand); }
+});
+// strike-through for done nodes in the map
+function markDone() {
+  if (!mind) return; const d = byId();
+  document.querySelectorAll('#map .me-tpc').forEach(el => { const n = el.nodeObj && d[el.nodeObj.id]; el.classList.toggle('mdone', !!(n && n.done === true)); });
+}
+new MutationObserver(() => markDone()).observe(document.getElementById('map'), { childList: true, subtree: true });
+// ---------- wiring ----------
+document.getElementById('mapbar').onclick = e => { const a = e.target.dataset.m; if (a) { e.stopPropagation(); mapAct(a); } };
+document.getElementById('bar').onclick = e => { const a = e.target.dataset.a; if (a) { e.stopPropagation(); act(a); } };
+document.getElementById('addTop').onclick = addTop;
+document.getElementById('newTop').onkeydown = e => { if (e.key === 'Enter') addTop(); };
+function addTop() { const i = document.getElementById('newTop'); if (!i.value.trim()) return; root.kids.push({ id: uid(), text: i.value.trim(), done: false, kids: [], open: true }); i.value = ''; changed(); }
+function setL4(v) { showL4 = v; localStorageSet('showL4', v ? '1' : '0'); document.getElementById('l4Btn').classList.toggle('on', v); if (!v && sel && depthOf(sel) === 4) sel = null; render(); }
+document.getElementById('l4Btn').classList.toggle('on', showL4);
+document.getElementById('l4Btn').onclick = () => setL4(!showL4);
+document.getElementById('hideDone').onclick = () => { hideDone = !hideDone; localStorageSet('hideDone', hideDone ? '1' : '0'); render(); };
+function setView(map) { if (!map && hand) setHand(false); mapOn = map; document.body.classList.toggle('map-mode', map); document.getElementById('mapBtn').classList.toggle('on', map); document.getElementById('treeBtn').classList.toggle('on', !map); if (map) drawMap(); }
+document.getElementById('mapBtn').onclick = () => setView(true);
+document.getElementById('treeBtn').onclick = () => setView(false);
+document.querySelector('main').addEventListener('click', e => { if (e.target.closest('.row') || e.target.closest('.add')) return; sel = null; render(); });
+document.addEventListener('keydown', e => {
+  if (mapOn) return;
+  if (editing || !sel || e.target.tagName === 'INPUT') return;
+  const k = { Enter: 'edit', Tab: e.shiftKey ? 'outdent' : 'indent', Delete: 'del' }[e.key];
+  if (k) { e.preventDefault(); act(k); }
+  if (e.altKey && e.key === 'ArrowUp') act('up'); if (e.altKey && e.key === 'ArrowDown') act('down');
+});
+// text color picker (remembered per browser)
+const fgPick = document.getElementById('fgPick');
+function applyFg(c) { if (c) document.documentElement.style.setProperty('--fg', c); }
+applyFg(localStorageGet('fg'));
+fgPick.value = localStorageGet('fg') || getComputedStyle(document.documentElement).getPropertyValue('--fg').trim() || '#1d1d1f';
+fgPick.oninput = () => { applyFg(fgPick.value); localStorageSet('fg', fgPick.value); };
+load(true);
+setInterval(() => load(false), 10000);
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+- [ ] agentic ai
+  - [ ] Foundations (high level, before the gate)
+    - [ ] LLM basics: tokens, context window, sampling
+    - [ ] Prompting + structured output
+    - [ ] Prompting vs RAG vs fine-tuning: when to pick which
+  - [ ] Embeddings + vector search
+    - [ ] Embeddings + similarity metrics
+    - [ ] ANN indexes: HNSW, IVF
+    - [ ] Vector stores: pgvector, FAISS, Pinecone, Milvus
+  - [ ] RAG
+    - [ ] Chunking + metadata
+    - [ ] Hybrid retrieval (BM25 + vector) + rerank
+    - [ ] Citations + grounding
+    - [ ] Failure modes: stale index, bad chunks, hallucination
+  - [ ] Agents
+    - [ ] Agent loop: tool calling, ReAct, planning
+    - [ ] Memory: short-term, long-term, summarization
+    - [ ] Multi-agent patterns + handoff
+    - [ ] Frameworks: Google ADK (default) vs Claude Agent SDK vs LangGraph
+  - [ ] MCP
+    - [ ] Protocol: tools, resources, prompts
+    - [ ] Build one MCP server
+    - [ ] Auth + safety
+  - [ ] Serving + infra
+    - [ ] Batching, KV cache, latency vs cost
+    - [ ] vLLM / TGI, model gateway
+    - [ ] Caching + rate limits
+  - [ ] Evals + guardrails
+    - [ ] Eval sets, LLM-as-judge
+    - [ ] Tracing + observability
+    - [ ] Prompt injection + guardrails
+  - [ ] Certs: AWS AI Practitioner, CCA-F
+  - [ ] Build: one agent project, MVP0 to MVP2

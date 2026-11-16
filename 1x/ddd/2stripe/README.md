@@ -1,98 +1,38 @@
-# 2stripe — local Stripe POC (Spring Boot)
+# 2stripe2 — taking the local POC to the cloud (docs only)
 
-A small but real Spring Boot + Stripe **test-mode** payment app you can run on
-your laptop. Server creates PaymentIntents, browser confirms them with Stripe.js
-Elements using Stripe's test cards. Webhook endpoint included.
+This folder is the **runbook** for promoting [`../2stripe`](../2stripe) — a
+local Spring Boot + Stripe test app — into a real cloud service that can
+take live payments. No code is added here. Every doc below is a checklist
+of *what to set up, in what order, and why*.
 
-- **No cloud, no production wiring.** Everything runs on `localhost:8080`.
-- **Hits the actual Stripe API**, but only its test environment — you cannot
-  charge real cards with a `sk_test_…` key.
+> Read in order. Earlier docs justify decisions that later docs depend on.
 
-## What's inside
+## Docs index
 
-```
-2stripe/
-├── pom.xml
-├── README.md
-├── SETUP.md                                ← configure Stripe test keys here
-├── src/main/java/com/example/stripepoc/
-│   ├── StripePocApplication.java
-│   ├── config/   (Stripe SDK init, OpenAPI, @ConfigurationProperties)
-│   ├── controller/ (PaymentController, WebhookController)
-│   ├── service/  (PaymentService, StripeService — the SDK seam)
-│   ├── repository/ (Spring Data JPA)
-│   ├── model/    (Payment entity, PaymentStatus enum)
-│   ├── dto/      (request/response records)
-│   └── exception/ (PaymentException + global handler)
-├── src/main/resources/
-│   ├── application.yml
-│   ├── application-local.yml.example       ← copy → application-local.yml
-│   └── static/                             ← UI (one HTML + JS + CSS)
-└── src/test/java/com/example/stripepoc/
-    ├── StripePocApplicationTests.java       (context loads, no API calls)
-    ├── service/PaymentServiceTest.java      (unit, Stripe mocked)
-    └── integration/StripeIntegrationTest.java (hits Stripe test API)
-```
-
-## Stack
-
-| Layer | Choice |
-|---|---|
-| Language / JVM | Java **21** |
-| Framework | Spring Boot **3.4** (web, data-jpa, validation) |
-| Stripe SDK | `com.stripe:stripe-java` 28.x |
-| Database | H2 (file-mode, lives under `./data/`) |
-| API docs | springdoc-openapi (Swagger UI) |
-| UI | One static page + Stripe.js Elements |
-| Tests | JUnit 5 + Mockito + AssertJ |
-
-## Endpoints
-
-| Method | Path | What |
+| # | File | Topic |
 |---|---|---|
-| GET | `/` | Static checkout page |
-| GET | `/api/config` | `{ publishableKey, currency }` — public bootstrap |
-| POST | `/api/payments/intent` | Create a PaymentIntent → `clientSecret` |
-| GET | `/api/payments` | List recent payments |
-| GET | `/api/payments/{id}` | One payment (refreshes status from Stripe) |
-| POST | `/api/stripe/webhook` | Stripe → server callback (signed) |
-| GET | `/swagger-ui.html` | API explorer |
-| GET | `/h2-console` | Browse the local DB (jdbc url shown in `application.yml`) |
+| 01 | [`docs/01-cloud-overview.md`](docs/01-cloud-overview.md) | What "production" actually means for this app; environments; cloud provider choice; high-level architecture diagram. |
+| 02 | [`docs/02-sequence.md`](docs/02-sequence.md) | The end-to-end sequence — what to provision when, and what to *not* do until later. |
+| 03 | [`docs/03-auth-roles-permissions.md`](docs/03-auth-roles-permissions.md) | Authentication (OIDC), authorization (roles, scopes), API permissions, and admin access. |
+| 04 | [`docs/04-secrets-and-config.md`](docs/04-secrets-and-config.md) | Where Stripe keys live, secret rotation, environment isolation. |
+| 05 | [`docs/05-webhooks-and-idempotency.md`](docs/05-webhooks-and-idempotency.md) | Production-grade webhook handling, retries, idempotency, replay safety. |
+| 06 | [`docs/06-observability-and-compliance.md`](docs/06-observability-and-compliance.md) | Logging, metrics, tracing, PCI scope reduction, audit trails. |
+| 07 | [`docs/07-go-live-checklist.md`](docs/07-go-live-checklist.md) | Final pre-flight before flipping `sk_test_…` to `sk_live_…`. |
 
-## Running
+## TL;DR
 
-```bash
-# 1. configure (see SETUP.md for screenshots/links)
-cp src/main/resources/application-local.yml.example \
-   src/main/resources/application-local.yml
-$EDITOR src/main/resources/application-local.yml    # paste sk_test_… and pk_test_…
+The local POC is one process, one DB, one set of test keys. Production
+adds:
 
-# 2. run
-./mvnw spring-boot:run        # or:  mvn spring-boot:run
-# → http://localhost:8080
-```
+- **Two environments** (staging → prod), each with its own Stripe account
+  or restricted-key set, its own DB, its own secrets.
+- **Auth** in front of every non-public endpoint (your customers' payments
+  flow stays open; admin/list endpoints lock down behind OIDC + RBAC).
+- **Secrets manager** (never env files on disk in prod).
+- **Managed Postgres** instead of H2.
+- **Signed webhooks**, idempotency, and a retry-safe consumer.
+- **Observability**: structured logs, metrics, traces, alerting.
+- **PCI scope**: never let raw card data touch your server — keep using
+  Stripe.js / Elements / Checkout so you stay in SAQ-A territory.
 
-Then in the browser: enter an amount, type a Stripe test card
-(`4242 4242 4242 4242`, any future expiry, any CVC), press **Pay**. The
-"Recent payments" table updates and you'll see the same PaymentIntent on
-your Stripe dashboard under Payments (Test mode).
-
-## Tests
-
-```bash
-mvn test                       # context-load + unit tests (no network)
-STRIPE_SECRET_KEY=sk_test_…  mvn test   # also runs StripeIntegrationTest
-```
-
-The integration test is guarded with `@EnabledIfEnvironmentVariable` so CI
-without a Stripe key still passes.
-
-## Trade-offs (on purpose)
-
-- **No auth, no users.** Anyone with the URL can create test PaymentIntents.
-  That's fine on `localhost`; not fine in production — see [`../2stripe2`](../2stripe2).
-- **No saved payment methods / customers.** Each payment is one-shot.
-- **No background jobs.** Status is refreshed lazily on `GET` and pushed
-  by webhook when configured.
-- **H2 file DB.** Swap to Postgres by changing `spring.datasource.url`.
-- **CORS wide open** (default, since UI is same-origin).
+The sequence in `docs/02-sequence.md` is the spine of all of this.

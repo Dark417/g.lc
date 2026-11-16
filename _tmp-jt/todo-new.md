@@ -1,0 +1,240 @@
+- [ ] x — knowledge
+  - [ ] 0java
+    - [ ] Java core (1java0.md, 1java.collections.md)
+      - [ ] OOP: pillars, overriding vs overloading, dynamic dispatch, expression problem (java-oop.md)
+      - [ ] Language fundamentals: types, strings, immutability, pass-by-value
+      - [ ] Object contracts: equals, hashCode, compareTo
+      - [ ] Collections: List, Map (HashMap internals), Set, Queue / Deque
+      - [ ] Streams + functional (lambda, Optional, Collectors)
+      - [ ] Exceptions: checked vs unchecked, try-with-resources
+      - [ ] Generics: erasure, wildcards, PECS
+      - [ ] Concurrency basics: JMM, synchronized, volatile, executors (deep dive in 1core)
+      - [ ] JVM: memory layout, class loading, JIT
+      - [ ] GC: generations, G1 / ZGC, tuning, reading GC logs
+      - [ ] Modern Java 17+: records, sealed types, pattern matching, virtual threads
+      - [ ] I/O + NIO, serialization
+      - [ ] Troubleshooting: jstack, heap dump, OOM, memory leak
+    - [ ] Question banks
+      - [ ] Routine: 30-second spoken answer, score 0 / 1 / 2, relearn only 0 / 1
+      - [ ] 1antra0.md
+      - [ ] 2.antra-grouped.md
+      - [ ] 1Beaconfire Question Bank
+      - [ ] 1.Interview Q&A Bank (regrouped)
+  - [ ] 1core
+    - [ ] SOLID (solid.md): finish reading + answer the 20 questions #p1 📅 2026-11-16
+      - [ ] SRP: one actor, one reason to change
+      - [ ] OCP: closed to new variants, not frozen
+      - [ ] LSP: substitutability, Square / Rectangle
+      - [ ] ISP: small interfaces
+      - [ ] DIP vs DI vs IoC
+      - [ ] Answer Q1–Q20 aloud
+    - [ ] Design patterns (design-patterns.md): the 15 that get asked
+      - [ ] Singleton (creational)
+      - [ ] Factory Method (creational)
+      - [ ] Abstract Factory (creational)
+      - [ ] Builder (creational)
+      - [ ] Adapter (structural)
+      - [ ] Decorator (structural)
+      - [ ] Proxy (structural)
+      - [ ] Facade (structural)
+      - [ ] Composite (structural)
+      - [ ] Strategy (behavioral)
+      - [ ] Observer (behavioral)
+      - [ ] State (behavioral)
+      - [ ] Command (behavioral)
+      - [ ] Template Method (behavioral)
+      - [ ] Chain of Responsibility (behavioral)
+      - [ ] Skim the rest: Prototype, Bridge, Flyweight, Iterator, Mediator, Memento, Visitor, Interpreter
+      - [ ] Similar pairs: Strategy vs State, Proxy vs Decorator, Factory vs Builder
+      - [ ] Production: transactions, idempotency, ambiguous commits
+    - [ ] Design principles (design-principles.md, lean version)
+      - [ ] DRY
+      - [ ] KISS
+      - [ ] YAGNI
+      - [ ] Separation of concerns
+      - [ ] High cohesion, low coupling
+      - [ ] Composition over inheritance
+      - [ ] Program to an interface
+      - [ ] Encapsulate what varies
+      - [ ] Law of Demeter
+      - [ ] Tell, don't ask
+      - [ ] Command-query separation
+      - [ ] Fail fast
+      - [ ] Principle of least astonishment
+      - [ ] Tensions between principles + interview questions
+    - [ ] Spring + Spring Boot (spring.md, spring-boot.md)
+      - [ ] IoC + dependency injection
+      - [ ] AOP + proxies, @Transactional pitfalls
+      - [ ] Boot: auto-configuration, starters, profiles
+      - [ ] Bean lifecycle + scopes
+    - [ ] Concurrency (1concurrency.md)
+      - [ ] Concurrency vs parallelism, threads vs processes
+      - [ ] Atomicity, visibility, ordering
+      - [ ] Java toolbox: locks, atomics, executors, CompletableFuture
+      - [ ] Deadlock + liveness failures
+      - [ ] Picking the tool
+      - [ ] Python concurrency: GIL, asyncio
+    - [ ] Distributed systems (1dissys.md)
+      - [ ] Why distribute + taxonomy
+      - [ ] CAP / PACELC, consistency models
+      - [ ] Global unique IDs
+      - [ ] Idempotency, uniqueness, consistency in the DB
+      - [ ] Sharding vs replication, consistent hashing
+      - [ ] Time, clocks, failure detection
+      - [ ] Consensus: Raft / Paxos, leader election
+      - [ ] Distributed transactions: 2PC, saga, outbox
+      - [ ] Geo-routing + multi-region
+  - [ ] 2api-msg
+    - [ ] API design (2api-ds.md)
+      - [ ] HTTP methods: safe, idempotent, cacheable
+      - [ ] Threads: Tomcat, virtual threads, WebFlux
+      - [ ] Path vs query vs body vs header
+      - [ ] POST vs PUT vs PATCH
+      - [ ] Status codes + error model
+      - [ ] Pagination: offset vs cursor
+      - [ ] Idempotency keys, concurrency, long-running operations
+      - [ ] Auth, rate limits
+      - [ ] Versioning, serialization
+      - [ ] Estimation (Part B)
+    - [ ] API styles
+      - [ ] REST: resources, caching, retries (2rest101.md)
+      - [ ] GraphQL: resolvers, N+1 / DataLoader, query safety (2rest-gql.md)
+      - [ ] gRPC: protobuf, streaming, deadlines (2rest-grpc-websocket.md)
+      - [ ] WebSocket: handshake, scaling connections (2rest-grpc-websocket.md)
+      - [ ] SSE + long polling (3messaging.md §5)
+      - [ ] Webhooks: signing, retries, replay
+      - [ ] Pick one: REST vs GraphQL vs gRPC table
+    - [ ] Messaging (3messaging.md, 3messaging-async.md)
+      - [ ] Map: who talks to whom
+      - [ ] Client to server: polling, long poll, SSE, WebSocket
+      - [ ] Server to client: push, fan-out, long-lived connections
+      - [ ] Server to server: sync RPC vs async queue vs pub/sub
+      - [ ] Paradigms: point-to-point, pub/sub, streaming, request-reply
+      - [ ] Delivery semantics: at-most / at-least / exactly-once
+      - [ ] Ordering + partitioning
+      - [ ] Consumer patterns: competing consumers, DLQ, retry
+      - [ ] Patterns: outbox, saga, schema evolution
+      - [ ] Brokers compared: SQS / SNS, RabbitMQ, Kinesis, Pulsar
+      - [ ] Observability: lag, redelivery, poison messages
+    - [ ] Kafka (3kafka.md)
+      - [ ] Architecture: topics, partitions, brokers
+      - [ ] Replication: leader, ISR, min.insync.replicas
+      - [ ] Producer: acks, batching, idempotent producer
+      - [ ] Consumer groups, offsets, rebalancing
+      - [ ] Exactly-once: transactions
+      - [ ] Retention + log compaction
+      - [ ] Failure modes + tuning
+      - [ ] Kafka vs SQS vs RabbitMQ
+  - [ ] 3db
+    - [ ] Data modeling (3data-modeling.md, 3persistence.md §1–2)
+      - [ ] Access-pattern-first method
+      - [ ] Model families: relational, document, wide-column, KV, graph
+      - [ ] Choosing a store
+      - [ ] Worked models
+    - [ ] Relational / SQL (3data-rds-ds.md, 3database.md)
+      - [ ] Entities, keys, IDs
+      - [ ] Normalization and when to break it
+      - [ ] Constraints as business rules
+      - [ ] Indexes from queries: B-tree, composite, covering
+      - [ ] Transactions, isolation levels, MVCC
+      - [ ] Locking: optimistic vs pessimistic
+      - [ ] EXPLAIN + slow queries
+      - [ ] Schema evolution + migrations
+    - [ ] Aurora / Postgres (db/aurora.*)
+      - [ ] Architecture, replicas, lag, failover
+      - [ ] Serverless v2, IAM auth, RDS Proxy, pools
+      - [ ] MVCC + vacuum, isolation levels
+      - [ ] Transactions, propagation, retries, idempotency
+      - [ ] CRUD, batch, upsert, locking, SKIP LOCKED queue
+      - [ ] Pagination, JSONB + GIN
+    - [ ] DynamoDB (db/dynamodb.*)
+      - [ ] Architecture, partitions, hot keys
+      - [ ] Reads + consistency
+      - [ ] GSI / LSI, single-table design
+      - [ ] Conditions, updates, query vs scan, pagination
+      - [ ] Batch, transactions, idempotency
+      - [ ] Streams, TTL, capacity modes
+    - [ ] MongoDB (db/mongodb.*)
+      - [ ] Document model, BSON, schema design
+      - [ ] WiredTiger storage
+      - [ ] Indexes, explain, query planner
+      - [ ] Aggregation pipeline
+      - [ ] Replica sets, oplog, read / write concern
+      - [ ] Transactions, sharding, change streams
+    - [ ] Redis (3redis.md, 3data-redis-ds.md)
+      - [ ] Data structures + use cases
+      - [ ] Persistence: RDB vs AOF
+      - [ ] Replication, Sentinel, Cluster
+      - [ ] Eviction policies
+      - [ ] Distributed locks, rate limiting, pub/sub, streams
+    - [ ] Caching (3data-caching.md)
+      - [ ] Placement: client, CDN, app, DB
+      - [ ] Patterns: cache-aside, write-through, write-behind
+      - [ ] Invalidation + TTL
+      - [ ] Stampede, hot keys, consistency
+    - [ ] Object storage: S3 (db/s3.*)
+      - [ ] Namespace, consistency, request rate
+      - [ ] Multipart, presigned URLs
+      - [ ] Conditional writes, versioning, lifecycle, encryption
+    - [ ] Storage engines + scale (3storage.md, 3persistence.md §5–7)
+      - [ ] B-tree vs LSM tree
+      - [ ] Partitioning + sharding
+      - [ ] Replication + consistency
+      - [ ] Specialized stores: search, time-series, graph
+    - [ ] Gaps: Elasticsearch, OLAP / lakehouse (Delta), vector DB
+  - [ ] 4cloud-security
+    - [ ] Cloud availability + reliability patterns
+    - [ ] Observability (L5)
+    - [ ] Docker, ECS, EKS
+    - [ ] Security stack
+    - [ ] Low-level design
+  - [ ] Gaps: generate Python, data, AI banks
+- [ ] sd — system design
+  - [ ] 0base
+    - [ ] FR / NFR
+    - [ ] Back-of-envelope estimation
+    - [ ] High-level architecture
+  - [ ] Hello Interview (16 questions)
+    - [x] Done: raw + my design
+      - [x] hi01 Ticketmaster
+      - [x] hi02 Distributed rate limiter
+      - [x] hi03 Bitly
+      - [x] hi04 Uber
+      - [x] hi05 Dropbox
+    - [ ] To do: write my design (raw done)
+      - [ ] hi06 WhatsApp
+      - [ ] hi07 Ad click aggregator
+      - [ ] hi08 Live comments
+      - [ ] hi09 Twitter
+      - [ ] hi10 YouTube
+      - [ ] hi11 Web crawler
+      - [ ] hi12 LeetCode
+      - [ ] hi13 Tinder
+      - [ ] hi14 FB news feed
+      - [ ] hi15 Top-K
+      - [ ] hi16 FB post search
+    - [ ] Timed 45-min self-test every 2 days
+  - [ ] Senior gaps
+    - [ ] Numbers that change the design
+    - [ ] Data flow end to end
+    - [ ] Failure handling
+    - [ ] Trade-offs with a "flip" condition
+- [ ] bq — behavioral
+  - [ ] 6 deep stories #p0
+    - [ ] Story list (6 candidates)
+      - [ ] Design story (small is fine)
+      - [ ] Troubleshoot story
+    - [ ] Retro each with the 7 questions
+      - [ ] Constraints, options, why this one
+      - [ ] Mechanism, success metric, 10× / failure, redo
+    - [ ] Record all stories aloud
+  - [ ] Map stories to Oracle values
+  - [ ] Resume defense
+- [ ] lc — LeetCode
+  - [ ] Daily: 2 mediums, 25 min each
+  - [ ] Oracle DS-design cluster #p0
+    - [ ] LRU + thread-safe LRU
+    - [ ] Rate limiter: token vs leaky bucket
+    - [ ] Redis-like KV store
+    - [ ] Streaming top-K
+  - [ ] Java run-and-test on HackerRank

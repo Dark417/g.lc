@@ -86,7 +86,12 @@
   - hyperlinked to each section
 
 ## 4. Content method (mechanism-first)
-- Lead with **mechanism**, not labels
+- Open with a **plain opener** before anything else
+  - Right after the index, and at the start of each concept's section
+  - 1–2 short sentences: what the thing is and what it does, in everyday words
+  - No jargon and no mechanism yet; an analogy is welcome
+  - Example: "A load balancer is a traffic cop in front of identical servers: it sends each request to one that isn't busy."
+- Then lead with **mechanism**, not labels
   - how it actually works underneath
   - data structures, algorithms, flow
 - Apply this order to every **component** and every **concept**:

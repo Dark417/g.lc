@@ -18,6 +18,7 @@
 - [6. Status And The Finish Rule](#6-status-and-the-finish-rule)
 - [7. task.md Protocol](#7-taskmd-protocol)
 - [8. Knowledge Docs In x-md](#8-knowledge-docs-in-x-md)
+- [8b. Concept Docs: No Code By Default](#8b-concept-docs-no-code-by-default)
 - [9. Code Rules: Shared](#9-code-rules-shared)
 - [10. Java Rules](#10-java-rules)
 - [11. Python Rules](#11-python-rules)
@@ -50,7 +51,7 @@ Pick the column of the folder you are working in; every other rule is shared.
 | Task ID / branch | `X-NNN` · `x/X-NNN-<slug>` | `A-NNN` · `a/A-NNN-<slug>` |
 | Primary language | Java + Python, equal | Python; Java only on backend call paths |
 | Knowledge doc folder | `x-md/` | `a-md/` |
-| Knowledge doc code blocks | Java first, then Python | Python only, no Java blocks |
+| Knowledge doc code blocks | None by default; when asked: Java first, then Python | None by default; when asked: Python only |
 
 | Item | `1x/` | `1A/` |
 | --- | --- | --- |
@@ -68,7 +69,8 @@ Pick the column of the folder you are working in; every other rule is shared.
 
 Each workspace pairs knowledge docs with code that demonstrates them.
 
-- ✅ **Knowledge docs**: concept explained, then code blocks, in `x-md/`
+- ✅ **Knowledge docs**: concepts explained in `x-md/`; **no code by default** (§8b)
+  - Code goes in a doc only when the user asks ("with code"), or for §8 component docs
 - ✅ **Code**: runnable-shape examples of how a component works
   - Java (Spring Boot) in `java/`
   - Python (FastAPI) in `python/`
@@ -121,16 +123,22 @@ Every item has a group and a component number, written two ways.
     - Why: identifiers cannot start with a digit
   - Terraform module dir `modules/03db_01aurora/`, block label `_03db_01aurora`
 - Multi-word names
-  - Markdown: hyphen, `01bedrock.03prompt-management`
+  - Markdown: hyphen, `prompt-management`
   - Code: underscore, `_01bedrock_03prompt_management`
 - Sub-concept files add a third number: full name `03db.01aurora.04locking`
 - Knowledge doc file names (x-md) drop what the folder already says
   - `1x`: drop the group prefix → `x-md/03db/01aurora.04locking.md`
-    - Group with one component (`01core`): drop the component too → `x-md/01core/01srp.md`
+    - Group with one component (`01core`): one file per topic, no number prefix → `x-md/01core/solid.md`, `spring.md` (the user adds prefixes)
     - Why: the folder already names the group; short names read faster
-  - `1A`: full name for now → `a-md/01bedrock/01bedrock.01converse.07tool-use.md`
-  - The H1 keeps the full name: `# 03db.01aurora.04locking Locking`
+  - `1A`: drop group and component → `a-md/01bedrock/converse.07tool-use.md`
+  - The H1 matches the file name: `# converse.07tool-use Tool Use`
   - Code names (Java, Python, Terraform) keep the full group + component
+- Topic folders with one file per topic (`x-md/02backend/`)
+  - Plain idea: a single-digit prefix says which category a file belongs to; the name says the topic
+  - Format: `<digit><topic>[-suffix].md`, lowercase, hyphens, no dot after the digit, no spaces
+  - Suffixes: `-ds` = design (schema / contract design), `-c` = code (implementation companion), `-zh` = Chinese version, `-review` = question bank
+  - Categories in `02backend`: 1 concurrency and distributed systems · 2 APIs and contract design · 3 messaging and communication · 4 databases and data design (internals: `4database`, `4persistence`; data-design chain: `4data-modeling` → `4data-rds-ds` → `4data-nosql-ds` → `4data-caching`) · 5 cloud availability, containers, load balancing · 6 container clusters (ECS, EKS) · 7 security · 8 low-level design
+  - Example: `2api-ds.md` (API design and contracts), `4data-rds-ds.md` (relational schema design), `1concurrency-c.md` (concurrency code)
 - Rename rule
   - Every file follows this naming; a mismatch is a bug to fix
   - Renaming → `git mv`, then update every reference (manifests, links, imports, Terraform)
@@ -247,14 +255,16 @@ Status marks are shared by manifests and task tables.
 
 ## 8. Knowledge Docs In x-md
 
+> Scope (11-16): this section is for **component docs paired with repo code** (manifest `[C]` items, e.g. AIP-C01 components). Every other knowledge doc follows §8b.
+
 Knowledge lives in `x-md/<group>/` (`1A`: `a-md/<group>/`) as many flat files, one per sub-concept.
 
-- Files of one component (`1x` short names, §4; `1A` keeps the `01bedrock.` prefix)
+- Files of one component (`1x` short names, §4; `1A` starts at the component name, e.g. `converse.`)
   - `01aurora.00index.md`: one-minute version, grouped index of all files, Code map
   - `01aurora.01<slug>.md` … `NN<slug>.md`: one sub-concept each
   - `01aurora.98tradeoffs.md`: when to use, knobs, comparison, failure modes
   - `01aurora.99interview.md`: interview questions, L4 + L5 extra
-  - Single-component group (`01core`): `00index.md`, `01srp.md` … `99interview.md`
+  - Single-component group (`01core`): one self-contained file per topic (`solid.md`, `design-principles.md`, `1design-patterns.md`, `spring.md`, `spring-boot.md`), each with its own cheat sheet, failure modes, interview questions and Code map
 - Every file: index first, then details
   - `# <full md name> <Title>` → `> purpose` → `## Index` (grouped, layered, linked) → numbered sections
 - Every concept: explain first, then code, then the catch
@@ -270,6 +280,23 @@ Knowledge lives in `x-md/<group>/` (`1A`: `a-md/<group>/`) as many flat files, o
 - Formatting: `.agents/rules.md` §3 and the `doc-formatting` skill
   - Status and checklist marker ✅ is welcome
   - Every claim carries its limit; numbers are sourced or marked "order of magnitude"
+
+## 8b. Concept Docs: No Code By Default
+
+Plain idea: a concept doc teaches how something works and how to choose. Code is a separate ask.
+
+- Applies to every knowledge doc that isn't a §8 component doc
+  - `1A`: the flat `a-md/` library, named `<group digit><topic>.md` (e.g. `1harness.md`)
+  - `1x`: the same rule for new concept docs in `x-md/`
+- No code unless the user says "with code"
+  - At most one illustrative schema or flow sketch, only if words are worse
+- Depth: concept level, not internals
+  - Plain idea, picture, how it works (3-5 steps), the catch, a line to say aloud
+  - Then the system-design view: options, trade-offs, how to decide, tools at hand
+- Size: about 2,000 words or less; readable in one sitting
+- Interview questions only when the user asks for them
+- Facts that change (products, versions, limits) are researched and cited
+- Example: `a-md/1loop.md` explains loop types and stop conditions; no Python loop
 
 ## 9. Code Rules: Shared
 
