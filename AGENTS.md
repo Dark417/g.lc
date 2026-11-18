@@ -1,5 +1,109 @@
 # AGENTS
 
+> Operating instructions for local agents working in this repository.
+> Last updated: 2026-11-18
+
+## Index
+
+- [Local Agent Instructions](#local-agent-instructions)
+- [Project Understanding](#project-understanding)
+- [Repo Structure](#repo-structure)
+- [Global Rules](#global-rules)
+- [Oracle Loop Status](#oracle-loop-status-updated-2026-09-09)
+- [Topic Files](#topic-files)
+- [Update Rule](#update-rule-update-ai)
+- [Message Log Rule](#message-log-rule)
+- [Agent Naming](#agent-naming)
+- [Skill Naming](#skill-naming)
+- [LeetCode Notes and Solutions Guide](#leetcode-notes--solutions-guide)
+
+## Local Agent Instructions
+
+### Role
+
+- Codex handles local coding and documentation.
+- Claude is a separate claude.ai project that owns:
+  - Project management.
+  - Syncing.
+  - Job tracking.
+  - Scheduling.
+
+### Before Any Task
+
+1. Read `D:\2Alfred\1D\AGENTS.md`.
+2. Read `D:\2Alfred\1D\0sys\rule-Agent Instructions.md` in full.
+   - This file is the source of truth for the local agent workflow.
+3. If a required path is missing, list `D:\2Alfred\1D` and locate the current file.
+   - The actual local files and paths take precedence.
+   - Never guess a path.
+4. Read these files under `D:\2Alfred\1D\0sys` only as needed:
+   - `rule-Doc Gen Format.md` for documentation format.
+   - `1sys.md` for system and sync rules.
+   - `0me.md` for user facts.
+   - `Dictionary.md` for user abbreviations.
+
+### Hard Rules
+
+- These rules apply even when the Alfred files are unreachable.
+- Follow the Git rules under [Global Rules](#global-rules).
+- Use only the shell or scripts for local file work.
+  - Never open Explorer or any file or folder window.
+- Delete files only when the user explicitly asks.
+  - If a file needs to be removed from its current location, move it to `_to_delete/` in the same folder and tell the user.
+- Edit the existing document in place.
+  - Keep one copy of each document.
+- Treat these Claude-owned paths under `D:\2Alfred\1D` as read-only:
+  - `0sys\*`
+  - `1Log` (`0sys\1Log.md`)
+  - `1BP` (`1OAA\1BP.md`)
+  - `1klg-map` (`1OAA\1klg-map.md`)
+  - `1T\oi.md`
+  - `1T\jd.md` and `1T\jd\`
+  - `1T\1bq\2bq-itv.md`
+  - `zTN\0TN-log.md`
+- For each file created, moved, renamed, or deleted in `1D`, queue one line in `D:\1lc\back-to-claude.md`.
+  - Add it under `## Queue`, newest first.
+  - Format the line as `yymmdd-hh:mm · <what changed>`.
+  - Claude picks it up from the queue.
+- Never print or commit API keys.
+
+### Style
+
+- Reply in Chinese when the user writes Chinese.
+- Reply in English when the user writes English.
+- Keep technical terms in English.
+- Write docs in Markdown.
+  - Start with a linked index.
+  - Use bullets with one idea per line.
+  - Give the plain idea before the mechanism.
+  - Use status emojis consistently, such as ✅ verified, ❌ incorrect, and ⚠️ needs confirmation.
+  - Link the item or question text directly to its detail.
+  - Omit a separate `Where` column.
+  - When details repeat the same fields, group by topic and use one row per item.
+  - For each company’s interview questions, use two detail tables in order:
+    1. Behavioral questions (BQ).
+    2. Technical questions.
+  - Preserve what I said, feedback, the better answer, and follow-ups in distinct columns.
+- Start replies with the answer.
+  - Skip preambles and recaps.
+- Be factual.
+  - Correct the user directly when a claim is wrong.
+
+### User Profile
+
+- Backend software engineer with about five years of experience.
+  - Java 17
+  - Spring Boot
+  - Python
+  - Amazon Web Services (AWS)
+- Interview targets
+  - Google L4
+  - Amazon SDE II
+  - Meta E4
+- Preparation priorities
+  - Coding
+  - System design
+
 ## Project Understanding
 
 This repository is mostly:
@@ -39,11 +143,12 @@ Goal: reach Google L4 interview-ready depth (with L5 visibility) using structure
 
 ## Global Rules
 
-- **Never push automatically.** Push only when the user explicitly says to push in the current message.
+- Push only when the user explicitly says "push" in the current message.
   - Commit only when asked; a finished task, a passing check, or an earlier "push" never implies a new push.
 
 - Codex and Claude Code share one rule tree: `AGENTS.md` + `.agents/` (rules, skills); `CLAUDE.md` only imports it.
-  - `AGENTS.md` and `.agents/rules.md` are the source of truth for content and format rules.
+  - Follow the [local agent instructions](#local-agent-instructions) first.
+  - Use `.agents/rules.md` for repository-specific content and formatting rules.
   - Skills live only in `.agents/skills/`; never recreate `.claude/skills/`.
   - Persist durable instructions in `AGENTS.md` (and the closest scoped `AGENTS.md`), not in `CLAUDE.md`.
 - Keep quality bar high for Google-style interviews.

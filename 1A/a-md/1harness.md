@@ -8,6 +8,12 @@
 - [0. One-minute version](#0-one-minute-version)
 - [1. Concept](#1-concept)
 - [2. What's inside a harness](#2-whats-inside-a-harness)
+  - [2.1 Is a harness always a loop?](#21-is-a-harness-always-a-loop)
+  - [2.2 What is "an agent", physically?](#22-what-is-an-agent-physically)
+  - [2.3 Everything becomes one prompt, except the enforcement](#23-everything-becomes-one-prompt-except-the-enforcement)
+  - [2.4 Tools: registered, sent, requested, executed](#24-tools-registered-sent-requested-executed)
+  - [2.5 Where instructions, policies and rules live](#25-where-instructions-policies-and-rules-live)
+  - [2.6 Human approval inside a harness](#26-human-approval-inside-a-harness)
 - [3. Harness, loop, graph: how they relate](#3-harness-loop-graph-how-they-relate)
 - [4. The different ways people define them](#4-the-different-ways-people-define-them)
 - [5. Design paradigms](#5-design-paradigms)
@@ -23,6 +29,7 @@
 - **Why:** the model only predicts text. The harness turns that into actions that are safe, bounded and observable.
 - **How:** the harness runs a control flow. That flow is a loop (the model decides the next step), a graph (your code decides), or one inside the other.
 - **Catch:** more model control handles more cases but costs more, varies more, and is harder to test.
+- **Not always a loop:** the harness is fixed, deterministic code. A loop is one control flow it may run, and each run of it is bounded.
 - 🗣 "Agent equals model plus harness. The harness is the product; the loop and the graph are two ways it decides what happens next."
 
 ---
@@ -64,7 +71,7 @@
 | Tool router ★★★ | validate args, check permission, run, shape the result | 3tools.md |
 | State and memory ★★ | session state, checkpoints, long-term facts | 2memory-state.md |
 | Control flow ★★★ | loop, graph, or both | [1loop.md](1loop.md), [1graph.md](1graph.md) |
-| Hooks ★★ | deterministic code before and after model and tool calls | this doc §5 |
+| Hooks ★★ | deterministic code before and after model and tool calls | below |
 | Guardrails and approval ★★★ | block, redact, pause for a human | 4guardrails.md, 4access.md |
 | Tracing ★★★ | every step, token, tool call and cost recorded | 4observability.md |
 
@@ -74,6 +81,97 @@
   - They're how you add rules the model can't skip.
   - Names differ by framework: ADK callbacks, Claude Agent SDK hooks, LangGraph nodes or middleware.
 - 🗣 "Hooks are where the rules live. The model can ignore a prompt; it can't skip a hook."
+
+### 2.1 Is a harness always a loop?
+`boundary` ★★★
+
+- **No.** The harness is the program around the model. The loop is one control flow it can run.
+  - Single call: the harness is a prompt builder plus a parser.
+  - Workflow: fixed steps in code.
+  - Loop: the model picks the next step.
+  - Graph: your code picks, with loops allowed inside nodes.
+- **Two time scales**
+  - The service runs all day and handles many requests.
+  - Each request starts one run. A run with a loop is bounded and ends.
+  - Between requests nothing is looping.
+- **Fixed code, with one non-deterministic part**
+  - The harness is definite: it sets the goal, tools, limits, permissions and stop conditions.
+  - The model is the only part that varies, and it chooses only inside those bounds.
+  - That's why the same model behaves differently in a different harness.
+- 🗣 "The harness is deterministic code that fences in one non-deterministic component."
+
+### 2.2 What is "an agent", physically?
+`AI` ★★★
+
+- **Plain idea:** an agent is a definition plus a running session. It is not a special kind of process.
+  - **Definition:** instructions, model, tools, limits (config).
+  - **Instance:** that definition running in a session or thread, with its own context window, a goal and stop conditions.
+- **The whole harness session is one agent.** If you manage the session, the goal and the termination, that's the agent.
+- **When does it become another agent?** When it gets its own context and its own tools.
+
+| Thing | Another agent? |
+|---|---|
+| A second model call in the same context with a different prompt | no, a step |
+| A sub-task in a fresh context window with its own tool list | yes, a sub-agent |
+| A graph node that calls the model once | no, a node |
+| A graph node that runs its own small loop | yes, a small agent |
+| A service reached over the network that runs its own loop | yes, a remote agent |
+
+- 🗣 "A new agent means a new context and a new toolset, not a new prompt."
+
+### 2.3 Everything becomes one prompt, except the enforcement
+`boundary` ★★★
+
+- **Yes, for what the model sees.** Goals, instructions, tool definitions, retrieved documents, history and prior results are all text in one request, resent on every call. The model has no other input.
+- **No, for what the harness enforces.** Limits, permissions, guardrails and approvals are code. The model never reads them; it only sees the outcome ("denied").
+- **Prompt asks. Code enforces.**
+
+| Concept | In the prompt | In code |
+|---|---|---|
+| Goal | stated as the task | a success check, if you have one |
+| Done signal | "call finish when done" | the stop decision: step, token and time limits |
+| Safety rules | written as instructions | hooks and tool checks that can't be skipped |
+| Tool availability | the tool list sent | only allowed tools execute |
+| Output format | schema or example | a validator and retry |
+
+- **Consequence:** anything you can't afford to be ignored must be in code.
+- 🗣 "Every concept reaches the model as text, but only code can guarantee it."
+
+### 2.4 Tools: registered, sent, requested, executed
+`AI` ★★★
+
+1. **Register:** at startup or per session the harness knows its tool list: functions in its own process, and MCP servers it connects to. For MCP, it asks each server for its tool list.
+2. **Send:** every model request carries the tool definitions (name, description, argument schema). The model is stateless, so they're resent each call. With many tools, send a relevant subset or use tool search.
+3. **Request:** the model replies with a structured tool call, a name plus arguments, instead of text. It executes nothing.
+4. **Execute:** the harness validates arguments, checks permission, then runs the tool: an in-process function, a network call, an MCP request, or a command in a sandbox.
+5. **Return:** the result goes back as a tool-result message. The loop continues.
+
+- **Local vs MCP:** "local function vs external" is about where the code runs. MCP is the standard interface so many agents can share a tool. Detail in [1architecture.md](1architecture.md) §3.2.
+- 🗣 "The model asks, the harness acts. Tool definitions travel with every call."
+
+### 2.5 Where instructions, policies and rules live
+`boundary` ★★
+
+- **Store:** a versioned place outside the code: Git, a config service, or a database.
+- **Load:** at session start or each run, cached in memory with a refresh. Stamp every trace with the version.
+- **Use:**
+  - Instructions go in the prompt on every call.
+  - Rules (rate limits, allowed tools per role) run in code at each step.
+  - Knowledge documents are retrieved when relevant.
+- **Guardrails at each hop?** Detail and a decision guide in [4guardrails.md](4guardrails.md).
+- Table of the three kinds: [1architecture.md](1architecture.md) §3.1.
+
+### 2.6 Human approval inside a harness
+`boundary` ★★
+
+- **Plain idea:** approval is a pause with a structured question. The answer picks the next branch.
+- **Mechanism**
+  1. The harness reaches a risky step and saves state.
+  2. It emits an approval request with options to the client and stops, holding no thread.
+  3. The client shows buttons; free text is parsed into a decision.
+  4. The decision returns with the run ID; the harness resumes into the chosen branch.
+- Every framework has a form of this: LangGraph interrupts, ADK confirmations, OpenAI Agents SDK approvals, Claude Agent SDK permission callbacks ([5frameworks.md](5frameworks.md)).
+- Round trip detail: [0edge-com.md](0edge-com.md) §6. Policy design: [4access.md](4access.md).
 
 ---
 

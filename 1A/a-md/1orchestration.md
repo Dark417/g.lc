@@ -169,6 +169,8 @@
 | Cross-team agents | A2A protocol |
 | Durable coordination | ledger tables + queue; Temporal or Step Functions |
 
+- **How each framework manages sub-agents:** compared side by side in [5frameworks.md](5frameworks.md) §4.
+- **Where sub-agents run:** inside one process (cheapest), as separate services over gRPC when you own both sides, or behind A2A across teams ([1architecture.md](1architecture.md) §6.2).
 - Default: one lead agent with sub-agents as tools for parallel reads, writes kept with the lead, a ledger for anything that changes data, and a per-run token budget across all agents.
 
 ---

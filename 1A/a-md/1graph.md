@@ -98,6 +98,15 @@
   - General workflow engines (Temporal, Step Functions): durable steps, not agent-aware.
 - 🗣 "Checkpoints make runs resumable; idempotent nodes make resuming safe."
 
+### 3.1 Thread, run and checkpoint, in a multi-user service
+- **Thread** = the session. Its ID keys everything saved for that conversation.
+- **Run** = one invocation on that thread. **Checkpoint** = a snapshot saved after each node.
+- **Many users:** many threads in one shared checkpoint store. The graph code is shared and holds no per-user data.
+- **Pause and resume:** an interrupt saves a checkpoint and stops. Resume loads the latest checkpoint for that thread, on any server.
+- **Time travel:** load an older checkpoint to replay or fork a run. It's a debugging tool.
+- **Costs:** checkpoints pile up (prune or set retention) and contain user data (encrypt, apply retention rules).
+- **Not the same as long-term memory:** checkpoints belong to one thread. Facts that should cross threads go in a separate store ([1architecture.md](1architecture.md) §5).
+
 ---
 
 ## 4. Graphs and loops together

@@ -87,6 +87,20 @@
 - **"No progress" is the hard one:** the agent loops on the same tool with similar arguments. Detect repeats and stop.
 - 🗣 "Every loop needs a done signal and a ceiling, and I log which one fired."
 
+### 3.1 Goal, termination, verifier and eval: four different things
+- **Plain idea:** they all sound like "checking success", but they run at different times and decide different things.
+
+| Thing | Question it answers | When it runs | Lives in |
+|---|---|---|---|
+| Goal | what counts as done? | stated at the start | the prompt (it's text the model reads) |
+| Termination | stop this run now? | every turn | harness code: step, token, time limits, plus the model's done signal |
+| Verifier (in-loop check) | is this output good enough? | during or at the end of one run | a code check or a grader model; pass means stop, fail means retry within a cap |
+| Eval | is the system good across many runs? | offline before a release; sampled in production | test set and graders; decides ship or not |
+
+- **They meet at the verifier.** It is a small eval running inside the loop, and its result feeds the termination decision.
+- **An eval suite never stops a run.** It measures many runs afterwards. Detail: [4evals.md](4evals.md).
+- **Goal and stop text are prompt.** They ask. The hard limits are code and enforce ([1harness.md](1harness.md) §2.3).
+
 ---
 
 ## 4. Loop patterns inside one agent

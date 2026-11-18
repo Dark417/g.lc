@@ -33,3 +33,28 @@
 ## Drill order (recommended)
 
 1 → 3 → 2 → 5 → 4 → 8 → 9 → 6 → 7 → 10. Start with the two you can build from your stack today; end with platform.
+
+## Concept docs behind each design (added 2026-11-16)
+
+- **How the two folders differ**
+  - `a-md/` = component knowledge: how each part works and how to choose it.
+  - `a-sd/` = applied designs: one system end to end, with numbers, in interview order.
+  - Read the a-md docs first, then drill the design.
+
+| # | Design | Read first in `../a-md/` |
+|---|---|---|
+| 1 | Customer service agent | 1harness, 1loop, 0edge-com §6, 4guardrails, 4access |
+| 2 | Enterprise knowledge assistant | 3rag (handbook), 4access §2–3, 4security §6 |
+| 3 | Data analyst agent | 4guardrails, 4security §2 (output handling), 6cost-latency |
+| 4 | Coding agent | 5claude-sdk, 4access §6 (sandbox), 6durable, 4evals |
+| 5 | Voice agent | 0edge-com, 6cost-latency §3, 2models |
+| 6 | Deep research agent | 1orchestration, 6durable, 4evals |
+| 7 | Browser agent | 4access, 4security, 4guardrails |
+| 8 | Document workflow agent | 1graph, 6durable, 4access §4 |
+| 9 | SRE incident agent | 4access, 4observability, 6durable |
+| 10 | Agent platform | 1architecture, 5frameworks, 6llmops, 6cost-latency, 4observability, 7serving |
+
+- **Updates these designs still need** (they predate the 2026-11-16 docs)
+  - Treating the run separately from the client connection: event IDs, replay, cancel ([0edge-com](../a-md/0edge-com.md)).
+  - Back-of-envelope from users to tokens per minute ([1architecture §7](../a-md/1architecture.md)).
+  - A dedicated harness service, with gRPC or A2A between agent services ([1architecture §6](../a-md/1architecture.md)).
